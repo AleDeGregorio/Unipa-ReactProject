@@ -1,0 +1,38 @@
+.divDettagli{
+    border-bottom-width: 1px;
+    border-bottom-color: gray;
+    border-bottom-style: solid;
+    width: 50%;
+    position: relative;
+    left:25%;
+}
+
+.Contatti{
+    position: relative;
+    right:17%;
+    
+}
+
+.Recensioni{
+    position: relative;
+    border-bottom-width: 1px;
+    border-bottom-color: gray;
+    border-bottom-style: solid;
+    width: 50%;
+    left: 25%;
+}
+
+.RecensioniH2 {
+    position: relative;
+    right: 42%;
+}
+
+.RecensioniUL {
+    position: relative;
+    right: 42%;
+}
+
+.Nome {
+    position: relative;
+    right:18%;
+}

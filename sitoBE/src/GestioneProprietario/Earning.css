@@ -1,0 +1,49 @@
+
+
+
+.paginaEarning{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+/* PARTE SINISTRA DELLA PAGINA */
+.containerSx {
+    display:flex;
+    flex-direction: column;
+    margin-left:30px;
+
+}
+/*accordion */
+.containerAccordion{
+    width: 80%;
+    display:flex;
+}
+.earning_head{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+/*Parte destra della pagina */
+.containerDx{
+    display: flex;
+    flex-direction: column;
+    margin-right:60px;
+}
+.propStruct {
+    width: 300px;
+    height:400px;
+    border: 2px solid black;
+}
+.cardEarning{
+    height: 100px;
+    width: 50%;
+}
+
+
+
+/*.containerEarning {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+}*/ 
