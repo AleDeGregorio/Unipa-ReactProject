@@ -7,7 +7,7 @@ function Footer() {
       <div class="container">
         <div class="row justify-content-center">
           <div  id="p1">
-            <h5 className="title">Links</h5>
+            <h5 className="title">Privacy</h5>
             <ul className="list-unstyled">
               <li>Termini e Condizioni</li>
               <li>Privacy</li>
@@ -15,10 +15,10 @@ function Footer() {
           </div>
 
           <div  id="p2">
-            <h5 className="title">Products</h5>
+            <h5 className="title">Prodotti</h5>
             <ul className="list-unstyled">
-              <li>Codemaps</li>
-              <li>Opportunity calendar</li>
+              <li>B&B</li>
+              <li>Casa Vacanza</li>
             </ul>
           </div>
 

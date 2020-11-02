@@ -1,6 +1,9 @@
 .Autenticazione {
     font-family: sans-serif;
-    text-align: center;
+    width: 100%;
+    position: relative;
+    height: 100%;
+    right:25%;
   }
   
   @import url("https://fonts.googleapis.com/css?family=Montserrat:400,800");
@@ -17,7 +20,7 @@
   
   .Autenticazione p {
     font-size: 14px;
-    font-weight: 100;
+    font-weight: 100%;
     line-height: 20px;
     letter-spacing: 0.5px;
     margin: 20px 0 30px;
@@ -75,6 +78,18 @@
     margin: 8px 0;
     width: 100%;
   }
+
+  .Autenticazione label{
+    width: 100%;
+  }
+
+  .inputSignUp{
+    background-color: #eee;
+    border: none;
+    padding: 12px 15px;
+    margin: 8px 0;
+    width: 100%;
+  }
   
   .containerAutenticazione {
     background-color: #fff;
@@ -88,11 +103,11 @@
     left: 25%;
     margin-bottom: 90px;
     margin-top: 90px;
+    height: 100%;
   }
   
   .form-containerAutenticazione {
     position: absolute;
-    top: 0;
     height: 100%;
     transition: all 0.6s ease-in-out;
   }
@@ -101,6 +116,7 @@
     left: 0;
     width: 50%;
     z-index: 2;
+    height: 100%;
   }
   
   .containerAutenticazione.right-panel-active .sign-in-containerAutenticazione {
@@ -112,6 +128,7 @@
     width: 50%;
     opacity: 0;
     z-index: 1;
+    height: 100%;
   }
   
   .containerAutenticazione.right-panel-active .sign-up-containerAutenticazione {
@@ -119,6 +136,7 @@
     opacity: 1;
     z-index: 5;
     animation: show 0.6s;
+    height: 100%;
   }
   
   @keyframes show {
@@ -201,47 +219,4 @@
   .containerAutenticazione.right-panel-active .overlay-right {
     transform: translateX(20%);
   }
-  
-  @media only screen and (min-width: 601px) and (max-width: 768px){
-    /* Tablet: */
-    .Autenticazione {
-      position: relative;
-      font-family: sans-serif;
-      text-align: center;
-      right: 25%;
-    }
-  }
-
-  @media only screen and (max-width: 600px){
-    /*Smartphone*/
-
-    .containerAutenticazione {
-      background-color: #fff;
-      border-radius: 10px;
-      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-      position: relative;
-      overflow: hidden;
-      width: 70%;
-      min-height: 650px;
-    }
-
-    .Autenticazione {
-      position: relative;
-      font-family: sans-serif;
-      text-align: center;
-      right: 10%;
-    }
-
-  }
-
-  @media only screen and (min-width: 1200px){
-      
-    .Autenticazione {
-      position: relative;
-      font-family: sans-serif;
-      text-align: center;
-      right: 10%;
-    }
-  }
-
   

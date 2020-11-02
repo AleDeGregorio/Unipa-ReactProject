@@ -1,4 +1,4 @@
-.contenitore {
+.contenitoreAutenticazione {
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
@@ -8,24 +8,25 @@
     justify-content: center;
     flex-direction: column;
     text-align: center;
-    width: 100%;
+    width: 50%;
     position: relative;
     height: 100%;
     margin-top: 20px;
     margin-bottom: 20px;
+    left: 20%;
     border-radius:  0 0 10px 10px;
 }
 
-.contentNewCheck{
+.contentNewCheckAutenticazione{
     width:100%;
     background: #fff;
-    border-radius:  0 0 10px 10px;
+    border-radius: 10px;
     box-shadow: 1px 1px 20px 3px rgba(0, 0, 0, 0.1);
     padding: 30px;
     border-radius:  0 0 10px 10px;
 }
 
-.contenitore input {
+.contenitoreAutenticazione input {
     background-color: #eee;
     border: none;
     padding: 12px 15px;
@@ -34,7 +35,7 @@
     height: 45px;
 }
 
-.contenitore select {
+.contenitoreAutenticazione select {
     background-color: #eee;
     border: none;
     padding: 12px 15px;
@@ -43,7 +44,16 @@
     height: 45px;
 }
 
-.contenitore button {
+
+.contenitoreAutenticazione h2 {
+    color: #00bec8;
+}
+
+.contenitoreAutenticazione label {
+    color: #00bec8;
+}
+
+.contenitoreAutenticazione .pulsante{
     border-radius:  0 0 10px 10px;
     border: 1px solid #00bec8;
     background-color: #00bec8;
@@ -57,12 +67,22 @@
     cursor: pointer;
 }
 
-.contenitore h2 {
-    color: #00bec8;
+.contenitoreAutenticazione .pulsanti{
+    border-radius:10px;
+    border: 1px solid #00bec8;
+    background-color: #00bec8;
+    color: #ffffff;
+    font-size: xx-small;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    width: 90%;
+    margin: 3px;
+    cursor: pointer;
 }
 
-.contenitore label {
-    color: #00bec8;
+.accedi{
+    height: 100%;
+    margin-top: 10%;
+    margin-bottom: 10%;
 }
-
-

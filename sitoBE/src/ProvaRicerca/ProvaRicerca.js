@@ -27,7 +27,7 @@ const ProvaRicerca = () => {
       };
 
     return(
-        <div className="ContainerRicerca row">
+        <div className="ContainerRicerca">
         <Form className="BarraRicerca">
           <div className="Prova">
             <Form.Row>
@@ -69,6 +69,7 @@ const ProvaRicerca = () => {
             </div>
         </Form>
         </div>
+
     );
 }
 export default ProvaRicerca;

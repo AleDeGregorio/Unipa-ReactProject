@@ -5,6 +5,7 @@ import "react-dates/lib/css/_datepicker.css";
 import { SingleDatePicker } from "react-dates";
 
 import { InputLabel, InputGroup } from "../comune/input";
+import { Dropdown } from "react-bootstrap";
 
 
 
@@ -16,9 +17,9 @@ const DatePicker = ({ dates, setStartDate, setEndDate }) => {
     });
 
     return(
-    
-        <div className="row">
-        <div clasName="col">
+      
+        <div className="col">
+        <div className="col">
         <label>Check-in</label>
         <SingleDatePicker
             date={dates.startDate}
@@ -41,7 +42,7 @@ const DatePicker = ({ dates, setStartDate, setEndDate }) => {
             noBorder={true}
           />
           </div>
-          <div>
+          <div className="col">
           <label>Check-out</label>
           <SingleDatePicker
             date={dates.endDate}
@@ -71,6 +72,7 @@ const DatePicker = ({ dates, setStartDate, setEndDate }) => {
           />
           </div>
           </div>
+          
           
     );
 }

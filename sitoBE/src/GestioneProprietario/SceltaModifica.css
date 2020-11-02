@@ -13,9 +13,8 @@
     color: #008cc8;
   }
   .carte_prop{
-      display:flex;
-      flex-wrap: wrap;
-      justify-content: center;
+    display:flex;
+    justify-content: space-around;
   }
 
   .LinK {
@@ -23,7 +22,7 @@
   }
   
   .LinK:hover{
-    color: #008cc8;
+    color: #025e85;
     text-decoration: none;
   }
 

@@ -2,6 +2,7 @@ import React from "react";
 import './Autenticazione.css'
 import SignInForm from "./SignIn";
 import SignUpForm from "./SignUp";
+import Cliente from '../components/ClientePage';
 
 import { Redirect } from "react-router-dom";
 
@@ -32,8 +33,16 @@ class Autenticazione extends React.Component {
 
   render() {
 
-    if(this.props.error) {
-      return <Redirect to = "/ErrorPage" error = {this.props.error} errorMessage = {this.props.errorMessage} />
+    if(this.props.error && this.props.errorMessage !== '') {
+      return <Redirect
+                to={{
+                    pathname: "/ErrorPage",
+                    state: { 
+                      error: this.props.error,
+                      errorMessage: this.props.errorMessage
+                    }
+                }}
+            />
     }
     else if(localStorage.getItem('logged') && localStorage.getItem('cliente')) {
       return <Redirect to = "/PaginaCliente" />

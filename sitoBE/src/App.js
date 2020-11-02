@@ -16,6 +16,14 @@ import ElencoCasaVacanza from './GestioneProprietario/ElencoCasaVacanza'
 import ElencoBeB from './GestioneProprietario/ElencoB&B'
 import SceltaModifica from './GestioneProprietario/SceltaModifica'
 import ModificaCasaVacanza from './GestioneProprietario/ModificaCasaVacanza'
+import SecondaAutenticazioneAccedi from './Autenticazione/secondaAutenticazioneAccedi'
+import SecondaAutenticazioneRegistrati from './Autenticazione/secondaAutenticazioneRegistrati'
+import Accettazione from './GestioneProprietario/Accettazione'
+import SceltaModificaBeb from './GestioneProprietario/SceltaModificaB&B'
+import ModificaBeB from './GestioneProprietario/ModificaB&B'
+import ElencoListaStanze from './GestioneProprietario/ElencoListaStanze'
+import ModificaStanza from './GestioneProprietario/ModificaStanza'
+import ErrorPage from './components/ErrorPage'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -66,6 +74,7 @@ class App extends React.Component {
     })
     .then((result) => result.text())
     .then((result) => {
+      console.log(JSON.parse(result));
       this.setState({ apiResponse: JSON.parse(result) });
 
       if(this.state.apiResponse.status === 'error') {
@@ -106,6 +115,12 @@ class App extends React.Component {
                 <HomePage/>
               </Route>
               <Route 
+                exact path = '/ErrorPage'
+                render = { (props) => (
+                  <ErrorPage {...props} 
+                />)}
+              />
+              <Route 
                 exact path = '/Autenticazione'
                 render = { (props) => (
                   <Autenticazione {...props}  
@@ -116,6 +131,12 @@ class App extends React.Component {
                   />)
                 }
               />
+              <Route exact path = '/secondaAutenticazioneAccedi'>
+                <SecondaAutenticazioneAccedi/>
+              </Route>
+              <Route exact path = '/secondaAutenticazioneRegistrati'>
+                <SecondaAutenticazioneRegistrati/>
+              </Route>
               <Route exact path = "/PaginaCliente">
                 <Cliente />
               </Route>
@@ -140,7 +161,7 @@ class App extends React.Component {
               <Route exact path = '/Earning'>
                 <Earning2/>
               </Route>
-              <Route exact path = '/ElencoB&B'>
+              <Route exact path = '/ElencoBnB'>
                 <ElencoBeB/>
               </Route>
               <Route exact path = '/ElencoCasaVacanza'>
@@ -151,6 +172,21 @@ class App extends React.Component {
               </Route>
               <Route exact path = '/ModificaCasaVacanza'>
                 <ModificaCasaVacanza/>
+              </Route>
+              <Route exact path = '/Accettazione'>
+                <Accettazione/>
+              </Route>
+              <Route exact path = '/SceltaModificaB&B'>
+                <SceltaModificaBeb/>
+              </Route>
+              <Route exact path = '/ModificaB&B'>
+                <ModificaBeB/>
+              </Route>
+              <Route exact path = '/ElencoListaStanze'>
+                <ElencoListaStanze/>
+              </Route>
+              <Route exact path = '/ModificaStanza'>
+                <ModificaStanza/>
               </Route>
             </Switch>  
           <Footer/>

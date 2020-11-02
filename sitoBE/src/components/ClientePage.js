@@ -22,7 +22,15 @@ class Cliente extends React.Component{
             );
         }
         else{
-            return <Redirect to = "/ErrorPage" error = {true} errorMessage = {"Utente non autorizzato"} />
+            return <Redirect
+                to={{
+                    pathname: "/ErrorPage",
+                    state: { 
+                        error: true,
+                        errorMessage: "Utente non autorizzato" 
+                    }
+                }}
+            />
         }
     }
 }

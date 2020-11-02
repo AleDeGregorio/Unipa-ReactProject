@@ -7,26 +7,25 @@ import {RiAccountBoxLine} from "react-icons/ri";
 import {Link} from 'react-router-dom'
 import {Col} from 'react-bootstrap'
 
-function SceltaModifica(){
+function SceltaModificaBeB(){
     return(
-        <div className="row carte_prop" >
-            <Link to= "/ElencoCasaVacanza" className="LinK">
+        <div className="carte_prop" >
+        <Link to= "/ModificaB&B" className="LinK">
         <Card className="propScelta">
             <Card.Body>
-            <Card.Title>Modifica Casa Vacanza</Card.Title>
+            <Card.Title>Modifica struttura B&B</Card.Title>
             <Card.Text>Visualizza tutti e dati della casa ed eventualmente modifica</Card.Text>
             </Card.Body>
         </Card></Link>
-        <Link to = "/ElencoB&B" className="LinK">
+        <Link to = "/ElencoListaStanze" className="LinK">
             <Card className="propScelta">
             <Card.Body>
-            <Card.Title>Modifica B&B</Card.Title>
-            <Card.Text>modifica dati della struttura ed eventualmente le sue stanze.</Card.Text>
+            <Card.Title>Modifica stanze B&B</Card.Title>
+            <Card.Text>modifica le caratteristiche delle tue stanze.</Card.Text>
             </Card.Body>
            </Card>
         </Link>
-
       </div>
         );
 }
-export default SceltaModifica;
+export default SceltaModificaBeB;

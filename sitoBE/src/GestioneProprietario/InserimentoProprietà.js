@@ -134,6 +134,7 @@ const InserimentoProprietà = ({ history }) => {
           <hr/>
           
           <Form.Group>
+            <label>Inserisci delle foto della tua struttura</label>
             <Form.Row className="justify-content-center">
             <input
               type="file"
@@ -165,7 +166,6 @@ const InserimentoProprietà = ({ history }) => {
             </Button>
             </Form.Row>
           </Form.Group>
-
           <Button variant="primary" type="submit">
             Carica
           </Button>

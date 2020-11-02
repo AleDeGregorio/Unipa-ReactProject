@@ -3,6 +3,7 @@ import styled from "styled-components";
 import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
 import { SingleDatePicker } from "react-dates";
+import "./ProvaRicerca.css"
 
 import { InputLabel, InputGroup } from "../comune/input";
 
@@ -13,10 +14,9 @@ const DatePicker = ({ dates, setStartDate, setEndDate }) => {
   });
 
   return (
-    <Container>
-      <InputGroup>
+    <div className="row contenitoreDate">
         <InputLabel htmlFor="start_date">check-in</InputLabel>
-        <DivStart>
+  
           <SingleDatePicker
             date={dates.startDate}
             onDateChange={date => setStartDate(date)}
@@ -39,9 +39,8 @@ const DatePicker = ({ dates, setStartDate, setEndDate }) => {
             reopenPickerOnClearDate={true}
             noBorder={true}
           />
-        </DivStart>
         <InputLabel htmlFor="end_date">check-out</InputLabel>
-        <DivEnd>
+   
           <SingleDatePicker
             date={dates.endDate}
             onDateChange={date => setEndDate(date)}
@@ -69,20 +68,10 @@ const DatePicker = ({ dates, setStartDate, setEndDate }) => {
             reopenPickerOnClearDate={true}
             noBorder={true}
           />
-        </DivEnd>
-      </InputGroup>
-    </Container>
+        </div>
   );
 };
 
 export default DatePicker;
 
-const Container = styled.div`
-  width: 250px;
-`;
 
-const DivStart = styled.div`
-`;
-
-const DivEnd = styled.div`
-`;

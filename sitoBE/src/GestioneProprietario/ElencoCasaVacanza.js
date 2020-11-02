@@ -1,3 +1,41 @@
+import React, { Component } from 'react'
+
+import ListCase from './ListCase'
+import styled, { createGlobalStyle } from 'styled-components'
+
+const GlobalStyle = createGlobalStyle`
+  @font-face {
+    font-family: "Montserrat";
+    src: url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
+  }
+  * {
+    margin: 0;
+	  padding: 0;
+    font-family: "Montserrat", sans-serif;
+    box-sizing: border-box;
+  }
+  body {
+    background-color: #f5f5f5;
+  }
+`
+
+
+class  ElencoCasaVacanza extends Component {
+  render() {
+    return (
+      <>
+        <GlobalStyle />
+       
+        <ListCase />
+       
+      </>
+    )
+  }
+}
+
+export default ElencoCasaVacanza;
+
+/* file vecchio 
 import React from "react";
 import Card from 'react-bootstrap/Card'
 import './ElencoProprietà.css';
@@ -111,4 +149,4 @@ function ElencoCasaVacanza(){
         </div>
     );
 }
-export default ElencoCasaVacanza;
+export default ElencoCasaVacanza; */ 
