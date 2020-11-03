@@ -1,7 +1,9 @@
+//CSS COMPLETATO
+
 import React from 'react';
 import Card from 'react-bootstrap/Card';
-
-import { Redirect } from 'react-router-dom';
+import {Button} from 'react-bootstrap'
+import './ClientePage.css'
 
 class Cliente extends React.Component{
     render() {
@@ -10,28 +12,50 @@ class Cliente extends React.Component{
             var cognome = localStorage.getObj('user_data')[0].cognome_cl;
             return(
                 <div className="PaginaCliente">
-                    <h1>BENVENUTO, {nome} {cognome}!</h1>
-                    <div className="row">
-                        <div className="col">
-                            <Card>
-
-                            </Card>
+                    <h1>BENVENUTO !</h1>
+                    <div className="contenitoreContainer">
+                        <div className="containerDati">
+                            <h3>DATI PERSONALI</h3>
+                            <div className="Dati">
+                                <ul>
+                                    <li>
+                                        Nome: 
+                                    </li>
+                                    <li>
+                                        Cognome:
+                                    </li>
+                                    <li>
+                                        Data di nascita:
+                                    </li>
+                                    <li>
+                                        E-mail:
+                                    </li>
+                                    <li>
+                                        Telefono:
+                                    </li>
+                                    <li>
+                                        Data di nascita:
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                        <Button>Modifica dati</Button>
                         </div>
                     </div>
                 </div>
             );
         }
         else{
-            return <Redirect
-                to={{
-                    pathname: "/ErrorPage",
-                    state: { 
-                        error: true,
-                        errorMessage: "Utente non autorizzato" 
-                    }
-                }}
-            />
+            return(
+                <div className="containerAutenticazioneFallita">
+                <div className = "AutenticazioneFallita">
+                  <h1>Si è verificato un errore!</h1>
+                  <p>Utente non autorizzato</p>
+                </div>
+                </div>
+              );
         }
     }
 }
 export default Cliente;
+

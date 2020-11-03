@@ -1,3 +1,5 @@
+/*CSS FATTO*/
+
 import React, { useState, useMemo } from "react";
 import camera from "../assets/camera.svg";   
 import {Form, Button} from "react-bootstrap"
@@ -130,18 +132,22 @@ const ModificaCasaVacanza = ({ history }) => {
             <input
               type="file"
               className="inputImg"
+              accept="image/*"
             />
             <input
               type="file"
               className="inputImg"
+              accept="image/*"
             />
            <input
               type="file"
               className="inputImg"
+              accept="image/*"
             />
             <input
               type="file"
               className="inputImg"
+              accept="image/*"
             />
             </Form.Row>
             </Form.Group>
