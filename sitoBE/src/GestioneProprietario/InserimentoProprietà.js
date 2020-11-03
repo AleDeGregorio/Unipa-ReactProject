@@ -1,3 +1,5 @@
+/*CSS FATTO*/
+
 import React, { useState, useMemo } from "react";
 import camera from "../assets/camera.svg";   
 import {Form, Button} from "react-bootstrap"
@@ -51,7 +53,7 @@ const InserimentoProprietà = ({ history }) => {
             type="text"
             id="Nome"
             value={Nome}
-            placeholder="Nome della casa"
+            placeholder="Nome casa"
             onChange={e => setNome(e.target.value)}
             className="i"
           />
@@ -61,7 +63,7 @@ const InserimentoProprietà = ({ history }) => {
             type="text"
             id="Città"
             value={Città}
-            placeholder="Nome della città"
+            placeholder="Nome città"
             onChange={e => setCittà(e.target.value)}
             className="i"
           />
@@ -71,7 +73,7 @@ const InserimentoProprietà = ({ history }) => {
             type="text"
             id="Via"
             value={Via}
-            placeholder="indirizzo civico della casa"
+            placeholder="Indirizzo casa"
             onChange={e => setVia(e.target.value)}
             className="i"
           />
@@ -81,7 +83,7 @@ const InserimentoProprietà = ({ history }) => {
             type="text"
             id="Provincia"
             value={Provincia}
-            placeholder="Provincia della casa vacanza"
+            placeholder="Provincia casa"
             onChange={e => setProvincia(e.target.value)}
             className="i"
           />
@@ -100,68 +102,18 @@ const InserimentoProprietà = ({ history }) => {
             type="text"
             id="Descrizione"
             value={Descrizione}
-            placeholder="Descrizione della casa vacanza"
+            placeholder="Descrizione casa"
             onChange={e => setDescrizione(e.target.value)}
             className="i"
           />
-       
-             <Form.Group controlId="PostiLetto">
-            <Form.Label>PostiLetto</Form.Label>
-            <Form.Control value={PostiLetto}  placeholder="Posti letto della casa vacanza" as="select"   onChange={e => setPostiLetto(e.target.value)}  >
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-              <option>6</option>
-              <option>7</option>
-              <option>8</option>
-              </Form.Control>
-          </Form.Group>
-           
-       
-          <label htmlFor="Prezzo">Prezzo</label>
-          <input
-            type="text"
-            id="Prezzo"
-            value={Prezzo}
-            placeholder="Prezzo della casa vacanza"
-            onChange={e => setPrezzo(e.target.value)}
-            className="i"
-          />
-          
-
           <hr/>
-          
-          <Form.Group>
-            <label>Inserisci delle foto della tua struttura</label>
-            <Form.Row className="justify-content-center">
-            <input
-              type="file"
-              className="inputImg"
-            />
-            <input
-              type="file"
-              className="inputImg"
-            />
-           <input
-              type="file"
-              className="inputImg"
-            />
-            <input
-              type="file"
-              className="inputImg"
-            />
-            <label>Seleziona il tipo di struttura che stai inserendo</label>
-            
-          </Form.Row>
-          </Form.Group>
+          <label>Seleziona il tipo di struttura che stai inserendo</label>
           <Form.Group>
             <Form.Row className="justify-content-center">
-            <Button variant="primary" className="bottoniScelta">
+            <Button variant="primary" className="bottoniScelta" href="/InserimentoCasaVacanza">
               Casa Vacanza
             </Button>
-            <Button variant="primary" className="bottoniScelta">
+            <Button variant="primary" className="bottoniScelta" href="/InserimentoBnB">
               B&B
             </Button>
             </Form.Row>

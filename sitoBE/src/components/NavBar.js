@@ -36,7 +36,7 @@ class NavBar extends React.Component {
                         <Nav.Link href="/BnB">BnB</Nav.Link>
                         <Nav.Link href="/CasaVacanza">Casa Vacanza</Nav.Link>
                     </Nav>
-                        <Nav.Link href="/Autenticazione">ACCEDI</Nav.Link>
+                        <Nav.Link href="/secondaAutenticazioneAccedi">ACCEDI</Nav.Link>
                 </Navbar.Collapse>
             </Navbar>
         );

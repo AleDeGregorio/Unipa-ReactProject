@@ -1,5 +1,8 @@
+/*CSS COMPLETATO*/
+
 import React from 'react';    
 import {Form, Col, Row, Button} from 'react-bootstrap'
+import {Link} from 'react-router-dom'
 import './secondaAutenticazione.css'
 
 
@@ -9,7 +12,6 @@ function SecondaAutenticazioneRegistrati(){
         <Form className="contenitoreAutenticazione">
             <div className="contentNewCheckAutenticazione">
             <h2>Iscriviti</h2>
-            <Form.Row>
             <Form.Group as={Col} controlId="formGridName">
                     <Form.Label>Nome</Form.Label>
                     <Form.Control type="name" placeholder="Nome" required />
@@ -19,8 +21,6 @@ function SecondaAutenticazioneRegistrati(){
                 <Form.Label>Cognome</Form.Label>
                     <Form.Control type="surname" placeholder="Cognome" required/>
                 </Form.Group>
-            </Form.Row>
-            <Form.Row>
             <Form.Group as={Col} controlId="formGridEmail">
             <Form.Label>E-mail</Form.Label>
                     <Form.Control type="email" placeholder="E-mail" required />
@@ -30,8 +30,6 @@ function SecondaAutenticazioneRegistrati(){
                 <Form.Label>Password</Form.Label>
                     <Form.Control type="password" placeholder="Password" required/>
                 </Form.Group>
-            </Form.Row>
-            <Form.Row>
             <Form.Group as={Col} controlId="formGridIndirizzo">
             <Form.Label>Telefono</Form.Label>
             <Form.Control type="tel" placeholder="Telefono" required/>
@@ -41,7 +39,6 @@ function SecondaAutenticazioneRegistrati(){
             <Form.Label>Data di nascita</Form.Label>
             <Form.Control type="date" required className="inputSignUp"/>
             </Form.Group>
-          </Form.Row>
 
           <Form.Row>
             <Form.Group as={Col} controlId="formGridEmail">
@@ -56,7 +53,9 @@ function SecondaAutenticazioneRegistrati(){
                 Proprietario
             </Button>
           </div>
+          <label>Sei già iscritto?<Link to="/secondaAutenticazioneAccedi"> ACCEDI</Link></label>
             </div>
+            
             <Button variant="primary" type="submit" className="pulsante">
                 Registrati
             </Button>

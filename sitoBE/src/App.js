@@ -23,6 +23,8 @@ import SceltaModificaBeb from './GestioneProprietario/SceltaModificaB&B'
 import ModificaBeB from './GestioneProprietario/ModificaB&B'
 import ElencoListaStanze from './GestioneProprietario/ElencoListaStanze'
 import ModificaStanza from './GestioneProprietario/ModificaStanza'
+import InserimentoBnB from './GestioneProprietario/inserimentoB&B'
+import InserimentoCasaVacanza from './GestioneProprietario/inserimentoCasaVacanza'
 import ErrorPage from './components/ErrorPage'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -161,7 +163,7 @@ class App extends React.Component {
               <Route exact path = '/Earning'>
                 <Earning2/>
               </Route>
-              <Route exact path = '/ElencoBnB'>
+              <Route exact path = '/ElencoB&B'>
                 <ElencoBeB/>
               </Route>
               <Route exact path = '/ElencoCasaVacanza'>
@@ -188,6 +190,13 @@ class App extends React.Component {
               <Route exact path = '/ModificaStanza'>
                 <ModificaStanza/>
               </Route>
+              <Route exact path = '/InserimentoBnB'>
+                <InserimentoBnB/>
+              </Route>
+              <Route exact path = '/InserimentoCasaVacanza'>
+                <InserimentoCasaVacanza/>
+              </Route>
+              /InserimentoCasaVacanza
             </Switch>  
           <Footer/>
           </div>
