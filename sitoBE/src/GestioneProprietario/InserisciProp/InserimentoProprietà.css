@@ -46,6 +46,25 @@ label#thumbnail{
     margin-bottom: 20px;
     left: 20%;
   }
+
+  .containerNewSelezione{
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    width: 60%;
+    position: relative;
+    height: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    left: 20%;
+  }
+
   
   .contentNew{
     width:100%;
@@ -102,6 +121,21 @@ label#thumbnail{
     background-color: #eee;
   }
   
+  .containerNewSelezione button{
+    border-radius: 2px;
+    border: 1px solid #00bec8;
+    background-color: #00bec8;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 12px 45px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius:  0 0 10px 10px;
+    width: 100%;
+  }
+
   .contentNew button{
     border-radius: 2px;
     border: 1px solid #00bec8;
@@ -131,10 +165,21 @@ label#thumbnail{
     margin: 8px 4px;
     height: 45px;
     background-color: #eee;
+    font-size:10px;
   }
   
   .containerNew form h2{
     color: #00bec8;
+  }
+
+  .containerNewSelezione h2{
+    color: #00bec8;
+  }
+
+  .containerNewSelezione .bottoniScelta{
+    width: 80%;
+    border-radius: 0;
+    margin-bottom: 10px;
   }
 
   .containerNew form .bottoniScelta{
@@ -149,6 +194,11 @@ label#thumbnail{
       height: 100%;
       left: 10%;
     }
+
+    .containerNewSelezione{
+      width: 50%;
+      height: 100%;
+    }
   }
 
   @media only screen and (min-width: 600px) and (max-width: 768px) {
@@ -157,6 +207,11 @@ label#thumbnail{
       height: 100%;
       left: 15%;
     }
+
+    .containerNewSelezione{
+      width: 50%;
+      height: 100%;
+    }
   }
 
   @media only screen and (min-width: 768px){
@@ -164,5 +219,14 @@ label#thumbnail{
       width: 50%;
       height: 100%;
       left: 25%;
+    }
+
+    .containerNewSelezione{
+      width: 50%;
+      height: 100%;
+      margin-top: 15%;
+      margin-bottom: 15%;
+      left: 25%;
+      position: relative;
     }
   }

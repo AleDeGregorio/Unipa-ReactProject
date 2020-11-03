@@ -8,52 +8,141 @@ import {Link} from "react-router-dom"
 import "./InserimentoProprietà.css";
 
 
-const InserimentoCasaVacanza = ({ history }) => {
-  const [Nome, setNome] = useState("");
-  const [Città, setCittà] = useState("");
-  const [Via, setVia] = useState("");
-  const[Provincia,setProvincia]= useState("");
-  const[Servizi,setServizi]=useState("");
-  const [Prezzo, setPrezzo] = useState("");
-  const[Descrizione, setDescrizione]=useState("");
-  const[PostiLetto,setPostiLetto]=useState("");
-  const [thumbnail, setThumbnail] = useState(null);
-
-  const preview = useMemo(() => {
-    return thumbnail ? URL.createObjectURL(thumbnail) : null;
-  }, [thumbnail]);
-
-  async function handleSubmit(e) {
+class InserimentoCasaVacanza extends React.Component {
+  constructor(){
+    super();
+    this.state={
+      nome_proprieta: '',
+      indirizzo: '',
+      localita:'',
+      provincia:'',
+      tipo_proprieta:'cv',
+      servizi:'',
+      descrizione:'',
+      ref_proprietario:localStorage.getItem('email_prop'),
+      postiletto:'',
+      tariffa:'',
+      apiResponse: [],
+      error: false,
+      errorMessage: ''
+    };
+  }
+  onChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+  onSubmitInsert = (e) => {
     e.preventDefault();
-    const data = new FormData();
-    const user_id = localStorage.getItem("user");     //presumo sia il setting della data di caricamento e nick del prop
+    const data1= {
+      nome_proprieta: this.state.nome_proprieta,
+      indirizzo: this.state.indirizzo,
+      localita:this.state.localita,
+      provincia:this.state.provincia,
+      tipo_proprieta:'cv',
+      servizi:this.state.servizi,
+      ref_proprietario:localStorage.getItem('email_prop'),
+      descrizione:this.state.descrizione
+    }
+    const data2 = {
+      ref_proprieta_cv:localStorage.getItem('id_proprieta'),
+      postiletto:this.state.postiletto,
+      tariffa:this.state.tariffa
+    };
 
-    data.append("thumbnail", thumbnail);
-    data.append("Nome", Nome);
-    data.append("Città", Città);
-    data.append("Via", Via);
-    data.append("Provincia", Provincia);
-    data.append("Servizi", Servizi);
-    data.append("Descrizione", Descrizione);
-    data.append("PostiLetto",PostiLetto);
-    data.append("Prezzo", Prezzo);
-  
-    
+    fetch('http://localhost:9000/insertProprieta/new',{
+      method: "POST",
+      headers:{
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(data1)
+    })
+    .then((result) => result.text())
+    .then((result) => {
+      console.log(JSON.parse(result));
+      this.setState({ apiResponse: JSON.parse(result) });
 
-   
-  };
-
+      if(this.state.apiResponse.status === 'error') {
+        this.setState({ error: true });
+        this.setState({ errorMessage: this.state.apiResponse.message });
+      }
+      else {
+        //inserire messaggio inserimento avvenuto
+      }
+    fetch('http//localhost:9000/insertCV/new',{
+      method: "POST",
+      headers:{
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(data2)
+    })
+    .then((result) => result.text())
+    .then((result) => {
+      console.log(JSON.parse(result));
+      this.setState({ apiResponse: JSON.parse(result) });
+    })
+  }
+render(){
   return (
     <div className="background">
         <div className="containerNew">  
             <div className="contentNew">
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={this.props.onSubmitLogin}>
                 <h2>Compila questo form inserire la tua casa vacanza!</h2>
+                <label htmlFor="Nome">Nome</label>
+          <input
+            type="text"
+            id="Nome"
+            placeholder="Nome casa"
+            onChange={{this.props.onChange)}
+            className="i"
+          />
+
+          <label htmlFor="Città">Città</label>
+          <input
+            type="text"
+            id="Città"
+            placeholder="Nome città"
+            onChange={{this.props.onChange)}
+            className="i"
+          />
+
+          <label htmlFor="Via">Via</label>
+          <input
+            type="text"
+            id="Via"
+            placeholder="Indirizzo casa"
+            onChange={{this.props.onChange}
+            className="i"
+          />
+           
+           <label htmlFor="Provincia">Provincia</label>
+          <input
+            type="text"
+            id="Provincia"
+            placeholder="Provincia casa"
+            onChange={this.props.onChange}
+            className="i"
+          />
+
+           <label htmlFor="Servizi">Servizi</label>
+          <input
+            type="text"
+            id="Servizi"
+            placeholder="Elenco servizi"
+            onChange={this.props.onChange}
+            className="i"
+          />
+              <label htmlFor="Descrizione">Descrizione</label>
+          <input
+            type="text"
+            id="Descrizione"
+            placeholder="Descrizione casa"
+            onChange={this.props.onChange}
+            className="i"
+          />
                 <label htmlFor="Nome">Tariffa</label>
                 <input
                     type="text"
                     id="Tariffa"
-                    value={Nome}
                     placeholder="Tariffa casa"
                     className="i"
                 />
@@ -90,7 +179,7 @@ const InserimentoCasaVacanza = ({ history }) => {
             </div>
         </div>
     </div>
-  );
+ });
 };
 
 export default InserimentoCasaVacanza;
