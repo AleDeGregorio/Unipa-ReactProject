@@ -133,9 +133,17 @@ class App extends React.Component {
                   />)
                 }
               />
-              <Route exact path = '/secondaAutenticazioneAccedi'>
-                <SecondaAutenticazioneAccedi/>
-              </Route>
+              <Route 
+                exact path = '/secondaAutenticazioneAccedi'
+                render = { (props) => (
+                  <SecondaAutenticazioneAccedi {...props}
+                    onChange = {this.onChange}
+                    onSubmitLogin = {this.onSubmitLogin}
+                    error = {this.state.error}
+                    errorMessage = {this.state.errorMessage}
+                  />
+                )}
+              />
               <Route exact path = '/secondaAutenticazioneRegistrati'>
                 <SecondaAutenticazioneRegistrati/>
               </Route>

@@ -4,6 +4,8 @@ import styled, { ThemeProvider } from "styled-components";
 import { theme } from "../shared/theme";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
+import { Redirect } from 'react-router-dom';
+
 const ListWrapper = styled.div`
   width: ${props => props.theme.maxWidth};
   max-width: 90%;
@@ -41,53 +43,68 @@ const ListDragItem = styled.div`
 `;
 
 class ListBeB extends Component {
-  state = {
-    listTitle: "ELENCO B&B",
-    listBreadcrumb: "Nome / chek-in/check-out",
-    items: [
-      {
-        id: 0,
-        hasActions: true,
-        textValue: "NomeB&B0",
-        checkin: "oraX/",
-        checkout:"oraY",
-        image:
-          "https://images.unsplash.com/photo-1542140372-de3e121eb11e?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6feeb58669ba6adbd2aacc9c89391713&auto=format&fit=crop&w=200&q=80",
-      
-      },
-      {
-        id: 1,
-        hasActions: true,
-        textValue: "NomeB&B1",
-        checkin: "oraX/",
-        checkout:"oraY",
-        image:
-          "https://images.unsplash.com/photo-1542149624-8a12d5285934?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a91f847fdcc99b00a29d5a39a2b6f4b9&auto=format&fit=crop&w=200&q=80",
-       
-      },
-      {
-        id: 2,
-        hasActions: true,
-        textValue: "NomeB&B2",
-        checkin: "oraX/",
-        checkout:"oraY",
-        image:
-          "https://images.unsplash.com/photo-1542274368-443d694d79aa?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=13f276041134f4982218e49b446bedb1&auto=format&fit=crop&w=200&q=80"},
-      
-      {
-        id: 3,
-        hasActions: true,
-        textValue: "NomeB&B3",
-        checkin: "oraX/",
-        checkout:"oraY",
-        image:
-          "https://images.unsplash.com/photo-1542144612-1b3641ec3459?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=c00cb83d290ac6e0b59ac95fcf46ee0e&auto=format&fit=crop&w=200&q=80",
-      
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      listTitle: "ELENCO B&B",
+      listBreadcrumb: "Nome / chek-in/check-out",
+      items: [
+        {
+          id: '',
+          hasActions: true,
+          textValue: "",
+          checkin: "",
+          checkout:"",
+          image: ''
+        }
+      ],
+      apiResponse: [],
+      error: false,
+      errorMessage: ''
+    };
+  }
+
+  componentDidMount() {
+    const data = {
+      ref_proprietario: localStorage.getItem('email'),
+      tipo_proprieta: 'bb'
+    }
+
+    fetch('http://localhost:9000/searchProprietaBBProprietario/proprietaBBProprietario', {
+        method: "POST",
+        headers: {
+            'Content-type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then((result) => result.text())
+    .then((result) => {
+        this.setState({ apiResponse: JSON.parse(result) });
         
-      }
-      
-    ]
-  };
+        var res = JSON.parse(result);
+
+        console.log(res[0].check_out);
+
+        for(var i = 0; i < res.length; i++) {
+          this.setState({
+            items: [...this.state.items, {
+              id: i,
+              hasActions: true,
+              textValue: res[i].nome_proprieta,
+              checkin: res[i].check_in + '0/',
+              checkout: res[i].check_out + '0',
+              image: res[i].imgBB_path1
+            }]
+          });
+        }
+    
+        if(this.state.apiResponse.status === 'error') {
+            this.setState({ error: true });
+            this.setState({ errorMessage: this.state.apiResponse.message });
+        }
+    });
+  }
 
   reorderItems = (startIndex, endIndex) => {
     const items = Array.from(this.state.items);
@@ -111,7 +128,19 @@ class ListBeB extends Component {
   };
 
   render() {
-    const { listTitle, listBreadcrumb, items } = this.state;
+    if(this.state.error) {
+      return <Redirect
+          to={{
+              pathname: "/ErrorPage",
+              state: { 
+                  error: true,
+                  errorMessage: this.state.errorMessage 
+              }
+          }}
+      />
+  }
+  else {
+    const { listTitle, listBreadcrumb, items, apiResponse, error, errorMessage } = this.state;
     return (
       <ThemeProvider theme={theme}>
         <ListWrapper>
@@ -149,6 +178,7 @@ class ListBeB extends Component {
         </ListWrapper>
       </ThemeProvider>
     );
+  }
   }
 }
 
