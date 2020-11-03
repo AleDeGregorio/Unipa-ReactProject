@@ -3,6 +3,7 @@ import ListItem from "./ListItem";
 import styled, { ThemeProvider } from "styled-components";
 import { theme } from "../shared/theme";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { Redirect } from 'react-router-dom';
 
 const ListWrapper = styled.div`
   width: ${props => props.theme.maxWidth};
@@ -43,15 +44,28 @@ const ListDragItem = styled.div`
 class List extends Component {
   constructor(props){
     super(props);
-    this.state = {ref_bb:localStorage.getItem('ref_bb'),
+
+    this.state = {
+                  listTitle:"ELENCO STANZE B&B",
+                  listBreadcrumb: "Numero stanza / tipologia",
+                  items :[
+                      {
+                        id: '',
+                        hasAction: true,
+                        textValue:"",
+                        image: ''
+                      }
+                  ],
                   apiResponse: [],
                   error:false,
                   errorMessage: ''
-      }
+      };
   }
   componentDidMount(){
-    const data = {ref_bb:this.state.ref_bb};
-    fetch('http://localhost:9000/searchStanzaBB/stanzaBB',{
+    const data = {ref_bb:localStorage.getItem('ref_bb'),
+                  ref_proprietario: localStorage.getItem('email'),
+                }
+    fetch('http://localhost:9000/searchStanzaBB/stanzaBB'/*da cambiare credo*/,{
       method:'POST',
       headers:{'Content-type':'application/json'},
       body: JSON.stringify(data)
@@ -59,61 +73,32 @@ class List extends Component {
     .then((result)=>result.text())
     .then((result)=>{
       this.setState({apiResponse:JSON.parse(result)});
-      if(this.state.apiResponse.status==='error'){
-        this.setState({error:true, errorMessage:'this.state.apiResponse.message'});
+      
+      var res=JSON.parse(result);
+      for(var i=0;i< res.lenght;i++){
+        this.setState({
+          items: [...this.state.items,{
+            id:i,
+            hasAction: true,
+            textValue:res[i].tipologia,
+            image:res[i].img /*inserire immagine nel db*/
+          }]
+        });
       }
-    })
+      if(this.state.apiResponse.status === 'error') {
+        this.setState({ error: true });
+        this.setState({ errorMessage: this.state.apiResponse.message });
+    }
+    });
   }
- /* state = {
-    listTitle: "ELENCO STANZE",
-    listBreadcrumb: "Codice / tipologia",
-    items: [
-      {
-        id: 0,
-        hasActions: true,
-        textValue: "101",
-        tipologia: "singola",
-        image:
-          "https://images.unsplash.com/photo-1542140372-de3e121eb11e?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6feeb58669ba6adbd2aacc9c89391713&auto=format&fit=crop&w=200&q=80",
-      
-      },
-      {
-        id: 1,
-        hasActions: true,
-        textValue: "101",
-        tipologia: "singola",
-        image:
-          "https://images.unsplash.com/photo-1542149624-8a12d5285934?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a91f847fdcc99b00a29d5a39a2b6f4b9&auto=format&fit=crop&w=200&q=80",
-       
-      },
-      {
-        id: 2,
-        hasActions: true,
-        textValue: "102",
-        tipologia: "doppia",
-        image:
-          "https://images.unsplash.com/photo-1542274368-443d694d79aa?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=13f276041134f4982218e49b446bedb1&auto=format&fit=crop&w=200&q=80"},
-      
-      {
-        id: 3,
-        hasActions: true,
-        textValue: "103",
-        tipologia: "Matrimoniale",
-        image:
-          "https://images.unsplash.com/photo-1542144612-1b3641ec3459?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=c00cb83d290ac6e0b59ac95fcf46ee0e&auto=format&fit=crop&w=200&q=80",
-      
-        
-      }
-    ]
-  };*/
 
- /* reorderItems = (startIndex, endIndex) => {
+  reorderItems = (startIndex, endIndex) => {
     const items = Array.from(this.state.items);
     const [removed] = items.splice(startIndex, 1);
     items.splice(endIndex, 0, removed);
     this.setState({ items });
   };
-
+ 
   onDragEnd = result => {
     const { source, destination } = result;
     if (!destination) return;
@@ -126,10 +111,21 @@ class List extends Component {
         items: prevState.items.filter(item => item.id !== id)
       };
     });
-  };*/
+  };
 
   render() {
-    const { listTitle, listBreadcrumb, items } = this.state;
+    if(this.state.error) {
+      return <Redirect
+          to={{
+              pathname: "/ErrorPage",
+              state: { 
+                  error: true,
+                  errorMessage: this.state.errorMessage 
+              }
+          }}
+      />}
+    else {
+    const { listTitle, listBreadcrumb, items, apiResponse, error, errorMessage } = this.state;
     return (
       <ThemeProvider theme={theme}>
         <ListWrapper>
@@ -166,7 +162,7 @@ class List extends Component {
           </DragDropContext>
         </ListWrapper>
       </ThemeProvider>
-    );
+    );}
   }
 }
 
