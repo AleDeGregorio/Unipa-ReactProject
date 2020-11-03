@@ -300,7 +300,7 @@ class ListItemCase extends Component {
                   className="listitem__select__text"
                   onClick={this.toggleSelect}
                 >
-                  Actions
+                  Azioni
                   <SelectArrowDown>
                     <svg
                       x="0px"
@@ -333,7 +333,7 @@ class ListItemCase extends Component {
                       className="listitem__select__list__item"
                       onClick={this.deleteItem}
                     >
-                      Delete
+                      Elimina
                     </div>
                   </div>
                 )}

@@ -3,6 +3,8 @@ import React, { Component } from 'react'
 import ListCase from './ListCase'
 import styled, { createGlobalStyle } from 'styled-components'
 
+import { Redirect } from 'react-router-dom';
+
 const GlobalStyle = createGlobalStyle`
   @font-face {
     font-family: "Montserrat";
@@ -22,14 +24,27 @@ const GlobalStyle = createGlobalStyle`
 
 class  ElencoCasaVacanza extends Component {
   render() {
-    return (
-      <>
-        <GlobalStyle />
-       
-        <ListCase />
-       
-      </>
-    )
+    if(!localStorage.getItem('logged') || !localStorage.getItem('proprietario')) {
+        return <Redirect
+            to={{
+                pathname: "/ErrorPage",
+                state: { 
+                    error: true,
+                    errorMessage: "Utente non autorizzato" 
+                }
+            }}
+        />
+    }
+    else {
+        return (
+            <>
+              <GlobalStyle />
+             
+              <ListCase />
+             
+            </>
+          )
+    }
   }
 }
 
