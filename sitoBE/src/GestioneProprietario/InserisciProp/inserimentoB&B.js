@@ -7,7 +7,7 @@ import {Link} from "react-router-dom"
 
 import "./InserimentoProprietà.css";
 
-class InseriementoBnB extend React.Component {
+class InseriementoBnB extends React.Component {
   constructor(){
     super();
     this.state={
@@ -24,11 +24,11 @@ class InseriementoBnB extend React.Component {
       apiResponse: [],
       error: false,
       errorMessage: ''
-    };
+    }
   }
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
-  }
+  };
   onSubmitInsert = (e) => {
     e.preventDefault();
     const data1= {
@@ -66,6 +66,7 @@ class InseriementoBnB extend React.Component {
       else {
         //inserire messaggio inserimento avvenuto
       }
+    }
     fetch('http//localhost:9000/insertBB/new',{
       method: "POST",
       headers:{
@@ -80,7 +81,7 @@ class InseriementoBnB extend React.Component {
     })
   }
   render(){
-  return (
+    return(
     <div className="background">
     <div className="containerNew">  
       <div className="contentNew">
@@ -165,7 +166,7 @@ class InseriementoBnB extend React.Component {
       </div>
     </div>
     </div>
-  });
+     ); }
 };
 
 export default InserimentoBnB;

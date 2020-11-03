@@ -67,17 +67,9 @@
 }
 
 .contenitoreAutenticazione .pulsanti{
-    border-radius:10px;
-    border: 1px solid #00bec8;
-    background-color: #00bec8;
-    color: #ffffff;
-    font-size: xx-small;
-    font-weight: bold;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    width: 90%;
-    margin: 3px;
-    cursor: pointer;
+    width: 80%;
+    border-radius: 0;
+    margin-bottom: 10px;
 }
 
 .accedi{
@@ -91,6 +83,8 @@
         width: 80%;
         height: 100%;
         left: 10%;
+        margin-top: 47%;
+        margin-bottom: 47%;
     }
 }
 
@@ -99,6 +93,8 @@
         width: 60%;
         height: 100%;
         left: 20%;
+        margin-top: 29%;
+        margin-bottom: 28%;
     }
 }
 
@@ -107,5 +103,7 @@
         width: 40%;
         height: 100%;
         left: 30%;
+        margin-top: 12%;
+        margin-bottom: 12%;
     }
 }

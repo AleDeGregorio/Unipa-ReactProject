@@ -67,18 +67,18 @@ class InserimentoCasaVacanza extends React.Component {
       else {
         //inserire messaggio inserimento avvenuto
       }
-    fetch('http//localhost:9000/insertCV/new',{
-      method: "POST",
-      headers:{
-        'Content-type': 'application/json'
-      },
-      body: JSON.stringify(data2)
-    })
-    .then((result) => result.text())
-    .then((result) => {
-      console.log(JSON.parse(result));
-      this.setState({ apiResponse: JSON.parse(result) });
-    })
+      fetch('http//localhost:9000/insertCV/new',{
+        method: "POST",
+        headers:{
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(data2)
+      })
+      .then((result) => result.text())
+      .then((result) => {
+        console.log(JSON.parse(result));
+        this.setState({ apiResponse: JSON.parse(result) });
+      })
   }
 render(){
   return (
@@ -92,7 +92,7 @@ render(){
             type="text"
             id="Nome"
             placeholder="Nome casa"
-            onChange={{this.props.onChange)}
+            onChange={this.props.onChange}
             className="i"
           />
 
@@ -101,7 +101,7 @@ render(){
             type="text"
             id="Città"
             placeholder="Nome città"
-            onChange={{this.props.onChange)}
+            onChange={this.props.onChange}
             className="i"
           />
 
@@ -110,7 +110,7 @@ render(){
             type="text"
             id="Via"
             placeholder="Indirizzo casa"
-            onChange={{this.props.onChange}
+            onChange={this.props.onChange}
             className="i"
           />
            
@@ -179,7 +179,7 @@ render(){
             </div>
         </div>
     </div>
- });
+ );}
 };
 
 export default InserimentoCasaVacanza;

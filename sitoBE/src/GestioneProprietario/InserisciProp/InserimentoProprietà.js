@@ -14,7 +14,7 @@ class InserimentoProprietà extends React.Component {
     <div className="background">
     <div className="containerNewSelezione">  
       <div className="contentNew">
-        <form onSubmit={handleSubmit}>
+        <form >
           <h2>Seleziona il tipo di struttura che stai inserendo</h2>
           <Form.Group>
             <Form.Row className="justify-content-center">
@@ -30,7 +30,7 @@ class InserimentoProprietà extends React.Component {
       </div>
     </div>
     </div>
-    });
-};
+  );}
+}
 
 export default InserimentoProprietà;
