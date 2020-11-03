@@ -1,6 +1,6 @@
-import React from "react";
+/*import React from "react";
 import './PaginaDettagli.css';
-import CaroselloDettagli from './CaroselloDettagli';
+import CaroselloDettagli from './CaroselloDettagli'; 
 class PaginaDettagli extends React.Component{
 constructor(props){
     super(props);
@@ -28,6 +28,7 @@ componentDidMount(){
 //funzione per distinguere i servizi e parsarla?
 render(){
     return(
+        
         { this.state.apiResponse.map(((res)=>
         <div classNane="paginaDettagli">
             <div className="containerDettagli">
@@ -105,6 +106,7 @@ render(){
         </div>
         ))}
 
-        );}
+       });
 }
-export default PaginaDettagli;
+
+export default PaginaDettagli;*/
