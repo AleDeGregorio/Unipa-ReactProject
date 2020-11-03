@@ -25,6 +25,7 @@ import ElencoListaStanze from './GestioneProprietario/Modifica/ElencoListaStanze
 import ModificaStanza from './GestioneProprietario/Modifica/ModificaStanza'
 import InserimentoBnB from './GestioneProprietario/InserisciProp/inserimentoB&B'
 import InserimentoCasaVacanza from './GestioneProprietario/InserisciProp/inserimentoCasaVacanza'
+import GestionePrenotazione from './GestioneUtente/GestionePrenotazione'
 import ErrorPage from './components/ErrorPage'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -45,13 +46,9 @@ class App extends React.Component {
     this.state = { 
       email: '',
       password: '',
-      //logged: false,
-      //cliente: false,
-      //proprietario: false,
       apiResponse: [],
       error: false,
       errorMessage: ''
-      //success: false,
     };
   }
 
@@ -84,12 +81,6 @@ class App extends React.Component {
         this.setState({ errorMessage: this.state.apiResponse.message });
       }
       else {
-        /*this.setState({ 
-          logged: true,
-          cliente: this.state.apiResponse[0].email_cl ? true : false,
-          proprietario: this.state.apiResponse[0].email_prop ? true : false
-        });*/
-
         localStorage.setItem('logged', true);
         localStorage.setObj('user_data', this.state.apiResponse);
 
@@ -204,7 +195,9 @@ class App extends React.Component {
               <Route exact path = '/InserimentoCasaVacanza'>
                 <InserimentoCasaVacanza/>
               </Route>
-              /InserimentoCasaVacanza
+              <Route exact path = '/GestionePrenotazione'>
+                <GestionePrenotazione/>
+              </Route>
             </Switch>  
           <Footer/>
           </div>

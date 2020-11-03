@@ -3,6 +3,7 @@
     width: 400px;
     margin: 20px;
     justify-content: center;
+    color: #00bec8;
   }
   .prop .image{
     width: 60px;
@@ -16,6 +17,11 @@
       justify-content: center;
       flex-wrap: wrap;
   }
+
+.prop:hover {
+  cursor: pointer;
+  color: #422aad;
+}
 
 
 
