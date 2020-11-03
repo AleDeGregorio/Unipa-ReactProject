@@ -7,7 +7,7 @@ import {Link} from "react-router-dom"
 
 import "./InserimentoProprietà.css";
 
-class InseriementoBnB extends React.Component {
+class InserimentoBnB extends React.Component {
   constructor(){
     super();
     this.state={
@@ -65,8 +65,8 @@ class InseriementoBnB extends React.Component {
       }
       else {
         //inserire messaggio inserimento avvenuto
-      }
-    }
+      } 
+    });
     fetch('http//localhost:9000/insertBB/new',{
       method: "POST",
       headers:{
@@ -78,6 +78,7 @@ class InseriementoBnB extends React.Component {
     .then((result) => {
       console.log(JSON.parse(result));
       this.setState({ apiResponse: JSON.parse(result) });
+
     })
   }
   render(){

@@ -26,6 +26,9 @@ import ModificaStanza from './GestioneProprietario/Modifica/ModificaStanza'
 import InserimentoBnB from './GestioneProprietario/InserisciProp/inserimentoB&B'
 import InserimentoCasaVacanza from './GestioneProprietario/InserisciProp/inserimentoCasaVacanza'
 import GestionePrenotazione from './GestioneUtente/GestionePrenotazione'
+import SecondaAutenticazioneRegistratiProprietario from './Autenticazione/secondaAutenticazioneRegistratiProprietario'
+import SecondaAutenticazioneRegistratiCliente from './Autenticazione/secondaAutenticazioneRegistratiCliente'
+
 import ErrorPage from './components/ErrorPage'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -197,6 +200,12 @@ class App extends React.Component {
               </Route>
               <Route exact path = '/GestionePrenotazione'>
                 <GestionePrenotazione/>
+              </Route>
+              <Route exact path = '/secondaAutenticazioneRegistratiCliente'>
+                <SecondaAutenticazioneRegistratiCliente />
+              </Route>
+              <Route exact path= '/secondaAutenticazioneRegistratiProprietario'>
+                <SecondaAutenticazioneRegistratiProprietario />
               </Route>
             </Switch>  
           <Footer/>

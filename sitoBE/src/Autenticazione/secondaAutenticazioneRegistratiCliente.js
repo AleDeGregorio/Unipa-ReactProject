@@ -49,7 +49,7 @@ class SecondaAutenticazioneRegistratiCliente extends React.Component{
     }
     render(){
     return(
-        <Form className="contenitoreAutenticazione" onSubmit={onSubmitInsert}>
+        <Form className="contenitoreAutenticazione" onSubmit={this.props.onSubmitInsert}>
             <div className="contentNewCheckAutenticazione">
                 <h2>Iscriviti</h2>
         <Form.Group as={Col} controlId="formGridName">

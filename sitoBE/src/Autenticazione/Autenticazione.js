@@ -1,4 +1,4 @@
-import React from "react";
+/*import React from "react";
 import './Autenticazione.css'
 import SignInForm from "./SignIn";
 import SignUpForm from "./SignUp";
@@ -18,7 +18,6 @@ class Autenticazione extends React.Component {
       containerClass: "containerAutenticazione "
     }
   }
-
   handleOnClick = (text) => {
     if(text !== this.state.type) {
       this.setState({ type: text });
@@ -94,4 +93,4 @@ class Autenticazione extends React.Component {
   }
 }
 
-export default Autenticazione;
+export default Autenticazione;*/

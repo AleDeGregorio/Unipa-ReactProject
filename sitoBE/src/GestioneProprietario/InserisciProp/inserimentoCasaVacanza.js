@@ -67,6 +67,7 @@ class InserimentoCasaVacanza extends React.Component {
       else {
         //inserire messaggio inserimento avvenuto
       }
+    });
       fetch('http//localhost:9000/insertCV/new',{
         method: "POST",
         headers:{
