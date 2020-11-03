@@ -21,7 +21,7 @@ class NavBar extends React.Component {
                         <Nav.Link href="/BnB">BnB</Nav.Link>
                         <Nav.Link href="/CasaVacanza">Casa Vacanza</Nav.Link>
                     </Nav>
-                        <Nav.Link href="/Autenticazione" onClick = {this.onClick}>ESCI</Nav.Link>
+                        <Nav.Link href="/SecondaAutenticazioneAccedi" onClick = {this.onClick}>ESCI</Nav.Link>
                 </Navbar.Collapse>
             </Navbar>
             );

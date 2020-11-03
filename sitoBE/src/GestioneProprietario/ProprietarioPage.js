@@ -58,7 +58,7 @@ class ProprietarioPage extends React.Component {
                 <Card className="prop">
                     <RiAccountBoxLine className="image"></RiAccountBoxLine>
                     <Card.Title>Gestione Account</Card.Title>
-                    <Card.Text>Vedi le opzioni disponibili dioporco</Card.Text>
+                    <Card.Text>Vedi le opzioni disponibili</Card.Text>
                 </Card>
                 <Card className="prop">
                   <SiCashapp className="image"></SiCashapp>

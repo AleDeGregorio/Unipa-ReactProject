@@ -5,36 +5,38 @@ import Card from 'react-bootstrap/Card';
 import {Button} from 'react-bootstrap'
 import './ClientePage.css'
 
+import { Redirect } from 'react-router-dom';
+
 class Cliente extends React.Component{
     render() {
         if(localStorage.getItem('logged') && localStorage.getItem('cliente')) {
             var nome = localStorage.getObj('user_data')[0].nome_cl;
             var cognome = localStorage.getObj('user_data')[0].cognome_cl;
+            var data_nascita = new Date(localStorage.getObj('user_data')[0].data_nascita_cl).toLocaleDateString();
+            var email = localStorage.getObj('user_data')[0].email_cl;
+            var telefono = localStorage.getObj('user_data')[0].telefono_cl;
             return(
                 <div className="PaginaCliente">
-                    <h1>BENVENUTO !</h1>
+                    <h1>BENVENUTO {nome}!</h1>
                     <div className="contenitoreContainer">
                         <div className="containerDati">
                             <h3>DATI PERSONALI</h3>
                             <div className="Dati">
                                 <ul>
                                     <li>
-                                        Nome: 
+                                        Nome: {nome}
                                     </li>
                                     <li>
-                                        Cognome:
+                                        Cognome: {cognome}
                                     </li>
                                     <li>
-                                        Data di nascita:
+                                        Data di nascita: {data_nascita}
                                     </li>
                                     <li>
-                                        E-mail:
+                                        E-mail: {email}
                                     </li>
                                     <li>
-                                        Telefono:
-                                    </li>
-                                    <li>
-                                        Data di nascita:
+                                        Telefono: {telefono}
                                     </li>
                                 </ul>
                             </div>
@@ -46,14 +48,15 @@ class Cliente extends React.Component{
             );
         }
         else{
-            return(
-                <div className="containerAutenticazioneFallita">
-                <div className = "AutenticazioneFallita">
-                  <h1>Si è verificato un errore!</h1>
-                  <p>Utente non autorizzato</p>
-                </div>
-                </div>
-              );
+            return <Redirect
+                to={{
+                    pathname: "/ErrorPage",
+                    state: { 
+                        error: true,
+                        errorMessage: "Utente non autorizzato" 
+                    }
+                }}
+            />
         }
     }
 }
