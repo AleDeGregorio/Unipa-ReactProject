@@ -9,38 +9,57 @@ import { Redirect } from "react-router-dom";
 
 
 class ProprietarioPage extends React.Component {
+
     constructor(props){
         super(props);
-        this.state={email:localStorage.getItem('email'),
-                    apiResponse: [],
-                    error:false,
-                    errorMessage:''
+
+        this.state = {
+            email: localStorage.getItem('email'),
+            apiResponse: [],
+            error: false,
+            errorMessage: '',
+            show: false
         }
     }
-    componentDidMount(){
-        const data = {ref_prop:this.state.email_prop};
-        fetch('http://localhost:9000/URLMANCANTE',{
-            method:'POST',
-            headers:{'Content-type':'application/json'},
-            body:JSON.stringify(data)
+    componentDidMount() {
+        const data = {
+            email: this.state.email
+        };
+
+        fetch('http://localhost:9000/getDataInvio/dataInvio',{
+            method: 'POST',
+            headers: {
+                'Content-type':'application/json'
+            },
+            body: JSON.stringify(data)
         })
         .then((result)=>result.text())
         .then((result)=>{
-            this.setState({apiResponse:JSON.parse(result)});
-            if(this.state.apiResponse.status==='error'){
-                this.setState({error:true,errorMessage:'this.state.apiResponse.message'});
+            this.setState({ apiResponse:JSON.parse(result) });
+
+            if(this.state.apiResponse.status === 'error') {
+                this.setState({
+                    error: true,
+                    errorMessage: this.state.apiResponse.message
+                });
             }
         })
     }
 
-    const [show, setShow] = useState(false);
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true); 
+    handleClose = () => {
+        this.setState({
+            show: false
+        });
+    }
+    
+    handleShow = () => {
+        this.setState({
+            show: true
+        });
+    }
 
     render() {
-        
-        
         if(!localStorage.getItem('logged') || !localStorage.getItem('proprietario')) {
             return <Redirect
                 to={{
@@ -53,8 +72,8 @@ class ProprietarioPage extends React.Component {
             />
         }
         else {
+            var data_invio = this.state.apiResponse[0] ? new Date(this.state.apiResponse[0].ultimo_invio_dati).toLocaleDateString() : "Mai inviati";
             return(
-
                 <div className="carte_prop" >
                 <Card className="prop">
                     <Card.Title>Accetta Prenotazioni</Card.Title>
@@ -69,31 +88,27 @@ class ProprietarioPage extends React.Component {
                     </Card.Body>
                    </Card>
                 </Link>
-                <Link to='/a'>
-                <Card className="prop">
+                <Card className="prop" onClick = {this.handleShow}>
                     <Card.Title>Invio dati Turismo </Card.Title>
                     <Card.Text>Effettua l'invio dei dati relativi ai soggiornanti all'ufficio del Turismo.</Card.Text>
                 </Card>
-                </Link>
-                {this.state.apiResponse.map(((res)=>
-                <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                  <Modal.Title>Invio dati all'ufficio del turismo</Modal.Title>
+                <Modal show={this.state.show} onHide={this.handleClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Invio dati all'ufficio del turismo</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                        <div className="turismocont">
-                           <p>Ultimo invio dei dati all'ufficio competente :</p>
+                           <p>Ultimo invio dei dati all'ufficio competente: {data_invio} </p>
                            <p>Desideri inviare i dati nuovamente?</p>
                        </div>
-                       </Modal.Body>
+                    </Modal.Body>
                     <Modal.Footer>
                      <Button variant="secondary" /*funzione invia dationClick={}*/>Invia dati</Button>
-                     <Button variant="secondary" onClick={handleClose}>
+                     <Button variant="secondary" onClick={this.handleClose}>
                       Chiudi
                     </Button>                    
                    </Modal.Footer>
                 </Modal>
-                ))}
                 
                 <Link to ="/InserimentoProprietà" className="LinK">
                 <Card className="prop">
@@ -118,9 +133,9 @@ class ProprietarioPage extends React.Component {
                     <Card.Text>Visualizza </Card.Text>
                 </Card>
                 </div>
-                
             );
         }
     }
 }
+
 export default ProprietarioPage;
