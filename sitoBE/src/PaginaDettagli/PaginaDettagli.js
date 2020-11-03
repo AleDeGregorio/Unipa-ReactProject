@@ -1,14 +1,39 @@
 import React from "react";
 import './PaginaDettagli.css';
 import CaroselloDettagli from './CaroselloDettagli';
-
-function PaginaDettagli(){
+class PaginaDettagli extends React.Component{
+constructor(props){
+    super(props);
+    this.state={id_proprieta:localStorage.getItem('id_proprieta'),
+                apiResponse:[],
+                error:false,
+                errorMessage:''
+             }
+    }
+componentDidMount(){
+        const data= {id_proprieta:this.state.id_proprieta};
+        fetch('localhost:9000/searchProprieta/results',{
+        method:'POST',
+        headers:{'Content-type':'application/json'},
+        body: JSON.stringify(data)    
+        })
+    .then((result)=>result.text())
+    .then((result)=>{
+        this.setState({apiResponse:JSON.parse(result)});
+        if (this.state.apiResponse.status==='error'){       //gestione errori
+            this.setState({error:true, errorMessage:'this.state.apiResponse.message'});
+        }
+    })
+}
+//funzione per distinguere i servizi e parsarla?
+render(){
     return(
+        { this.state.apiResponse.map(((res)=>
         <div classNane="paginaDettagli">
             <div className="containerDettagli">
                 <div className="Nome">
-                    <h2>NOME CASA/BnB</h2>
-                    <span>indirizzo</span>
+                    <h2>res.nome_proprieta</h2>
+                    <span>res.indirizzo</span>
                 </div>
                 <CaroselloDettagli/>
                 <div className="divDettagli">
@@ -78,6 +103,8 @@ function PaginaDettagli(){
                 </div>
             </div>
         </div>
-    );
+        ))}
+
+        );}
 }
 export default PaginaDettagli;

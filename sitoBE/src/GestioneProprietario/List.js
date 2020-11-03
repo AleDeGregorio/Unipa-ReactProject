@@ -41,7 +41,30 @@ const ListDragItem = styled.div`
 `;
 
 class List extends Component {
-  state = {
+  constructor(props){
+    super(props);
+    this.state = {ref_bb:localStorage.getItem('ref_bb'),
+                  apiResponse: [],
+                  error:false,
+                  errorMessage: ''
+      }
+  }
+  componentDidMount(){
+    const data = {ref_bb:this.state.ref_bb};
+    fetch('http://localhost:9000/searchStanzaBB/stanzaBB',{
+      method:'POST',
+      headers:{'Content-type':'application/json'},
+      body: JSON.stringify(data)
+    })
+    .then((result)=>result.text())
+    .then((result)=>{
+      this.setState({apiResponse:JSON.parse(result)});
+      if(this.state.apiResponse.status==='error'){
+        this.setState({error:true, errorMessage:'this.state.apiResponse.message'});
+      }
+    })
+  }
+ /* state = {
     listTitle: "ELENCO STANZE",
     listBreadcrumb: "Codice / tipologia",
     items: [
@@ -81,49 +104,10 @@ class List extends Component {
       
         
       }
-      // {
-      //   id: 4,
-      //   hasActions: true,
-      //   textValue: 'Facebook and the Fires',
-      //   lastUser: 'New York Times',
-      //   daysAgo: '23',
-      //   image:
-      //     'https://images.unsplash.com/photo-1542345374-c620bf3914af?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=d806fdfa8bd4b43065461e758d97781e&auto=format&fit=crop&w=200&q=80',
-      //   person1_image:
-      //     'https://images.unsplash.com/photo-1517800249805-f3d51bd0b07f?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=c72070c639ef480f54f7bd5170738321&auto=format&fit=crop&w=200&q=80',
-      //   person2_image:
-      //     'https://images.unsplash.com/photo-1489980557514-251d61e3eeb6?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=e49161057e12d6c453b0680c5781d6f6&auto=format&fit=crop&w=200&q=80'
-      // },
-      // {
-      //   id: 5,
-      //   hasActions: false,
-      //   textValue: 'The Future Of Voice Control',
-      //   lastUser: 'Edward Muldrew',
-      //   daysAgo: '9',
-      //   image:
-      //     'https://images.unsplash.com/photo-1542339871798-04ac93837090?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=0b96770fbb8e38c4d8ac26cebac173b7&auto=format&fit=crop&w=200&q=80',
-      //   person1_image:
-      //     'https://images.unsplash.com/photo-1514813482567-2858e6c00ee1?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=fe4841ca192cd9a351dfccccef0888cf&auto=format&fit=crop&w=200&q=80',
-      //   person2_image:
-      //     'https://images.unsplash.com/photo-1517800249805-f3d51bd0b07f?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=c72070c639ef480f54f7bd5170738321&auto=format&fit=crop&w=200&q=80'
-      // },
-      // {
-      //   id: 6,
-      //   hasActions: false,
-      //   textValue: 'The Politics of Digital Identity',
-      //   lastUser: 'Emerge  in Coinmonks',
-      //   daysAgo: '4',
-      //   image:
-      //     'https://images.unsplash.com/photo-1542317180-e6692cb35508?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=119479e8759cf5cc17d386784edd5b1c&auto=format&fit=crop&w=200&q=80',
-      //   person1_image:
-      //     'https://images.unsplash.com/photo-1489980557514-251d61e3eeb6?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=e49161057e12d6c453b0680c5781d6f6&auto=format&fit=crop&w=200&q=80',
-      //   person2_image:
-      //     'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a723711f2c79ac1dc3c8718d82850f30&auto=format&fit=crop&w=200&q=80'
-      // }
     ]
-  };
+  };*/
 
-  reorderItems = (startIndex, endIndex) => {
+ /* reorderItems = (startIndex, endIndex) => {
     const items = Array.from(this.state.items);
     const [removed] = items.splice(startIndex, 1);
     items.splice(endIndex, 0, removed);
@@ -142,7 +126,7 @@ class List extends Component {
         items: prevState.items.filter(item => item.id !== id)
       };
     });
-  };
+  };*/
 
   render() {
     const { listTitle, listBreadcrumb, items } = this.state;
