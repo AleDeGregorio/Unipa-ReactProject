@@ -1,7 +1,5 @@
-import React from 'react';
-import Nav from 'react-bootstrap/Nav'
-import Card from 'react-bootstrap/Card'
-import CardColumns from 'react-bootstrap/CardColumns'
+import React, {useState} from 'react';
+import {Nav, Card, CardColumns, Modal, Button} from 'react-bootstrap'
 import './ProprietarioPage.css'
 import {SiCashapp} from "react-icons/si";
 import {RiAccountBoxLine} from "react-icons/ri";
@@ -10,8 +8,14 @@ import {Link} from 'react-router-dom'
 import { Redirect } from "react-router-dom";
 
 class ProprietarioPage extends React.Component {
+    
 
     render() {
+        const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+        
         if(!localStorage.getItem('logged') || !localStorage.getItem('proprietario')) {
             return <Redirect
                 to={{
@@ -39,10 +43,29 @@ class ProprietarioPage extends React.Component {
                     </Card.Body>
                    </Card>
                 </Link>
+                <Link onClick={handleShow}>
                 <Card className="prop">
                     <Card.Title>Invio dati Turismo </Card.Title>
                     <Card.Text>Effettua l'invio dei dati relativi ai soggiornanti all'ufficio del Turismo.</Card.Text>
                 </Card>
+                </Link>
+                <Modal show={show} onHide={handleClose}>
+                 <Modal.Header closeButton>
+                   <Modal.Title>Invio dati all'ufficio del turismo</Modal.Title>
+                     </Modal.Header>
+                     <Modal.Body>
+                        <div className="turismocont">
+                            <p>Ultimo invio dei dati all'ufficio competente :</p>
+                            <p>Desideri inviare i dati nuovamente?</p>
+                        </div>
+                        </Modal.Body>
+                     <Modal.Footer>
+                      <Button variant="secondary" /*funzione invia dationClick={}*/>Invia dati</Button>
+                      <Button variant="secondary" onClick={handleClose}>
+                       Chiudi
+                     </Button>                    
+                    </Modal.Footer>
+                 </Modal>
                 <Link to ="/InserimentoProprietà" className="LinK">
                 <Card className="prop">
                     <Card.Img src="https://cdn3.iconfinder.com/data/icons/hotels-b-b-and-cabins-1/50/Hotels_BB_and_Cabins_Outline-74-512.png" className="image"></Card.Img>
