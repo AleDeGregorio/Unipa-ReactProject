@@ -1,4 +1,4 @@
-
+/*CSS FATTO*/
 
 label#thumbnail{
     margin-bottom: 20px;
@@ -141,4 +141,28 @@ label#thumbnail{
     width: 80%;
     border-radius: 0;
     margin-bottom: 10px;
+  }
+
+  @media only screen and (max-width: 600px) {
+    .containerNew {
+      width: 80%;
+      height: 100%;
+      left: 10%;
+    }
+  }
+
+  @media only screen and (min-width: 600px) and (max-width: 768px) {
+    .containerNew {
+      width: 70%;
+      height: 100%;
+      left: 15%;
+    }
+  }
+
+  @media only screen and (min-width: 768px){
+    .containerNew {
+      width: 50%;
+      height: 100%;
+      left: 25%;
+    }
   }

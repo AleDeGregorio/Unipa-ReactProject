@@ -1,3 +1,5 @@
+/*CSS FATTO*/ 
+
 import React from 'react';    
 import {Form, Col, Button} from 'react-bootstrap'
 import './Checkin.css'
@@ -19,21 +21,18 @@ class Checkin extends React.Component {
     }
     
     render() {
-        if(!localStorage.getItem('logged') || !localStorage.getItem('proprietario')) {
-            return <Redirect
-                to={{
-                    pathname: "/ErrorPage",
-                    state: { 
-                        error: true,
-                        errorMessage: "Utente non autorizzato" 
-                    }
-                }}
-            />
+        /*if(!localStorage.getItem('logged') || !localStorage.getItem('proprietario')) {
+            return(
+                <div className = "Autenticazione">
+                  <h1>Si è verificato un errore!</h1>
+                  <p>Utente non autorizzato</p>
+                </div>
+              );
         }
         else if(this.state.submit) {
             return <Redirect to = "/CheckinEffettuato" />
         }
-        else {
+        else {*/
             return(
                 <Form className="contenitore" onSubmit = {this.onSubmit}>
                     <div className="contentNewCheck">
@@ -41,31 +40,31 @@ class Checkin extends React.Component {
                     <Form.Row>
                         <Form.Group as={Col} controlId="formGridEmail">
                         <Form.Label>Nome</Form.Label>
-                        <Form.Control type="name" placeholder="Inserire nome cliente" required />
+                        <Form.Control type="name" placeholder="Nome" required />
                         </Form.Group>
         
                         <Form.Group as={Col} controlId="formGridPassword">
                         <Form.Label>Cognome</Form.Label>
-                        <Form.Control type="surname" placeholder="Inserire cognome cliente" required/>
+                        <Form.Control type="surname" placeholder="Cognome" required/>
                         </Form.Group>
                     </Form.Row>
         
                     <Form.Row>
                         <Form.Group as={Col} controlId="formGridAddress1">
                             <Form.Label>Indirizzo</Form.Label>
-                            <Form.Control type="surname" placeholder="Inserire indirizzo cliente" required/>
+                            <Form.Control type="surname" placeholder="Indirizzo" required/>
                         </Form.Group>
         
                         <Form.Group as={Col} controlId="formGridZip">
                             <Form.Label>Codice Postale</Form.Label>
-                            <Form.Control type="zip" placeholder="Inserire codice postale cliente" required/>
+                            <Form.Control type="zip" placeholder="Codice postale" required/>
                         </Form.Group>
                     </Form.Row>
         
                     <Form.Row>
                         <Form.Group as={Col} controlId="formGridCity">
                         <Form.Label>Città</Form.Label>
-                        <Form.Control type="city" placeholder="Inserire città del cliente" required/>
+                        <Form.Control type="city" placeholder="Città" required/>
                         </Form.Group>
         
                         <Form.Group as={Col} controlId="formGridState">
@@ -437,7 +436,7 @@ class Checkin extends React.Component {
                     <Form.Row>
                         <Form.Group as={Col} controlId="formGridDocument">
                             <Form.Label>Numero documento</Form.Label>
-                            <Form.Control type="document_num" placeholder="Inserire numero documento cliente" required/>
+                            <Form.Control type="document_num" placeholder="Documento" required/>
                         </Form.Group>
                         <Form.Group as={Col} controlId="formGridState" >
                         <Form.Label>Tipo documento</Form.Label>
@@ -450,7 +449,7 @@ class Checkin extends React.Component {
                         </Form.Group>
                     </Form.Row>
                     <Form.Group>
-                            <Form.File id="caricaFotoDocumento" label="Carica foto documento" required/>
+                            <Form.File id="caricaFotoDocumento" label="Carica foto documento" accept="image/*" required/>
                     </Form.Group>
                     </div>
                     <Button variant="primary" type="submit">
@@ -458,7 +457,7 @@ class Checkin extends React.Component {
                     </Button>
                 </Form>
             );
-        }
+        //}
     }
 }
 export default Checkin

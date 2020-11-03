@@ -1,3 +1,5 @@
+//CSS COMPLETATO
+
 import React, {useState} from 'react'
 import './Earning.css'
 import Accordion from '@material-ui/core/Accordion';

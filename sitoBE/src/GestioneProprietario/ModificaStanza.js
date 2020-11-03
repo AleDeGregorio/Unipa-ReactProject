@@ -1,3 +1,5 @@
+/*CSS FATTO*/
+
 import React, { useState, useMemo } from "react";
 import camera from "../assets/camera.svg";   
 import {Form} from "react-bootstrap"
@@ -43,7 +45,7 @@ const ModificaStanza = ({ history }) => {
             type="text"
             id="Nome"
             value={Nome}
-            placeholder="Nome della casa"
+            placeholder="Nome casa"
             onChange={e => setNome(e.target.value)}
             className="i"
           />
@@ -62,7 +64,7 @@ const ModificaStanza = ({ history }) => {
             type="text"
             id="Descrizione"
             value={Descrizione}
-            placeholder="Descrizione della casa vacanza"
+            placeholder="Descrizione"
             onChange={e => setDescrizione(e.target.value)}
             className="i"
           />
@@ -71,14 +73,14 @@ const ModificaStanza = ({ history }) => {
             type="text"
             id="Prezzo"
             value={Prezzo}
-            placeholder="Prezzo della casa vacanza"
+            placeholder="Prezzo"
             onChange={e => setPrezzo(e.target.value)}
             className="i"
           />
 
              <Form.Group controlId="PostiLetto">
             <Form.Label>PostiLetto</Form.Label>
-            <Form.Control value={PostiLetto}  placeholder="Posti letto della casa vacanza" as="select"   onChange={e => setPostiLetto(e.target.value)}  >
+            <Form.Control value={PostiLetto}  placeholder="Posti letto" as="select"   onChange={e => setPostiLetto(e.target.value)}  >
               <option>1</option>
               <option>2</option>
               <option>3</option>
@@ -93,18 +95,22 @@ const ModificaStanza = ({ history }) => {
             <input
               type="file"
               className="inputImg"
+              accept="image/*"
             />
             <input
               type="file"
               className="inputImg"
+              accept="image/*"
             />
            <input
               type="file"
               className="inputImg"
+              accept="image/*"
             />
             <input
               type="file"
               className="inputImg"
+              accept="image/*"
             />
             </Form.Row>
             </Form.Group>
