@@ -1,165 +1,267 @@
 /*CSS FATTO*/
 
-import React, { useState, useMemo } from "react";
+import React from "react";
 import camera from "../assets/camera.svg";   
 import {Form, Button} from "react-bootstrap"
 import '../InserisciProp/InserimentoProprietà.css'
 
+import { Redirect } from 'react-router-dom';
 
+class ModificaCasaVacanza extends React.Component {
 
-const ModificaCasaVacanza = ({ history }) => {
-  const [Nome, setNome] = useState("");
-  const [Città, setCittà] = useState("");
-  const [Via, setVia] = useState("");
-  const[Provincia,setProvincia]= useState("");
-  const[Servizi,setServizi]=useState("");
-  const [Prezzo, setPrezzo] = useState("");
-  const[Descrizione, setDescrizione]=useState("");
-  const[PostiLetto,setPostiLetto]=useState("");
-  const [thumbnail, setThumbnail] = useState(null);
+  constructor(props) {
+    super(props);
 
-  const preview = useMemo(() => {
-    return thumbnail ? URL.createObjectURL(thumbnail) : null;
-  }, [thumbnail]);
+    this.state = {
+      dati_casa: this.props.history.location.state ? this.props.history.location.state.dati_casa : '',
+      ref_proprietario: localStorage.getItem('email'),
+      id_proprieta: this.props.history.location.state ? this.props.history.location.state.dati_casa.id_proprieta : '',
+      nome_proprieta: this.props.history.location.state ? this.props.history.location.state.dati_casa.nome_proprieta : '',
+      indirizzo: this.props.history.location.state ? this.props.history.location.state.dati_casa.indirizzo : '',
+      localita: this.props.history.location.state ? this.props.history.location.state.dati_casa.localita : '',
+      provincia: this.props.history.location.state ? this.props.history.location.state.dati_casa.provincia : '',
+      tipo_proprieta: this.props.history.location.state ? this.props.history.location.state.dati_casa.tipo_proprieta : '',
+      servizi: this.props.history.location.state ? this.props.history.location.state.dati_casa.servizi : '',
+      descrizione: this.props.history.location.state ? this.props.history.location.state.dati_casa.descrizione : '',
+      ref_proprieta_cv: this.props.history.location.state ? this.props.history.location.state.dati_casa.ref_proprieta_cv : '',
+      posti_letto: this.props.history.location.state ? this.props.history.location.state.dati_casa.posti_letto : '',
+      tariffa_casa: this.props.history.location.state ? this.props.history.location.state.dati_casa.tariffa_casa : '',
+      apiResponse: [],
+      error: false,
+      errorMessage: '',
+      success: false,
+    }
+  }
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    const data = new FormData();
-      //presumo sia il setting della data di caricamento e nick del prop
+  onChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  }
 
-    data.append("thumbnail", thumbnail);
-    data.append("Nome", Nome);
-    data.append("Città", Città);
-    data.append("Via", Via);
-    data.append("Provincia", Provincia);
-    data.append("Servizi", Servizi);
-    data.append("Descrizione", Descrizione);
-    data.append("PostiLetto",PostiLetto);
-    data.append("Prezzo", Prezzo);
+  onSubmit = (e) => {
+    const data1 = {
+      nome_proprieta: this.state.nome_proprieta,
+      indirizzo: this.state.indirizzo,
+      localita: this.state.localita,
+      provincia: this.state.provincia,
+      tipo_proprieta: this.state.tipo_proprieta,
+      servizi: this.state.servizi,
+      ref_proprietario: this.state.ref_proprietario,
+      descrizione: this.state.descrizione,
+      id_proprieta: this.state.id_proprieta
+    };
+
+    fetch('http://localhost:9000/updateProprieta/fields', {
+        method: 'POST',
+        headers: {
+          'Content-type':'application/json'
+        },
+        body: JSON.stringify(data1)
+    })
+    .then((result) => {result.text()})
+    .then((result) => {
+      this.setState({ apiResponse: result });
+
+      if(this.state.apiResponse && this.state.apiResponse.status === 'error') {
+        this.setState({
+          error: true,
+          errorMessage: this.state.apiResponse.message
+        });
+      }
+      else {
+        const data2 = {
+          posti_letto: this.state.posti_letto,
+          tariffa_casa: this.state.tariffa_casa,
+          ref_proprieta_cv: this.state.ref_proprieta_cv,
+        };
     
-  };
+        fetch('http://localhost:9000/updateCasa/fields',{
+            method: 'POST',
+            headers: {
+                'Content-type':'application/json'
+            },
+            body: JSON.stringify(data2)
+        })
+        .then((result) => result.text())
+        .then((result) => {
+          this.setState({ apiResponse: result });
+    
+          if(this.state.apiResponse && this.state.apiResponse.status === 'error') {
+            this.setState({
+              error: true,
+              errorMessage: this.state.apiResponse.message
+            });
+          }
+          else {
+            this.setState({ success: true })
+          }
+        });
+      }
+    });
+  }
 
-  return (
-      <div className="background">
-    <div className="containerNew"> 
-      <div className="contentNew">
-        <form onSubmit={handleSubmit}>
-        <h2>Compila questo form per modificare la tua casa vacanza!</h2>
-          <label htmlFor="Nome">Nome</label>
-          <input
-            type="text"
-            id="Nome"
-            value={Nome}
-            placeholder="Nome della casa"
-            onChange={e => setNome(e.target.value)}
-            className="i"
-          />
-          <label htmlFor="Città">Città</label>
-          <input
-            type="text"
-            id="Città"
-            value={Città}
-            placeholder="Nome della città"
-            onChange={e => setCittà(e.target.value)}
-            className="i"
-          />
-          <label htmlFor="Via">Via</label>
-          <input
-            type="text"
-            id="Via"
-            value={Via}
-            placeholder="indirizzo civico della casa"
-            onChange={e => setVia(e.target.value)}
-            className="i"
-          />
-           
-           <label htmlFor="Provincia">Provincia</label>
-          <input
-            type="text"
-            id="Provincia"
-            value={Provincia}
-            placeholder="Provincia della casa vacanza"
-            onChange={e => setProvincia(e.target.value)}
-            className="i"
-          />
+  render() {
+    if(!localStorage.getItem('logged') || !localStorage.getItem('proprietario')) {
+      return <Redirect
+          to={{
+              pathname: "/ErrorPage",
+              state: { 
+                error: true,
+                errorMessage: "Utente non autorizzato" 
+              }
+          }}
+      />
+    }
+    else if(this.state.error) {
+      return <Redirect 
+        to = {{
+          pathname: "/ErrorPage",
+          state: {
+            error: true,
+            errorMessage: this.state.errorMessage
+          }
+        }}
+      />
+    }
+    else if(this.state.success) {
+      return (
+        <div className = "Errore">
+          <h1>Modifiche avvenute con successo!</h1>
+          <p>La tua casa vacanza è stata modificata correttamente all'interno del sistema</p>
+        </div>
+      );
+    }
+    else {
+      var casa = this.state.dati_casa;
 
-           <label htmlFor="Servizi">Servizi</label>
-          <input
-            type="text"
-            id="Servizi"
-            value={Servizi}
-            placeholder="Elenco servizi"
-            onChange={e => setServizi(e.target.value)}
-            className="i"
-          />
-              <label htmlFor="Descrizione">Descrizione</label>
-          <input
-            type="text"
-            id="Descrizione"
-            value={Descrizione}
-            placeholder="Descrizione della casa vacanza"
-            onChange={e => setDescrizione(e.target.value)}
-            className="i"
-          />
-       
-             <Form.Group controlId="PostiLetto">
-            <Form.Label>PostiLetto</Form.Label>
-            <Form.Control value={PostiLetto}  placeholder="Posti letto della casa vacanza" as="select"   onChange={e => setPostiLetto(e.target.value)}  >
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-              <option>6</option>
-              <option>7</option>
-              <option>8</option>
-              </Form.Control>
-          </Form.Group>
-           
-       
-          <label htmlFor="Prezzo">Prezzo</label>
-          <input
-            type="text"
-            id="Prezzo"
-            value={Prezzo}
-            placeholder="Prezzo della casa vacanza"
-            onChange={e => setPrezzo(e.target.value)}
-            className="i"
-          />
-          <Form.Group>
-            <label>Inserisci delle foto della tua struttura</label>
-            <Form.Row className="justify-content-center">
-            <input
-              type="file"
-              className="inputImg"
-              accept="image/*"
-            />
-            <input
-              type="file"
-              className="inputImg"
-              accept="image/*"
-            />
-           <input
-              type="file"
-              className="inputImg"
-              accept="image/*"
-            />
-            <input
-              type="file"
-              className="inputImg"
-              accept="image/*"
-            />
-            </Form.Row>
-            </Form.Group>
+      return (
+          <div className="background">
+        <div className="containerNew"> 
+          <div className="contentNew">
+            <form>
+            <h2>Modifica la tua casa vacanza con le informazioni che preferisci!</h2>
+              <label htmlFor = "nome_proprieta">Nome</label>
+              <input
+                type = "text"
+                id = "nome_proprieta"
+                name = "nome_proprieta"
+                defaultValue = {casa.nome_proprieta}
+                onChange = {this.onChange}
+                className = "i"
+              />
+              <label htmlFor = "localita">Città</label>
+              <input
+                type = "text"
+                id = "localita"
+                name = "localita"
+                defaultValue = {casa.localita}
+                onChange = {this.onChange}
+                className = "i"
+              />
+              <label htmlFor = "indirizzo">Indirizzo</label>
+              <input
+                type = "text"
+                id = "indirizzo"
+                name = "indirizzo"
+                defaultValue = {casa.indirizzo}
+                onChange = {this.onChange}
+                className = "i"
+              />
+              
+              <label htmlFor = "provincia">Provincia</label>
+              <input
+                type = "text"
+                id = "provincia"
+                name = "provincia"
+                defaultValue = {casa.provincia}
+                onChange = {this.onChange}
+                className = "i"
+              />
 
-            <Button variant="primary" type="submit">
-            Carica
-          </Button>
-        </form>
-      </div>
-    </div>
-    </div>
-  );
-};
+              <label htmlFor = "servizi">Servizi</label>
+              <input
+                type = "text"
+                id = "servizi"
+                name = "servizi"
+                defaultValue = {casa.servizi}
+                onChange = {this.onChange}
+                className = "i"
+              />
+              <label htmlFor = "descrizione">Descrizione</label>
+              <textarea 
+                id = 'descrizione'
+                name = 'descrizione'
+                defaultValue = {casa.descrizione}
+                onChange = {this.onChange}
+                className = 'iTA'
+              >
+              </textarea>
+          
+                <Form.Group id = 'posti_letto' name = 'posti_letto' >
+                <Form.Label>Posti Letto</Form.Label>
+                <Form.Control 
+                  id = 'posti_letto'
+                  name = 'posti_letto'
+                  defaultValue = {casa.posti_letto}
+                  as = "select"   
+                  onChange = {this.onChange}  
+                >
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                  <option>6</option>
+                  <option>7</option>
+                  <option>8</option>
+                  </Form.Control>
+              </Form.Group>
+              
+          
+              <label htmlFor = "tariffa_casa">Prezzo</label>
+              <input
+                type = "text"
+                id = "tariffa_casa"
+                name = 'tariffa_casa'
+                defaultValue = {casa.tariffa_casa}
+                onChange = {this.onChange}
+                className = "i"
+              />
+              <Form.Group>
+                <label>Inserisci delle foto della tua struttura</label>
+                <Form.Row className="justify-content-center">
+                <input
+                  type="file"
+                  className="inputImg"
+                  accept="image/*"
+                />
+                <input
+                  type="file"
+                  className="inputImg"
+                  accept="image/*"
+                />
+              <input
+                  type="file"
+                  className="inputImg"
+                  accept="image/*"
+                />
+                <input
+                  type="file"
+                  className="inputImg"
+                  accept="image/*"
+                />
+                </Form.Row>
+                </Form.Group>
+
+                <Button variant="primary" onClick = {this.onSubmit}>
+                Carica
+              </Button>
+            </form>
+          </div>
+        </div>
+        </div>
+      );
+    }
+    }
+}
 
 export default ModificaCasaVacanza;

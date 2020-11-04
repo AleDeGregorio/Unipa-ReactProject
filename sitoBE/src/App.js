@@ -174,9 +174,12 @@ class App extends React.Component {
               <Route exact path = '/SceltaModifica'>
                 <SceltaModifica/>
               </Route>
-              <Route exact path = '/ModificaCasaVacanza'>
-                <ModificaCasaVacanza/>
-              </Route>
+              <Route 
+                exact path = '/ModificaCasaVacanza'
+                render = { (props) => (
+                  <ModificaCasaVacanza {...props}/>
+                )}
+              />
               <Route exact path = '/Accettazione'>
                 <Accettazione/>
               </Route>

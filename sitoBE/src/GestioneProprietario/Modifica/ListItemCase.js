@@ -194,18 +194,23 @@ const SelectArrowDown = styled.div`
 `
 
 class ListItemCase extends Component {
-  state = {
-    showSelect: false,
-    editName: false,
-    hasActions: true,
-    textValue: '',
-    isDeleted: false,
-    isAlive: true
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      showSelect: false,
+      editName: false,
+      hasActions: true,
+      textValue: '',
+      isDeleted: false,
+      isAlive: true,
+    }
   }
 
-  
   componentDidMount() {
-    this.setState({ textValue: this.props.number.textValue })
+    this.setState({ 
+      textValue: this.props.number.textValue,
+    });
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -325,7 +330,13 @@ class ListItemCase extends Component {
                       
                    
                     >
-                      <Link to="/ModificaCasaVacanza" className="LinkList">
+                      <Link className="LinkList" to = {{
+                        pathname: "/ModificaCasaVacanza",
+                        state: { 
+                          dati_casa: this.props.dati_casa
+                        }
+                      }}
+                      >
                       Modifica
                       </Link>
                     </div>

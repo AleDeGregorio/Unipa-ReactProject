@@ -106,6 +106,21 @@ label#thumbnail{
     background-color: #eee;
   }
 
+  .contentNew form .iTA{
+    background-color: #eee;
+    border: none;
+    padding: 12px 15px;
+    margin: 8px 0;
+    width: 80%;
+    height: 150px;
+    margin-left:10%;
+  }
+
+  .contentNew form .iTA:focus{
+    box-shadow:none;
+    background-color: #eee;
+  }
+
   .containerNew form select{
     background-color: #eee;
     border: none;

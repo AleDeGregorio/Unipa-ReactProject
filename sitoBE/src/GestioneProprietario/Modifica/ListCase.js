@@ -155,6 +155,7 @@ class ListCase extends Component {
                           order={key}
                         >
                           <ListItemCase
+                            dati_casa = {this.state.apiResponse[0] ? this.state.apiResponse[0] : ''}
                             number={number}
                             dragging={snapshot.isDragging}
                             onDeleteItem={this.refreshItemsList}

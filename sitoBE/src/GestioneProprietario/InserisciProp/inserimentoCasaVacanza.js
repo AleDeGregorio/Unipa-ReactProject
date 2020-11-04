@@ -249,18 +249,26 @@ class InserimentoCasaVacanza extends React.Component {
                         onChange = {this.onChange}
                         className = "i"
                     />
-                    <label htmlFor = "posti_letto">Posti letto</label>
-                    <input
-                        type = "number"
-                        id = "posti_letto"
-                        name = "posti_letto"
-                        min = "1"
-                        max = "10"
-                        placeholder = "1"
-                        onChange = {this.onChange}
-                        className = "i"
-                        required
-                    />
+                    <Form.Group controlId = "posti_Letto" id = 'posti_letto' name = 'posti_letto' >
+                      <Form.Label>Posti Letto</Form.Label>
+                      <Form.Control 
+                        id = 'posti_letto'
+                        name = 'posti_letto'
+                        defaultValue = '1'
+                        as = "select"   
+                        onChange = {this.onChange}  
+                        className = 'i'
+                      >
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        </Form.Control>
+                    </Form.Group>
                     <Form.Group>
                         <label>Inserisci delle foto della tua struttura</label>
                         <Form.Row className = "justify-content-center">
