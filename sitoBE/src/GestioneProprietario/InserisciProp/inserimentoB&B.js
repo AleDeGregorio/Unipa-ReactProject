@@ -7,47 +7,50 @@ import {Link} from "react-router-dom"
 
 import "./InserimentoProprietà.css";
 
+import { Redirect } from 'react-router-dom';
+
 class InserimentoBnB extends React.Component {
-  constructor(){
-    super();
-    this.state={
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
       nome_proprieta: '',
       indirizzo: '',
-      localita:'',
-      provincia:'',
-      tipo_proprieta:'bb',
-      servizi:'',
-      descrizione:'',
-      ref_proprietario:localStorage.getItem('email_prop'),
-      oraci:'',
-      oraco:'',
+      localita: '',
+      provincia: '',
+      tipo_proprieta: 'bb',
+      servizi: '',
+      descrizione: '',
+      ref_proprietario: localStorage.getItem('email'),
+      check_in: '',
+      check_out: '',
       apiResponse: [],
       error: false,
-      errorMessage: ''
-    }
+      errorMessage: '',
+      success: false
+    };
   }
+
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
-  };
+  }
+
   onSubmitInsert = (e) => {
     e.preventDefault();
-    const data1= {
+
+    const data1 = {
       nome_proprieta: this.state.nome_proprieta,
       indirizzo: this.state.indirizzo,
-      localita:this.state.localita,
-      provincia:this.state.provincia,
-      tipo_proprieta:'bb',
-      servizi:this.state.servizi,
-      ref_proprietario:localStorage.getItem('email_prop'),
-      descrizione:this.state.descrizione
+      localita: this.state.localita,
+      provincia: this.state.provincia,
+      tipo_proprieta: 'bb',
+      servizi: this.state.servizi,
+      ref_proprietario: this.state.ref_proprietario,
+      descrizione: this.state.descrizione
     }
-    const data2 = {
-      ref_proprieta_bb:localStorage.getItem('id_proprieta'),
-      check_in:this.state.oraci,
-      check_out:this.state.oraco
-    };
 
-    fetch('http://localhost:9000/insertProprieta/new',{
+    fetch('http://localhost:9000/insertProprieta/new', {
       method: "POST",
       headers:{
         'Content-type': 'application/json'
@@ -56,118 +59,179 @@ class InserimentoBnB extends React.Component {
     })
     .then((result) => result.text())
     .then((result) => {
-      console.log(JSON.parse(result));
       this.setState({ apiResponse: JSON.parse(result) });
 
       if(this.state.apiResponse.status === 'error') {
         this.setState({ error: true });
         this.setState({ errorMessage: this.state.apiResponse.message });
       }
-      else {
-        //inserire messaggio inserimento avvenuto
-      } 
+
+      const data2 = {
+        ref_proprieta_bb: this.state.apiResponse.insertId,
+        check_in: this.state.check_in,
+        check_out : this.state.check_out
+      };
+
+      fetch('http://localhost:9000/insertBB/new',{
+        method: "POST",
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(data2)
+      })
+      .then((result) => result.text())
+      .then((result) => {
+        this.setState({ apiResponse: result });
+
+        if(this.state.apiResponse.status === 'error') {
+          this.setState({ error: true });
+          this.setState({ errorMessage: this.state.apiResponse.message });
+        }
+        else { 
+          this.setState({ success: true });
+        }
+      });
     });
-    fetch('http//localhost:9000/insertBB/new',{
-      method: "POST",
-      headers:{
-        'Content-type': 'application/json'
-      },
-      body: JSON.stringify(data2)
-    })
-    .then((result) => result.text())
-    .then((result) => {
-      console.log(JSON.parse(result));
-      this.setState({ apiResponse: JSON.parse(result) });
-
-    })
   }
-  render(){
-    return(
-    <div className="background">
-    <div className="containerNew">  
-      <div className="contentNew">
-        <form onSubmit={this.props.onSubmitLogin}>
-          <h2>Compila questo form inserire il tuo B&B!</h2>
-          
-          <label htmlFor="Nome">Nome</label>
-          <input
-            type="text"
-            id="Nome"
-            placeholder="Nome casa"
-            onChange={this.props.onChange}
-            className="i"
-          />
 
-          <label htmlFor="Città">Città</label>
-          <input
-            type="text"
-            id="Città"
-            placeholder="Nome città"
-            onChange={this.props.onChange}
-            className="i"
-          />
-
-          <label htmlFor="Via">Via</label>
-          <input
-            type="text"
-            id="Via"
-            placeholder="Indirizzo casa"
-            onChange={this.props.onChange}
-            className="i"
-          />
-           
-           <label htmlFor="Provincia">Provincia</label>
-          <input
-            type="text"
-            id="Provincia"
-            placeholder="Provincia"
-            onChange={this.props.onChange}
-            className="i"
-          />
-
-           <label htmlFor="Servizi">Servizi</label>
-          <input
-            type="text"
-            id="Servizi"
-            placeholder="Elenco servizi"
-            onChange={this.props.onChange}
-            className="i"
-          />
-              <label htmlFor="Descrizione">Descrizione</label>
-          <input
-            type="text"
-            id="Descrizione"
-            placeholder="Descrizione casa"
-            onChange={this.props.onChange}
-            className="i"
-          />
-
-          <label htmlFor="Nome">Check-in</label>
-          <input
-            type="text"
-            id="Check-in"
-            placeholder="Orario check-in"
-            className="i"
-            onChange= {this.props.onChange}
-          />
-
-          <label htmlFor="Città">Check-out</label>
-          <input
-            type="text"
-            id="Check-out"
-            placeholder="Orario check-out"
-            className="i"
-            onChange={this.props.onChange}
-          />
-          <Link to="/InserimentoProprietà">Torna indietro</Link>
-          <Button variant="primary" type="submit">
-            Carica
-          </Button>
-        </form>
+  render() {
+    if(!localStorage.getItem('logged') || !localStorage.getItem('proprietario')) {
+      return <Redirect
+          to={{
+              pathname: "/ErrorPage",
+              state: { 
+                error: true,
+                errorMessage: "Utente non autorizzato" 
+              }
+          }}
+      />
+    }
+    else if(this.state.error) {
+      return <Redirect 
+        to = {{
+          pathname: "/ErrorPage",
+          state: {
+            error: true,
+            errorMessage: this.state.errorMessage
+          }
+        }}
+      />
+    }
+    else if(this.state.success) {
+      return (
+        <div className = "Errore">
+          <h1>Inserimento avvenuto con successo!</h1>
+          <p>Il tuo B&B è stato registrato correttamente all'interno del sistema</p>
+        </div>
+      );
+    }
+    else {
+      return(
+        <div className = "background">
+        <div className = "containerNew">  
+            <div className = "contentNew">
+                <form onSubmit = {this.onSubmitInsert}>
+                <h2>Compila questo form per inserire il tuo B&B!</h2>
+            
+                <label htmlFor = "nome_proprieta">Nome</label>
+                <input
+                  type = "text"
+                  id = "nome_proprieta"
+                  name = "nome_proprieta"
+                  placeholder = "Nome B&B"
+                  onChange = {this.onChange}
+                  className = "i"
+                  required
+                />
+  
+                <label htmlFor = "localita">Città</label>
+                <input
+                  type = "text"
+                  id = "localita"
+                  name = "localita"
+                  placeholder = "Città B&B"
+                  onChange = {this.onChange}
+                  className = "i"
+                  required
+                />
+  
+                <label htmlFor = "indirizzo">Indirizzo</label>
+                <input
+                  type = "text"
+                  id = "indirizzo"
+                  name = "indirizzo"
+                  placeholder= "Indirizzo B&B"
+                  onChange = {this.onChange}
+                  className = "i"
+                  required
+                />
+             
+                <label htmlFor = "provincia">Provincia</label>
+                <input
+                  type = "text"
+                  id = "provincia"
+                  name = "provincia"
+                  placeholder = "Provincia B&B"
+                  onChange = {this.onChange}
+                  className = "i"
+                  required
+                />
+  
+                <label htmlFor = "servizi">Servizi</label>
+                <input
+                  type = "text"
+                  id = "servizi"
+                  name = "servizi"
+                  title = "Separare ogni servizio elencato con una virgola"
+                  placeholder = "Elenco servizi offerti"
+                  onChange = {this.onChange}
+                  className = "i"
+                  required
+                />
+                  <label htmlFor = "descrizione">Descrizione</label>
+                  <input
+                  type = "text"
+                  id = "descrizione"
+                  name = "descrizione"
+                  placeholder = "Descrizione B&B"
+                  onChange = {this.onChange}
+                  className = "i"
+                  required
+                />
+  
+            <label htmlFor="check_in">Check-in</label>
+            <input
+              type = "text"
+              pattern = "^(0[0-9]|1[0-9]|2[0-3]).[0-5][0-9]$"
+              title = "Inserire un orario corretto, usando un punto per separare i minuti"
+              id = "check_in"
+              name = "check_in"
+              placeholder = "Orario check-in"
+              className = "i"
+              onChange = {this.onChange}
+            />
+  
+            <label htmlFor="check_out">Check-out</label>
+            <input
+              type = "text"
+              pattern = "^(0[0-9]|1[0-9]|2[0-3]).[0-5][0-9]$"
+              title = "Inserire un orario corretto, usando un punto per separare i minuti"
+              id = "check_out"
+              name = "check_out"
+              placeholder = "Orario check-out"
+              className = "i"
+              onChange = {this.onChange}
+            />
+            <Link to="/InserimentoProprietà">Torna indietro</Link>
+            <Button variant="primary" type="submit">
+              Carica
+            </Button>
+          </form>
+        </div>
       </div>
-    </div>
-    </div>
-     ); }
+      </div>
+       ); }
+    }
 };
 
 export default InserimentoBnB;
