@@ -108,9 +108,6 @@ const ListItemTextSecond = styled.div`
   font-size: 20px;
   color: ${props => props.theme.mediumGray};
 `
-
-
-
 const ListItemSelect = styled.div`
   width: 90px;
   background-color: #fff;
@@ -194,15 +191,19 @@ const SelectArrowDown = styled.div`
 `
 
 class ListItem extends Component {
-  state = {
-    showSelect: false,
-    editName: false,
-    hasActions: true,
-    textValue: '',
-    isDeleted: false,
-    isAlive: true
-  }
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      showSelect: false,
+      editName: false,
+      hasActions: true,
+      textValue: '',
+      isDeleted: false,
+      isAlive: true
+    }
+  }
   
   componentDidMount() {
     this.setState({ textValue: this.props.number.textValue })
@@ -300,7 +301,7 @@ class ListItem extends Component {
                   className="listitem__select__text"
                   onClick={this.toggleSelect}
                 >
-                  Actions
+                  Azioni
                   <SelectArrowDown>
                     <svg
                       x="0px"
@@ -325,7 +326,13 @@ class ListItem extends Component {
                       
                    
                     >
-                      <Link to="/ModificaStanza" className="LinkList">
+                      <Link className="LinkList" to = {{
+                        pathname: "/ModificaStanza",
+                        state: { 
+                          dati_stanza: this.props.dati_stanza
+                        }
+                      }}
+                      >
                       Modifica
                       </Link>
                     </div>
@@ -333,7 +340,7 @@ class ListItem extends Component {
                       className="listitem__select__list__item"
                       onClick={this.deleteItem}
                     >
-                      Delete
+                      Elimina
                     </div>
                   </div>
                 )}

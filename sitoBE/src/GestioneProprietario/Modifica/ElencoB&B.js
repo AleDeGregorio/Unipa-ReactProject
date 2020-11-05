@@ -23,6 +23,7 @@ const GlobalStyle = createGlobalStyle`
 
 
 class  ElencoBeB extends Component {
+    
   render() {
     if(!localStorage.getItem('logged') || !localStorage.getItem('proprietario')) {
         return <Redirect

@@ -46,49 +46,53 @@ class List extends Component {
     super(props);
 
     this.state = {
-                  listTitle:"ELENCO STANZE B&B",
-                  listBreadcrumb: "Numero stanza / tipologia",
-                  items :[
-                      {
-                        id: '',
-                        hasAction: true,
-                        textValue:"",
-                        image: ''
-                      }
-                  ],
-                  apiResponse: [],
-                  error:false,
-                  errorMessage: ''
-      };
+      listTitle:"ELENCO STANZE B&B",
+      listBreadcrumb: "Codice stanza / Numero ospiti",
+      items :[
+        {
+        
+        }
+      ],
+      dati_bb: this.props.dati_bb ? this.props.dati_bb : '',
+      apiResponse: [],
+      error:false,
+      errorMessage: ''
+    };
   }
   componentDidMount(){
-    const data = {ref_bb:localStorage.getItem('ref_bb'),
-                  ref_proprietario: localStorage.getItem('email'),
-                }
-    fetch('http://localhost:9000/searchStanzaBB/stanzaBB'/*da cambiare credo*/,{
-      method:'POST',
-      headers:{'Content-type':'application/json'},
-      body: JSON.stringify(data)
-    })
-    .then((result)=>result.text())
-    .then((result)=>{
-      this.setState({apiResponse:JSON.parse(result)});
-      
-      var res=JSON.parse(result);
-      for(var i=0;i< res.lenght;i++){
-        this.setState({
-          items: [...this.state.items,{
-            id:i,
-            hasAction: true,
-            textValue:res[i].tipologia,
-            image:res[i].img /*inserire immagine nel db*/
-          }]
-        });
-      }
-      if(this.state.apiResponse.status === 'error') {
-        this.setState({ error: true });
-        this.setState({ errorMessage: this.state.apiResponse.message });
+    const data = {
+      ref_bb: this.state.dati_bb.ref_proprieta_bb
     }
+
+    fetch('http://localhost:9000/searchStanzaBB/stanzaBB', {
+        method: "POST",
+        headers: {
+            'Content-type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then((result) => result.text())
+    .then((result) => {
+        this.setState({ apiResponse: JSON.parse(result) });
+        
+        var res = JSON.parse(result);
+
+        for(var i = 0; i < res.length; i++) {
+          this.setState({
+            items: [...this.state.items, {
+              id: i,
+              hasActions: true,
+              textValue: res[i].id_stanza,
+              tipologia: res[i].tipologia === 1 ? res[i].tipologia + ' ospite' : res[i].tipologia + ' ospiti',
+              image: res[i].imgST_path1
+            }]
+          });
+        }
+    
+        if(this.state.apiResponse.status === 'error') {
+            this.setState({ error: true });
+            this.setState({ errorMessage: this.state.apiResponse.message });
+        }
     });
   }
 
@@ -125,44 +129,45 @@ class List extends Component {
           }}
       />}
     else {
-    const { listTitle, listBreadcrumb, items, apiResponse, error, errorMessage } = this.state;
-    return (
-      <ThemeProvider theme={theme}>
-        <ListWrapper>
-          <ListTitle>{listTitle}</ListTitle>
-          <ListBreadcrumb>{listBreadcrumb}</ListBreadcrumb>
-          <DragDropContext onDragEnd={this.onDragEnd}>
-            <Droppable droppableId="droppabe-list">
-              {(provided, snapshot) => (
-                <div ref={provided.innerRef}>
-                  {items.map((number, key) => (
-                    <Draggable
-                      draggableId={`draggable-${number.id}`}
-                    
-                    >
-                      {(provided, snapshot) => (
-                        <ListDragItem
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                          order={key}
-                        >
-                          <ListItem
-                            number={number}
-                            dragging={snapshot.isDragging}
-                            onDeleteItem={this.refreshItemsList}
-                          />
-                        </ListDragItem>
-                      )}
-                    </Draggable>
-                  ))}
-                </div>
-              )}
-            </Droppable>
-          </DragDropContext>
-        </ListWrapper>
-      </ThemeProvider>
-    );}
+      const { listTitle, listBreadcrumb, items, apiResponse, error, errorMessage } = this.state;
+      return (
+        <ThemeProvider theme={theme}>
+          <ListWrapper>
+            <ListTitle>{listTitle}</ListTitle>
+            <ListBreadcrumb>{listBreadcrumb}</ListBreadcrumb>
+            <DragDropContext onDragEnd={this.onDragEnd}>
+              <Droppable droppableId="droppabe-list">
+                {(provided, snapshot) => (
+                  <div ref={provided.innerRef}>
+                    {items.map((number, key) => (
+                      <Draggable
+                        draggableId={`draggable-${number.id}`}
+                      
+                      >
+                        {(provided, snapshot) => (
+                          <ListDragItem
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            order={key}
+                          >
+                            <ListItem
+                              dati_stanza = {this.state.apiResponse[0] ? this.state.apiResponse[0] : ''}
+                              number={number}
+                              dragging={snapshot.isDragging}
+                              onDeleteItem={this.refreshItemsList}
+                            />
+                          </ListDragItem>
+                        )}
+                      </Draggable>
+                    ))}
+                  </div>
+                )}
+              </Droppable>
+            </DragDropContext>
+          </ListWrapper>
+        </ThemeProvider>
+      );}
   }
 }
 

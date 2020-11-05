@@ -183,18 +183,30 @@ class App extends React.Component {
               <Route exact path = '/Accettazione'>
                 <Accettazione/>
               </Route>
-              <Route exact path = '/SceltaModificaB&B'>
-                <SceltaModificaBeb/>
-              </Route>
-              <Route exact path = '/ModificaB&B'>
-                <ModificaBeB/>
-              </Route>
-              <Route exact path = '/ElencoListaStanze'>
-                <ElencoListaStanze/>
-              </Route>
-              <Route exact path = '/ModificaStanza'>
-                <ModificaStanza/>
-              </Route>
+              <Route 
+                exact path = '/SceltaModificaB&B'
+                render = { (props) => (
+                  <SceltaModificaBeb {...props}/>
+                )}
+              />
+              <Route 
+                exact path = '/ModificaB&B'
+                render = { (props) => (
+                  <ModificaBeB {...props}/>
+                )}
+              />
+              <Route 
+                exact path = '/ElencoListaStanze'
+                render = { (props) => (
+                  <ElencoListaStanze {...props}/>
+                )}
+              />
+              <Route 
+                exact path = '/ModificaStanza'
+                render = { (props) => (
+                  <ModificaStanza {...props}/>
+                )}
+              />
               <Route exact path = '/InserimentoBnB'>
                 <InserimentoBnB/>
               </Route>

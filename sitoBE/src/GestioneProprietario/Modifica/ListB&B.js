@@ -48,15 +48,10 @@ class ListBeB extends Component {
 
     this.state = {
       listTitle: "ELENCO B&B",
-      listBreadcrumb: "Nome / chek-in/check-out",
+      listBreadcrumb: "Nome / Chek-in/Check-out",
       items: [
         {
-          id: '',
-          hasActions: true,
-          textValue: "",
-          checkin: "",
-          checkout:"",
-          image: ''
+          
         }
       ],
       apiResponse: [],
@@ -83,8 +78,6 @@ class ListBeB extends Component {
         this.setState({ apiResponse: JSON.parse(result) });
         
         var res = JSON.parse(result);
-
-        console.log(res[0].check_out);
 
         for(var i = 0; i < res.length; i++) {
           this.setState({
@@ -163,6 +156,7 @@ class ListBeB extends Component {
                           order={key}
                         >
                           <ListItemBeB
+                            dati_bb = {this.state.apiResponse[0] ? this.state.apiResponse[0] : ''}
                             number={number}
                             dragging={snapshot.isDragging}
                             onDeleteItem={this.refreshItemsList}

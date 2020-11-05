@@ -202,7 +202,7 @@ class InserimentoBnB extends React.Component {
             <label htmlFor="check_in">Check-in</label>
             <input
               type = "text"
-              pattern = "^(0[0-9]|1[0-9]|2[0-3]).[0-5][0-9]$"
+              pattern = "^([0-9]|1[0-9]|2[0-3]).[0-5][0-9]$"
               title = "Inserire un orario corretto, usando un punto per separare i minuti"
               id = "check_in"
               name = "check_in"
@@ -214,7 +214,7 @@ class InserimentoBnB extends React.Component {
             <label htmlFor="check_out">Check-out</label>
             <input
               type = "text"
-              pattern = "^(0[0-9]|1[0-9]|2[0-3]).[0-5][0-9]$"
+              pattern = "^([0-9]|1[0-9]|2[0-3]).[0-5][0-9]$"
               title = "Inserire un orario corretto, usando un punto per separare i minuti"
               id = "check_out"
               name = "check_out"

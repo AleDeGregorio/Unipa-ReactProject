@@ -26,15 +26,32 @@ class ModificaCasaVacanza extends React.Component {
       ref_proprieta_cv: this.props.history.location.state ? this.props.history.location.state.dati_casa.ref_proprieta_cv : '',
       posti_letto: this.props.history.location.state ? this.props.history.location.state.dati_casa.posti_letto : '',
       tariffa_casa: this.props.history.location.state ? this.props.history.location.state.dati_casa.tariffa_casa : '',
+      imgCV_path1SRC: this.props.history.location.state ? this.props.history.location.state.dati_casa.imgCV_path1 : '',
+      imgCV_path2SRC: this.props.history.location.state ? this.props.history.location.state.dati_casa.imgCV_path2 : '',
+      imgCV_path3SRC: this.props.history.location.state ? this.props.history.location.state.dati_casa.imgCV_path3 : '',
+      imgCV_path4SRC: this.props.history.location.state ? this.props.history.location.state.dati_casa.imgCV_path4 : '',
+      imgCV_path1: null,
+      filename1: '',
+      imgCV_path2: null,
+      filename2: '',
+      imgCV_path3: null,
+      filename3: '',
+      imgCV_path4: null,
+      filename4: '',
       apiResponse: [],
       error: false,
       errorMessage: '',
-      success: false,
+      success: false
     }
   }
 
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
+  }
+
+  onChangeImg = (e) => {
+    this.setState({ [e.target.name]: URL.createObjectURL(e.target.files[0]) });
+    this.setState({ [e.target.id]: e.target.files[0] });
   }
 
   onSubmit = (e) => {
@@ -73,6 +90,13 @@ class ModificaCasaVacanza extends React.Component {
           tariffa_casa: this.state.tariffa_casa,
           ref_proprieta_cv: this.state.ref_proprieta_cv,
         };
+
+        this.setState({
+          fileName1: data2.ref_proprieta_cv + "_1.jpg",
+          fileName2: data2.ref_proprieta_cv + "_2.jpg",
+          fileName3: data2.ref_proprieta_cv + "_3.jpg",
+          fileName4: data2.ref_proprieta_cv + "_4.jpg",
+        });
     
         fetch('http://localhost:9000/updateCasa/fields',{
             method: 'POST',
@@ -92,7 +116,36 @@ class ModificaCasaVacanza extends React.Component {
             });
           }
           else {
-            this.setState({ success: true })
+            var form = new FormData();
+            if(this.state.imgCV_path1) {
+              form.append("foto1", this.state.imgCV_path1, this.state.fileName1);
+            }
+            if(this.state.imgCV_path2) {
+              form.append("foto2", this.state.imgCV_path2, this.state.fileName2);
+            }
+            if(this.state.imgCV_path3) {
+              form.append("foto3", this.state.imgCV_path3, this.state.fileName3);
+            }
+            if(this.state.imgCV_path4) {
+              form.append("foto4", this.state.imgCV_path4, this.state.fileName4);
+            }
+
+            fetch('http://localhost:9000/uploadFotoCV/upload', {
+              method: "POST",
+              body: form
+            })
+            .then((result) => result.text())
+            .then((result) => {
+              this.setState({ apiResponse: result });
+
+            if(this.state.apiResponse.status === 'error') {
+              this.setState({ error: true });
+              this.setState({ errorMessage: this.state.apiResponse.message });
+            }
+            else {
+              this.setState({ success: true });
+            }
+          });
           }
         });
       }
@@ -220,6 +273,8 @@ class ModificaCasaVacanza extends React.Component {
               <label htmlFor = "tariffa_casa">Prezzo</label>
               <input
                 type = "text"
+                pattern = "^\d+(.\d{1,2})?$"
+                title = "Inserire un valore numerico usando un punto per i valori decimali"
                 id = "tariffa_casa"
                 name = 'tariffa_casa'
                 defaultValue = {casa.tariffa_casa}
@@ -227,30 +282,46 @@ class ModificaCasaVacanza extends React.Component {
                 className = "i"
               />
               <Form.Group>
-                <label>Inserisci delle foto della tua struttura</label>
-                <Form.Row className="justify-content-center">
+                <label>Modifica le foto della tua struttura</label>
+                <Form.Row className = "justify-content-center">
                 <input
-                  type="file"
-                  className="inputImg"
-                  accept="image/*"
+                  id = "imgCV_path1"
+                  name = "imgCV_path1SRC"
+                  onChange = {this.onChangeImg}
+                  type = "file"
+                  className = "inputImg"
+                  accept = "image/*"
                 />
+                <img src = {this.state.imgCV_path1SRC} alt = {"Foto 1 " + this.state.nome_proprieta} ></img>
                 <input
-                  type="file"
-                  className="inputImg"
-                  accept="image/*"
+                  id = "imgCV_path2"
+                  name = "imgCV_path2SRC"
+                  onChange = {this.onChangeImg}
+                  type = "file"
+                  className = "inputImg"
+                  accept = "image/*"
                 />
+                <img src = {this.state.imgCV_path2SRC} alt = {"Foto 2 " + this.state.nome_proprieta}></img>
               <input
-                  type="file"
-                  className="inputImg"
-                  accept="image/*"
+                  id = "imgCV_path3"
+                  name = "imgCV_path3SRC"
+                  onChange = {this.onChangeImg}
+                  type = "file"
+                  className = "inputImg"
+                  accept = "image/*"
                 />
+                <img src = {this.state.imgCV_path3SRC} alt = {"Foto 3 " + this.state.nome_proprieta}></img>
                 <input
-                  type="file"
-                  className="inputImg"
-                  accept="image/*"
+                  id = "imgCV_path4"
+                  name = "imgCV_path4SRC"
+                  onChange = {this.onChangeImg}
+                  type = "file"
+                  className = "inputImg"
+                  accept = "image/*"
                 />
+                <img src = {this.state.imgCV_path4SRC} alt = {"Foto 4 " + this.state.nome_proprieta}></img>
                 </Form.Row>
-                </Form.Group>
+              </Form.Group>
 
                 <Button variant="primary" onClick = {this.onSubmit}>
                 Carica
