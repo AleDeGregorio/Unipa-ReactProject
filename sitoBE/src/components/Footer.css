@@ -18,6 +18,11 @@
     padding-top: 1rem;
     margin-right: 10px;
   }
+
+  .title:hover {
+    cursor: pointer;
+    color: #01686b;
+  }
   
   img {
     width: 180px;
@@ -50,6 +55,7 @@
   /* Add a hover effect if you want */
   .icone-social:hover {
     opacity: 0.7;
+    cursor: pointer;
   }
   
   @media (max-width: 600px) {

@@ -21,18 +21,21 @@ class Checkin extends React.Component {
     }
     
     render() {
-        /*if(!localStorage.getItem('logged') || !localStorage.getItem('proprietario')) {
-            return(
-                <div className = "Autenticazione">
-                  <h1>Si è verificato un errore!</h1>
-                  <p>Utente non autorizzato</p>
-                </div>
-              );
+        if(!localStorage.getItem('logged') || !localStorage.getItem('proprietario')) {
+            return <Redirect
+                to={{
+                    pathname: "/ErrorPage",
+                    state: { 
+                        error: true,
+                        errorMessage: "Utente non autorizzato" 
+                    }
+                }}
+            />
         }
         else if(this.state.submit) {
             return <Redirect to = "/CheckinEffettuato" />
         }
-        else {*/
+        else {
             return(
                 <Form className="contenitore" onSubmit = {this.onSubmit}>
                     <div className="contentNewCheck">
@@ -457,7 +460,7 @@ class Checkin extends React.Component {
                     </Button>
                 </Form>
             );
-        //}
+        }
     }
 }
 export default Checkin
