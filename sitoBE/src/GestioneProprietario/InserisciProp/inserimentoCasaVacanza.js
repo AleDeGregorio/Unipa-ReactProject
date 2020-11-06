@@ -26,12 +26,16 @@ class InserimentoCasaVacanza extends React.Component {
       ref_proprietario: localStorage.getItem('email'),
       posti_letto:'',
       tariffa_casa: '',
+      foto1SRC: '',
       foto1: null,
       fileName1: '',
+      foto2SRC: '',
       foto2: null,
       fileName2: '',
+      foto3SRC: '',
       foto3: null,
       fileName3: '',
+      foto4SRC: '',
       foto4: null,
       fileName4: '',
       apiResponse: [],
@@ -46,7 +50,8 @@ class InserimentoCasaVacanza extends React.Component {
   }
 
   onChangeFoto = (e) => {
-    this.setState({ [e.target.name]: e.target.files[0] });
+    this.setState({ [e.target.name]: URL.createObjectURL(e.target.files[0]) })
+    this.setState({ [e.target.id]: e.target.files[0] });
   }
 
   onSubmitInsert = (e) => {
@@ -275,39 +280,43 @@ class InserimentoCasaVacanza extends React.Component {
                         <input
                         type = "file"
                         id = "foto1"
-                        name = "foto1"
+                        name = "foto1SRC"
                         onChange = {this.onChangeFoto}
                         className = "inputImg"
                         accept = "image/*"
                         required
                         />
+                        <img src = {this.state.foto1SRC} alt = "Foto 1" ></img>
                         <input
                         type = "file"
                         id = "foto2"
-                        name = "foto2"
+                        name = "foto2SRC"
                         onChange = {this.onChangeFoto}
                         className = "inputImg"
                         accept = "image/*"
                         required
                         />
+                        <img src = {this.state.foto2SRC} alt = "Foto 2" ></img>
                         <input
                         type = "file"
                         id = "foto3"
-                        name = "foto3"
+                        name = "foto3SRC"
                         onChange = {this.onChangeFoto}
                         className = "inputImg"
                         accept = "image/*"
                         required
                         />
+                        <img src = {this.state.foto3SRC} alt = "Foto 3" ></img>
                         <input
                         type = "file"
                         id = "foto4"
-                        name = "foto4"
+                        name = "foto4SRC"
                         onChange = {this.onChangeFoto}
                         className = "inputImg"
                         accept = "image/*"
                         required
                         />
+                        <img src = {this.state.foto4SRC} alt = "Foto 4" ></img>
                     </Form.Row>
                     </Form.Group>
                     <Link to="/InserimentoProprietà">Torna indietro</Link>

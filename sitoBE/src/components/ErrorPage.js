@@ -10,6 +10,7 @@ class ErrorPage extends React.Component {
                 <div className = "Errore">
                     <h1>Si è verificato un errore!</h1>
                     <p>{this.props.location.state.errorMessage}</p>
+                    <p>Tornare indietro e riprovare</p>
                 </div>
             );
         }

@@ -37,7 +37,12 @@ class Earning2 extends React.Component {
   }
 
   onChange_nome_struttura = (e) => {
-    this.setState({ id_struttura: e.target.value });
+    var value = e.target.value.split('\t');
+    this.setState({ 
+      id_struttura: value[0], //id proprieta
+      tipo_struttura: value[1] // tipo proprieta
+    });
+
   }
 
   onSubmit_date = (e) => {
@@ -60,8 +65,8 @@ class Earning2 extends React.Component {
             this.setState({ apiResponse: JSON.parse(result) });
         
             if(this.state.apiResponse.status === 'error') {
-                this.setState({ error: true });
-                this.setState({ errorMessage: this.state.apiResponse.message });
+              this.setState({ error: true });
+              this.setState({ errorMessage: this.state.apiResponse.message });
             }
         });
   }
@@ -168,6 +173,15 @@ class Earning2 extends React.Component {
       />
   }
   else {
+    var tipo_struttura = '';
+
+    if(this.state.tipo_struttura === 'cv') {
+      tipo_struttura = 'Casa Vacanza'
+    }
+    else if(this.state.tipo_struttura === 'bb') {
+      tipo_struttura = 'B&B'
+    }
+
     return(
       <div className="paginaEarning">
           <div className ="containerSx">
@@ -179,8 +193,8 @@ class Earning2 extends React.Component {
             <div className="col containerAccordion">
               <Accordion>
                   <div className="earning_head">
-                      <p>Filtra i tuoi guadagni in base alla data</p>
-                      <Accordion.Toggle as={MdExpandMore} variant="link" eventKey="0" />
+                    <p>Filtra i tuoi guadagni in base alla data</p>
+                    <Accordion.Toggle as={MdExpandMore} variant="link" eventKey="0" />
                   </div>
                  <Accordion.Collapse eventKey="0">
                      <div className="earning_body">
@@ -197,7 +211,7 @@ class Earning2 extends React.Component {
                    </Form.Row>
                  </Form>
                       <Button onClick = {this.onSubmit_date} >Visualizza guadagni</Button>
-                     </div>
+                  </div>
                  </Accordion.Collapse>
                  <div className="earning_head">
                       <p>Filtra i tuoi guadagni in base al tipo di struttura e alla data</p>
@@ -243,8 +257,10 @@ class Earning2 extends React.Component {
                       <Form.Control as="select" placeholder="Scegli struttura" onChange = {this.onChange_nome_struttura}>
                       <option></option>
                       {
-                        this.state.apiResponse_strutture.map(((res) => 
-                          <option value={res.id_proprieta}>{res.id_proprieta}: {res.nome_proprieta}</option>
+                        this.state.apiResponse_strutture.map(((res) =>
+                          <option value = {res.id_proprieta + '\t' + res.tipo_proprieta} >
+                            {res.id_proprieta}: {res.nome_proprieta} ({res.tipo_proprieta === 'cv' ? 'Casa Vacanza' : 'B&B'})
+                          </option>
                         ))
                       }
                       </Form.Control>
@@ -271,11 +287,14 @@ class Earning2 extends React.Component {
             <div className="earningResult">
             <h5>Ecco il resoconto dei tuoi guadagni :</h5>
             <p>Codice truttura selezionata: {this.state.id_struttura} </p>
-            <p>Tipo di struttra selezionata: {this.state.tipo_struttura} </p>
-            <p>Data selezionata: {new Date(this.state.data_1).toLocaleDateString()} - {new Date(this.state.data_2).toLocaleDateString()} </p>
+            <p>Tipo di struttura selezionata: {tipo_struttura} </p>
+            <p>Data selezionata: &nbsp;
+              {this.state.data_1 ? new Date(this.state.data_1).toLocaleDateString() : 'Selezionare una data'} - 
+              {this.state.data_2 ? new Date(this.state.data_2).toLocaleDateString() : 'Selezionare una data'} 
+            </p>
             <p>Guadagni: &nbsp;
-              {typeof this.state.apiResponse[3] !== 'undefined' ? this.state.apiResponse[3][0].tot_guadagni : ""}
-              {(typeof this.state.apiResponse[4] !== 'undefined' && typeof this.state.apiResponse[4][0] !== 'undefined') ? this.state.apiResponse[4][0].tot_guadagni : ""} euro
+              {typeof this.state.apiResponse[3] !== 'undefined' ? this.state.apiResponse[3][0].tot_guadagni : "0"}
+              {(typeof this.state.apiResponse[4] !== 'undefined' && typeof this.state.apiResponse[4][0] !== 'undefined') ? this.state.apiResponse[4][0].tot_guadagni : "0"} euro
             </p>
           </div>
         </div>

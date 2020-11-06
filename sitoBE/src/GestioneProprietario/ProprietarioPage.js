@@ -75,10 +75,12 @@ class ProprietarioPage extends React.Component {
             var data_invio = this.state.apiResponse[0] ? new Date(this.state.apiResponse[0].ultimo_invio_dati).toLocaleDateString() : "Mai inviati";
             return(
                 <div className="carte_prop" >
+                <Link to="/Accettazione" className="LinK">
                 <Card className="prop">
                     <Card.Title>Accetta Prenotazioni</Card.Title>
                     <Card.Text>Visualizza le prenotazioni in attesa di essere accettate.</Card.Text>
                 </Card>
+                </Link>
                 <Link to = "/Checkin" className="LinK">
                     <Card className="prop">
                     <Card.Img src="https://cdn.onlinewebfonts.com/svg/img_572848.png" className="image"></Card.Img>
@@ -127,11 +129,13 @@ class ProprietarioPage extends React.Component {
                     <Card.Title>Gestione Account</Card.Title>
                     <Card.Text>Vedi le opzioni disponibili</Card.Text>
                 </Card>
+                <Link to="/Earning" className="LinK">
                 <Card className="prop">
                   <SiCashapp className="image"></SiCashapp>
                     <Card.Title>Resoconto Guadagni</Card.Title>
                     <Card.Text>Visualizza </Card.Text>
                 </Card>
+                </Link>
                 </div>
             );
         }
