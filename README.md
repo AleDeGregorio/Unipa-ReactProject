@@ -1,4 +1,4 @@
 # Progetto-Unipa
-React frontend
-Express backend
-React-native mobile app
+React frontend;
+Express backend;
+React-native mobile app;
