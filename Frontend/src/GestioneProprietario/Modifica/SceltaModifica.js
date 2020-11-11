@@ -1,11 +1,11 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card'
-import CardColumns from 'react-bootstrap/CardColumns'
+//import CardColumns from 'react-bootstrap/CardColumns'
 import './SceltaModifica.css'
-import {SiCashapp} from "react-icons/si";
-import {RiAccountBoxLine} from "react-icons/ri";
+//import {SiCashapp} from "react-icons/si";
+//import {RiAccountBoxLine} from "react-icons/ri";
 import {Link} from 'react-router-dom'
-import {Col} from 'react-bootstrap'
+//import {Col} from 'react-bootstrap'
 
 import { Redirect } from 'react-router-dom';
 

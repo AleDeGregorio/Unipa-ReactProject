@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
-import {Nav, Card, CardColumns, Modal, Button} from 'react-bootstrap'
+import React from 'react';
+import {Card, Modal, Button} from 'react-bootstrap'
+//import {Nav, CardColumns} from 'react-bootstrap'
 import './ProprietarioPage.css'
 import {SiCashapp} from "react-icons/si";
 import {RiAccountBoxLine} from "react-icons/ri";

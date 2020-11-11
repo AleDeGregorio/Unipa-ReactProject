@@ -1,6 +1,7 @@
 import React from 'react'
 import './GestionePrenotazione.css'
-import {Card, CardColumn, Accordion, ListGroup, ListGroupItem, Button, Form, Col} from 'react-bootstrap'
+import {Card, Accordion, Button, Form, Col} from 'react-bootstrap'
+//import { CardColumn, ListGroup, ListGroupItem } from 'react-bootstrap'
 
 import { Redirect } from 'react-router-dom'
 

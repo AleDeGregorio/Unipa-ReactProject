@@ -1,5 +1,6 @@
 import React from 'react'
-import {ListGroup, Table, Button, ButtonGroup, Accordion, Card} from 'react-bootstrap'
+import {Table, Button, Accordion} from 'react-bootstrap'
+//import { ListGroup, ButtonGroup, Card } from 'react-bootstrap'
 import './Accettazione.css'
 
 import { Redirect } from 'react-router-dom';

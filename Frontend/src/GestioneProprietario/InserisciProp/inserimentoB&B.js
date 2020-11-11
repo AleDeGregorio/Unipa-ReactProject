@@ -1,8 +1,9 @@
 /*CSS FATTO*/ 
 
-import React, { useState, useMemo } from "react";
-import camera from "../assets/camera.svg";   
-import {Form, Button} from "react-bootstrap"
+import React from "react";
+//import camera from "../assets/camera.svg";   
+import {Button} from "react-bootstrap"
+//import { Form } from 'react-bootstrap'
 import {Link} from "react-router-dom"
 
 import "./InserimentoProprietà.css";

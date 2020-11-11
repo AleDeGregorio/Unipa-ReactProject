@@ -38,8 +38,8 @@ function Footer() {
             &copy; {new Date().getFullYear()} All Rights Reserved
           </div>
           <div className="col align-self-end">
-            <img src="https://www.flaticon.com/svg/static/icons/svg/733/733603.svg" className="icone-social" />
-            <img src="https://www.flaticon.com/svg/static/icons/svg/1384/1384031.svg" className="icone-social"/>
+            <img src="https://www.flaticon.com/svg/static/icons/svg/733/733603.svg" alt=''  className="icone-social" />
+            <img src="https://www.flaticon.com/svg/static/icons/svg/1384/1384031.svg" alt='' className="icone-social"/>
           </div>
         </div>
       </div>

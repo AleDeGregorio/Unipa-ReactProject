@@ -1,7 +1,7 @@
 /*CSS FATTO*/
 
 import React from "react";
-import camera from "../assets/camera.svg";   
+//import camera from "../assets/camera.svg";   
 import {Form, Button} from "react-bootstrap"
 import '../InserisciProp/InserimentoProprietà.css'
 

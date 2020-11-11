@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 
 import ListBeB from './ListB&B'
-import styled, { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle } from 'styled-components'
+//import styled from 'styled-components'
 
 import { Redirect } from 'react-router-dom';
 

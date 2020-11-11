@@ -1,6 +1,7 @@
-import React, {useState} from 'react'
+import React from 'react'
 import './Earning.css'
-import {Accordion, Form, Col, Button, Card, CardDeck, Row} from 'react-bootstrap'
+import {Accordion, Form, Col, Button} from 'react-bootstrap'
+//import {Card, CardDeck, Row} from 'react-bootstrap'
 import {MdExpandMore} from 'react-icons/md'
 
 import { Redirect } from 'react-router-dom';
@@ -89,7 +90,6 @@ class Earning2 extends React.Component {
         })
         .then((result) => result.text())
         .then((result) => {
-          var a = JSON.parse(result);
           this.setState({ apiResponse: JSON.parse(result) });
       
           if(this.state.apiResponse.status === 'error') {

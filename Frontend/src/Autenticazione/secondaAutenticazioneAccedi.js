@@ -1,7 +1,8 @@
 /*CSS COMPLETATO*/
 
 import React from 'react';    
-import {Form, Col, Row, Button} from 'react-bootstrap'
+import {Form, Col, Button} from 'react-bootstrap'
+//import { Row } from 'react-bootstrap'
 import {Link} from 'react-router-dom'
 import './secondaAutenticazione.css'
 

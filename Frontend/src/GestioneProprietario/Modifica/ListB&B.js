@@ -133,7 +133,7 @@ class ListBeB extends Component {
       />
   }
   else {
-    const { listTitle, listBreadcrumb, items, apiResponse, error, errorMessage } = this.state;
+    const { listTitle, listBreadcrumb, items } = this.state;
     return (
       <ThemeProvider theme={theme}>
         <ListWrapper>

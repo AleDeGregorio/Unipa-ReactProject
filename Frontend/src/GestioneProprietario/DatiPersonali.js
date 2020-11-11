@@ -1,8 +1,9 @@
 import React from 'react'
-import { Button, Col, Form, Row} from 'react-bootstrap'
-import {Accordion, AccordionSummary, AccordionDetails} from '@material-ui/core'
-import {MdExpandMore} from 'react-icons/md'
-import {Container} from '@material-ui/core'
+import { Button, Col, Form} from 'react-bootstrap'
+//import { Row } from 'react-bootstrap'
+//import {Accordion, AccordionSummary, AccordionDetails} from '@material-ui/core'
+//import {MdExpandMore} from 'react-icons/md'
+//import {Container} from '@material-ui/core'
 import './DatiPersonali.css'
 
 function DatiPersonali (){

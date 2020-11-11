@@ -255,7 +255,7 @@ class ListItemCase extends Component {
   }
  
   render() {
-    const { dragging } = this.props
+    //const { dragging } = this.props
     const {
       showSelect,
       editName,
