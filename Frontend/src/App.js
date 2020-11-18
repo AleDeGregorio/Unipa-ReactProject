@@ -6,7 +6,7 @@ import HomePage from './components/HomePage'
 import Autenticazione from './Autenticazione/Autenticazione'
 import Cliente from './components/ClientePage'
 import ProprietarioPage from './GestioneProprietario/ProprietarioPage'
-import PaginaDettagli from './PaginaDettagli/PaginaDettagli'
+//import PaginaDettagli from './PaginaDettagli/PaginaDettagli'
 import Checkin from './GestioneProprietario/Checkin/Checkin'
 import CheckinEffettuato from './GestioneProprietario/Checkin/CheckinEffettuato'
 import Earning2 from './GestioneProprietario/Earning/Earning2'
@@ -28,7 +28,8 @@ import InserimentoCasaVacanza from './GestioneProprietario/InserisciProp/inserim
 import GestionePrenotazione from './GestioneUtente/GestionePrenotazione'
 import SecondaAutenticazioneRegistratiProprietario from './Autenticazione/secondaAutenticazioneRegistratiProprietario'
 import SecondaAutenticazioneRegistratiCliente from './Autenticazione/secondaAutenticazioneRegistratiCliente'
-
+import CaseVacanza from './Pagine/CaseVacanza'
+import BandB from './Pagine/B&B'
 import ErrorPage from './components/ErrorPage'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -147,9 +148,7 @@ class App extends React.Component {
               <Route exact path = '/PaginaProprietario'>
                 <ProprietarioPage/>
               </Route>
-              <Route exact path = '/PaginaDettagli'>
-                  <PaginaDettagli/>
-              </Route>
+              
               <Route exact path = '/Checkin'>
                 <Checkin />
               </Route>
@@ -222,6 +221,8 @@ class App extends React.Component {
               <Route exact path= '/secondaAutenticazioneRegistratiProprietario'>
                 <SecondaAutenticazioneRegistratiProprietario />
               </Route>
+              <Route exact path="/CaseVacanza/" component={CaseVacanza} />
+              <Route exact path="/B&B/" component={BandB} />
             </Switch>  
           <Footer/>
           </div>
