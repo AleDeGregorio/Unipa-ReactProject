@@ -30,6 +30,7 @@ import SecondaAutenticazioneRegistratiProprietario from './Autenticazione/second
 import SecondaAutenticazioneRegistratiCliente from './Autenticazione/secondaAutenticazioneRegistratiCliente'
 import CaseVacanza from './Pagine/CaseVacanza'
 import BandB from './Pagine/B&B'
+import RiepilogoCasaVacanza from './Pagine/RiepilogoCasaVacanza';
 import ErrorPage from './components/ErrorPage'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -223,6 +224,7 @@ class App extends React.Component {
               </Route>
               <Route exact path="/CaseVacanza/" component={CaseVacanza} />
               <Route exact path="/B&B/" component={BandB} />
+              <Route exact path="/CaseVacanza/:slug" component={RiepilogoCasaVacanza} />
             </Switch>  
           <Footer/>
           </div>
