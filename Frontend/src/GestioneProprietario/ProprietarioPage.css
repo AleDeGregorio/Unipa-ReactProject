@@ -1,36 +1,86 @@
-.prop {
-    height: 250px;
-    width: 400px;
-    margin: 20px;
-    justify-content: center;
-    color: #00bec8;
-  }
-  .prop .image{
-    width: 60px;
-    height: 60px;
-    margin-left: 170px;
-    margin-bottom: 20px;
-    color: #00bec8;
-  }
-  .carte_prop{
-      display:flex;
-      justify-content: center;
-      flex-wrap: wrap;
-  }
+.carte_prop{
+  display:flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
 
-.prop:hover {
-  cursor: pointer;
-  color: #422aad;
+.prop {
+display: flex;
+justify-content: center;
 }
 
 
+.LinK:hover{
+color:  #008cc8;
+text-decoration: none;
+}
 
-  .LinK {
-    color: #00bec8;
-  }
-  
-  .LinK:hover{
-    color: #422aad;
-    text-decoration: none;
-  }
+@media only screen and (max-width: 600px) {
+.prop {
+  height: 100%;
+  width: 100%;
+}
+
+.imageProp{
+  width: 30%;
+  height: 30%;
+  left:35%;
+  position: relative;
+}
+
+.LinK {
+  height: 100%;
+  width: 100%;
+  height: 250px;
+  margin: 5px;
+}
+}
+
+@media only screen and (min-width: 600px) and (max-width: 768px) {
+
+.prop {
+  height: 100%;
+  width: 100%;
+}
+
+.imageProp{
+  width: 30%;
+  height: 30%;
+  left:35%;
+  position: relative;
+}
+
+.LinK {
+  height: 100%;
+  width: 100%;
+  height: 250px;
+  margin: 5px;
+}
+
+}
+
+@media only screen and (min-width: 768px){
+
+.prop {
+  height: 250px;
+  width: 450px;
+  margin: 5px;
+}
+
+.imageProp{
+  width: 60px;
+  height: 60px;
+  left:43%;
+  position: relative;
+}
+
+.LinK {
+  height: 250px;
+  width: 450px;
+  margin: 5px;
+}
+
+}
+
+
 
