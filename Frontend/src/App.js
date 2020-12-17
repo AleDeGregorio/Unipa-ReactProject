@@ -32,6 +32,7 @@ import CaseVacanza from './Pagine/CaseVacanza'
 import BandB from './Pagine/B&B'
 import RiepilogoCasaVacanza from './Pagine/RiepilogoCasaVacanza';
 import ErrorPage from './components/ErrorPage'
+import Testina from './GestioneProprietario/Accettazione/Testina'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -225,6 +226,7 @@ class App extends React.Component {
               <Route exact path="/CaseVacanza/" component={CaseVacanza} />
               <Route exact path="/B&B/" component={BandB} />
               <Route exact path="/CaseVacanza/:slug" component={RiepilogoCasaVacanza} />
+              <Route exact path="/Testina" component={Testina} />
             </Switch>  
           <Footer/>
           </div>
