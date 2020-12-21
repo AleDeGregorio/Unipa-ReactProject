@@ -350,12 +350,21 @@ const updateProprieta= async(req) => {
 
 // insert new proprieta
 const insertProprieta = async(req) => {
+
+    var servizio1 = req.servizio1 ? '"' + req.servizio1 + '"' : null;
+    var servizio2 = req.servizio2 ? '"' + req.servizio2 + '"' : null;
+    var servizio3 = req.servizio3 ? '"' + req.servizio3 + '"' : null;
+    var servizio4 = req.servizio4 ? '"' + req.servizio4 + '"' : null;
+    var servizio5 = req.servizio5 ? '"' + req.servizio5 + '"' : null;
+    var servizio6 = req.servizio6 ? '"' + req.servizio6 + '"' : null;
+
     return new Promise((resolve, reject) => {
 
         Connection.query(
-            'INSERT INTO proprieta (nome_proprieta, indirizzo, localita, provincia, tipo_proprieta, servizi, ref_proprietario, descrizione) VALUES ' +
+            'INSERT INTO proprieta (nome_proprieta, indirizzo, localita, provincia, tipo_proprieta, servizio1, servizio2, servizio3, servizio4, servizio5, servizio6, ref_proprietario, descrizione) VALUES ' +
             '("' + req.nome_proprieta + '", "' + req.indirizzo + '", "' + req.localita + '", "' + req.provincia +
-            '", "' + req.tipo_proprieta + '", "' + req.servizi + '", "' + req.ref_proprietario + '", "' + req.descrizione + '"); ',
+            '", "' + req.tipo_proprieta + '", ' + servizio1 + ', ' + servizio2 + ', ' + servizio3 + ', ' + servizio4 + ', ' + servizio5 + ', ' +
+            servizio6 + ', "' + req.ref_proprietario + '", "' + req.descrizione + '"); ',
             (err, results) => {
                 if(err) {
                     return reject(new BadRequest("Si è verificato un errore nell'inserimento"));
