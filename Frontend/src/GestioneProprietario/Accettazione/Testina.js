@@ -1,6 +1,7 @@
 import React from 'react';
 import {Tabs, Tab, Button, Accordion,Table} from 'react-bootstrap'
 import { Redirect } from 'react-router-dom';
+import ListPrAccettate from './ListPrAccettate';
 class Testina extends React.Component {
     constructor(props) {
         super(props);
@@ -78,40 +79,7 @@ class Testina extends React.Component {
     else {
         return( <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
         <Tab eventKey="home" title="               Accetta Prenotazioni               ">
-        <div className="containerAccettazione">
-                        <h1>Ecco le prenotazioni da accettare</h1>
-                        <Accordion>
-                            <div className="testa_accordo">
-                                <p>ID</p>
-                                <p>Cliente</p>
-                                <p>Tempo rimanente</p>
-                                <p>Struttura</p>
-                                <p>Visualizza dettagli</p>
-                            </div>
-                            {
-                                this.state.apiResponse_accettazione.map(((res) => 
-                                    <div>
-                                        <div className="testa_accordo">
-                                            <p>{res.id_prenotazione}</p>&nbsp;
-                                            <p>{res.ref_cliente}</p>&nbsp;
-                                            <p>{Math.ceil((Math.abs(new Date(res.data_partenza) - Date.now()) / (1000 * 60 * 60 * 24)))} giorni</p>&nbsp;
-                                            <p>{res.ref_proprieta}</p>&nbsp;
-                                            <Accordion.Toggle as={Button} variant="link" eventKey={res.id_prenotazione}>visualizza dettagli</Accordion.Toggle>
-                                        </div>
-                                        <Accordion.Collapse eventKey={res.id_prenotazione}>
-                                            <div className="corpo_accordo">
-                                                <p>Numero soggiornanti: {res.num_soggiornanti}</p>    
-                                                <p>Costo: {res.costo}</p>
-                                                <p>Caparra: {res.caparra}</p>
-                                                <p>Inizio soggiorno: {new Date(res.data_partenza).toLocaleDateString()}</p>
-                                                <p>Fine soggiorno: {new Date(res.data_ritorno).toLocaleDateString()}</p>
-                                            </div>                     
-                                        </Accordion.Collapse>
-                                    </div>
-                                ))
-                            }
-                        </Accordion>
-                    </div>
+            <ListPrAccettate />       
         </Tab>
         <Tab eventKey="profile" title="               Check-in               ">
         <div className="listaAccettazioni">
