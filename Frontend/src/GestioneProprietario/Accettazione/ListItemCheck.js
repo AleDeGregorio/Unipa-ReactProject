@@ -193,7 +193,7 @@ const SelectArrowDown = styled.div`
   }
 `
 
-class ListItemPrenotazioni extends Component {
+class ListItemCheck extends Component {
   constructor(props) {
     super(props);
 
@@ -269,8 +269,7 @@ class ListItemPrenotazioni extends Component {
       ref_cliente,
       data_partenza,
       data_ritorno,
-      costo,
-      num_soggiornanti,
+      ref_proprieta,
       hasActions,
       image,
      
@@ -299,11 +298,10 @@ class ListItemPrenotazioni extends Component {
                 )}
               </ListItemText>
               <ListItemTextSecond>
-                <div className="ALFIOSTILIZZA ">
+                <div className="ALFIOSTILIZZA2 ">
                <p>Cliente :{ref_cliente} </p>
-               <p>Num persone: {num_soggiornanti}</p>
-               <p>Costo: {costo}</p>
                <p>Partenza-Ritorno : {new Date(data_partenza).toLocaleDateString()},  {new Date(data_ritorno).toLocaleDateString()}</p>
+               <p>Struttura: {ref_proprieta}</p>
                </div>
               </ListItemTextSecond>
             </ListItemInfo>
@@ -366,4 +364,4 @@ class ListItemPrenotazioni extends Component {
   }
 }
 
-export default ListItemPrenotazioni
+export default ListItemCheck

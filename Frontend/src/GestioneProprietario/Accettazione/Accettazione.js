@@ -109,7 +109,6 @@ class Accettazione extends React.Component {
                                             <div className="corpo_accordo">
                                                 <p>Numero soggiornanti: {res.num_soggiornanti}</p>    
                                                 <p>Costo: {res.costo}</p>
-                                                <p>Caparra: {res.caparra}</p>
                                                 <p>Inizio soggiorno: {new Date(res.data_partenza).toLocaleDateString()}</p>
                                                 <p>Fine soggiorno: {new Date(res.data_ritorno).toLocaleDateString()}</p>
                                             </div>                     

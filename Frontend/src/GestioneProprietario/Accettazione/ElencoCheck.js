@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ListItemPrenotazioni from "./ListItemPrenotazioni";
+import ListItemCheck from "./ListItemCheck";
 import styled, { ThemeProvider } from "styled-components";
 import { theme } from "../shared/theme";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
@@ -42,13 +42,13 @@ const ListDragItem = styled.div`
   z-index: ${props => 99999 - props.order};
 `;
 
-class ListAccettate extends Component {
+class ElencoCheck extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      listTitle: "Ecco le prenotazioni da accettare",
-      listBreadcrumb: "Proprietà / Info clienti",
+      listTitle: "Ecco le prenotazioni Accettate",
+      listBreadcrumb: "Scegli tra le prenotazioni presenti per effettuare il check-in",
       items: [
         {
           
@@ -66,7 +66,7 @@ class ListAccettate extends Component {
             ref_proprietario: this.state.email_prop
         };
 
-        fetch('http://localhost:9000/getPrenotazioniAccettazione/prenotazioniAccettazione', {
+        fetch('http://localhost:9000/getPrenotazioniAccettate/prenotazioniAccettate', {
             method: "POST",
             headers: {
                 'Content-type': 'application/json'
@@ -75,7 +75,7 @@ class ListAccettate extends Component {
         })
         .then((result) => result.text())
         .then((result) => {
-            this.setState({ apiResponse_accettazione: JSON.parse(result) });
+            this.setState({ apiResponse_accettate: JSON.parse(result) });
             var res = JSON.parse(result);
 
             for(var i = 0; i < res.length; i++) {
@@ -86,17 +86,19 @@ class ListAccettate extends Component {
                   textValue: res[i].ref_proprieta,
                   id_prenotazione: res[i].id_prenotazione,
                   ref_cliente: res[i].ref_cliente,
-                  
+                  ref_proprieta:res[i].ref_proprieta,
+                  data_partenza:res[i].data_partenza,
+                  data_ritorno:res[i].data_ritorno              
                 }]
               });
             }
-
-            if(this.state.apiResponse_accettazione.status === 'error') {
-                this.setState({ error: true });
-                this.setState({ errorMessage: this.state.apiResponse_accettazione.message });
-            }
+            //if(this.state.apiResponse_accettate.status === 'error') {
+             //   this.setState({ error: true });
+             //   this.setState({ errorMessage: this.state.apiResponse_accettate.message });
+           // }
         });
     }
+
        
   reorderItems = (startIndex, endIndex) => {
     const items = Array.from(this.state.items);
@@ -154,9 +156,9 @@ class ListAccettate extends Component {
                           {...provided.dragHandleProps}
                           order={key}
                         >
-                          <ListItemPrenotazioni //damodificare
+                          <ListItemCheck //damodificare
                             
-                           dati_casa = {this.state.apiResponse_accettazione[0] ? this.state.apiResponse_accettazione[0] : ''}
+                           dati_casa2 = {this.state.apiResponse_accettate[0] ? this.state.apiResponse_accettate[0] : ''}
                             number={number}
                             dragging={snapshot.isDragging}
                             onDeleteItem={this.refreshItemsList}
@@ -176,4 +178,4 @@ class ListAccettate extends Component {
   }
 }
 
-export default ListAccettate;
+export default ElencoCheck;

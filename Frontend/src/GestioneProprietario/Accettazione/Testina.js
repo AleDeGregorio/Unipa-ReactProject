@@ -1,7 +1,8 @@
 import React from 'react';
 import {Tabs, Tab, Button, Accordion,Table} from 'react-bootstrap'
 import { Redirect } from 'react-router-dom';
-import ListPrAccettate from './ListPrAccettate';
+import ListPrAccettare from './ListPrAccettare';
+import ElencoCheck from './ElencoCheck';
 class Testina extends React.Component {
     constructor(props) {
         super(props);
@@ -79,36 +80,10 @@ class Testina extends React.Component {
     else {
         return( <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
         <Tab eventKey="home" title="               Accetta Prenotazioni               ">
-            <ListPrAccettate />       
+            <ListPrAccettare />       
         </Tab>
         <Tab eventKey="profile" title="               Check-in               ">
-        <div className="listaAccettazioni">
-                        <h1>Ecco le prenotazioni accettate</h1>
-                        <Table className="tabella">
-                            <thead>
-                                <tr>
-                                    <th>ID </th>
-                                    <th>Cliente</th>
-                                    <th>Durata soggiorno</th>
-                                    <th>Struttura</th>
-                                </tr>
-                            </thead>
-                            {
-                                this.state.apiResponse_accettate.map(((res) => 
-                                    <div>
-                                        <tbody>
-                                            <tr>
-                                                <th>{res.id_prenotazione}</th>
-                                                <th>{res.ref_cliente}</th>
-                                                <th>{Math.ceil((Math.abs(new Date(res.data_ritorno) - new Date(res.data_partenza))) / (1000 * 60 * 60 * 24))}</th>
-                                                <th>{res.ref_proprieta}</th>
-                                            </tr>
-                                        </tbody>
-                                    </div>
-                                ))
-                            }
-                        </Table>
-                    </div>
+            <ElencoCheck />
         </Tab>
       </Tabs>
       )
