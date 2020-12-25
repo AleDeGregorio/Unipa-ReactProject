@@ -6,13 +6,14 @@ import {Card} from 'react-bootstrap'
 //import ProvaRicerca from '../ProvaRicerca/ProvaRicerca';
 //import Carta from './Carta'
 //import SecondaRicerca from '../secondaRicerca/secondaRicerca'
-import SearchPage from '../RicercaVecchia/SearchPage'
+//import SearchPage from '../RicercaVecchia/SearchPage'
+import RicercaFinale from './RicercaFinale'
 
 function HomePage(){
     return(
         <div className="HomePage">
             <div>
-                <SearchPage/>
+                <RicercaFinale/>
             </div>
             <div className="containerCarosello">
                 <Carousello/>
