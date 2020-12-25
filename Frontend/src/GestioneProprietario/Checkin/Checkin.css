@@ -1,4 +1,9 @@
 /*CSS FATTO*/
+.cont_acc_ch{
+    position:relative;
+    width:80%;
+    left:10%;
+}
 
 .contenitore {
     background-color: #fff;

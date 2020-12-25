@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Col, Form} from 'react-bootstrap'
+import { Button, Col, Form, Accordion, Card} from 'react-bootstrap'
 //import { Row } from 'react-bootstrap'
 //import {Accordion, AccordionSummary, AccordionDetails} from '@material-ui/core'
 //import {MdExpandMore} from 'react-icons/md'
@@ -10,8 +10,19 @@ function DatiPersonali (){
     return(
       <Form className="contenitore">
                     <div className="contentNewCheck">
-                    <h2>Ecco qui i tuoi dati personali!</h2>
-                    <Form.Row>
+                    <h2>Qui puoi modificare i tuoi dati personali!</h2>
+                    <Accordion >
+                    <Card>
+                        <Card.Header>
+                            <div>
+                            <p> Dati attuali : Nome e cognome + documento </p>
+                        <Accordion.Toggle disabled as={Button} variant="link" eventKey="0">
+                            Modifica
+                        </Accordion.Toggle>
+                        </div>
+                        </Card.Header>
+                        <Accordion.Collapse eventKey="0">
+                         <Card.Body><Form.Row>
                         <Form.Group as={Col} controlId="formGridEmail">
                         <Form.Label>Nome</Form.Label>
                         <Form.Control type="name" placeholder="Inserire nome cliente" required />
@@ -21,9 +32,21 @@ function DatiPersonali (){
                         <Form.Label>Cognome</Form.Label>
                         <Form.Control type="surname" placeholder="Inserire cognome cliente" required/>
                         </Form.Group>
-                    </Form.Row>
-        
-                    <Form.Row>
+                    </Form.Row></Card.Body>
+                         </Accordion.Collapse>
+                    </Card>
+                    <Card>
+                        <Card.Header>
+                            <div>
+                            <p>indirizzo, codice postale, città, provincia nazione</p>
+                            <Accordion.Toggle as={Button} variant="link" eventKey="1">
+                                Modifica
+                            </Accordion.Toggle>
+                            </div>
+                        </Card.Header>
+                        <Accordion.Collapse eventKey="1">
+                            <Card.Body>
+                            <Form.Row>
                         <Form.Group as={Col} controlId="formGridAddress1">
                             <Form.Label>Indirizzo</Form.Label>
                             <Form.Control type="surname" placeholder="Inserire indirizzo cliente" required/>
@@ -34,7 +57,7 @@ function DatiPersonali (){
                             <Form.Control type="zip" placeholder="Inserire codice postale cliente" required/>
                         </Form.Group>
                     </Form.Row>
-        
+                    
                     <Form.Row>
                         <Form.Group as={Col} controlId="formGridCity">
                         <Form.Label>Città</Form.Label>
@@ -406,8 +429,22 @@ function DatiPersonali (){
                         </Form.Control>
                         </Form.Group> 
                     </Form.Row>
-        
-                    <Form.Row>
+                            </Card.Body>
+                        </Accordion.Collapse>
+                    </Card>
+                    <Card>
+                        <Card.Header>
+                            <div>
+                                <p>Documento</p>
+                            
+                            <Accordion.Toggle as={Button} variant="link" eventKey="2">
+                            Modifica
+                            </Accordion.Toggle>
+                            </div>
+                        </Card.Header>
+                        <Accordion.Collapse eventKey="2">
+                            <Card.Body>
+                            <Form.Row>
                         <Form.Group as={Col} controlId="formGridDocument">
                             <Form.Label>Numero documento</Form.Label>
                             <Form.Control type="document_num" placeholder="Inserire numero documento cliente" required/>
@@ -422,12 +459,39 @@ function DatiPersonali (){
                         </Form.Control>
                         </Form.Group>
                     </Form.Row>
-                    </div>
                     <Button variant="primary" type="submit">
                         Invia dati
                     </Button>
-                </Form>
+                            </Card.Body>
+                        </Accordion.Collapse>
+                    </Card>
+                    <Card>
+                        <Card.Header>
+                            <div>
+                                <p>Cambia la tua password</p>
+                            
+                            <Accordion.Toggle as={Button} variant="link" eventKey="3">
+                            Modifica
+                            </Accordion.Toggle>
+                            </div>
+                        </Card.Header>
+                        <Accordion.Collapse eventKey="3"> 
+                            <Card.Body>
+                            <p>Da inserire</p>
+                            </Card.Body>
+                        </Accordion.Collapse>
+                    </Card>
 
+                    </Accordion>
+                    
+                   
+        
+        
+                  
+                    </div>
+                    </Form>
+                    
+              
     );
 }
 export default DatiPersonali
