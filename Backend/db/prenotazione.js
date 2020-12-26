@@ -191,6 +191,24 @@ const updatePrenotazione = async(req) => {
     })
 }
 
+// update date prenotazione
+const updateDatePrenotazione = async(req) => {
+    return new Promise((resolve, reject) => {
+
+        Connection.query(
+            'UDATE prenotazione ' +
+            'SET data_partenza = "' + req.data_partenza + '", data_ritorno = "' + req.data_ritorno + '", accettata = false ' +
+            'WHERE id_prenotazione = ' + req.id_prenotazione + '; ',
+            (err, results) => {
+                if(err) {
+                    return reject(new NotFound('Prenotazione non trovata'));
+                }
+                resolve(results);
+            }
+        );
+    })
+}
+
 // insert new prenotazione
 const insertPrenotazione = async(req) => {
     return new Promise((resolve, reject) => {
@@ -208,6 +226,22 @@ const insertPrenotazione = async(req) => {
                 resolve(results);
         });
     });
+}
+
+// delete prenotazione
+const deletePrenotazione = async(req) => {
+    return new Promise((resolve, reject) => {
+
+        Connection.query(
+            'DELETE FROM prenotazione WHERE id_prenotazione = ' + req.id_prenotazione + ';',
+            (err, results) => {
+                if(err) {
+                    return reject(new NotFound("Prenotazione non trovata"));
+                }
+                resolve(results);
+            }
+        )
+    })
 }
 
 // controllo vincolo 28 giorni
@@ -255,6 +289,8 @@ module.exports = getPrenotazioneAccettazione;
 module.exports = getPrenotazioneAccettata;
 module.exports = accettaPrenotazione;
 module.exports = updatePrenotazione;
+module.exports = updateDatePrenotazione;
+module.exports = deletePrenotazione;
 module.exports = insertPrenotazione;
 module.exports = checkSoggiornante;
 
@@ -269,6 +305,8 @@ module.exports = {
     getPrenotazioneAccettata,
     accettaPrenotazione,
     updatePrenotazione,
+    updateDatePrenotazione,
+    deletePrenotazione,
     insertPrenotazione,
     checkSoggiornante
 }

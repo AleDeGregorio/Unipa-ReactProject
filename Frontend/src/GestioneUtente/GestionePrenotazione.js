@@ -9,6 +9,10 @@ class GestionePrenotazione extends React.Component {
     constructor(props) {     //props : stati delle componenti parent
         super(props);
         this.state = {
+            id_prenotazione: '',
+            data_partenza: '',
+            data_ritorno: '',
+            ref_proprietario: '',
             email: localStorage.getItem('email'),  //variabili di cui abbiamo bisogno
             apiResponse: [] ,
             error: false,
@@ -40,6 +44,76 @@ class GestionePrenotazione extends React.Component {
             }
         })
    }
+
+   onChange = (e) => {
+        this.setState({ [e.target.name]: e.target.value });
+    }
+
+    set_id = (e) => {
+        this.setState({ id_prenotazione: e })
+    }
+
+    set_emailProprietario = (e) => {
+        this.setState({ ref_proprietario: e })
+    }
+
+    onSubmitModifica = (e) => {
+        e.preventDefault();
+
+        const data = {
+            id_prenotazione: this.state.id_prenotazione,
+            data_partenza: this.state.data_partenza,
+            data_ritorno: this.state.data_ritorno
+        }
+
+        fetch('http://localhost:9000/updateDatePrenotazione/newDate', {
+            method: "POST",
+            headers: {
+                'Content-type' : 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then((result) => result.text())
+        .then((result)=>{
+            this.setState({ apiResponse:JSON.parse(result) });
+
+            if(this.state.apiResponse.status === 'error') {
+                this.setState({ error: true });
+                this.setState({ errorMessage: this.state.apiResponse.message });
+            }
+            else {
+                this.setState({ success: true })
+            }
+        });
+    }
+
+    onSubmitElimina = (e) => {
+        e.preventDefault();
+
+        const data = {
+            id_prenotazione: this.state.id_prenotazione,
+        }
+
+        fetch('http://localhost:9000/deletePrenotazione/delete', {
+            method: "POST",
+            headers: {
+                'Content-type' : 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then((result) => result.text())
+        .then((result)=>{
+            this.setState({ apiResponse:JSON.parse(result) });
+
+            if(this.state.apiResponse.status === 'error') {
+                this.setState({ error: true });
+                this.setState({ errorMessage: this.state.apiResponse.message });
+            }
+            else {
+                this.setState({ success: true })
+            }
+        });
+    }
 
     render() {
         if(!localStorage.getItem('logged') || !localStorage.getItem('cliente')) {
@@ -80,7 +154,9 @@ class GestionePrenotazione extends React.Component {
                                                     <p>ID: {res.id_prenotazione}</p>
                                                     <p>Partenza: {new Date(res.data_partenza).toLocaleDateString()}</p>
                                                     <p>Ritorno: {new Date(res.data_ritorno).toLocaleDateString()}</p>
-                                                    <Accordion.Toggle as={Button} variant="link" eventKey="0">Dettagli</Accordion.Toggle>
+                                                    <Accordion.Toggle as={Button} variant="link" eventKey="0" onClick = {() => this.set_id(res.id_prenotazione)}>
+                                                        Dettagli
+                                                    </Accordion.Toggle>
                                                 </div>
                                             </Card.Header>
                                             <Accordion.Collapse eventKey="0">
@@ -105,11 +181,23 @@ class GestionePrenotazione extends React.Component {
                                                                     <Form.Row>
                                                                         <Form.Group as={Col} controlId="formGridDate">
                                                                             <Form.Label>Data di inizio</Form.Label>
-                                                                            <Form.Control type="date" placeholder="Inserisci data di inizio" />
+                                                                            <Form.Control 
+                                                                                type="date" 
+                                                                                placeholder="Inserisci data di inizio" 
+                                                                                id = 'data_partenza'
+                                                                                name = 'data_partenza'
+                                                                                onChange = {this.onChange}
+                                                                            />
                                                                         </Form.Group>
                                                                         <Form.Group as={Col} controlId="formGridDate1">
                                                                             <Form.Label>Data fine</Form.Label>
-                                                                            <Form.Control type="date" placeholder="Inserisci data di inizio" />
+                                                                            <Form.Control 
+                                                                                type="date" 
+                                                                                placeholder="Inserisci data di fine" 
+                                                                                id = 'data_ritorno'
+                                                                                name = 'data_ritorno'
+                                                                                onChange = {this.onChange}
+                                                                            />
                                                                         </Form.Group>
                                                                     </Form.Row>
                                                                     <Button>Modifica Data</Button>
@@ -124,7 +212,7 @@ class GestionePrenotazione extends React.Component {
                                                                 </div>
                                                             </Accordion.Collapse>
 
-                                                            <Accordion.Collapse eventKey="3">
+                                                            <Accordion.Collapse eventKey="3" onClick = {() => this.set_emailProprietario(res.ref_proprietario)}>
                                                                 <Form>
                                                                     <Form.Row>
                                                                         <Form.Group controlId="formGridContact">
