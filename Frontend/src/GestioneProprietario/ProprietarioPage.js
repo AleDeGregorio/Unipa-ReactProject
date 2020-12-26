@@ -112,7 +112,7 @@ class ProprietarioPage extends React.Component {
             <Card.Text>Scegli tra le strutture possedute ed effettua i cambiamenti che preferisci.</Card.Text>
         </Card>
         </Link>
-        <Link to = "" className="LinK">
+        <Link to = "/DatiPersonali" className="LinK">
         <Card className="prop">
             <RiAccountBoxLine className="imageProp"></RiAccountBoxLine>
             <Card.Title>Gestione Account</Card.Title>
