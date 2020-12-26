@@ -264,6 +264,12 @@ app.use('/accettaPrenotazione', prenotazioneRouter);
 // modifica dei campi di una prenotazione (fornendo l'id)
 // indirizzo: /updatePrenotazione/fields
 app.use('/updatePrenotazione', prenotazioneRouter);
+// update date of table Prenotazione (from id_prenotazione)
+// indirizzo: /updateDatePrenotazione/newDate
+app.use('/updateDatePrenotazione', prenotazioneRouter);
+// delete prenotazione from id_prenotazione
+// indirizzo: /deletePrenotazione/delete
+app.use('/deletePrenotazione', prenotazioneRouter);
 // inserimento di una nuova prenotazione
 // indirizzo: /insertPrenotazione/new
 app.use('/insertPrenotazione', prenotazioneRouter);
