@@ -43,7 +43,7 @@ const getUser = async(req) => {
         Connection.query(
             'SELECT * ' +
             'FROM proprietario ' +
-            'WHERE email_prop_prop = ' + '"' +  req.email + '"', (err, results) => {
+            'WHERE email_prop = ' + '"' +  req.email + '"', (err, results) => {
             if(err) {
                 return reject(new NotFound('Proprietario non trovato'));
             }
@@ -130,8 +130,9 @@ const updateUser= async(req) => {
     return new Promise((resolve, reject) => {
 
         Connection.query(
+            'SELECT @pass := SHA2("' + req.password + '", 512); ' +
             'UPDATE proprietario ' +
-            'SET nome_prop = "' + req.nome + '", cognome_prop = "' + req.cognome +
+            'SET password_prop = @pass, nome_prop = "' + req.nome + '", cognome_prop = "' + req.cognome +
             '", data_nascita_prop = "' + req.nascita + '", num_documento = "' + req.num_documento +
             '", telefono_prop = "' + req.telefono + '" ' +
             'WHERE email_prop = "' + req.email+ '"',
