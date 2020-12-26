@@ -1,7 +1,11 @@
 import React from 'react';
 import Navbar from 'react-bootstrap/Navbar'
+import Dropdown from 'react-bootstrap/Dropdown'
 //import NavDropdown from 'react-bootstrap/NavDropdown'
 import Nav from 'react-bootstrap/Nav'
+import { FcMenu } from 'react-icons/fc'
+import {CgProfile} from 'react-icons/cg'
+import './NavCss.css'
 
 class NavBar extends React.Component {
     
@@ -27,6 +31,8 @@ class NavBar extends React.Component {
             </Navbar>
             );
         }
+        //<Nav.Link href="/PaginaProprietario">Area personale</Nav.Link>
+       //<Nav.Link href="/SecondaAutenticazioneAccedi" onClick = {this.onClick}>ESCI</Nav.Link>
         if(localStorage.getItem('logged') && localStorage.getItem('proprietario')) {
             return(
                 <Navbar bg="light" expand="lg">
@@ -38,8 +44,18 @@ class NavBar extends React.Component {
                         <Nav.Link href="/BnB">BnB</Nav.Link>
                         <Nav.Link href="/CasaVacanza">Casa Vacanza</Nav.Link>
                     </Nav>
-                        <Nav.Link href="/PaginaProprietario">Area personale</Nav.Link>
-                        <Nav.Link href="/SecondaAutenticazioneAccedi" onClick = {this.onClick}>ESCI</Nav.Link>
+                   <Dropdown>
+                   <Dropdown.Toggle as={Menu} >
+                 </Dropdown.Toggle>
+
+             <Dropdown.Menu >
+               <Dropdown.Item eventKey="1">Gestisci prenotazioni</Dropdown.Item>
+               <Dropdown.Item eventKey="2">Logout</Dropdown.Item>
+               <Dropdown.Item eventKey="3"></Dropdown.Item>
+               
+              </Dropdown.Menu>
+             </Dropdown>
+                  
                 </Navbar.Collapse>
             </Navbar>
             );
@@ -62,3 +78,9 @@ class NavBar extends React.Component {
 }
 
 export default NavBar;
+
+function Menu (){
+    return(
+        <FcMenu className="menu-prop" />
+    )
+}
