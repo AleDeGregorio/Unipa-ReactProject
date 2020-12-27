@@ -31,6 +31,7 @@ class SecondaAutenticazioneAccedi extends React.Component {
                             <Form.Group as={Col} controlId="formGridPassword">
                                 <Form.Control type="password" name = "password" placeholder="Password" onChange = {this.props.onChange} required/>
                             </Form.Group>
+                            <p>Nome utente o password errati</p>
                             <label>Non sei iscritto?<Link to="/secondaAutenticazioneRegistrati"> REGISTRATI</Link></label>
                         <Button variant="primary" type="submit" className="pulsante">
                             Accedi

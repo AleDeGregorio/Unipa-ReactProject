@@ -44,17 +44,9 @@ class NavBar extends React.Component {
                         <Nav.Link href="/BnB">BnB</Nav.Link>
                         <Nav.Link href="/CasaVacanza">Casa Vacanza</Nav.Link>
                     </Nav>
-                   <Dropdown>
-                   <Dropdown.Toggle as={Menu} >
-                 </Dropdown.Toggle>
-
-             <Dropdown.Menu >
-               <Dropdown.Item eventKey="1">Gestisci prenotazioni</Dropdown.Item>
-               <Dropdown.Item eventKey="2">Logout</Dropdown.Item>
-               <Dropdown.Item eventKey="3"></Dropdown.Item>
-               
-              </Dropdown.Menu>
-             </Dropdown>
+                }
+                <Nav.Link href="/PaginaProprietario">Area personale</Nav.Link>
+                <Nav.Link href="/SecondaAutenticazioneAccedi" onClick = {this.onClick}>ESCI</Nav.Link>
                   
                 </Navbar.Collapse>
             </Navbar>
@@ -84,3 +76,14 @@ function Menu (){
         <FcMenu className="menu-prop" />
     )
 }
+/*<Dropdown>
+                   <Dropdown.Toggle as={Menu}>
+                 </Dropdown.Toggle>
+
+             <Dropdown.Menu >
+               <Dropdown.Item eventKey="1">Gestisci prenotazioni</Dropdown.Item>
+               <Dropdown.Item eventKey="2">Logout</Dropdown.Item>
+               <Dropdown.Item eventKey="3"></Dropdown.Item>
+               
+              </Dropdown.Menu>
+             </Dropdown>*/
