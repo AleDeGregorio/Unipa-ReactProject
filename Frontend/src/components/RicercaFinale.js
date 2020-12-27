@@ -103,9 +103,9 @@ const RicercaFinale = () => {
                         <option value="BnB">B&B</option>
                     </select>
                 </div>
-                <div class="search-element">
+                <div class="search-element-ospiti">
                     <label class="search-label">Ospiti</label>
-                    <select class="search-input" placeholder="Ospiti">
+                    <select class="search-input-ospiti" placeholder="Ospiti">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -118,8 +118,8 @@ const RicercaFinale = () => {
                         <option value="10">10</option>
                     </select>
                 </div>
-                <a type="submit" class="search-button">Search</a>
             </div>
+            <button type="submit" class="search-button">Ricerca</button>
         </form>
     );
 }
