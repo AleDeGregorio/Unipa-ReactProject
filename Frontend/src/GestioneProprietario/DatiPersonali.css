@@ -20,3 +20,41 @@
 .containerDGA{
     border: 2px solid black;
 }
+.white-carta{
+   border:none;
+   background-color:white;
+
+}
+.view-cont{
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    justify-content: space-between;
+    height:5rem;
+}
+.margin-right{
+    margin-right: 10px;
+}
+.sx-head{
+    display:flex;
+    flex-direction:column;
+    justify-content: left;
+    margin-left:10px;
+}
+.first-cont{
+    display:flex;
+    flex-direction:row;
+}
+.datiprofilo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center;
+    margin-left:100px;
+}
+.imgprof{
+    width:100px;
+    height:100px;
+    margin-left:10px;
+    align-items: center;
+}

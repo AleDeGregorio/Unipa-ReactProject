@@ -1,9 +1,19 @@
 .containeracc{
     width:60%;
-    eight:60%;
+    height:60%;
+    left: 20%;
+    position : relative;
 }
 .headcac{
     display:flex;
     flex-direction: row;
     justify-content: space-around;
+    height: 4rem;
+    align-items:center;
+}
+.propcard{
+    width:50%;
+    height:70%;
+    position:relative;
+    left:22%;
 }

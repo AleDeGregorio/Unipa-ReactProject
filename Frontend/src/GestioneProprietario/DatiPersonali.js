@@ -1,5 +1,7 @@
 import React from 'react'
 import { Button, Col, Form, Accordion, Card} from 'react-bootstrap'
+import {AiOutlineEdit} from 'react-icons/ai'
+import {CgProfile} from 'react-icons/cg'
 //import { Row } from 'react-bootstrap'
 //import {Accordion, AccordionSummary, AccordionDetails} from '@material-ui/core'
 //import {MdExpandMore} from 'react-icons/md'
@@ -123,46 +125,31 @@ class DatiPersonali extends React.Component {
                             <div className="contentNewCheck">
                             <h2>Qui puoi modificare i tuoi dati personali!</h2>
                             <Accordion >
-                            <Card>
-                                <Card.Header>
-                                    <div>
-                                    <p> Dati attuali: {nome} {cognome}, documento {num_documento} </p>
-                                <Accordion.Toggle disabled as={Button} variant="link" eventKey="0">
-                                    Modifica
-                                </Accordion.Toggle>
+                            <Card border="light">
+                                 <div className="first-cont">
+                                   <CgProfile className="imgprof" />
+                                   <div className="datiprofilo">
+                                     <p> Nome : {nome} </p>
+                                     <p> Cognome :  {cognome}</p>
+                                     <p>Email : {email} </p>
+                                   </div>
                                 </div>
-                                </Card.Header>
-                                <Accordion.Collapse eventKey="0">
-                                <Card.Body><Form.Row>
-                                <Form.Group as={Col} controlId="formGridEmail">
-                                <Form.Label>Nome</Form.Label>
-                                <Form.Control type="name" placeholder="Inserire nome cliente" required />
-                                </Form.Group>
-                
-                                <Form.Group as={Col} controlId="formGridPassword">
-                                <Form.Label>Cognome</Form.Label>
-                                <Form.Control type="surname" placeholder="Inserire cognome cliente" required/>
-                                </Form.Group>
-                            </Form.Row></Card.Body>
-                                </Accordion.Collapse>
                             </Card>
-                            <Card>
-                                <Card.Header>
-                                    <div>
+                            <Card border="light">
+                                    <div className="view-cont">
+                                    <div className="sx-head">
                                     <p>indirizzo, codice postale, città, provincia nazione</p>
-                                    <Accordion.Toggle as={Button} variant="link" eventKey="1">
-                                        Modifica
+                                    </div>
+                                    <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="1">
                                     </Accordion.Toggle>
                                     </div>
-                                </Card.Header>
                                 <Accordion.Collapse eventKey="1">
                                     <Card.Body>
                                     <Form.Row>
                                 <Form.Group as={Col} controlId="formGridAddress1">
                                     <Form.Label>Indirizzo</Form.Label>
                                     <Form.Control type="surname" placeholder="Inserire indirizzo cliente" required/>
-                                </Form.Group>
-                
+                                </Form.Group>              
                                 <Form.Group as={Col} controlId="formGridZip">
                                     <Form.Label>Codice Postale</Form.Label>
                                     <Form.Control type="zip" placeholder="Inserire codice postale cliente" required/>
@@ -540,19 +527,21 @@ class DatiPersonali extends React.Component {
                                 </Form.Control>
                                 </Form.Group> 
                             </Form.Row>
+                            <Button variant="primary" type="submit">
+                                Modifica dati
+                            </Button>
                                     </Card.Body>
                                 </Accordion.Collapse>
                             </Card>
-                            <Card>
-                                <Card.Header>
-                                    <div>
-                                        <p>Documento</p>
-                                    
-                                    <Accordion.Toggle as={Button} variant="link" eventKey="2">
+                            <Card border="light">
+                                    <div className="view-cont">
+                                    <div className="sx-head">
+                                        <p>Documento : {num_documento}</p>
+                                    </div>
+                                    <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="2">
                                     Modifica
                                     </Accordion.Toggle>
                                     </div>
-                                </Card.Header>
                                 <Accordion.Collapse eventKey="2">
                                     <Card.Body>
                                     <Form.Row>
@@ -577,28 +566,97 @@ class DatiPersonali extends React.Component {
                                 </Form.Group>
                             </Form.Row>
                             <Button variant="primary" type="submit">
-                                Invia dati
+                                Modifica 
                             </Button>
                                     </Card.Body>
                                 </Accordion.Collapse>
                             </Card>
-                            <Card>
-                                <Card.Header>
-                                    <div>
+                            <Card border="light">
+                                    <div className="view-cont">
+                                    <div className="sx-head">
                                         <p>Cambia la tua password</p>
-                                    
-                                    <Accordion.Toggle as={Button} variant="link" eventKey="3">
-                                    Modifica
+                                    </div>
+                                    <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="3">
                                     </Accordion.Toggle>
                                     </div>
-                                </Card.Header>
                                 <Accordion.Collapse eventKey="3"> 
                                     <Card.Body>
-                                    <p>Da inserire</p>
+                                    <Form.Row>
+                                    <Form.Group as={Col} controlId="formGridPassword">
+                        <Form.Label>Inserisci vecchia Password</Form.Label>
+                            <Form.Control 
+                                type="password" 
+                                title="Almeno 8 caratteri, una lettera maiuscola e un numero" 
+                                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$"
+                                placeholder="Password" 
+                                id = 'password'
+                                name = 'password'
+                                onChange={this.onChange} 
+                                required/>
+                        </Form.Group>
+                                    </Form.Row>
+                                    <Form.Row>
+                                    <Form.Group as={Col} controlId="formGridPassword">
+                        <Form.Label>Nuova Password</Form.Label>
+                            <Form.Control 
+                                type="password" 
+                                title="Almeno 8 caratteri, una lettera maiuscola e un numero" 
+                                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$"
+                                placeholder="Password" 
+                                id = 'password'
+                                name = 'password'
+                                onChange={this.onChange} 
+                                required/>
+                             </Form.Group>
+                             <Form.Group as={Col} controlId="formGridPassword">
+                        <Form.Label>Ripeti Password</Form.Label>
+                            <Form.Control 
+                                type="password" 
+                                title="Almeno 8 caratteri, una lettera maiuscola e un numero" 
+                                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$"
+                                placeholder="Password" 
+                                id = 'password'
+                                name = 'password'
+                                onChange={this.onChange} 
+                                required/>
+                        </Form.Group>
+                                    </Form.Row>
+                                    <Button variant="primary" type="submit">
+                                Modifica password
+                            </Button>
                                     </Card.Body>
                                 </Accordion.Collapse>
                             </Card>
-        
+                            <Card border="light">
+                                    <div className="view-cont">
+                                    <div className="sx-head">
+                                        <p>Numero di telefono: {telefono}</p>
+                                        </div>
+                                        <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="4">
+                                    </Accordion.Toggle>
+                                    </div>
+                                <Accordion.Collapse eventKey="4">
+                                    <Card.Body>
+                                        <Form.Row>
+                                        <Form.Group as={Col} controlId="formGridIndirizzo">
+                            <Form.Label>Telefono</Form.Label>
+                            <Form.Control 
+                                type = "tel" 
+                                placeholder = "Telefono" 
+                                id = 'telefono'
+                                name = 'telefono'
+                                onChange = {this.onChange} 
+                                required
+                            />
+                        </Form.Group>
+                                        </Form.Row>
+                                        <Button variant="primary" type="submit">
+                                Modifica numero
+                            </Button>
+                                    </Card.Body>
+
+                                </Accordion.Collapse>
+                        </Card>
                             </Accordion>
                             
                             
@@ -614,3 +672,10 @@ class DatiPersonali extends React.Component {
     }
 }
 export default DatiPersonali
+
+
+function BottoneDati () {
+    return(
+        <button></button>
+    )
+}

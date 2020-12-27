@@ -148,28 +148,33 @@ class GestionePrenotazione extends React.Component {
                             this.state.apiResponse.map(((res)=>
                                 <div className="containeracc">
                                     <Accordion>
-                                        <Card>
-                                            <Card.Header>
+                                        <Card border="light">
                                                 <div className="headcac">
                                                     <p>ID: {res.id_prenotazione}</p>
                                                     <p>Partenza: {new Date(res.data_partenza).toLocaleDateString()}</p>
                                                     <p>Ritorno: {new Date(res.data_ritorno).toLocaleDateString()}</p>
+                                                    <p>Stato: (Accettata/ In attesa/ Rifiutata)</p>
                                                     <Accordion.Toggle as={Button} variant="link" eventKey="0" onClick = {() => this.set_id(res.id_prenotazione)}>
                                                         Dettagli
                                                     </Accordion.Toggle>
                                                 </div>
-                                            </Card.Header>
                                             <Accordion.Collapse eventKey="0">
                                                 <Card.Body>
                                                     <h4>Dettagli struttura </h4>
-                                                    <p>Codice struttura: {res.ref_proprieta}</p>
-                                                    <p>Tipo struttura: {res.tipo_proprieta === 'bb' ? 'B&B' : 'Casa vacanza'}</p>
-                                                    <p>Nome struttura: {res.nome_proprieta}</p>
-                                                    <p>Località: {res.localita} ({res.provincia})</p>
-                                                    <p>Indirizzo: {res.indirizzo}</p>
+                                                    <Card className="propcard">
+                                                    <Card.Body>
+                                                    <Card.Title>{res.nome_proprieta}</Card.Title>
+                                                    <Card.Img src=""/>
+                                                    <Card.Text>
+                                                    <p>Codice struttura: {res.ref_proprieta}, Tipo struttura: {res.tipo_proprieta === 'bb' ? 'B&B' : 'Casa vacanza'}</p>
+                                                    <p>Località: {res.localita} ({res.provincia}),Indirizzo: {res.indirizzo}</p>
                                                     <p>Costo: {res.costo} euro</p>
-                                                    <p>Caparra: {res.caparra} euro</p>
                                                     <p>Soggiornante: {res.nome_sogg} {res.cognome_sogg}</p>
+                                                    </Card.Text>
+                                                    </Card.Body>
+                                                    </Card>
+                                                   
+                                                    
                                                     <Accordion>
                                                         <div className="acc3">
                                                             <Accordion.Toggle as={Button} onClick={this.nomeFunzione} variant="link" eventKey="1">Modifica data prenotazione</Accordion.Toggle>
@@ -177,6 +182,7 @@ class GestionePrenotazione extends React.Component {
                                                             <Accordion.Toggle as={Button} variant="link" eventKey="3">Contatta il gestore</Accordion.Toggle>
 
                                                             <Accordion.Collapse eventKey="1">
+                                                                <div className="tisfunnu">
                                                                 <Form>
                                                                     <Form.Row>
                                                                         <Form.Group as={Col} controlId="formGridDate">
@@ -200,8 +206,11 @@ class GestionePrenotazione extends React.Component {
                                                                             />
                                                                         </Form.Group>
                                                                     </Form.Row>
-                                                                    <Button>Modifica Data</Button>
                                                                 </Form>
+                                                                <Button variant="primary" type="submit">
+                                                                Modifica data
+                                                                 </Button>
+                                                                 </div>
                                                             </Accordion.Collapse>
 
                                                             <Accordion.Collapse eventKey="2">
