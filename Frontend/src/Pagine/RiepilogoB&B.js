@@ -5,7 +5,7 @@ import Banner from "../components/Banner";
 import { Link } from "react-router-dom";
 import { CasaBandBContext } from "../B&B/context";
 
-import StyledHero from "../components/StyledHero";
+//import StyledHero from "../components/StyledHero";
 export default class RiepilogoCasaBandb extends Component {
   constructor(props) {
     super(props);
@@ -27,9 +27,9 @@ export default class RiepilogoCasaBandb extends Component {
     if (!casaBandB) {
       return (
         <div className="error">
-          <h3> no such caseVacanza could be found...</h3>
+          <h3> Nessun B&B trovato...</h3>
           <Link to="/B&B" className="btn-primary">
-            back to rooms
+            Ritorna alle stanze
           </Link>
         </div>
       );
@@ -53,7 +53,7 @@ export default class RiepilogoCasaBandb extends Component {
         <StyledHero img={images[0] || this.state.defaultBcg}>
           <Banner title={`${name} casaBandB`}>
             <Link to="/B&B" className="btn-primary">
-              back to rooms
+              ritorna alle stanze
             </Link>
           </Banner>
         </StyledHero>
@@ -65,15 +65,15 @@ export default class RiepilogoCasaBandb extends Component {
           </div>
           <div className="single-room-info">
             <article className="desc">
-              <h3>details</h3>
+              <h3>DETTAGLI</h3>
               <p>{description}</p>
             </article>
             <article className="info">
-              <h3>info</h3>
-              <h6>price : ${price}</h6>
-              <h6>size : {size} SQFT</h6>
+              <h3>INFO</h3>
+              <h6>Prezzo: ${price}</h6>
+              <h6>Misure: {size} SQFT</h6>
               <h6>
-                max capacity :
+                Capacità massima:
                 {capacity > 1 ? `${capacity} people` : `${capacity} person`}
               </h6>
               <h6>{wify ? "pets allowed" : "no pets allowed"}</h6>
