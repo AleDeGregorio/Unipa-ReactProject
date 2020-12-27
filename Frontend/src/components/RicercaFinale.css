@@ -52,3 +52,39 @@
   text-decoration: none;
   background-color: #01e1ec;
 }
+
+@media only screen and (max-width: 600px) {
+
+  .search-input {
+      
+  }
+
+  .search-button {
+    
+  }
+
+}
+
+@media only screen and (min-width: 600px) and (max-width: 768px) {
+
+  .search-input {
+      
+  }
+
+  .search-button {
+    
+  }
+
+}
+
+@media only screen and (min-width: 768px){
+
+  .search-input {
+     
+  }
+
+  .search-button {
+    
+  }
+
+}
