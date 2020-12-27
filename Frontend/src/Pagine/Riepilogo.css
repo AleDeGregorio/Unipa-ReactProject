@@ -1,0 +1,40 @@
+.return{
+    color: black;
+}
+
+.single-room-images{
+    width: 100%;
+}
+
+.riepilogoImg{
+    width: 15%;
+    border-radius: 10px;
+    margin: 10px;
+}
+
+.single-room{
+}
+
+.single-room-info{
+    text-align: left;
+}
+
+.room-extras{
+    text-align: left;
+}
+
+.contenitoreRiepilogo{
+    padding-left: 310px;
+    padding-right: 310px;
+}
+
+.prenota{
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: 12px;
+    box-shadow: rgb(0, 0, 0, 0.12) 0px 6px 16px;
+    width: 300px;
+    height: 300px;
+    padding: 40px;
+    text-align: center;
+}
+
