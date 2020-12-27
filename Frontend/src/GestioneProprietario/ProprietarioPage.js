@@ -82,19 +82,12 @@ class ProprietarioPage extends React.Component {
             return(
                 <div className="col">
         <div className="carte_prop" >
-        <Link to = "" className="LinK">
+        <Link to = "/Testina" className="LinK">
         <Card className="prop">
             <FaClipboardList className="imageProp"/>
-            <Card.Title>Accetta Prenotazioni</Card.Title>
-            <Card.Text>Visualizza le prenotazioni in attesa di essere accettate.</Card.Text>
+            <Card.Title>Gestisci Prenotazioni</Card.Title>
+            <Card.Text>Gestisci le prenotazioni in attesa e quelle già accettate.</Card.Text>
         </Card>
-        </Link>
-        <Link to = "/Checkin" className="LinK">
-            <Card className="prop">
-            <AiFillCheckSquare className="imageProp"/>
-            <Card.Title>Check-in</Card.Title>
-            <Card.Text>Effettua il check-in dei soggiornanti e invia i dati all'ufficio della Questura.</Card.Text>
-           </Card>
         </Link>
         <Link to = "" className="LinK">
         <Card className="prop">
@@ -119,7 +112,7 @@ class ProprietarioPage extends React.Component {
             <Card.Text>Scegli tra le strutture possedute ed effettua i cambiamenti che preferisci.</Card.Text>
         </Card>
         </Link>
-        <Link to = "" className="LinK">
+        <Link to = "/DatiPersonali" className="LinK">
         <Card className="prop">
             <RiAccountBoxLine className="imageProp"></RiAccountBoxLine>
             <Card.Title>Gestione Account</Card.Title>

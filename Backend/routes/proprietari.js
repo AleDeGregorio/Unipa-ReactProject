@@ -18,7 +18,7 @@ router.get('/all', async (req, res, next) => {
 // indirizzo: /searchProprietarioEmail/proprietarioEmail
 router.post('/proprietarioEmail', async(req, res, next) => {
     try {
-        let search = await DB.Proprietario.getUserEmail(req.body);
+        let search = await DB.Proprietario.getUser(req.body);
         res.json(search);
     }
     catch(e) {

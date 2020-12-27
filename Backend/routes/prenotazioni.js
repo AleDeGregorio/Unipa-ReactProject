@@ -122,6 +122,30 @@ router.post('/fields', async(req, res, next) => {
     }
 });
 
+// update date of table Prenotazione (from id_prenotazione)
+// indirizzo: /updateDatePrenotazione/newDate
+router.post('/newDate', async(req, res, next) => {
+    try {
+        let update = await DB.Prenotazione.updateDatePrenotazione(req.body);
+        res.json(update);
+    }
+    catch(e) {
+        next(e);
+    }
+});
+
+// delete prenotazione from id_prenotazione
+// indirizzo: /deletePrenotazione/delete
+router.post('/delete', async(req, res, next) => {
+    try {
+        let deleted = await DB.Prenotazione.deletePrenotazione(req.body);
+        res.json(deleted)
+    }
+    catch(e) {
+        next(e);
+    }
+});
+
 // insert new prenotazione in table prenotazione
 // indirizzo: /insertPrenotazione/new
 router.post('/new', async(req, res, next) => {
