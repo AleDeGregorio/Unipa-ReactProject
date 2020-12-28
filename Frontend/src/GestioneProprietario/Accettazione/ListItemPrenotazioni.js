@@ -253,7 +253,10 @@ class ListItemPrenotazioni extends Component {
     }, 150)
    
   }
- 
+  /*accettaPren =() =>{
+    da inserire
+  }
+  */
   render() {
     //const { dragging } = this.props
     const {
@@ -339,15 +342,12 @@ class ListItemPrenotazioni extends Component {
                       
                    
                     >
-                      <Link className="LinkList" to = {{ //qua va modificato in modo che permetta di accettare la prenotazione
-                        pathname: "/ModificaCasaVacanza",
-                        state: { 
-                          dati_casa: this.props.dati_casa
-                        }
-                      }}
+                      <div className="LinkList" //qua va modificato in modo che permetta di accettare la prenotazione
+                        onClick={this.accettaPren}
+                       
                       >
                       Accetta 
-                      </Link>
+                      </div>
                     </div>
                     <div
                       className="listitem__select__list__item"

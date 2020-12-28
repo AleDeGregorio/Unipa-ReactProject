@@ -158,8 +158,7 @@ class ListAccettare extends Component {
                           {...provided.dragHandleProps}
                           order={key}
                         >
-                          <ListItemPrenotazioni //damodificare
-                            
+                          <ListItemPrenotazioni                          
                            dati_casa = {this.state.apiResponse_accettazione[0] ? this.state.apiResponse_accettazione[0] : ''}
                             number={number}
                             dragging={snapshot.isDragging}
