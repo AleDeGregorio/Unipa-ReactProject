@@ -83,6 +83,7 @@ export default class SingleCasaVacanza extends Component {
               </article>
             </div>
           </section>
+          <div className="row">
           <section className="room-extras">
             <h3>SERVIZI</h3>
             <ul className="extras">
@@ -91,13 +92,18 @@ export default class SingleCasaVacanza extends Component {
               ))}
             </ul>
           </section>
-          <div className="prenota">
-            <label>Prenota la tua esperienza!</label>
-            <form className="formPerPrenotare">
-              <input type="date"></input>
-              <input type="date"></input>
-            </form>
-            <button>PRENOTA</button>
+          <div className="contenitorePrenota">
+            <div className="prenota">
+              <h3>Prenota la tua esperienza!</h3>
+              <form className="formPerPrenotare">
+                <label>Check-in</label>
+                <input type="date"></input>
+                <label>Check-out</label>
+                <input type="date"></input>
+              </form>
+              <button>PRENOTA</button>
+            </div>
+          </div>
           </div>
         </div>
       </>

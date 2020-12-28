@@ -77,6 +77,7 @@ const getPrenotazioneCliente = async(req) => {
             if(err) {
                 return reject(new NotFound('Nessuna prenotazione relativa al cliente'));
             }
+
             var res1 = results;
             
             if(res1[0].tipo_proprieta === 'cv') {
@@ -160,13 +161,52 @@ const getPrenotazioneAccettazione = async(req) => {
 
         Connection.query(
             'SELECT * ' +
-            'FROM prenotazione ' +
-            'WHERE ref_proprietario = "' + req.ref_proprietario + '" AND accettata = false;',
+            'FROM prenotazione, proprieta ' +
+            'WHERE prenotazione.ref_proprietario = "' + req.ref_proprietario + '" AND accettata = false AND ref_proprieta = id_proprieta;',
             (err, results) => {
                 if(err) {
                     return reject(new NotFound('Nessuna prenotazione da accettare'));
                 }
-                resolve(results);
+
+                var res1 = results;
+            
+                if(res1[0].tipo_proprieta === 'cv') {
+                    Connection.query(
+                        'SELECT * ' + 
+                        'FROM casa_vacanza ' +
+                        'WHERE ref_proprieta_cv = ' + res1[0].id_proprieta + '; ',
+                        (err, results) => {
+                            if(err) {
+                                return reject(new NotFound('Casa vacanza non trovata'));
+                            }
+
+                            for(var i = 0; i < res1.length; i++) {
+                                res1[i].img = results[0].imgCV_path1;
+                            }
+
+                            resolve(res1);
+                        }
+                    )
+                }
+                else {
+                    Connection.query(
+                        'SELECT * ' +
+                        'FROM b_and_b, stanza ' +
+                        'WHERE ref_proprieta_bb = ' + res1[0].id_proprieta + ' AND ref_proprieta_bb = ref_bb ',
+                        (err, results) => {
+                            if(err) {
+                                return reject(new NotFound('B&B non trovato'));
+                            }
+
+                            for(var i = 0; i < res1.length; i++) {
+                                res1[i].img = results[0].imgST_path1;
+                                res1[i].id_stanza = results[i].id_stanza;
+                            }
+                            console.log(res1);
+                            resolve(res1);
+                        }
+                    )
+                }
             }
         );
     });
@@ -178,13 +218,58 @@ const getPrenotazioneAccettata = async(req) => {
 
         Connection.query(
             'SELECT * ' +
-            'FROM prenotazione ' +
-            'WHERE ref_proprietario = "' + req.ref_proprietario + '" AND accettata = true;',
+            'FROM prenotazione, proprieta ' +
+            'WHERE prenotazione.ref_proprietario = "' + req.ref_proprietario + '" AND accettata = true AND ref_proprieta = id_proprieta;',
             (err, results) => {
                 if(err) {
                     return reject(new NotFound('Nessuna prenotazione accettata'));
                 }
-                resolve(results);
+
+                if(results.length < 1) {
+                    resolve(results);
+                }
+                
+                else {
+                    var res1 = results;
+                
+                    if(res1[0].tipo_proprieta === 'cv') {
+                        Connection.query(
+                            'SELECT * ' + 
+                            'FROM casa_vacanza ' +
+                            'WHERE ref_proprieta_cv = ' + res1[0].id_proprieta + '; ',
+                            (err, results) => {
+                                if(err) {
+                                    return reject(new NotFound('Casa vacanza non trovata'));
+                                }
+
+                                for(var i = 0; i < res1.length; i++) {
+                                    res1[i].img = results[0].imgCV_path1;
+                                }
+
+                                resolve(res1);
+                            }
+                        )
+                    }
+                    else {
+                        Connection.query(
+                            'SELECT * ' +
+                            'FROM b_and_b, stanza ' +
+                            'WHERE ref_proprieta_bb = ' + res1[0].id_proprieta + ' AND ref_proprieta_bb = ref_bb ',
+                            (err, results) => {
+                                if(err) {
+                                    return reject(new NotFound('B&B non trovato'));
+                                }
+
+                                for(var i = 0; i < res1.length; i++) {
+                                    res1[i].img = results[0].imgST_path1;
+                                    res1[i].id_stanza = results[i].id_stanza;
+                                }
+                                console.log(res1);
+                                resolve(res1);
+                            }
+                        )
+                    }
+                }
             }
         );
     });

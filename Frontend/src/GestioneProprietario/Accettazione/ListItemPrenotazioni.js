@@ -276,7 +276,8 @@ class ListItemPrenotazioni extends Component {
       num_soggiornanti,
       hasActions,
       image,
-     
+      nome,
+      stanza
     } = this.props.number
     let listItemContentClass = ``
     if (isDeleted) listItemContentClass += ` list-item-content--deleted`
@@ -303,7 +304,9 @@ class ListItemPrenotazioni extends Component {
               </ListItemText>
               <ListItemTextSecond>
                 <div className="ALFIOSTILIZZA ">
-               <p>Cliente: {ref_cliente} </p>
+                <p>Struttura: {nome}</p>
+                <p style = {{display: stanza === '' ? 'none' : 'inline'}}>Stanza: {stanza}</p>
+               <p>Cliente: {ref_cliente}</p>
                <p>Num persone: {num_soggiornanti}</p>
                <p>Costo: {costo}</p>
                <p>Partenza-Ritorno: {new Date(data_partenza).toLocaleDateString()},  {new Date(data_ritorno).toLocaleDateString()}</p>

@@ -1,6 +1,8 @@
 .containeracc{
     width:60%;
     height:60%;
+    left: 20%;
+    position : relative;
 }
 .headcac{
     display:flex;

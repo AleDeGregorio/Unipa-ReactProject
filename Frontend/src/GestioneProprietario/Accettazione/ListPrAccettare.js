@@ -83,7 +83,9 @@ class ListAccettare extends Component {
                 items: [...this.state.items, {
                   id: i,
                   hasActions: true,
-                  image: res[i].image,
+                  image: res[i].img,
+                  nome: res[i].nome_proprieta,
+                  stanza: res[i].id_stanza ? res[i].id_stanza : '',
                   textValue: res[i].ref_proprieta,
                   id_prenotazione: res[i].id_prenotazione,
                   ref_cliente: res[i].ref_cliente,
