@@ -29,10 +29,12 @@ import SecondaAutenticazioneRegistratiProprietario from './Autenticazione/second
 import SecondaAutenticazioneRegistratiCliente from './Autenticazione/secondaAutenticazioneRegistratiCliente'
 import CaseVacanza from './Pagine/CaseVacanza'
 import BandB from './Pagine/B&B'
+import InserimentoStanzaBnB from './GestioneProprietario/InserisciProp/InserimentoStanzaBnB'
 import RiepilogoCasaVacanza from './Pagine/RiepilogoCasaVacanza';
 import ErrorPage from './components/ErrorPage'
 import Testina from './GestioneProprietario/Accettazione/Testina'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import ElencoBnB2 from './GestioneProprietario/InserisciProp/ElencoB&B'
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 
@@ -236,6 +238,8 @@ class App extends React.Component {
               <Route exact path="/B&B/" component={BandB} />
               <Route exact path="/CaseVacanza/:slug" component={RiepilogoCasaVacanza} />
               <Route exact path="/Testina" component={Testina} />
+              <Route exact path="/InserimentoStanzaBnB" component={InserimentoStanzaBnB} />
+              <Route exact path="/ElencoBnB2" component={ElencoBnB2} />
             </Switch>  
           <Footer/>
           </div>

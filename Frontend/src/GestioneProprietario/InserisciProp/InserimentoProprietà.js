@@ -24,6 +24,9 @@ class InserimentoProprietà extends React.Component {
             <Button variant="primary" className="bottoniScelta" href="/InserimentoBnB">
               B&B
             </Button>
+            <Button variant="primary" className="bottoniScelta" href="/ElencoBnB2">
+              Stanza B&B
+            </Button>
             </Form.Row>
           </Form.Group>
         </form>
