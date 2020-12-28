@@ -167,6 +167,7 @@ class GestionePrenotazione extends React.Component {
                                                     <Card.Img src={res.img}/>
                                                     <Card.Text>
                                                     <p>Codice struttura: {res.ref_proprieta}, Tipo struttura: {res.tipo_proprieta === 'bb' ? 'B&B' : 'Casa vacanza'}</p>
+                                                    <p style = {{display: res.tipo_proprieta === 'bb' ? 'inline' : 'none'}}>Codice stanza: {res.id_stanza}</p>
                                                     <p>Località: {res.localita} ({res.provincia}),Indirizzo: {res.indirizzo}</p>
                                                     <p>Costo: {res.costo} euro</p>
                                                     <p>Soggiornante: {res.nome_sogg} {res.cognome_sogg}</p>
