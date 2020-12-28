@@ -18,7 +18,6 @@ import SceltaModifica from './GestioneProprietario/Modifica/SceltaModifica'
 import ModificaCasaVacanza from './GestioneProprietario/Modifica/ModificaCasaVacanza'
 import SecondaAutenticazioneAccedi from './Autenticazione/secondaAutenticazioneAccedi'
 import SecondaAutenticazioneRegistrati from './Autenticazione/secondaAutenticazioneRegistrati'
-import Accettazione from './GestioneProprietario/Accettazione/Accettazione'
 import SceltaModificaBeb from './GestioneProprietario/Modifica/SceltaModificaB&B'
 import ModificaBeB from './GestioneProprietario/Modifica/ModificaB&B'
 import ElencoListaStanze from './GestioneProprietario/Modifica/ElencoListaStanze'
@@ -181,9 +180,6 @@ class App extends React.Component {
                   <ModificaCasaVacanza {...props}/>
                 )}
               />
-              <Route exact path = '/Accettazione'>
-                <Accettazione/>
-              </Route>
               <Route 
                 exact path = '/SceltaModificaB&B'
                 render = { (props) => (
