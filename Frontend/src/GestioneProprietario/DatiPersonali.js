@@ -29,7 +29,9 @@ class DatiPersonali extends React.Component {
         super(props);
 
         this.state = {
-            password: '',
+            oldPassword: '',
+            newPassword: '',
+            confirmPassword: '',
             nome: localStorage.getObj('user_data')[0].nome_prop,
             cognome: localStorage.getObj('user_data')[0].cognome_prop,
             nascita: new Date(localStorage.getObj('user_data')[0].data_nascita_prop).toLocaleDateString(),
@@ -52,7 +54,7 @@ class DatiPersonali extends React.Component {
 
         const data = {
             email: this.state.email,
-            password: this.state.password,
+            password: this.state.newPassword,
             nome: this.state.nome,
             cognome: this.state.cognome,
             nascita: this.state.nascita,
@@ -589,8 +591,8 @@ class DatiPersonali extends React.Component {
                                 title="Almeno 8 caratteri, una lettera maiuscola e un numero" 
                                 pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$"
                                 placeholder="Password" 
-                                id = 'password'
-                                name = 'password'
+                                id = 'oldPassword'
+                                name = 'oldPassword'
                                 onChange={this.onChange} 
                                 required/>
                         </Form.Group>
@@ -603,8 +605,8 @@ class DatiPersonali extends React.Component {
                                 title="Almeno 8 caratteri, una lettera maiuscola e un numero" 
                                 pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$"
                                 placeholder="Password" 
-                                id = 'password'
-                                name = 'password'
+                                id = 'newPassword'
+                                name = 'newPassword'
                                 onChange={this.onChange} 
                                 required/>
                              </Form.Group>
@@ -615,8 +617,8 @@ class DatiPersonali extends React.Component {
                                 title="Almeno 8 caratteri, una lettera maiuscola e un numero" 
                                 pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$"
                                 placeholder="Password" 
-                                id = 'password'
-                                name = 'password'
+                                id = 'confirmPassword'
+                                name = 'confirmPassword'
                                 onChange={this.onChange} 
                                 required/>
                         </Form.Group>
