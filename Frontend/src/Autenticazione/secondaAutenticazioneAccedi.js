@@ -10,28 +10,35 @@ import { Redirect } from 'react-router-dom';
 
 class SecondaAutenticazioneAccedi extends React.Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            email: '',
+            password: ''
+        }
+    }
+
+    handleChange = (e) => {
+        this.props.onChange(e);
+        this.setState({ [e.target.name]: e.target.value });
+    }
+
     render() {
         if(this.props.error && this.props.errorMessage !== '') {
-            /*
-                ---------- LEGGI QUI ----------
 
-                Da modificare per mostrare l'errore in caso di dati sbagliati per il login
-
-                -------------------------------
-
-            */
             return(
                 <div className="accedi">
                     <Form className="contenitoreAutenticazione" onSubmit = {this.props.onSubmitLogin}>
                         <h2>Accedi</h2>
                            <Form.Group as={Col} controlId="formGridEmail">
-                                <Form.Control type="email" name = "email" placeholder="E-mail" onChange = {this.props.onChange} required />
+                                <Form.Control type="email" name = "email" placeholder="E-mail" onChange = {this.handleChange} required />
                             </Form.Group>
                 
                             <Form.Group as={Col} controlId="formGridPassword">
-                                <Form.Control type="password" name = "password" placeholder="Password" onChange = {this.props.onChange} required/>
+                                <Form.Control type="password" name = "password" placeholder="Password" onChange = {this.handleChange} required/>
                             </Form.Group>
-                            <p>Nome utente o password errati</p>
+                            <p style={{color: 'red'}}>Nome utente o password errati</p>
                             <label>Non sei iscritto?<Link to="/secondaAutenticazioneRegistrati"> REGISTRATI</Link></label>
                         <Button variant="primary" type="submit" className="pulsante">
                             Accedi
@@ -40,32 +47,31 @@ class SecondaAutenticazioneAccedi extends React.Component {
                 </div>
             );
         }
-        else if(localStorage.getItem('logged') && localStorage.getItem('cliente')) {
+        if(localStorage.getItem('logged') && localStorage.getItem('cliente')) {
             return <Redirect to = "/PaginaCliente" />
         }
-        else if(localStorage.getItem('logged') && localStorage.getItem('proprietario')) {
+        if(localStorage.getItem('logged') && localStorage.getItem('proprietario')) {
             return <Redirect to = "/PaginaProprietario" />
         }
-        else {
-            return(
-                <div className="accedi">
-                    <Form className="contenitoreAutenticazione" onSubmit = {this.props.onSubmitLogin}>
-                        <h2>Accedi</h2>
-                           <Form.Group as={Col} controlId="formGridEmail">
-                                <Form.Control type="email" name = "email" placeholder="E-mail" onChange = {this.props.onChange} required />
-                            </Form.Group>
-                
-                            <Form.Group as={Col} controlId="formGridPassword">
-                                <Form.Control type="password" name = "password" placeholder="Password" onChange = {this.props.onChange} required/>
-                            </Form.Group>
-                            <label>Non sei iscritto?<Link to="/secondaAutenticazioneRegistrati"> REGISTRATI</Link></label>
-                        <Button variant="primary" type="submit" className="pulsante">
-                            Accedi
-                        </Button>
-                    </Form>
-                </div>
-            );
-        }
+
+        return(
+            <div className="accedi">
+                <Form className="contenitoreAutenticazione" onSubmit = {this.props.onSubmitLogin}>
+                    <h2>Accedi</h2>
+                        <Form.Group as={Col} controlId="formGridEmail">
+                            <Form.Control type="email" name = "email" placeholder="E-mail" onChange = {this.handleChange} required />
+                        </Form.Group>
+            
+                        <Form.Group as={Col} controlId="formGridPassword">
+                            <Form.Control type="password" name = "password" placeholder="Password" onChange = {this.handleChange} required/>
+                        </Form.Group>
+                        <label>Non sei iscritto?<Link to="/secondaAutenticazioneRegistrati"> REGISTRATI</Link></label>
+                    <Button variant="primary" type="submit" className="pulsante">
+                        Accedi
+                    </Button>
+                </Form>
+            </div>
+        );
     }
 }
 
