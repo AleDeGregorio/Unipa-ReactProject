@@ -299,8 +299,8 @@ class ListItemCheck extends Component {
               </ListItemText>
               <ListItemTextSecond>
                 <div className="ALFIOSTILIZZA2 ">
-               <p>Cliente :{ref_cliente} </p>
-               <p>Partenza-Ritorno : {new Date(data_partenza).toLocaleDateString()},  {new Date(data_ritorno).toLocaleDateString()}</p>
+               <p>Cliente: {ref_cliente} </p>
+               <p>Partenza-Ritorno: {new Date(data_partenza).toLocaleDateString()},  {new Date(data_ritorno).toLocaleDateString()}</p>
                <p>Struttura: {ref_proprieta}</p>
                </div>
               </ListItemTextSecond>
