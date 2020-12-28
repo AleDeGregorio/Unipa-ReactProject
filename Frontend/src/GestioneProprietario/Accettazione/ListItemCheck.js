@@ -272,7 +272,8 @@ class ListItemCheck extends Component {
       ref_proprieta,
       hasActions,
       image,
-     
+      nome,
+      stanza
     } = this.props.number
     let listItemContentClass = ``
     if (isDeleted) listItemContentClass += ` list-item-content--deleted`
@@ -301,7 +302,8 @@ class ListItemCheck extends Component {
                 <div className="ALFIOSTILIZZA2 ">
                <p>Cliente: {ref_cliente} </p>
                <p>Partenza-Ritorno: {new Date(data_partenza).toLocaleDateString()},  {new Date(data_ritorno).toLocaleDateString()}</p>
-               <p>Struttura: {ref_proprieta}</p>
+               <p>Struttura: {ref_proprieta} - {nome}</p>
+                <p style = {{display: stanza === '' ? 'none' : 'inline'}}>Stanza: {stanza}</p>
                </div>
               </ListItemTextSecond>
             </ListItemInfo>
