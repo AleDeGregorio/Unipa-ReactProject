@@ -77,7 +77,44 @@ const getPrenotazioneCliente = async(req) => {
             if(err) {
                 return reject(new NotFound('Nessuna prenotazione relativa al cliente'));
             }
-            resolve(results);
+            var res1 = results;
+            
+            if(res1[0].tipo_proprieta === 'cv') {
+                Connection.query(
+                    'SELECT * ' + 
+                    'FROM casa_vacanza ' +
+                    'WHERE ref_proprieta_cv = ' + res1[0].id_proprieta + '; ',
+                    (err, results) => {
+                        if(err) {
+                            return reject(new NotFound('Casa vacanza non trovata'));
+                        }
+
+                        for(var i = 0; i < res1.length; i++) {
+                            res1[i].img = results[0].imgCV_path1;
+                        }
+
+                        resolve(res1);
+                    }
+                )
+            }
+            else {
+                Connection.query(
+                    'SELECT * ' +
+                    'FROM b_and_b, stanza ' +
+                    'WHERE ref_proprieta_bb = ' + res1[0].id_proprieta + ' AND ref_proprieta_bb = ref_bb ',
+                    (err, results) => {
+                        if(err) {
+                            return reject(new NotFound('B&B non trovato'));
+                        }
+
+                        for(var i = 0; i < res1.length; i++) {
+                            res1[i].img = results[0].imgST_path1;
+                        }
+                        
+                        resolve(res1);
+                    }
+                )
+            }
         });
     });
 }
