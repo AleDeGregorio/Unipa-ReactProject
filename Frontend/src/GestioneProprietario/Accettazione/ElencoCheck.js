@@ -54,7 +54,7 @@ class ElencoCheck extends Component {
           
         },
       ],
-      apiResponse_accettazione: [],
+      apiResponse_accettate: [],
       email_prop: localStorage.getItem('email'),
       error: false,
       errorMessage: ''
@@ -92,10 +92,10 @@ class ElencoCheck extends Component {
                 }]
               });
             }
-            //if(this.state.apiResponse_accettate.status === 'error') {
-             //   this.setState({ error: true });
-             //   this.setState({ errorMessage: this.state.apiResponse_accettate.message });
-           // }
+            if(this.state.apiResponse_accettate.status === 'error') {
+                this.setState({ error: true });
+                this.setState({ errorMessage: this.state.apiResponse_accettate.message });
+            }
         });
     }
 
