@@ -54,7 +54,7 @@ class ElencoCheck extends Component {
           
         },
       ],
-      apiResponse_accettazione: [],
+      apiResponse_accettate: [],
       email_prop: localStorage.getItem('email'),
       error: false,
       errorMessage: ''
