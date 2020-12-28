@@ -18,7 +18,6 @@ import SceltaModifica from './GestioneProprietario/Modifica/SceltaModifica'
 import ModificaCasaVacanza from './GestioneProprietario/Modifica/ModificaCasaVacanza'
 import SecondaAutenticazioneAccedi from './Autenticazione/secondaAutenticazioneAccedi'
 import SecondaAutenticazioneRegistrati from './Autenticazione/secondaAutenticazioneRegistrati'
-import Accettazione from './GestioneProprietario/Accettazione/Accettazione'
 import SceltaModificaBeb from './GestioneProprietario/Modifica/SceltaModificaB&B'
 import ModificaBeB from './GestioneProprietario/Modifica/ModificaB&B'
 import ElencoListaStanze from './GestioneProprietario/Modifica/ElencoListaStanze'
@@ -54,7 +53,9 @@ class App extends React.Component {
       password: '',
       apiResponse: [],
       error: false,
-      errorMessage: ''
+      errorMessage: '',
+      successCliente: false,
+      successProprietario: false
     };
   }
 
@@ -63,6 +64,8 @@ class App extends React.Component {
   }
 
   onSubmitLogin = (e) => {
+    this.refresh();
+
     e.preventDefault();
     // get form data out of state
     const data = {
@@ -103,6 +106,13 @@ class App extends React.Component {
       }
     });
   }
+
+  refresh = (e) => {
+    this.setState({ 
+      error: false,
+      errorMessage: '' 
+    });
+  }
   
   render() {
     return (
@@ -127,6 +137,8 @@ class App extends React.Component {
                     onSubmitLogin = {this.onSubmitLogin}
                     error = {this.state.error}
                     errorMessage = {this.state.errorMessage}
+                    successCliente = {this.state.successCliente}
+                    successProprietario = {this.state.successProprietario}
                   />)
                 }
               />
@@ -181,9 +193,6 @@ class App extends React.Component {
                   <ModificaCasaVacanza {...props}/>
                 )}
               />
-              <Route exact path = '/Accettazione'>
-                <Accettazione/>
-              </Route>
               <Route 
                 exact path = '/SceltaModificaB&B'
                 render = { (props) => (

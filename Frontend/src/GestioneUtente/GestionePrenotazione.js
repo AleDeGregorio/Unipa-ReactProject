@@ -153,7 +153,7 @@ class GestionePrenotazione extends React.Component {
                                                     <p>ID: {res.id_prenotazione}</p>
                                                     <p>Partenza: {new Date(res.data_partenza).toLocaleDateString()}</p>
                                                     <p>Ritorno: {new Date(res.data_ritorno).toLocaleDateString()}</p>
-                                                    <p>Stato: (Accettata/ In attesa/ Rifiutata)</p>
+                                                    <p>Stato: {res.accettata ? 'Accettata' : 'In attesa di accettazione'}</p>
                                                     <Accordion.Toggle as={Button} variant="link" eventKey="0" onClick = {() => this.set_id(res.id_prenotazione)}>
                                                         Dettagli
                                                     </Accordion.Toggle>
@@ -164,9 +164,10 @@ class GestionePrenotazione extends React.Component {
                                                     <Card className="propcard">
                                                     <Card.Body>
                                                     <Card.Title>{res.nome_proprieta}</Card.Title>
-                                                    <Card.Img src=""/>
+                                                    <Card.Img src={res.img}/>
                                                     <Card.Text>
                                                     <p>Codice struttura: {res.ref_proprieta}, Tipo struttura: {res.tipo_proprieta === 'bb' ? 'B&B' : 'Casa vacanza'}</p>
+                                                    <p style = {{display: res.tipo_proprieta === 'bb' ? 'inline' : 'none'}}>Codice stanza: {res.id_stanza}</p>
                                                     <p>Località: {res.localita} ({res.provincia}),Indirizzo: {res.indirizzo}</p>
                                                     <p>Costo: {res.costo} euro</p>
                                                     <p>Soggiornante: {res.nome_sogg} {res.cognome_sogg}</p>

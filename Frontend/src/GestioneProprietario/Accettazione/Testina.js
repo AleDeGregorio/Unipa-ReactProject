@@ -3,6 +3,7 @@ import {Tabs, Tab, Button, Accordion,Table} from 'react-bootstrap'
 import { Redirect } from 'react-router-dom';
 import ListPrAccettare from './ListPrAccettare';
 import ElencoCheck from './ElencoCheck';
+import './Accettazione.css'
 class Testina extends React.Component {
     constructor(props) {
         super(props);
@@ -78,11 +79,11 @@ class Testina extends React.Component {
         />
     }
     else {
-        return( <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
-        <Tab eventKey="home" title="               Accetta Prenotazioni               ">
+        return( <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" className="vogliostilizzarti">
+        <Tab eventKey="home" title="Accetta Prenotazioni" className="vogliostilizzarti2">
             <ListPrAccettare />       
         </Tab>
-        <Tab eventKey="profile" title="               Check-in               ">
+        <Tab eventKey="profile" title="Check-in" className="vogliostilizzarti2">
             <ElencoCheck />
         </Tab>
       </Tabs>

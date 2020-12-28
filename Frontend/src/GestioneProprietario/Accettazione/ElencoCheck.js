@@ -78,11 +78,16 @@ class ElencoCheck extends Component {
             this.setState({ apiResponse_accettate: JSON.parse(result) });
             var res = JSON.parse(result);
 
+            console.log(res);
+
             for(var i = 0; i < res.length; i++) {
               this.setState({
                 items: [...this.state.items, {
                   id: i,
                   hasActions: true,
+                  image: res[i].img,
+                  nome: res[i].nome_proprieta,
+                  stanza: res[i].id_stanza ? res[i].id_stanza : '',
                   textValue: res[i].ref_proprieta,
                   id_prenotazione: res[i].id_prenotazione,
                   ref_cliente: res[i].ref_cliente,
@@ -92,10 +97,10 @@ class ElencoCheck extends Component {
                 }]
               });
             }
-            //if(this.state.apiResponse_accettate.status === 'error') {
-             //   this.setState({ error: true });
-             //   this.setState({ errorMessage: this.state.apiResponse_accettate.message });
-           // }
+            if(this.state.apiResponse_accettate.status === 'error') {
+                this.setState({ error: true });
+                this.setState({ errorMessage: this.state.apiResponse_accettate.message });
+            }
         });
     }
 

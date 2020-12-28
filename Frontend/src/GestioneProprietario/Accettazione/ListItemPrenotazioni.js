@@ -253,7 +253,10 @@ class ListItemPrenotazioni extends Component {
     }, 150)
    
   }
- 
+  /*accettaPren =() =>{
+    da inserire
+  }
+  */
   render() {
     //const { dragging } = this.props
     const {
@@ -273,7 +276,8 @@ class ListItemPrenotazioni extends Component {
       num_soggiornanti,
       hasActions,
       image,
-     
+      nome,
+      stanza
     } = this.props.number
     let listItemContentClass = ``
     if (isDeleted) listItemContentClass += ` list-item-content--deleted`
@@ -295,15 +299,17 @@ class ListItemPrenotazioni extends Component {
                   />)
               
                  : (
-                  <span onClick={this.toggleEditName}>{textValue}</span>
+                  <span onClick={this.toggleEditName}></span>
                 )}
               </ListItemText>
               <ListItemTextSecond>
                 <div className="ALFIOSTILIZZA ">
-               <p>Cliente :{ref_cliente} </p>
+                <p>Struttura: {nome}</p>
+                <p style = {{display: stanza === '' ? 'none' : 'inline'}}>Stanza: {stanza}</p>
+               <p>Cliente: {ref_cliente}</p>
                <p>Num persone: {num_soggiornanti}</p>
                <p>Costo: {costo}</p>
-               <p>Partenza-Ritorno : {new Date(data_partenza).toLocaleDateString()},  {new Date(data_ritorno).toLocaleDateString()}</p>
+               <p>Partenza-Ritorno: {new Date(data_partenza).toLocaleDateString()},  {new Date(data_ritorno).toLocaleDateString()}</p>
                </div>
               </ListItemTextSecond>
             </ListItemInfo>
@@ -339,15 +345,12 @@ class ListItemPrenotazioni extends Component {
                       
                    
                     >
-                      <Link className="LinkList" to = {{ //qua va modificato in modo che permetta di accettare la prenotazione
-                        pathname: "/ModificaCasaVacanza",
-                        state: { 
-                          dati_casa: this.props.dati_casa
-                        }
-                      }}
+                      <div className="LinkList" //qua va modificato in modo che permetta di accettare la prenotazione
+                        onClick={this.accettaPren}
+                       
                       >
                       Accetta 
-                      </Link>
+                      </div>
                     </div>
                     <div
                       className="listitem__select__list__item"

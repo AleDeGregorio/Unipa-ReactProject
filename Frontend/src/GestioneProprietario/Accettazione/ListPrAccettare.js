@@ -83,6 +83,9 @@ class ListAccettare extends Component {
                 items: [...this.state.items, {
                   id: i,
                   hasActions: true,
+                  image: res[i].img,
+                  nome: res[i].nome_proprieta,
+                  stanza: res[i].id_stanza ? res[i].id_stanza : '',
                   textValue: res[i].ref_proprieta,
                   id_prenotazione: res[i].id_prenotazione,
                   ref_cliente: res[i].ref_cliente,
@@ -157,8 +160,7 @@ class ListAccettare extends Component {
                           {...provided.dragHandleProps}
                           order={key}
                         >
-                          <ListItemPrenotazioni //damodificare
-                            
+                          <ListItemPrenotazioni                          
                            dati_casa = {this.state.apiResponse_accettazione[0] ? this.state.apiResponse_accettazione[0] : ''}
                             number={number}
                             dragging={snapshot.isDragging}
