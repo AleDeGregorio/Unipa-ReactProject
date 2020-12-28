@@ -53,7 +53,9 @@ class App extends React.Component {
       password: '',
       apiResponse: [],
       error: false,
-      errorMessage: ''
+      errorMessage: '',
+      successCliente: false,
+      successProprietario: false
     };
   }
 
@@ -62,6 +64,8 @@ class App extends React.Component {
   }
 
   onSubmitLogin = (e) => {
+    this.refresh();
+
     e.preventDefault();
     // get form data out of state
     const data = {
@@ -102,6 +106,13 @@ class App extends React.Component {
       }
     });
   }
+
+  refresh = (e) => {
+    this.setState({ 
+      error: false,
+      errorMessage: '' 
+    });
+  }
   
   render() {
     return (
@@ -126,6 +137,8 @@ class App extends React.Component {
                     onSubmitLogin = {this.onSubmitLogin}
                     error = {this.state.error}
                     errorMessage = {this.state.errorMessage}
+                    successCliente = {this.state.successCliente}
+                    successProprietario = {this.state.successProprietario}
                   />)
                 }
               />

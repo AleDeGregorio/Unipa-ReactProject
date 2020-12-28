@@ -298,15 +298,15 @@ class ListItemPrenotazioni extends Component {
                   />)
               
                  : (
-                  <span onClick={this.toggleEditName}>{textValue}</span>
+                  <span onClick={this.toggleEditName}></span>
                 )}
               </ListItemText>
               <ListItemTextSecond>
                 <div className="ALFIOSTILIZZA ">
-               <p>Cliente :{ref_cliente} </p>
+               <p>Cliente: {ref_cliente} </p>
                <p>Num persone: {num_soggiornanti}</p>
                <p>Costo: {costo}</p>
-               <p>Partenza-Ritorno : {new Date(data_partenza).toLocaleDateString()},  {new Date(data_ritorno).toLocaleDateString()}</p>
+               <p>Partenza-Ritorno: {new Date(data_partenza).toLocaleDateString()},  {new Date(data_ritorno).toLocaleDateString()}</p>
                </div>
               </ListItemTextSecond>
             </ListItemInfo>
