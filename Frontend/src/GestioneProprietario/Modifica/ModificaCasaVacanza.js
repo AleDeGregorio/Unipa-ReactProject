@@ -2,8 +2,9 @@
 
 import React from "react";
 //import camera from "../assets/camera.svg";   
-import {Form, Button} from "react-bootstrap"
+import {Form, Button, Accordion, Card, Col} from "react-bootstrap"
 import '../InserisciProp/InserimentoProprietà.css'
+import {AiOutlineEdit} from 'react-icons/ai'
 
 import { Redirect } from 'react-router-dom';
 
@@ -190,143 +191,245 @@ class ModificaCasaVacanza extends React.Component {
           <div className="background">
         <div className="containerNew"> 
           <div className="contentNew">
-            <form>
-            <h2>Modifica la tua casa vacanza con le informazioni che preferisci!</h2>
-              <label htmlFor = "nome_proprieta">Nome</label>
-              <input
-                type = "text"
-                id = "nome_proprieta"
-                name = "nome_proprieta"
-                defaultValue = {casa.nome_proprieta}
-                onChange = {this.onChange}
-                className = "i"
-              />
-              <label htmlFor = "localita">Città</label>
-              <input
-                type = "text"
-                id = "localita"
-                name = "localita"
-                defaultValue = {casa.localita}
-                onChange = {this.onChange}
-                className = "i"
-              />
-              <label htmlFor = "indirizzo">Indirizzo</label>
-              <input
-                type = "text"
-                id = "indirizzo"
-                name = "indirizzo"
-                defaultValue = {casa.indirizzo}
-                onChange = {this.onChange}
-                className = "i"
-              />
-              
-              <label htmlFor = "provincia">Provincia</label>
-              <input
-                type = "text"
-                id = "provincia"
-                name = "provincia"
-                defaultValue = {casa.provincia}
-                onChange = {this.onChange}
-                className = "i"
-              />
-
-              <label htmlFor = "servizi">Servizi</label>
-              <input
-                type = "text"
-                id = "servizi"
-                name = "servizi"
-                defaultValue = {casa.servizi}
-                onChange = {this.onChange}
-                className = "i"
-              />
-              <label htmlFor = "descrizione">Descrizione</label>
-              <textarea 
-                id = 'descrizione'
-                name = 'descrizione'
-                defaultValue = {casa.descrizione}
-                onChange = {this.onChange}
-                className = 'iTA'
-              >
-              </textarea>
-          
-                <Form.Group id = 'posti_letto' name = 'posti_letto' >
-                <Form.Label>Posti Letto</Form.Label>
-                <Form.Control 
-                  id = 'posti_letto'
-                  name = 'posti_letto'
-                  defaultValue = {casa.posti_letto}
-                  as = "select"   
-                  onChange = {this.onChange}  
-                >
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                  <option>6</option>
-                  <option>7</option>
-                  <option>8</option>
-                  </Form.Control>
-              </Form.Group>
-              
-          
-              <label htmlFor = "tariffa_casa">Prezzo</label>
-              <input
-                type = "text"
-                pattern = "^\d+(.\d{1,2})?$"
-                title = "Inserire un valore numerico usando un punto per i valori decimali"
-                id = "tariffa_casa"
-                name = 'tariffa_casa'
-                defaultValue = {casa.tariffa_casa}
-                onChange = {this.onChange}
-                className = "i"
-              />
-              <Form.Group>
-                <label>Modifica le foto della tua struttura</label>
-                <Form.Row className = "justify-content-center">
-                <input
-                  id = "imgCV_path1"
-                  name = "imgCV_path1SRC"
-                  onChange = {this.onChangeImg}
-                  type = "file"
-                  className = "inputImg"
-                  accept = "image/*"
-                />
-                <img src = {this.state.imgCV_path1SRC} alt = {"Foto 1 " + this.state.nome_proprieta} ></img>
-                <input
-                  id = "imgCV_path2"
-                  name = "imgCV_path2SRC"
-                  onChange = {this.onChangeImg}
-                  type = "file"
-                  className = "inputImg"
-                  accept = "image/*"
-                />
-                <img src = {this.state.imgCV_path2SRC} alt = {"Foto 2 " + this.state.nome_proprieta}></img>
-              <input
-                  id = "imgCV_path3"
-                  name = "imgCV_path3SRC"
-                  onChange = {this.onChangeImg}
-                  type = "file"
-                  className = "inputImg"
-                  accept = "image/*"
-                />
-                <img src = {this.state.imgCV_path3SRC} alt = {"Foto 3 " + this.state.nome_proprieta}></img>
-                <input
-                  id = "imgCV_path4"
-                  name = "imgCV_path4SRC"
-                  onChange = {this.onChangeImg}
-                  type = "file"
-                  className = "inputImg"
-                  accept = "image/*"
-                />
-                <img src = {this.state.imgCV_path4SRC} alt = {"Foto 4 " + this.state.nome_proprieta}></img>
-                </Form.Row>
-              </Form.Group>
-
-                <Button variant="primary" onClick = {this.onSubmit}>
-                Carica
+          <h2>Modifica la tua casa vacanza con le informazioni che preferisci!</h2>
+          <Accordion>
+              <Card border="light">
+                <div className="head-update">
+                  <p>Nome: {casa.nome_proprieta}</p>
+                  <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="1" />
+                </div>
+                <Accordion.Collapse eventKey="1">
+                  <Card.Body>
+                    <form>
+                    <label htmlFor = "nome_proprieta">Nome</label>
+                    <input
+                    type = "text"
+                   id = "nome_proprieta"
+                   name = "nome_proprieta"
+                   placeholder = {casa.nome_proprieta}
+                    onChange = {this.onChange}
+                    className = "i"
+                    />
+                    </form>
+                    <Button onClick = {this.onSubmit}>
+                Modifica nome
               </Button>
-            </form>
+                  </Card.Body>
+                </Accordion.Collapse>
+              </Card>
+              <Card border="light">
+              <div className="head-update">
+                <p>Località : {casa.localita}, {casa.indirizzo},{casa.provincia}</p>
+                <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="2" />
+                </div>
+                <Accordion.Collapse eventKey="2">
+                  <Card.Body>
+                  <form>
+                  <label htmlFor = "localita">Città</label>
+                <input
+                  type = "text"
+                  id = "localita"
+                  name = "localita"
+                  placeholder=" Inserisci città"
+                  onChange = {this.onChange}
+                  className = "i"
+                />
+
+                <label htmlFor = "indirizzo">Indirizzo</label>
+                <input
+                  type = "text"
+                  id = "indirizzo"
+                  name = "indirizzo"
+                  placeholder=" Inserisci indirizzo"
+                  onChange = {this.onChange}
+                  className = "i"
+                />
+                
+                <label htmlFor = "provincia">Provincia</label>
+                <input
+                  type = "text"
+                  id = "provincia"
+                  name = "provincia"
+                  placeholder=" Inserisci Provincia (Due lettere)"
+                  onChange = {this.onChange}
+                  className = "i"
+                />
+                  <Button onClick = {this.onSubmit}>
+                Modifica località
+              </Button>
+                  </form>
+                </ Card.Body>
+                </Accordion.Collapse>
+              </Card>
+              <Card border="light">
+                <div className="head-update">
+                <p> Servizi offerti :{casa.servizi}</p>
+                <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="3" />
+                </div>
+                <Accordion.Collapse eventKey="3">
+                  <Card.Body>
+                    <Form.Row>
+                      <Form.Group as={Col} controlId="formGridState">
+                        <Form.Label>Servizi</Form.Label>
+                        <Form.Check type="checkbox" id="Wi-fi" label="Wi-fi"/>
+                        <Form.Check type="checkbox" id="Aria condizionata" label="Aria condizionata"/> 
+                        <Form.Check type="checkbox" id="Parcheggio gratuito" label="Parcheggio gratuito"/>
+                        <Form.Check type="checkbox" id="4" label="Animali annessi"/>
+                        <Form.Check type="checkbox" id="5" label="Accesso ospiti disabili"/>
+                        <Form.Check type="checkbox" id="6" label="Misure extra per la salute"/>
+                      </Form.Group>
+                    </Form.Row>
+                    <Button onClick = {this.onSubmit}>
+                Cambia servizi
+              </Button>
+                  </Card.Body>
+                </Accordion.Collapse>
+              </Card>
+              <Card border="light">
+                <div className="head-update">
+                <p> Descrizione : </p>
+                <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="4" />
+                </div>
+                <Accordion.Collapse eventKey="4">
+                  <Card.Body>
+                    <form>
+                    <label htmlFor = "descrizione">Descrizione attuale: {casa.descrizione}</label>
+                <textarea 
+                  id = 'descrizione'
+                  name = 'descrizione'
+                  placeholder='Inserisci descrizione'
+                  onChange = {this.onChange}
+                  className = 'iTA'
+                >
+                </textarea>
+                <Button onClick = {this.onSubmit}>
+                Modifica Descrizione
+              </Button>
+                    </form>
+                  </Card.Body>
+                </Accordion.Collapse>
+              </Card>
+              <Card border="light">
+                <div className="head-update">
+                  <p>Posti letto : {casa.posti_letto}</p>
+                  <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="5" />
+
+                </div>
+                <Accordion.Collapse eventKey="5">
+                  <Card.Body>
+                  <Form.Group id = 'posti_letto' name = 'posti_letto' >
+    <Form.Label>Posti Letto</Form.Label>
+    <Form.Control 
+      id = 'posti_letto'
+      name = 'posti_letto'
+      defaultValue = {casa.posti_letto}
+      as = "select"   
+      onChange = {this.onChange}  
+    >
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+      <option>6</option>
+      <option>7</option>
+      <option>8</option>
+      </Form.Control>
+  </Form.Group>  
+  <Button onClick = {this.onSubmit}>
+                Modifica posti letto
+              </Button>
+                  </Card.Body>
+                </Accordion.Collapse>
+              </Card>
+              <Card border="light">
+                <div className="head-update">
+                <p>Tariffa attuale : {casa.tariffa_casa}</p>
+                <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="6" />
+                </div>
+                <Accordion.Collapse eventKey="6">
+                  <Card.Body>
+                    <form>
+                    <label htmlFor = "tariffa_casa">Prezzo</label>
+  <input
+    type = "text"
+    pattern = "^\d+(.\d{1,2})?$"
+    title = "Inserire un valore numerico usando un punto per i valori decimali"
+    id = "tariffa_casa"
+    name = 'tariffa_casa'
+    placeholder="Inserisci tariffa casa usando un punto per i valori decimali"
+    onChange = {this.onChange}
+    className = "i"
+  />
+              <Button onClick = {this.onSubmit}>
+                Cambia tariffa
+              </Button>
+                    </form>
+                  </Card.Body>
+                </Accordion.Collapse>
+              </Card>
+              <Card border="light">
+                <div className="head-update">
+                <p>Modifica foto</p>
+                <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="7" />
+                </div>
+                <Accordion.Collapse eventKey="7">
+                  <Card.Body>
+                    <p>Foto attuali : </p>
+                    <img src = {this.state.imgCV_path1SRC} alt = {"Foto 1 " + this.state.nome_proprieta} ></img>
+                    <img src = {this.state.imgCV_path2SRC} alt = {"Foto 2 " + this.state.nome_proprieta}></img>
+                    <img src = {this.state.imgCV_path3SRC} alt = {"Foto 3 " + this.state.nome_proprieta}></img>
+                    <img src = {this.state.imgCV_path4SRC} alt = {"Foto 4 " + this.state.nome_proprieta}></img>
+
+                  <Form.Group>
+    <label>Modifica le foto della tua struttura</label>
+    <Form.Row className = "justify-content-center">
+    <input
+      id = "imgCV_path1"
+      name = "imgCV_path1SRC"
+      onChange = {this.onChangeImg}
+      type = "file"
+      className = "inputImg"
+      accept = "image/*"
+    />
+    <img src = {this.state.imgCV_path1SRC} alt = {"Foto 1 " + this.state.nome_proprieta} ></img>
+    <input
+      id = "imgCV_path2"
+      name = "imgCV_path2SRC"
+      onChange = {this.onChangeImg}
+      type = "file"
+      className = "inputImg"
+      accept = "image/*"
+    />
+    <img src = {this.state.imgCV_path2SRC} alt = {"Foto 2 " + this.state.nome_proprieta}></img>
+  <input
+      id = "imgCV_path3"
+      name = "imgCV_path3SRC"
+      onChange = {this.onChangeImg}
+      type = "file"
+      className = "inputImg"
+      accept = "image/*"
+    />
+    <img src = {this.state.imgCV_path3SRC} alt = {"Foto 3 " + this.state.nome_proprieta}></img>
+    <input
+      id = "imgCV_path4"
+      name = "imgCV_path4SRC"
+      onChange = {this.onChangeImg}
+      type = "file"
+      className = "inputImg"
+      accept = "image/*"
+    />
+    <img src = {this.state.imgCV_path4SRC} alt = {"Foto 4 " + this.state.nome_proprieta}></img>
+    </Form.Row>
+  </Form.Group>
+
+    <Button variant="primary" onClick = {this.onSubmit}>
+    Carica
+  </Button>
+                  </Card.Body>
+                </Accordion.Collapse>
+              </Card>
+            </Accordion>
           </div>
         </div>
         </div>

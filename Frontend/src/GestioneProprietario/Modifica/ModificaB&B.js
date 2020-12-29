@@ -1,9 +1,8 @@
 /*CSS FATTO*/
 
-import React from "react";
-//import camera from "../assets/camera.svg";   
-import { Button } from "react-bootstrap"
-//import { Form } from 'react-bootstrap'
+import React from "react";   
+import { Button, Accordion, Card, Form, Col } from "react-bootstrap"
+import {AiOutlineEdit} from 'react-icons/ai'
 
 import "../InserisciProp/InserimentoProprietà.css";
 
@@ -139,23 +138,46 @@ class ModificaBeB extends React.Component {
           <div className="background">
         <div className="containerNew">  
           <div className="contentNew">
-            <form>
-            <h2>Modifica il tuo B&B con le informazioni che preferisci!</h2>
-              <label htmlFor = "nome_proprieta">Nome</label>
+          <h2>Modifica il tuo B&B con le informazioni che preferisci!</h2>
+            <Accordion>
+              <Card border="light">
+                <div className="head-update">
+                  <p>Nome :{bb.nome_proprieta}</p>
+                  <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="1" />
+                </div>
+                <Accordion.Collapse eventKey="1">
+                  <Card.Body>
+                    <form>
+                  <label htmlFor = "nome_proprieta">Nome</label>
                 <input
                   type = "text"
                   id = "nome_proprieta"
                   name = "nome_proprieta"
-                  defaultValue = {bb.nome_proprieta}
+                  placeholder = "Inserisci nome proprietà"
                   onChange = {this.onChange}
                   className = "i"
                 />
-                <label htmlFor = "localita">Città</label>
+                <Button variant="primary" onClick = {this.onSubmit}>
+                Modifica nome
+              </Button>
+              </form>
+                  </Card.Body>
+                </Accordion.Collapse>
+              </Card>
+              <Card border="light">
+                <div className="head-update">
+                <p>Località : {bb.localita}, {bb.indirizzo},{bb.provincia}</p>
+                <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="2" />
+                </div>
+                <Accordion.Collapse eventKey="2">
+                  <Card.Body>
+                  <form>
+                  <label htmlFor = "localita">Città</label>
                 <input
                   type = "text"
                   id = "localita"
                   name = "localita"
-                  defaultValue = {bb.localita}
+                  placeholder=" Inserisci città"
                   onChange = {this.onChange}
                   className = "i"
                 />
@@ -165,7 +187,7 @@ class ModificaBeB extends React.Component {
                   type = "text"
                   id = "indirizzo"
                   name = "indirizzo"
-                  defaultValue = {bb.indirizzo}
+                  placeholder=" Inserisci indirizzo"
                   onChange = {this.onChange}
                   className = "i"
                 />
@@ -175,58 +197,66 @@ class ModificaBeB extends React.Component {
                   type = "text"
                   id = "provincia"
                   name = "provincia"
-                  defaultValue = {bb.provincia}
+                  placeholder=" Inserisci Provincia (Due lettere)"
                   onChange = {this.onChange}
                   className = "i"
                 />
-
-                <label htmlFor = "servizi">Servizi</label>
-                <input
-                  type = "text"
-                  id = "servizi"
-                  name = "servizi"
-                  defaultValue = {bb.servizi}
-                  onChange = {this.onChange}
-                  className = "i"
-                />
-                <label htmlFor = "descrizione">Descrizione</label>
+                  <Button onClick = {this.onSubmit}>
+                Modifica località
+              </Button>
+                  </form>
+                  </Card.Body>
+                </Accordion.Collapse>
+              </Card>
+              <Card border="light">
+                <div className="head-update">
+                <p> Servizi offerti :{bb.servizi}</p>
+                <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="3" />
+                </div>
+                <Accordion.Collapse eventKey="3">
+                  <Card.Body>
+                    <Form.Row>
+                      <Form.Group as={Col} controlId="formGridState">
+                        <Form.Label>Servizi</Form.Label>
+                        <Form.Check type="checkbox" id="Wi-fi" label="Wi-fi"/>
+                        <Form.Check type="checkbox" id="Aria condizionata" label="Aria condizionata"/> 
+                        <Form.Check type="checkbox" id="Parcheggio gratuito" label="Parcheggio gratuito"/>
+                        <Form.Check type="checkbox" id="4" label="Animali annessi"/>
+                        <Form.Check type="checkbox" id="5" label="Accesso ospiti disabili"/>
+                        <Form.Check type="checkbox" id="6" label="Misure extra per la salute"/>
+                      </Form.Group>
+                    </Form.Row>
+                    <Button onClick = {this.onSubmit}>
+                Cambia servizi
+              </Button>
+                  </Card.Body>
+                </Accordion.Collapse>
+              </Card>
+              <Card border="light">
+                <div className="head-update">
+                <p> Descrizione : </p>
+                <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="4" />
+                </div>
+                <Accordion.Collapse eventKey="4">
+                  <Card.Body>
+                    <form>
+                    <label htmlFor = "descrizione">Descrizione attuale: {bb.descrizione}</label>
                 <textarea 
                   id = 'descrizione'
                   name = 'descrizione'
-                  defaultValue = {bb.descrizione}
+                  placeholder='Inserisci descrizione'
                   onChange = {this.onChange}
                   className = 'iTA'
                 >
                 </textarea>
-
-                <label htmlFor = "check_in">Check-in</label>
-                <input
-                  type = "text"
-                  pattern = "^([0-9]|1[0-9]|2[0-3]).[0-5][0-9]$"
-                  title = "Inserire un orario corretto, usando un punto per separare i minuti"
-                  id = "check_in"
-                  name = "check_in"
-                  defaultValue = {bb.check_in + '0'}
-                  onChange = {this.onChange}
-                  className = "i"
-                />
-
-                <label htmlFor = "check_out">Check-out</label>
-                <input
-                  type = "text"
-                  pattern = "^([0-9]|1[0-9]|2[0-3]).[0-5][0-9]$"
-                  title = "Inserire un orario corretto, usando un punto per separare i minuti"
-                  id = "check_out"
-                  name = "check_out"
-                  defaultValue = {bb.check_out + '0'}
-                  onChange = {this.onChange}
-                  className = "i"
-                />
-              
-                <Button variant="primary" onClick = {this.onSubmit}>
-                Carica
+                <Button onClick = {this.onSubmit}>
+                Modifica Descrizione
               </Button>
-            </form>
+                    </form>
+                  </Card.Body>
+                </Accordion.Collapse>
+              </Card>
+            </Accordion>
           </div>
         </div>
         </div>

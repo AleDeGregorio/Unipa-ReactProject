@@ -245,3 +245,12 @@ label#thumbnail{
       position: relative;
     }
   }
+
+.head-update{
+  display:flex;
+  flex-direction:row;
+  justify-content:space-between;
+  height:4rem;
+  align-items:center;
+  margin-left:10px;
+}

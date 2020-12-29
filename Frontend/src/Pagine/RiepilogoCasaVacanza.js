@@ -17,11 +17,11 @@ export default class SingleCasaVacanza extends Component {
   }
   static contextType = CasaVacanzaContext;
 
-  // componentDidMount() {
-  //   console.log(this.props);
-  // }
+   componentDidMount() {
+     console.log(this.props);
+   }
   render() {
-    const { getCasaVacanza } = this.context;
+   const { getCasaVacanza } = this.context;
     const casaVacanza = getCasaVacanza(this.state.slug);
 
     if (!casaVacanza) {

@@ -2,7 +2,9 @@
 
 import React from "react";
 //import camera from "../assets/camera.svg";   
-import {Form, Button} from "react-bootstrap"
+import {Form, Button, Card, Accordion} from "react-bootstrap"
+import {AiOutlineEdit} from 'react-icons/ai'
+
 
 import "../InserisciProp/InserimentoProprietà.css";
 
@@ -152,87 +154,150 @@ class ModificaStanza extends React.Component {
           <div className="background">
         <div className="containerNew">  
           <div className="contentNew">
-            <form>
-            <h2>Modifica le informazioni della tua stanza come preferisci!</h2>
-              <Form.Group id = 'tipologia' name = 'tipologia' >
-                <Form.Label>Tipologia stanza - Numero ospiti</Form.Label>
-                <Form.Control 
-                  id = 'tipologia'
-                  name = 'tipologia'
-                  defaultValue = {stanza.tipologia}
-                  as = "select"   
-                  onChange = {this.onChange}  
-                >
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                  <option>6</option>
-                  <option>7</option>
-                  <option>8</option>
-                  </Form.Control>
-              </Form.Group>
-
-                <label htmlFor = "tariffa_stanza">Tariffa</label>
-                <input
+          <h2>Modifica le informazioni della tua stanza come preferisci!</h2>
+          <Accordion>
+              <Card border="light">
+                <div className="head-update">
+                  <p>Tipologia stanza : {stanza.tipologia}</p>
+                <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="1" />
+                </div>
+                <Accordion.Collapse eventKey="1">
+                  <Card.Body>
+                  <Form.Group id = 'tipologia' name = 'tipologia' >
+    <Form.Label>Tipologia stanza - Numero ospiti</Form.Label>
+    <Form.Control 
+      id = 'tipologia'
+      name = 'tipologia'
+      placeholder='1'
+      as = "select"   
+      onChange = {this.onChange}  
+    >
+      <option value="1">Singola</option>
+      <option value="2">Doppia</option>
+      <option value="3">Matrimoniale</option>
+      <option value="4">Doppia Matrimoniale</option>
+      <option value="5">Tripla</option>
+      </Form.Control>
+  </Form.Group>  
+  <Button variant="primary" onClick = {this.onSubmit}>
+    Cambia tipologia di camera
+  </Button>
+                  </Card.Body>
+                </Accordion.Collapse>
+              </Card>
+              <Card border="light">
+                <div className="head-update">
+                <p>Tariffa : {stanza.tariffa_stanza} </p>
+                <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="2" />
+                </div>
+                <Accordion.Collapse eventKey="2">
+                  <Card.Body>
+               <form>    
+    <label htmlFor = "tariffa_stanza">Tariffa</label>
+    <input
+      type = "text"
+      pattern = "^\d+(.\d{1,2})?$"
+      title = "Inserire un valore numerico usando un punto per i valori decimali"
+      id = "tariffa_stanza"
+      name = "tariffa_stanza"
+      placeholder="Inserire tariffa"
+      onChange = {this.onChange}
+      className = "i"
+    />
+    </form> 
+    <Button variant="primary" onClick = {this.onSubmit}>
+    Cambia tariffa
+  </Button>
+                  </Card.Body>
+                </Accordion.Collapse>
+              </Card>
+              <Card border="light">
+                <div className="head-update">
+                <p>Descrizione</p>
+                <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="3" />
+                </div>
+                <Accordion.Collapse eventKey="3">
+                  <Card.Body>
+                    <form>
+                  <label htmlFor = "descrizione">Descrizione</label>
+                  <input
                   type = "text"
-                  pattern = "^\d+(.\d{1,2})?$"
-                  title = "Inserire un valore numerico usando un punto per i valori decimali"
-                  id = "tariffa_stanza"
-                  name = "tariffa_stanza"
-                  defaultValue = {stanza.tariffa_stanza}
+                  id = "descrizione"
+                  name = "descrizione"
+                  placeholder = "Descrizione camera"
                   onChange = {this.onChange}
                   className = "i"
-                />
+                  required
+                /> 
+                </form>
+                <Button variant="primary" onClick = {this.onSubmit}>
+    Cambia descrizione
+  </Button>
+                  </Card.Body>
+                </Accordion.Collapse>
+              </Card>
+              <Card border="light">
+                <div className="head-update">
+                  <p>Foto : </p>
+                <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="4" />
+                </div>
+                <Accordion.Collapse eventKey="4">
+                  <Card.Body>
+                    <p>Foto attuali : </p>
+                    <img src = {this.state.imgST_path1SRC} alt = {"Foto 1 stanza " + this.state.id_stanza} ></img>
+                    <img src = {this.state.imgST_path2SRC} alt = {"Foto 2 stanza " + this.state.id_stanza}></img>
+                    <img src = {this.state.imgST_path3SRC} alt = {"Foto 3 stanza " + this.state.id_stanza}></img>
+                    <img src = {this.state.imgST_path4SRC} alt = {"Foto 4 stanza " + this.state.id_stanza}></img>
 
-              <Form.Group>
-                <label>Modifica le foto della tua stanza</label>
-                <Form.Row className = "justify-content-center">
-                <input
-                  id = "imgST_path1"
-                  name = "imgST_path1SRC"
-                  onChange = {this.onChangeImg}
-                  type = "file"
-                  className = "inputImg"
-                  accept = "image/*"
-                />
-                <img src = {this.state.imgST_path1SRC} alt = {"Foto 1 stanza " + this.state.id_stanza} ></img>
-                <input
-                  id = "imgST_path2"
-                  name = "imgST_path2SRC"
-                  onChange = {this.onChangeImg}
-                  type = "file"
-                  className = "inputImg"
-                  accept = "image/*"
-                />
-                <img src = {this.state.imgST_path2SRC} alt = {"Foto 2 stanza " + this.state.id_stanza}></img>
-              <input
-                  id = "imgST_path3"
-                  name = "imgST_path3SRC"
-                  onChange = {this.onChangeImg}
-                  type = "file"
-                  className = "inputImg"
-                  accept = "image/*"
-                />
-                <img src = {this.state.imgST_path3SRC} alt = {"Foto 3 stanza " + this.state.id_stanza}></img>
-                <input
-                  id = "imgST_path4"
-                  name = "imgST_path4SRC"
-                  onChange = {this.onChangeImg}
-                  type = "file"
-                  className = "inputImg"
-                  accept = "image/*"
-                />
-                <img src = {this.state.imgST_path4SRC} alt = {"Foto 4 stanza " + this.state.id_stanza}></img>
-                </Form.Row>
-              </Form.Group>
-              
-    
-              <Button variant="primary" onClick = {this.onSubmit}>
-                Carica
-              </Button>
-            </form>
+                  <Form.Group>
+    <label>Modifica le foto della tua stanza</label>
+    <Form.Row className = "justify-content-center">
+    <input
+      id = "imgST_path1"
+      name = "imgST_path1SRC"
+      onChange = {this.onChangeImg}
+      type = "file"
+      className = "inputImg"
+      accept = "image/*"
+    />
+    <img src = {this.state.imgST_path1SRC} alt = {"Foto 1 stanza " + this.state.id_stanza} ></img>
+    <input
+      id = "imgST_path2"
+      name = "imgST_path2SRC"
+      onChange = {this.onChangeImg}
+      type = "file"
+      className = "inputImg"
+      accept = "image/*"
+    />
+    <img src = {this.state.imgST_path2SRC} alt = {"Foto 2 stanza " + this.state.id_stanza}></img>
+  <input
+      id = "imgST_path3"
+      name = "imgST_path3SRC"
+      onChange = {this.onChangeImg}
+      type = "file"
+      className = "inputImg"
+      accept = "image/*"
+    />
+    <img src = {this.state.imgST_path3SRC} alt = {"Foto 3 stanza " + this.state.id_stanza}></img>
+    <input
+      id = "imgST_path4"
+      name = "imgST_path4SRC"
+      onChange = {this.onChangeImg}
+      type = "file"
+      className = "inputImg"
+      accept = "image/*"
+    />
+    <img src = {this.state.imgST_path4SRC} alt = {"Foto 4 stanza " + this.state.id_stanza}></img>
+    </Form.Row>
+  </Form.Group> 
+  <Button variant="primary" onClick = {this.onSubmit}>
+    Carica foto
+  </Button>
+                  </Card.Body>
+                </Accordion.Collapse>
+              </Card>
+            </Accordion>
+           
           </div>
         </div>
         </div>
@@ -242,3 +307,85 @@ class ModificaStanza extends React.Component {
 }
 
 export default ModificaStanza;
+/*
+<form>
+<h2>Modifica le informazioni della tua stanza come preferisci!</h2>
+  <Form.Group id = 'tipologia' name = 'tipologia' >
+    <Form.Label>Tipologia stanza - Numero ospiti</Form.Label>
+    <Form.Control 
+      id = 'tipologia'
+      name = 'tipologia'
+      defaultValue = {stanza.tipologia}
+      as = "select"   
+      onChange = {this.onChange}  
+    >
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+      <option>6</option>
+      <option>7</option>
+      <option>8</option>
+      </Form.Control>
+  </Form.Group>
+
+    <label htmlFor = "tariffa_stanza">Tariffa</label>
+    <input
+      type = "text"
+      pattern = "^\d+(.\d{1,2})?$"
+      title = "Inserire un valore numerico usando un punto per i valori decimali"
+      id = "tariffa_stanza"
+      name = "tariffa_stanza"
+      defaultValue = {stanza.tariffa_stanza}
+      onChange = {this.onChange}
+      className = "i"
+    />
+
+  <Form.Group>
+    <label>Modifica le foto della tua stanza</label>
+    <Form.Row className = "justify-content-center">
+    <input
+      id = "imgST_path1"
+      name = "imgST_path1SRC"
+      onChange = {this.onChangeImg}
+      type = "file"
+      className = "inputImg"
+      accept = "image/*"
+    />
+    <img src = {this.state.imgST_path1SRC} alt = {"Foto 1 stanza " + this.state.id_stanza} ></img>
+    <input
+      id = "imgST_path2"
+      name = "imgST_path2SRC"
+      onChange = {this.onChangeImg}
+      type = "file"
+      className = "inputImg"
+      accept = "image/*"
+    />
+    <img src = {this.state.imgST_path2SRC} alt = {"Foto 2 stanza " + this.state.id_stanza}></img>
+  <input
+      id = "imgST_path3"
+      name = "imgST_path3SRC"
+      onChange = {this.onChangeImg}
+      type = "file"
+      className = "inputImg"
+      accept = "image/*"
+    />
+    <img src = {this.state.imgST_path3SRC} alt = {"Foto 3 stanza " + this.state.id_stanza}></img>
+    <input
+      id = "imgST_path4"
+      name = "imgST_path4SRC"
+      onChange = {this.onChangeImg}
+      type = "file"
+      className = "inputImg"
+      accept = "image/*"
+    />
+    <img src = {this.state.imgST_path4SRC} alt = {"Foto 4 stanza " + this.state.id_stanza}></img>
+    </Form.Row>
+  </Form.Group>
+  
+
+  <Button variant="primary" onClick = {this.onSubmit}>
+    Carica
+  </Button>
+</form>*/

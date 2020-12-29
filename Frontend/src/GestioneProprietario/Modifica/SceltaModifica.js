@@ -6,6 +6,8 @@ import './SceltaModifica.css'
 //import {RiAccountBoxLine} from "react-icons/ri";
 import {Link} from 'react-router-dom'
 //import {Col} from 'react-bootstrap'
+import ElencoCasaVacanza from './ElencoCasaVacanza'
+import ElencoBeB from './ElencoB&B'
 
 import { Redirect } from 'react-router-dom';
 
@@ -22,26 +24,16 @@ class SceltaModifica extends React.Component{
                 }}
             />
         }
-        else {
+        else { 
             return(
-                <div className="row carte_prop" >
-                    <Link to= "/ElencoCasaVacanza" className="LinK">
-                <Card className="propScelta">
-                    <Card.Body>
-                    <Card.Title>Modifica Casa Vacanza</Card.Title>
-                    <Card.Text>Visualizza e modifica le informazioni della tua casa vacanza</Card.Text>
-                    </Card.Body>
-                </Card></Link>
-                <Link to = "/ElencoB&B" className="LinK">
-                    <Card className="propScelta">
-                    <Card.Body>
-                    <Card.Title>Modifica B&B</Card.Title>
-                    <Card.Text>Modifica i dati della tua struttura e gestisci le sue stanze</Card.Text>
-                    </Card.Body>
-                   </Card>
-                </Link>
-        
-              </div>
+                <div>
+                    <div>
+                    <ElencoCasaVacanza />
+                    </div>
+                    <div>
+                    <ElencoBeB />
+                     </div>
+               </div>
             );
         }
     }

@@ -1,6 +1,6 @@
 import React from 'react'
 import './Earning.css'
-import {Accordion, Form, Col, Button} from 'react-bootstrap'
+import {Accordion, Form, Col, Button, Card} from 'react-bootstrap'
 //import {Card, CardDeck, Row} from 'react-bootstrap'
 import {MdExpandMore} from 'react-icons/md'
 
@@ -192,11 +192,13 @@ class Earning2 extends React.Component {
           <div className="containerEarning">
             <div className="col containerAccordion">
               <Accordion>
+                  <Card >
                   <div className="earning_head">
                     <p>Filtra i tuoi guadagni in base alla data</p>
                     <Accordion.Toggle as={MdExpandMore} variant="link" eventKey="0" />
                   </div>
                  <Accordion.Collapse eventKey="0">
+                 <Card.Body>
                      <div className="earning_body">
                       <Form className="formEarning">
                       <Form.Row>
@@ -212,12 +214,16 @@ class Earning2 extends React.Component {
                  </Form>
                       <Button onClick = {this.onSubmit_date} >Visualizza guadagni</Button>
                   </div>
+                  </Card.Body>
                  </Accordion.Collapse>
+                 </Card>
+                 <Card >
                  <div className="earning_head">
                       <p>Filtra i tuoi guadagni in base al tipo di struttura e alla data</p>
                       <Accordion.Toggle as={MdExpandMore} variant="link" eventKey="1" />                       
                   </div>
                   <Accordion.Collapse eventKey="1">
+                    <Card.Body>
                       <div className="earning_body">
                       <Form className="formEarning">
                    <Form.Row>
@@ -242,13 +248,17 @@ class Earning2 extends React.Component {
                    </Form.Row>
                  </Form>
                       <Button onClick = {this.onSubmit_tipo_struttura} >Visualizza guadagni</Button>
-                      </div>                        
+                      </div> 
+                      </Card.Body>                       
                   </Accordion.Collapse>
+                  </Card>
+                  <Card >
                   <div className="earning_head">
                       <p>Filtra i tuoi guadagni in base alla struttura e alla data</p>
                       <Accordion.Toggle as={MdExpandMore} variant="link" eventKey="2" />                       
                   </div>
                 <Accordion.Collapse eventKey="2">
+                  <Card.Body>
                   <div className="earning_body">
                   <Form className="formEarning">
                    <Form.Row>
@@ -279,7 +289,9 @@ class Earning2 extends React.Component {
                  </Form>
                  <Button onClick = {this.onSubmit_nome_struttura}>Visualizza guadagni</Button>
                   </div>
+                  </Card.Body>
                 </Accordion.Collapse>
+                </Card>
               </Accordion>
             </div>
             </div>

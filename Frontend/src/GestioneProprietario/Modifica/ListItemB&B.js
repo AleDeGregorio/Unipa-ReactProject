@@ -327,13 +327,28 @@ class ListItemCase extends Component {
                    
                     >
                       <Link className="LinkList" to = {{
-                        pathname: "/SceltaModificaB&B",
+                        pathname: "/ModificaB&B",
                         state: { 
                           dati_bb: this.props.dati_bb
                         }
                       }}
                       >
-                      Modifica
+                      Modifica BnB
+                      </Link>
+                    </div>
+                    <div
+                      className="listitem__select__list__item"
+                      
+                   
+                    >
+                      <Link className="LinkList" to = {{
+                        pathname: "/ElencoListaStanze",
+                        state: { 
+                          dati_bb: this.props.dati_bb
+                        }
+                      }}
+                      >
+                      Modifica Camera BnB
                       </Link>
                     </div>
                     <div
