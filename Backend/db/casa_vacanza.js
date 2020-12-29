@@ -94,6 +94,7 @@ const insertCasa = async(req) => {
         Connection.query(
             'INSERT INTO casa_vacanza VALUES ' +
             '(' + req.ref_proprieta_cv + ', ' + req.posti_letto + ', ' + req.tariffa_casa + 
+            ', "1970-01-01", "1970-01-01" ' +
             ', "./Images/' + req.ref_proprieta_cv + '_1.jpg"' +
             ', "./Images/' + req.ref_proprieta_cv + '_2.jpg"' +
             ', "./Images/' + req.ref_proprieta_cv + '_3.jpg"' +

@@ -282,12 +282,40 @@ const accettaPrenotazione = async(req) => {
         Connection.query(
             'UPDATE prenotazione ' +
             'SET accettata = true ' +
-            'WHERE id_prenotazione = ' + req.id_prenotazione + ';',
+            'WHERE id_prenotazione = ' + req.id_prenotazione + '; ', 
             (err, results) => {
                 if(err) {
                     return reject(new NotFound('Prenotazione non trovata'));
                 }
-                resolve(results);
+
+                if(req.tipo_proprieta === 'cv') {
+                    Connection.query(
+                        'UPDATE casa_vacanza ' +
+                        'SET non_disponibile_inizio_cv = "' + req.data_partenza + '", non_disponibile_fine_cv = "' + req.data_ritorno + '" ' +
+                        'WHERE ref_proprieta_cv = ' + req.ref_proprieta + '; ',
+                        (err, results) => {
+                            if(err) {
+                                return reject(new NotFound('Casa vacanza non trovata'));
+                            }
+
+                            resolve(results);
+                        }
+                    );
+                }
+                else {
+                    Connection.query(
+                        'UPDATE stanza ' + 
+                        'SET non_disponibile_inizio_st = "' + req.data_partenza + '", non_disponibile_fine_st = ' + req.data_ritorno + '" ' +
+                        'WHERE id_stanza = ' + req.id_stanza + '; ',
+                        (err, results) => {
+                            if(err) {
+                                return reject(new NotFound('Stanza non trovata'));
+                            }
+
+                            resolve(results);
+                        }
+                    );
+                }
             }
         );
     });

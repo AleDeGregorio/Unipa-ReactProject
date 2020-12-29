@@ -123,8 +123,8 @@ const insertStanza = async(req) => {
     return new Promise((resolve, reject) => {
 
         Connection.query(
-            'INSERT INTO stanza (ref_bb, tipologia, tariffa_stanza) VALUES ' +
-            '(' + req.ref_bb + ', ' + req.tipologia + ', ' + req.tariffa_stanza + '); ' +
+            'INSERT INTO stanza (ref_bb, tipologia, tariffa_stanza, non_disponibile_inizio_st, non_disponibile_fine_st) VALUES ' +
+            '(' + req.ref_bb + ', ' + req.tipologia + ', ' + req.tariffa_stanza + ', "1970-01-01", "1970-01-01"); ' +
             'SELECT @id := (SELECT id_stanza ' +
                             'FROM stanza ' +
                             'HAVING id_stanza >= ALL (SELECT id_stanza ' +

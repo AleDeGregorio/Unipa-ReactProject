@@ -307,21 +307,26 @@ const ricercaAlloggio = async(req) => {
             'SELECT @tipo := "' + (req.tipo == '' ? '%%' : req.tipo) + '"; ' +
             'SELECT @localita := "' + (req.localita == '' ? '%%' : req.localita) + '"; ' +
             'SELECT @provincia := "' + (req.provincia == '' ? '%%' : req.provincia) + '"; ' +
-            'SELECT @servizi := "' + (req.servizi == '' ? '%%' : req.servizi) + '"; ' +
-            'SELECT @posti := ' + (req.posti == '' ? '"%%"' : req.posti) + '; ' +
+            'SELECT @posti := ' + req.posti + '; ' +
             'SELECT @tariffa := ' + (req.tariffa == '' ? '"%%"' : req.tariffa) + '; ' +
-            'SELECT DISTINCT p.nome_proprieta, p.indirizzo, p.localita, p.tipo_proprieta, p.servizi, ' +
+            'SELECT @inizio := "'+ (req.checkIn == '' ? '1970-01-01' : + req.checkIn) + '"; ' +
+            'SELECT @fine := "'+ (req.checkOut == '' ? '1970-01-01' : + req.checkOut) + '"; ' +
+            'SELECT DISTINCT p.nome_proprieta, p.indirizzo, p.localita, p.tipo_proprieta, ' +
                 'IF(@tipo = "cv", c.tariffa_casa, s.tariffa_stanza) AS tariffa, ' +
                 'IF(@tipo = "cv", c.posti_letto, s.tipologia) AS posti, p.descrizione ' +
             'FROM proprieta p, casa_vacanza c, b_and_b b, stanza s ' +
             'WHERE p.id_proprieta = IF(@tipo = "cv", c.ref_proprieta_cv, b.ref_proprieta_bb) AND b.ref_proprieta_bb = s.ref_bb AND ' +
-                'p.localita LIKE @localita AND p.provincia LIKE @provincia AND p.servizi LIKE @servizi AND ' +
-                '(c.posti_letto LIKE @posti OR s.tipologia LIKE @posti) AND (c.tariffa_casa LIKE @tariffa OR s.tariffa_stanza LIKE @tariffa);',
+                'p.localita LIKE @localita AND p.provincia LIKE @provincia AND ' +
+                'p.tipo_proprieta LIKE @tipo AND ' +
+                '(c.posti_letto >= @posti OR s.tipologia >= @posti) AND (c.tariffa_casa LIKE @tariffa OR s.tariffa_stanza LIKE @tariffa) AND ' +
+                '(((@inizio <= c.non_disponibile_inizio_cv AND @fine <= c.non_disponibile_fine_cv) OR (@inizio >= c.non_disponibile_inizio_cv AND @fine >= c.non_disponibile_fine_cv)) ' +
+                'AND ((@inizio <= s.non_disponibile_inizio_st AND @fine <= s.non_disponibile_inizio_st) OR (@inizio >= s.non_disponibile_inizio_st AND @fine >= s.non_disponibile_fine_st)));',
             (err, results) => {
                 if(err) {
                     return reject(new NotFound('Nessun alloggio corrisponde ai criteri di ricerca'));
                 }
-                resolve(results);
+                
+                resolve(results[7]);
             }
         )
     })
