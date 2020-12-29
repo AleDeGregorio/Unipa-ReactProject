@@ -15,13 +15,12 @@ const CasaVacanza = memo(({ casaVacanza }) => {
         <img src={images[0] || defaultImg} alt="single casaVacanza" />
         <div className="info">
         <div className="price-top">
-          <h6>${price}</h6>
-          <p>per night</p>
-        <Link to={`/caseVacanza/${slug}`} className="btn-primary room-link">
-          features
-        </Link>
-      </div>
-      <p className="casaVacanza-info">{name}</p>
+          <h6>${price} a notte</h6>
+        </div>
+          <p className="casaVacanza-info">{name}</p>
+          <Link to={`/caseVacanza/${slug}`} className="vai">
+          visita pagina
+          </Link>
       </div>
     </article>
   );
