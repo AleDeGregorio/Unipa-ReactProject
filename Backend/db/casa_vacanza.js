@@ -25,6 +25,10 @@ const all = async () => {
 
         Connection.query('SELECT * FROM casa_vacanza', (err, results) => {
             if(err) {
+                console.log(err);
+                return reject(new GeneralError('Si è verificato un errore'));
+            }
+            if(results.length < 1) {
                 return reject(new NotFound('Nessuna casa vacanza registrata'));
             }
             resolve(results);
@@ -40,9 +44,13 @@ const getCasa = async(req) => {
             'SELECT * ' +
             'FROM casa_vacanza ' +
             'WHERE ref_proprieta_cv = ' +  req.ref_proprieta_cv + '; ', (err, results) => {
-            if(err) {
-                return reject(new NotFound('Nessuna casa vacanza trovata'));
-            }
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessuna casa vacanza trovata'));
+                }
             resolve(results);
         });
     });
@@ -58,6 +66,10 @@ const getCasePosti = async(req) => {
             'WHERE posti_letto = ' + req.posti_letto,
             (err, results) => {
                 if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
                     return reject(new NotFound('Nessuna casa vacanza corrisponde ai criteri di ricerca'));
                 }
                 resolve(results); 
@@ -79,6 +91,10 @@ const updateCasa = async(req) => {
             'WHERE ref_proprieta_cv = ' + req.ref_proprieta_cv + '; ',
             (err, results) => {
                 if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
                     return reject(new NotFound('Casa vacanza non trovata'));
                 }
                 resolve(results);
@@ -102,6 +118,10 @@ const insertCasa = async(req) => {
             ')',
             (err, results) => {
                 if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
                     return reject(new BadRequest("Si è verificato un errore nell'inserimento"));
                 }
                 resolve(results);

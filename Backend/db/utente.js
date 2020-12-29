@@ -37,6 +37,7 @@ const login = async(req, res, next) => {
                         'WHERE email_prop = "' + req.email + '"; ',
                         (err, results) => {
                             if(err) {
+                                console.log(err);
                                 return reject(new GeneralError('Si è verificato un errore'));
                             }
                             if(results.length < 1) {

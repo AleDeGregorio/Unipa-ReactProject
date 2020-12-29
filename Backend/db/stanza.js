@@ -24,6 +24,10 @@ const all = async () => {
 
         Connection.query('SELECT * FROM stanza', (err, results) => {
             if(err) {
+                console.log(err);
+                return reject(new GeneralError('Si è verificato un errore'));
+            }
+            if(results.length < 1) {
                 return reject(new NotFound('Nessuna stanza registrata'));
             }
             resolve(results);
@@ -39,9 +43,13 @@ const getStanza = async(req) => {
             'SELECT * ' +
             'FROM stanza ' +
             'WHERE id_stanza = ' +  req.id_stanza + '; ', (err, results) => {
-            if(err) {
-                return reject(new NotFound('Stanza non trovata'));
-            }
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Stanza non trovata'));
+                }
             resolve(results);
         });
     });
@@ -55,9 +63,13 @@ const getStanzaBB = async(req) => {
             'SELECT * ' +
             'FROM stanza ' +
             'WHERE ref_bb = ' +  req.ref_bb + '; ', (err, results) => {
-            if(err) {
-                return reject(new NotFound('Nessuna stanza relativa al b&b'));
-            }
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessuna stanza relativa al b&b'));
+                }
             resolve(results);
         });
     });
@@ -71,9 +83,13 @@ const getStanzaTipologia = async(req) => {
             'SELECT * ' +
             'FROM stanza ' +
             'WHERE tipologia = ' +  req.tipologia + '; ', (err, results) => {
-            if(err) {
-                return reject(new NotFound('Nessuna stanza corrisponde alla tipologia selezionata'));
-            }
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessuna stanza corrisponde alla tipologia selezionata'));
+                }
             resolve(results);
         });
     });
@@ -88,9 +104,13 @@ const getStanzaBBTipologia = async(req) => {
             'FROM stanza ' +
             'WHERE ref_bb = ' +  req.ref_bb + ' AND tipologia = ' + req.tipologia + ';',
             (err, results) => {
-            if(err) {
-                return reject(new NotFound('Nessuna stanza trovata'));
-            }
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessuna stanza trovata'));
+                }
             resolve(results);
         });
     });
@@ -110,6 +130,10 @@ const updateStanza= async(req) => {
             'WHERE id_stanza = ' + req.id_stanza + '; ',
             (err, results) => {
                 if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
                     return reject(new NotFound('Stanza non trovata'));
                 }
                 resolve(results);
@@ -142,6 +166,10 @@ const insertStanza = async(req) => {
             'WHERE id_stanza = @id; ',
             (err, results) => {
                 if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
                     return reject(new BadRequest("Si è verificato un errore nell'inserimento"));
                 }
                 resolve(results);

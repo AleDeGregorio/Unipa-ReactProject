@@ -29,6 +29,10 @@ const all = async () => {
 
         Connection.query('SELECT * FROM proprietario', (err, results) => {
             if(err) {
+                console.log(err);
+                return reject(new GeneralError('Si è verificato un errore'));
+            }
+            if(results.length < 1) {
                 return reject(new NotFound('Nessun proprietario registrato'));
             }
             resolve(results);
@@ -44,9 +48,13 @@ const getUser = async(req) => {
             'SELECT * ' +
             'FROM proprietario ' +
             'WHERE email_prop = ' + '"' +  req.email + '"', (err, results) => {
-            if(err) {
-                return reject(new NotFound('Proprietario non trovato'));
-            }
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Proprietario non trovato'));
+                }
             resolve(results);
         });
     });
@@ -67,6 +75,10 @@ const getGuadagni = async(req) => {
             'GROUP BY pro.email_prop;',
             (err, results) => {
                 if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
                     return reject(new NotFound('Nessun guadagno trovato'));
                 }
                 resolve(results);
@@ -92,6 +104,10 @@ const getGuadagniTipo = async(req) => {
             'GROUP BY pro.email_prop;',
             (err, results) => {
                 if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
                     return reject(new NotFound('Nessun guadagno trovato'));
                 }
                 resolve(results);
@@ -117,6 +133,10 @@ const getGuadagniProprieta = async(req) => {
             'GROUP BY pro.email_prop;',
             (err, results) => {
                 if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
                     return reject(new NotFound('Nessun guadagno trovato'));
                 }
                 resolve(results);
@@ -138,6 +158,10 @@ const updateUser= async(req) => {
             'WHERE email_prop = "' + req.email+ '"',
             (err, results) => {
                 if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
                     return reject(new NotFound('Nessun proprietario trovato'));
                 }
                 resolve(results);
@@ -174,6 +198,10 @@ const insertUser = async(req) => {
             '", "' + req.telefono + '", NULL); ',
             (err, results) => {
                 if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
                     return reject(new BadRequest("Si è verificato un errore nell'inserimento"));
                 }
                 resolve(results);
@@ -192,6 +220,10 @@ const invioDati = async(req) => {
             'WHERE email_prop = "' + req.email+ '"; ',
             (err, results) => {
                 if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
                     return reject(new NotFound('Nessun proprietario trovato'));
                 }
                 resolve(results);
@@ -210,6 +242,10 @@ const getDataInvio = async(req) => {
             'WHERE email_prop = "' + req.email + '"; ',
             (err, results) => {
                 if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
                     return reject(new NotFound('Nessun proprietario trovato'));
                 }
                 resolve(results);
@@ -228,6 +264,7 @@ const login = async(req) => {
             'WHERE email_prop = "' + req.email + '"; ',
             (err, results) => {
                 if(err) {
+                    console.log(err);
                     return reject(new GeneralError('Si è verificato un errore'));
                 }
                 if(results.length < 1) {

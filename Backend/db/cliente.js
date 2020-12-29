@@ -26,7 +26,11 @@ const all = async () => {
 
         Connection.query('SELECT * FROM cliente', (err, results) => {
             if(err) {
-                return reject(new GeneralError('Nessun cliente registrato'));
+                console.log(err);
+                return reject(new GeneralError('Si è verificato un errore'));
+            }
+            if(results.length < 1) {
+                return reject(new NotFound('Nessun cliente registrato'));
             }
             resolve(results);
         });
@@ -41,9 +45,13 @@ const getUser = async(req) => {
             'SELECT * ' +
             'FROM cliente ' +
             'WHERE email_cl = ' + '"' +  req.email + '"', (err, results) => {
-            if(err) {
-                return reject(new NotFound('Cliente non trovato'));
-            }
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Cliente non trovato'));
+                }
             resolve(results);
         });
     });
@@ -60,6 +68,10 @@ const updateUser = async(req) => {
             'WHERE email_cl = "' + req.email + '"',
             (err, results) => {
                 if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
                     return reject(new NotFound('Cliente non trovato'));
                 }
                 resolve(results);
@@ -79,7 +91,11 @@ const insertUser = async(req) => {
             req.nascita + '", "' + req.telefono + '"); ',
             (err, results) => {
                 if(err) {
-                    return reject(new GeneralError("Si è verificato un errore nell'inserimento"));
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new BadRequest("Si è verificato un errore nell'inserimento"));
                 }
                 resolve(results);
             }
@@ -97,6 +113,7 @@ const login = async(req, res, next) => {
             'WHERE email_cl = "' + req.email + '"; ',
             (err, results) => {
                 if(err) {
+                    console.log(err);
                     return reject(new GeneralError('Si è verificato un errore'));
                 }
                 if(results.length < 1) {

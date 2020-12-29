@@ -24,6 +24,10 @@ const all = async () => {
 
         Connection.query('SELECT * FROM prenotazione', (err, results) => {
             if(err) {
+                console.log(err);
+                return reject(new GeneralError('Si è verificato un errore'));
+            }
+            if(results.length < 1) {
                 return reject(new NotFound('Nessuna prenotazione registrata'));
             }
             resolve(results);
@@ -40,9 +44,13 @@ const getPrenotazione = async(req) => {
             'FROM prenotazione ' +
             'WHERE id_prenotazione = ' +  req.id_prenotazione + '; ',
             (err, results) => {
-            if(err) {
-                return reject(new NotFound('Prenotazione non trovata'));
-            }
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Prenotazione non trovata'));
+                }
             resolve(results);
         });
     });
@@ -57,9 +65,13 @@ const getPrenotazioneSoggiornante = async(req) => {
             'FROM prenotazione ' +
             'WHERE ref_soggiornante = "' +  req.ref_soggiornante + '"',
             (err, results) => {
-            if(err) {
-                return reject(new NotFound('Nessuna prenotazione relativa al soggiornante'));
-            }
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessuna prenotazione relativa al soggiornante'));
+                }
             resolve(results);
         });
     });
@@ -74,9 +86,13 @@ const getPrenotazioneCliente = async(req) => {
             'FROM prenotazione, proprieta, soggiornante ' +
             'WHERE ref_cliente = "' +  req.ref_cliente + '" AND ref_proprieta = id_proprieta AND ref_soggiornante = cf_sogg',
             (err, results) => {
-            if(err) {
-                return reject(new NotFound('Nessuna prenotazione relativa al cliente'));
-            }
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessuna prenotazione relativa al cliente'));
+                }
 
             var res1 = results;
             
@@ -87,6 +103,10 @@ const getPrenotazioneCliente = async(req) => {
                     'WHERE ref_proprieta_cv = ' + res1[0].id_proprieta + '; ',
                     (err, results) => {
                         if(err) {
+                            console.log(err);
+                            return reject(new GeneralError('Si è verificato un errore'));
+                        }
+                        if(results.length < 1) {
                             return reject(new NotFound('Casa vacanza non trovata'));
                         }
 
@@ -105,6 +125,10 @@ const getPrenotazioneCliente = async(req) => {
                     'WHERE ref_proprieta_bb = ' + res1[0].id_proprieta + ' AND ref_proprieta_bb = ref_bb ',
                     (err, results) => {
                         if(err) {
+                            console.log(err);
+                            return reject(new GeneralError('Si è verificato un errore'));
+                        }
+                        if(results.length < 1) {
                             return reject(new NotFound('B&B non trovato'));
                         }
 
@@ -130,9 +154,13 @@ const getPrenotazioneProprietario = async(req) => {
             'FROM prenotazione ' +
             'WHERE ref_proprietario = "' +  req.ref_proprietario + '"',
             (err, results) => {
-            if(err) {
-                return reject(new NotFound('Nessuna prenotazione relativa al proprietario'));
-            }
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessuna prenotazione relativa al proprietario'));
+                }
             resolve(results);
         });
     });
@@ -147,9 +175,13 @@ const getPrenotazioneProprieta = async(req) => {
             'FROM prenotazione ' +
             'WHERE ref_proprieta = ' +  req.ref_proprieta + '; ',
             (err, results) => {
-            if(err) {
-                return reject(new NotFound("Nessuna prenotazione relativa all'alloggio"));
-            }
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound("Nessuna prenotazione relativa all'alloggio"));
+                }
             resolve(results);
         });
     });
@@ -165,6 +197,10 @@ const getPrenotazioneAccettazione = async(req) => {
             'WHERE prenotazione.ref_proprietario = "' + req.ref_proprietario + '" AND accettata = false AND ref_proprieta = id_proprieta;',
             (err, results) => {
                 if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
                     return reject(new NotFound('Nessuna prenotazione da accettare'));
                 }
 
@@ -177,6 +213,10 @@ const getPrenotazioneAccettazione = async(req) => {
                         'WHERE ref_proprieta_cv = ' + res1[0].id_proprieta + '; ',
                         (err, results) => {
                             if(err) {
+                                console.log(err);
+                                return reject(new GeneralError('Si è verificato un errore'));
+                            }
+                            if(results.length < 1) {
                                 return reject(new NotFound('Casa vacanza non trovata'));
                             }
 
@@ -195,6 +235,10 @@ const getPrenotazioneAccettazione = async(req) => {
                         'WHERE ref_proprieta_bb = ' + res1[0].id_proprieta + ' AND ref_proprieta_bb = ref_bb ',
                         (err, results) => {
                             if(err) {
+                                console.log(err);
+                                return reject(new GeneralError('Si è verificato un errore'));
+                            }
+                            if(results.length < 1) {
                                 return reject(new NotFound('B&B non trovato'));
                             }
 
@@ -222,8 +266,12 @@ const getPrenotazioneAccettata = async(req) => {
             'WHERE prenotazione.ref_proprietario = "' + req.ref_proprietario + '" AND accettata = true AND ref_proprieta = id_proprieta;',
             (err, results) => {
                 if(err) {
-                    return reject(new NotFound('Nessuna prenotazione accettata'));
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
                 }
+                /*if(results.length < 1) {
+                    return reject(new NotFound('Nessuna prenotazione accettata'));
+                }*/
 
                 if(results.length < 1) {
                     resolve(results);
@@ -239,6 +287,10 @@ const getPrenotazioneAccettata = async(req) => {
                             'WHERE ref_proprieta_cv = ' + res1[0].id_proprieta + '; ',
                             (err, results) => {
                                 if(err) {
+                                    console.log(err);
+                                    return reject(new GeneralError('Si è verificato un errore'));
+                                }
+                                if(results.length < 1) {
                                     return reject(new NotFound('Casa vacanza non trovata'));
                                 }
 
@@ -257,6 +309,10 @@ const getPrenotazioneAccettata = async(req) => {
                             'WHERE ref_proprieta_bb = ' + res1[0].id_proprieta + ' AND ref_proprieta_bb = ref_bb ',
                             (err, results) => {
                                 if(err) {
+                                    console.log(err);
+                                    return reject(new GeneralError('Si è verificato un errore'));
+                                }
+                                if(results.length < 1) {
                                     return reject(new NotFound('B&B non trovato'));
                                 }
 
@@ -264,7 +320,7 @@ const getPrenotazioneAccettata = async(req) => {
                                     res1[i].img = results[0].imgST_path1;
                                     res1[i].id_stanza = results[i].id_stanza;
                                 }
-                                console.log(res1);
+
                                 resolve(res1);
                             }
                         )
@@ -285,6 +341,10 @@ const accettaPrenotazione = async(req) => {
             'WHERE id_prenotazione = ' + req.id_prenotazione + '; ', 
             (err, results) => {
                 if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
                     return reject(new NotFound('Prenotazione non trovata'));
                 }
 
@@ -295,6 +355,10 @@ const accettaPrenotazione = async(req) => {
                         'WHERE ref_proprieta_cv = ' + req.ref_proprieta + '; ',
                         (err, results) => {
                             if(err) {
+                                console.log(err);
+                                return reject(new GeneralError('Si è verificato un errore'));
+                            }
+                            if(results.length < 1) {
                                 return reject(new NotFound('Casa vacanza non trovata'));
                             }
 
@@ -309,6 +373,10 @@ const accettaPrenotazione = async(req) => {
                         'WHERE id_stanza = ' + req.id_stanza + '; ',
                         (err, results) => {
                             if(err) {
+                                console.log(err);
+                                return reject(new GeneralError('Si è verificato un errore'));
+                            }
+                            if(results.length < 1) {
                                 return reject(new NotFound('Stanza non trovata'));
                             }
 
@@ -334,6 +402,10 @@ const updatePrenotazione = async(req) => {
             'WHERE id_prenotazione = ' + req.id_prenotazione + '; ',
             (err, results) => {
                 if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
                     return reject(new NotFound('Prenotazione non trovata'));
                 }
                 resolve(results);
@@ -352,6 +424,10 @@ const updateDatePrenotazione = async(req) => {
             'WHERE id_prenotazione = ' + req.id_prenotazione + '; ',
             (err, results) => {
                 if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
                     return reject(new NotFound('Prenotazione non trovata'));
                 }
                 resolve(results);
@@ -372,6 +448,10 @@ const insertPrenotazione = async(req) => {
             req.data_ritorno + '", false)',
             (err, results) => {
                 if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
                     return reject(new BadRequest("Si è verificato un errore nell'inserimento"));
                 }
                 resolve(results);
@@ -387,7 +467,11 @@ const deletePrenotazione = async(req) => {
             'DELETE FROM prenotazione WHERE id_prenotazione = ' + req.id_prenotazione + ';',
             (err, results) => {
                 if(err) {
-                    return reject(new NotFound("Prenotazione non trovata"));
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Prenotazione non trovata'));
                 }
                 resolve(results);
             }
@@ -410,6 +494,7 @@ const checkSoggiornante = async(req) => {
             'GROUP BY pre.ref_soggiornante, YEAR(pre.data_ritorno);',
             (err, results) => {
                 if(err) {
+                    console.log(err);
                     return reject(new GeneralError('Si è verificato un errore'));
                 }
                 if(results.length < 1) {

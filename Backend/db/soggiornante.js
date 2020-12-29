@@ -24,6 +24,10 @@ const all = async () => {
 
         Connection.query('SELECT * FROM soggiornante', (err, results) => {
             if(err) {
+                console.log(err);
+                return reject(new GeneralError('Si è verificato un errore'));
+            }
+            if(results.length < 1) {
                 return reject(new NotFound('Nessun soggiornante registrato'));
             }
             resolve(results);
@@ -39,9 +43,13 @@ const getSoggiornante = async(req) => {
             'SELECT * ' +
             'FROM soggiornante ' +
             'WHERE cf_sogg = ' + '"' +  req.cf + '"', (err, results) => {
-            if(err) {
-                return reject(new NotFound('Soggiornante non trovato'));
-            }
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Soggiornante non trovato'));
+                }
             resolve(results);
         });
     });
@@ -58,6 +66,10 @@ const updateSoggiornante= async(req) => {
             'WHERE cf_sogg = "' + req.cf+ '"',
             (err, results) => {
                 if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
                     return reject(new NotFound('Nessun soggiornante trovato'));
                 }
                 resolve(results);
@@ -75,7 +87,11 @@ const insertSoggiornante = async(req) => {
             '("' + req.cf + '", "' + req.nome + '", "' + req.cognome + '", "' + req.nascita +  '")',
             (err, results) => {
                 if(err) {
-                    return reject(new NotFound("Si è verificato un errore nell'inserimento"));
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new BadRequest("Si è verificato un errore nell'inserimento"));
                 }
                 resolve(results);
         });
