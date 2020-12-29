@@ -1,42 +1,57 @@
 import React from 'react';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import './App.css';
+
+// Fissi in ogni pagina
 import Navbar from './components/NavBar'
 import Footer from './components/Footer'
+
+// Pagine generali
 import HomePage from './components/HomePage'
-import Autenticazione from './Autenticazione/Autenticazione'
-import Cliente from './components/ClientePage'
-import ProprietarioPage from './GestioneProprietario/ProprietarioPage'
+import ErrorPage from './components/ErrorPage'
+import CaseVacanza from './Pagine/CaseVacanza'
+import RiepilogoCasaVacanza from './Pagine/RiepilogoCasaVacanza';
+import BandB from './Pagine/B&B'
 //import PaginaDettagli from './PaginaDettagli/PaginaDettagli'
-import Checkin from './GestioneProprietario/Checkin/Checkin'
-import CheckinEffettuato from './GestioneProprietario/Checkin/CheckinEffettuato'
-import Earning2 from './GestioneProprietario/Earning/Earning2'
-import DatiPersonali from './GestioneProprietario/DatiPersonali'
-import InserimentoProprietà from './GestioneProprietario/InserisciProp/InserimentoProprietà';
-import ElencoCasaVacanza from './GestioneProprietario/Modifica/ElencoCasaVacanza'
-import ElencoBeB from './GestioneProprietario/Modifica/ElencoB&B'
-import SceltaModifica from './GestioneProprietario/Modifica/SceltaModifica'
-import ModificaCasaVacanza from './GestioneProprietario/Modifica/ModificaCasaVacanza'
+
+// Login e registrazione
+import Autenticazione from './Autenticazione/Autenticazione'
 import SecondaAutenticazioneAccedi from './Autenticazione/secondaAutenticazioneAccedi'
 import SecondaAutenticazioneRegistrati from './Autenticazione/secondaAutenticazioneRegistrati'
+import SecondaAutenticazioneRegistratiCliente from './Autenticazione/secondaAutenticazioneRegistratiCliente'
+import SecondaAutenticazioneRegistratiProprietario from './Autenticazione/secondaAutenticazioneRegistratiProprietario'
+
+// Area personale del cliente
+import Cliente from './components/ClientePage'
+import GestionePrenotazione from './GestioneUtente/GestionePrenotazione'
+
+// Area personale del proprietario
+import ProprietarioPage from './GestioneProprietario/ProprietarioPage'
+// Gestione prenotazione
+import Testina from './GestioneProprietario/Accettazione/Testina'
+import Checkin from './GestioneProprietario/Checkin/Checkin'
+import CheckinEffettuato from './GestioneProprietario/Checkin/CheckinEffettuato'
+// Inserimento proprietà
+import InserimentoProprietà from './GestioneProprietario/InserisciProp/InserimentoProprietà';
+import InserimentoCasaVacanza from './GestioneProprietario/InserisciProp/inserimentoCasaVacanza'
+import InserimentoBnB from './GestioneProprietario/InserisciProp/inserimentoB&B'
+import ElencoBnB2 from './GestioneProprietario/InserisciProp/ElencoB&B'
+import InserimentoStanzaBnB from './GestioneProprietario/InserisciProp/InserimentoStanzaBnB'
+// Modifica proprietà
+import SceltaModifica from './GestioneProprietario/Modifica/SceltaModifica'
+import ElencoCasaVacanza from './GestioneProprietario/Modifica/ElencoCasaVacanza'
+import ModificaCasaVacanza from './GestioneProprietario/Modifica/ModificaCasaVacanza'
 import SceltaModificaBeb from './GestioneProprietario/Modifica/SceltaModificaB&B'
+import ElencoBeB from './GestioneProprietario/Modifica/ElencoB&B'
 import ModificaBeB from './GestioneProprietario/Modifica/ModificaB&B'
 import ElencoListaStanze from './GestioneProprietario/Modifica/ElencoListaStanze'
 import ModificaStanza from './GestioneProprietario/Modifica/ModificaStanza'
-import InserimentoBnB from './GestioneProprietario/InserisciProp/inserimentoB&B'
-import InserimentoCasaVacanza from './GestioneProprietario/InserisciProp/inserimentoCasaVacanza'
-import GestionePrenotazione from './GestioneUtente/GestionePrenotazione'
-import SecondaAutenticazioneRegistratiProprietario from './Autenticazione/secondaAutenticazioneRegistratiProprietario'
-import SecondaAutenticazioneRegistratiCliente from './Autenticazione/secondaAutenticazioneRegistratiCliente'
-import CaseVacanza from './Pagine/CaseVacanza'
-import BandB from './Pagine/B&B'
-import InserimentoStanzaBnB from './GestioneProprietario/InserisciProp/InserimentoStanzaBnB'
-import RiepilogoCasaVacanza from './Pagine/RiepilogoCasaVacanza';
-import ErrorPage from './components/ErrorPage'
-import Testina from './GestioneProprietario/Accettazione/Testina'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import ElencoBnB2 from './GestioneProprietario/InserisciProp/ElencoB&B'
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+// Gestione account
+import DatiPersonali from './GestioneProprietario/DatiPersonali'
+// Resoconto guadagni
+import Earning2 from './GestioneProprietario/Earning/Earning2'
 
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 Storage.prototype.setObj = function(key, obj) {
   return this.setItem(key, JSON.stringify(obj))
@@ -121,7 +136,9 @@ class App extends React.Component {
       <Router>
       <div className="App">
           <Navbar />
+
             <Switch>
+
               <Route exact path="/">
                 <HomePage/>
               </Route>
@@ -131,6 +148,16 @@ class App extends React.Component {
                   <ErrorPage {...props} 
                 />)}
               />
+              <Route exact path="/CaseVacanza/">
+                <CaseVacanza />
+              </Route>
+              <Route exact path="/CaseVacanza/:slug">
+                <RiepilogoCasaVacanza />
+              </Route>
+              <Route exact path="/B&B/">
+                <BandB />
+              </Route>
+
               <Route 
                 exact path = '/Autenticazione'
                 render = { (props) => (
@@ -158,13 +185,26 @@ class App extends React.Component {
               <Route exact path = '/secondaAutenticazioneRegistrati'>
                 <SecondaAutenticazioneRegistrati/>
               </Route>
+              <Route exact path = '/secondaAutenticazioneRegistratiCliente'>
+                <SecondaAutenticazioneRegistratiCliente />
+              </Route>
+              <Route exact path= '/secondaAutenticazioneRegistratiProprietario'>
+                <SecondaAutenticazioneRegistratiProprietario />
+              </Route>
+
               <Route exact path = "/PaginaCliente">
                 <Cliente />
               </Route>
+              <Route exact path = '/GestionePrenotazione'>
+                <GestionePrenotazione/>
+              </Route>
+
               <Route exact path = '/PaginaProprietario'>
                 <ProprietarioPage/>
               </Route>
-              
+              <Route exact path="/Testina">
+                <Testina />
+              </Route>
               <Route exact path = '/Checkin'>
                 <Checkin />
               </Route>
@@ -174,20 +214,23 @@ class App extends React.Component {
               <Route exact path = '/InserimentoProprietà'>
                 <InserimentoProprietà />
               </Route>
-              <Route exact path = '/DatiPersonali'>
-                <DatiPersonali/>
+              <Route exact path = '/InserimentoCasaVacanza'>
+                <InserimentoCasaVacanza/>
               </Route>
-              <Route exact path = '/Earning'>
-                <Earning2/>
+              <Route exact path = '/InserimentoBnB'>
+                <InserimentoBnB/>
               </Route>
-              <Route exact path = '/ElencoB&B'>
-                <ElencoBeB/>
+              <Route exact path="/ElencoBnB2">
+                <ElencoBnB2 />
               </Route>
-              <Route exact path = '/ElencoCasaVacanza'>
-                <ElencoCasaVacanza/>
+              <Route exact path="/InserimentoStanzaBnB">
+                <InserimentoStanzaBnB />
               </Route>
               <Route exact path = '/SceltaModifica'>
                 <SceltaModifica/>
+              </Route>
+              <Route exact path = '/ElencoCasaVacanza'>
+                <ElencoCasaVacanza/>
               </Route>
               <Route 
                 exact path = '/ModificaCasaVacanza'
@@ -201,6 +244,9 @@ class App extends React.Component {
                   <SceltaModificaBeb {...props}/>
                 )}
               />
+              <Route exact path = '/ElencoB&B'>
+                <ElencoBeB/>
+              </Route>
               <Route 
                 exact path = '/ModificaB&B'
                 render = { (props) => (
@@ -219,30 +265,19 @@ class App extends React.Component {
                   <ModificaStanza {...props}/>
                 )}
               />
-              <Route exact path = '/InserimentoBnB'>
-                <InserimentoBnB/>
+              <Route exact path = '/DatiPersonali'>
+                <DatiPersonali/>
               </Route>
-              <Route exact path = '/InserimentoCasaVacanza'>
-                <InserimentoCasaVacanza/>
+              <Route exact path = '/Earning'>
+                <Earning2/>
               </Route>
-              <Route exact path = '/GestionePrenotazione'>
-                <GestionePrenotazione/>
-              </Route>
-              <Route exact path = '/secondaAutenticazioneRegistratiCliente'>
-                <SecondaAutenticazioneRegistratiCliente />
-              </Route>
-              <Route exact path= '/secondaAutenticazioneRegistratiProprietario'>
-                <SecondaAutenticazioneRegistratiProprietario />
-              </Route>
-              <Route exact path="/CaseVacanza/" component={CaseVacanza} />
-              <Route exact path="/B&B/" component={BandB} />
-              <Route exact path="/CaseVacanza/:slug" component={RiepilogoCasaVacanza} />
-              <Route exact path="/Testina" component={Testina} />
-              <Route exact path="/InserimentoStanzaBnB" component={InserimentoStanzaBnB} />
-              <Route exact path="/ElencoBnB2" component={ElencoBnB2} />
-            </Switch>  
+
+            </Switch> 
+
           <Footer/>
+
           </div>
+
         </ Router>
       );
   }
