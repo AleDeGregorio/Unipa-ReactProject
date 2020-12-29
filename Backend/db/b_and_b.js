@@ -26,6 +26,10 @@ const all = async () => {
 
         Connection.query('SELECT * FROM b_and_b', (err, results) => {
             if(err) {
+                console.log(err);
+                return reject(new GeneralError('Si è verificato un errore'));
+            }
+            if(results.length < 1) {
                 return reject(new NotFound('Nessun b&b registrato'));
             }
             resolve(results);
@@ -41,9 +45,13 @@ const getBB = async(req) => {
             'SELECT * ' +
             'FROM b_and_b ' +
             'WHERE ref_proprieta_bb = ' + req.ref_proprieta_bb + '; ', (err, results) => {
-            if(err) {
-                return reject(new NotFound('Nessun b&b relativo al proprietario'));
-            }
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessun b&b relativo al proprietario'));
+                }
             resolve(results);
         });
     });
@@ -59,6 +67,10 @@ const updateBB = async(req) => {
             'WHERE ref_proprieta_bb = ' + req.ref_proprieta_bb + '; ',
             (err, results) => {
                 if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
                     return reject(new NotFound('B&B non trovato'));
                 }
                 resolve(results);
@@ -76,6 +88,10 @@ const insertBB = async(req) => {
             '(' + req.ref_proprieta_bb + ', ' + req.check_in + ', ' + req.check_out + ')',
             (err, results) => {
                 if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
                     return reject(new BadRequest("Si è verificato un errore nell'inserimento"));
                 }
                 resolve(results);

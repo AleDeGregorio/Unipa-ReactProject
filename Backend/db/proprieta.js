@@ -24,6 +24,10 @@ const all = async () => {
 
         Connection.query('SELECT * FROM proprieta', (err, results) => {
             if(err) {
+                console.log(err);
+                return reject(new GeneralError('Si è verificato un errore'));
+            }
+            if(results.length < 1) {
                 return reject(new NotFound('Nessuna proprietà registrata'));
             }
             resolve(results);
@@ -39,9 +43,13 @@ const getProprieta = async(req) => {
             'SELECT * ' +
             'FROM proprieta ' +
             'WHERE id_proprieta = ' +  req.id_proprieta + '; ', (err, results) => {
-            if(err) {
-                return reject(new NotFound('Nessuna proprietà trovata'));
-            }
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessuna proprietà trovata'));
+                }
             resolve(results);
         });
     });
@@ -55,9 +63,13 @@ const getProprietaNome = async(req) => {
             'SELECT * ' +
             'FROM proprieta ' +
             'WHERE nome_proprieta = "' +  req.nome_proprieta + '"', (err, results) => {
-            if(err) {
-                return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
-            }
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
+                }
             resolve(results);
         });
     });
@@ -71,9 +83,13 @@ const getProprietaLocalita = async(req) => {
             'SELECT * ' +
             'FROM proprieta ' +
             'WHERE localita = "' +  req.localita + '"', (err, results) => {
-            if(err) {
-                return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
-            }
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
+                }
             resolve(results);
         });
     });
@@ -87,9 +103,13 @@ const getProprietaProvincia = async(req) => {
             'SELECT * ' +
             'FROM proprieta ' +
             'WHERE provincia = "' +  req.provincia + '"', (err, results) => {
-            if(err) {
-                return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
-            }
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
+                }
             resolve(results);
         });
     });
@@ -103,9 +123,13 @@ const getProprietaTipo = async(req) => {
             'SELECT * ' +
             'FROM proprieta ' +
             'WHERE tipo_proprieta = "' +  req.tipo_proprieta + '"', (err, results) => {
-            if(err) {
-                return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
-            }
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
+                }
             resolve(results);
         });
     });
@@ -121,9 +145,13 @@ const getProprietaCVProprietario = async(req) => {
             'WHERE id_proprieta = ref_proprieta_cv AND ' +
             'tipo_proprieta = "' +  req.tipo_proprieta + '" AND ref_proprietario = "' + req.ref_proprietario + '"; ', 
             (err, results) => {
-            if(err) {
-                return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
-            }
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
+                }
             resolve(results);
         });
     });
@@ -139,9 +167,13 @@ const getProprietaBBProprietario = async(req) => {
             'WHERE id_proprieta = ref_proprieta_bb AND ' +
             'tipo_proprieta = "' +  req.tipo_proprieta + '" AND ref_proprietario = "' + req.ref_proprietario + '"; ', 
             (err, results) => {
-            if(err) {
-                return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
-            }
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
+                }
             resolve(results);
         });
     });
@@ -155,9 +187,13 @@ const getProprietaServizi = async(req) => {
             'SELECT * ' +
             'FROM proprieta ' +
             'WHERE servizi = "' +  req.servizi + '"', (err, results) => {
-            if(err) {
-                return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
-            }
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
+                }
             resolve(results);
         });
     });
@@ -171,9 +207,13 @@ const getProprietaProprietario = async(req) => {
             'SELECT * ' +
             'FROM proprieta ' +
             'WHERE ref_proprietario = "' +  req.ref_proprietario + '"', (err, results) => {
-            if(err) {
-                return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
-            }
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
+                }
             resolve(results);
         });
     });
@@ -188,9 +228,13 @@ const getProprietaLocalitaTipo = async(req) => {
             'FROM proprieta ' +
             'WHERE localita = "' +  req.localita + '" AND tipo_proprieta = "' + req.tipo_proprieta + '"', 
             (err, results) => {
-            if(err) {
-                return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
-            }
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
+                }
             resolve(results);
         });
     });
@@ -205,9 +249,13 @@ const getProprietaProvinciaTipo = async(req) => {
             'FROM proprieta ' +
             'WHERE provincia = "' +  req.provincia + '" AND tipo_proprieta = "' + req.tipo_proprieta + '"', 
             (err, results) => {
-            if(err) {
-                return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
-            }
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
+                }
             resolve(results);
         });
     });
@@ -222,9 +270,13 @@ const getProprietaLocalitaServizi = async(req) => {
             'FROM proprieta ' +
             'WHERE localita = "' +  req.localita + '" AND servizi = "' + req.servizi + '"', 
             (err, results) => {
-            if(err) {
-                return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
-            }
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
+                }
             resolve(results);
         });
     });
@@ -239,9 +291,13 @@ const getProprietaProvinciaServizi = async(req) => {
             'FROM proprieta ' +
             'WHERE provincia = "' +  req.provincia + '" AND servizi = "' + req.servizi + '"', 
             (err, results) => {
-            if(err) {
-                return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
-            }
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
+                }
             resolve(results);
         });
     });
@@ -256,9 +312,13 @@ const getProprietaTipoServizi = async(req) => {
             'FROM proprieta ' +
             'WHERE tipo_proprieta = "' +  req.tipo_proprieta + '" AND servizi = "' + req.servizi + '"', 
             (err, results) => {
-            if(err) {
-                return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
-            }
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
+                }
             resolve(results);
         });
     });
@@ -273,9 +333,13 @@ const getProprietaLocalitaTipoServizi = async(req) => {
             'FROM proprieta ' +
             'WHERE localita = "' +  req.localita + '" AND tipo_proprieta = "' + req.tipo_proprieta + '" AND servizi = "' + req.servizi + '"',
             (err, results) => {
-            if(err) {
-                return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
-            }
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
+                }
             resolve(results);
         });
     });
@@ -290,9 +354,13 @@ const getProprietaProvinciaTipoServizi = async(req) => {
             'FROM proprieta ' +
             'WHERE provincia = "' +  req.provincia + '" AND tipo_proprieta = "' + req.tipo_proprieta + '" AND servizi = "' + req.servizi + '"',
             (err, results) => {
-            if(err) {
-                return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
-            }
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
+                }
             resolve(results);
         });
     });
@@ -308,7 +376,7 @@ const ricercaAlloggio = async(req) => {
             'SELECT @localita := "' + (req.localita == '' ? '%%' : req.localita) + '"; ' +
             'SELECT @provincia := "' + (req.provincia == '' ? '%%' : req.provincia) + '"; ' +
             'SELECT @posti := ' + req.posti + '; ' +
-            'SELECT @tariffa := ' + (req.tariffa == '' ? '"%%"' : req.tariffa) + '; ' +
+            'SELECT @tariffa := ' + (req.tariffa == '' ? 99999 : req.tariffa) + '; ' +
             'SELECT @inizio := "'+ (req.checkIn == '' ? '1970-01-01' : + req.checkIn) + '"; ' +
             'SELECT @fine := "'+ (req.checkOut == '' ? '1970-01-01' : + req.checkOut) + '"; ' +
             'SELECT DISTINCT p.nome_proprieta, p.indirizzo, p.localita, p.tipo_proprieta, ' +
@@ -318,12 +386,16 @@ const ricercaAlloggio = async(req) => {
             'WHERE p.id_proprieta = IF(@tipo = "cv", c.ref_proprieta_cv, b.ref_proprieta_bb) AND b.ref_proprieta_bb = s.ref_bb AND ' +
                 'p.localita LIKE @localita AND p.provincia LIKE @provincia AND ' +
                 'p.tipo_proprieta LIKE @tipo AND ' +
-                '(c.posti_letto >= @posti OR s.tipologia >= @posti) AND (c.tariffa_casa LIKE @tariffa OR s.tariffa_stanza LIKE @tariffa) AND ' +
+                '(c.posti_letto >= @posti OR s.tipologia >= @posti) AND (c.tariffa_casa <= @tariffa OR s.tariffa_stanza <= @tariffa) AND ' +
                 '(((@inizio <= c.non_disponibile_inizio_cv AND @fine <= c.non_disponibile_fine_cv) OR (@inizio >= c.non_disponibile_inizio_cv AND @fine >= c.non_disponibile_fine_cv)) ' +
                 'AND ((@inizio <= s.non_disponibile_inizio_st AND @fine <= s.non_disponibile_inizio_st) OR (@inizio >= s.non_disponibile_inizio_st AND @fine >= s.non_disponibile_fine_st)));',
             (err, results) => {
                 if(err) {
-                    return reject(new NotFound('Nessun alloggio corrisponde ai criteri di ricerca'));
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
                 }
                 
                 resolve(results[7]);
@@ -345,6 +417,10 @@ const updateProprieta= async(req) => {
             'WHERE id_proprieta= ' + req.id_proprieta+ '; ',
             (err, results) => {
                 if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
                     return reject(new NotFound('Proprietà non trovata'));
                 }
                 resolve(results);
@@ -372,6 +448,10 @@ const insertProprieta = async(req) => {
             servizio6 + ', "' + req.ref_proprietario + '", "' + req.descrizione + '"); ',
             (err, results) => {
                 if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
                     return reject(new BadRequest("Si è verificato un errore nell'inserimento"));
                 }
                 resolve(results);

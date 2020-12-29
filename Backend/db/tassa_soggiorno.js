@@ -24,6 +24,10 @@ const all = async () => {
 
         Connection.query('SELECT * FROM tassa_soggiorno', (err, results) => {
             if(err) {
+                console.log(err);
+                return reject(new GeneralError('Si è verificato un errore'));
+            }
+            if(results.length < 1) {
                 return reject(new NotFound('Nessuna tassa di soggiorno registrata'));
             }
             resolve(results);
@@ -39,9 +43,13 @@ const getTassa = async(req) => {
             'SELECT * ' +
             'FROM tassa_soggiorno ' +
             'WHERE id_tassa = ' +  req.id_tassa + '; ', (err, results) => {
-            if(err) {
-                return reject(new NotFound('Tassa di soggiorno non trovata'));
-            }
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Tassa di soggiorno non trovata'));
+                }
             resolve(results);
         });
     });
@@ -55,9 +63,13 @@ const getTassaSoggiornante = async(req) => {
             'SELECT * ' +
             'FROM tassa_soggiorno ' +
             'WHERE ref_soggiornante = "' +  req.ref_soggiornante + '"', (err, results) => {
-            if(err) {
-                return reject(new NotFound('Nessuna tassa di soggiorno relativa al soggiornante'));
-            }
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessuna tassa di soggiorno relativa al soggiornante'));
+                }
             resolve(results);
         });
     });
@@ -71,9 +83,13 @@ const getTassaPrenotazione = async(req) => {
             'SELECT * ' +
             'FROM tassa_soggiorno ' +
             'WHERE ref_prenotazione = ' + req.ref_prenotazione + '; ', (err, results) => {
-            if(err) {
-                return reject(new NotFound('Nessuna tassa di soggiorno relativa alla prenotazione'));
-            }
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessuna tassa di soggiorno relativa alla prenotazione'));
+                }
             resolve(results);
         });
     });
@@ -87,9 +103,13 @@ const getTassaProprietario = async(req) => {
             'SELECT * ' +
             'FROM tassa_soggiorno ' +
             'WHERE ref_proprietario = ' + '"' +  req.ref_proprietario + '"', (err, results) => {
-            if(err) {
-                return reject(new NotFound('Nessuna tassa di soggiorno relativa al proprietario'));
-            }
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessuna tassa di soggiorno relativa al proprietario'));
+                }
             resolve(results);
         });
     });
@@ -106,6 +126,10 @@ const updateTassa= async(req) => {
             'WHERE id_tassa = ' + req.id_tassa + '; ',
             (err, results) => {
                 if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
                     return reject(new NotFound('Tassa di soggiorno non trovata'));
                 }
                 resolve(results);
@@ -124,6 +148,10 @@ const insertTassa = async(req) => {
             req.ref_proprietario + '", ' + req.ammontare + ')',
             (err, results) => {
                 if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
                     return reject(new BadRequest("Si è verificato un errore nell'inserimento"));
                 }
                 resolve(results);
