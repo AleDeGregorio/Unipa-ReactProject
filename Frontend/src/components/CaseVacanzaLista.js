@@ -1,5 +1,8 @@
 import React from "react";
 import CasaVacanza from "./CasaVacanza";
+
+import './CaseVacanzaLista';
+
 const CaseVacanzaList = ({ caseVacanza }) => {
   if (caseVacanza.length === 0) {
     return (
@@ -10,7 +13,7 @@ const CaseVacanzaList = ({ caseVacanza }) => {
   }
   return (
     <section className="caseVacanzalist">
-      <div className="caseVacanzalist-center">
+      <div className="caseVacanzalistDiv">
         {caseVacanza.map(item => {
           return <CasaVacanza key={item.id} casaVacanza={item} />;
         })}

@@ -4,22 +4,25 @@ import defaultImg from "../images/room-1.jpeg";
 import PropTypes from "prop-types";
 import { memo } from "react";
 import {CasaVacanzaProvider} from "../CasaVacanza/context";
+
+import './CasaVacanza.css';
+
 const CasaVacanza = memo(({ casaVacanza }) => {
   const { name, slug, images, price } = casaVacanza;
   // console.log(name);
   return (
     <article className="casaVacanza">
-      <div className="img-container">
         <img src={images[0] || defaultImg} alt="single casaVacanza" />
+        <div className="info">
         <div className="price-top">
           <h6>${price}</h6>
           <p>per night</p>
-        </div>
         <Link to={`/caseVacanza/${slug}`} className="btn-primary room-link">
           features
         </Link>
       </div>
       <p className="casaVacanza-info">{name}</p>
+      </div>
     </article>
   );
 });

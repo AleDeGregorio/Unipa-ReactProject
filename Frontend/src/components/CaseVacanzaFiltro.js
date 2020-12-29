@@ -2,6 +2,8 @@ import React from "react";
 import { useContext } from "react";
 import { CasaVacanzaContext } from "../CasaVacanza/context";
 import Title from "./title";
+
+import './CaseVacanzaFiltro.css'
 // get all unique values
 const getUnique = (items, value) => {
     if(items)
@@ -30,7 +32,6 @@ const CaseVacanzaFilter = ({ caseVacanza }) => {
 
   return (
     <section className="filter-container">
-      <Title title="search caseVacanza" />
       <form className="filter-form">
         {/* select type */}
         <div className="form-group">
@@ -46,9 +47,20 @@ const CaseVacanzaFilter = ({ caseVacanza }) => {
           </select>
         </div>
         {/* end of select type */}
+        <div className="form-group">
+          <label htmlFor="type">Località</label>
+          <select
+            name="type"
+            id="type"
+            onChange={handleChange}
+            className="form-control"
+            value={type}
+          >
+          </select>
+        </div>
         {/* guests  */}
         <div className="form-group">
-          <label htmlFor="capacity">Guests</label>
+          <label htmlFor="capacity">Ospiti</label>
           <select
             name="capacity"
             id="capacity"
@@ -56,7 +68,17 @@ const CaseVacanzaFilter = ({ caseVacanza }) => {
             className="form-control"
             value={capacity}
           >
-            
+            <option></option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
           </select>
         </div>
         {/* end of guests */}
@@ -76,7 +98,7 @@ const CaseVacanzaFilter = ({ caseVacanza }) => {
         </div>
         {/* end of casaVacanza price*/}
         {/* size */}
-        <div className="form-group">
+        <div className="form-group-size">
           <label htmlFor="price">room size </label>
           <div className="size-inputs">
             <input
@@ -96,17 +118,27 @@ const CaseVacanzaFilter = ({ caseVacanza }) => {
           </div>
         </div>
         {/* end of select type */}
-        {/* extras */}
-        <div className="form-group">
+      </form>
+      {/* extras */}
+      <div className="form-group-extra">
           <div className="single-extra">
             <input
               type="checkbox"
               name="wifi"
-              id="breakfast"
+              id="wifi"
               checked={wify}
               onChange={handleChange}
             />
-            <label htmlFor="breakfast">breakfast</label>
+            <label htmlFor="breakfast">Wi-Fi</label>
+          </div>
+          <div className="single-extra">
+            <input
+              type="checkbox"
+              name="animali"
+              checked={ariaCondizionata}
+              onChange={handleChange}
+            />
+            <label htmlFor="breakfast">Animali ammessi</label>
           </div>
           <div className="single-extra">
             <input
@@ -115,11 +147,37 @@ const CaseVacanzaFilter = ({ caseVacanza }) => {
               checked={ariaCondizionata}
               onChange={handleChange}
             />
-            <label htmlFor="breakfast">pets</label>
+            <label htmlFor="breakfast">Aria condizionata</label>
+          </div>
+          <div className="single-extra">
+            <input
+              type="checkbox"
+              name="parcheggio"
+              checked={ariaCondizionata}
+              onChange={handleChange}
+            />
+            <label htmlFor="breakfast">Parcheggio gratuito</label>
+          </div>
+          <div className="single-extra">
+            <input
+              type="checkbox"
+              name="disabili"
+              checked={ariaCondizionata}
+              onChange={handleChange}
+            />
+            <label htmlFor="breakfast">Accesso ospiti disabili</label>
+          </div>
+          <div className="single-extra">
+            <input
+              type="checkbox"
+              name="salute"
+              checked={ariaCondizionata}
+              onChange={handleChange}
+            />
+            <label htmlFor="breakfast">Misure extra per la salute</label>
           </div>
         </div>
         {/* end of extras type */}
-      </form>
     </section>
   );
 };
