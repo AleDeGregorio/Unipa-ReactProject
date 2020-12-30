@@ -28,16 +28,19 @@ import GestionePrenotazione from './GestioneUtente/GestionePrenotazione'
 
 // Area personale del proprietario
 import ProprietarioPage from './GestioneProprietario/ProprietarioPage'
+
 // Gestione prenotazione
 import Testina from './GestioneProprietario/Accettazione/Testina'
 import Checkin from './GestioneProprietario/Checkin/Checkin'
 import CheckinEffettuato from './GestioneProprietario/Checkin/CheckinEffettuato'
+
 // Inserimento proprietà
 import InserimentoProprietà from './GestioneProprietario/InserisciProp/InserimentoProprietà';
 import InserimentoCasaVacanza from './GestioneProprietario/InserisciProp/inserimentoCasaVacanza'
 import InserimentoBnB from './GestioneProprietario/InserisciProp/inserimentoB&B'
 import ElencoBnB2 from './GestioneProprietario/InserisciProp/ElencoB&B'
 import InserimentoStanzaBnB from './GestioneProprietario/InserisciProp/InserimentoStanzaBnB'
+
 // Modifica proprietà
 import SceltaModifica from './GestioneProprietario/Modifica/SceltaModifica'
 import ElencoCasaVacanza from './GestioneProprietario/Modifica/ElencoCasaVacanza'
@@ -46,8 +49,10 @@ import ElencoBeB from './GestioneProprietario/Modifica/ElencoB&B'
 import ModificaBeB from './GestioneProprietario/Modifica/ModificaB&B'
 import ElencoListaStanze from './GestioneProprietario/Modifica/ElencoListaStanze'
 import ModificaStanza from './GestioneProprietario/Modifica/ModificaStanza'
+
 // Gestione account
 import DatiPersonali from './GestioneProprietario/DatiPersonali'
+
 // Resoconto guadagni
 import Earning2 from './GestioneProprietario/Earning/Earning2'
 
