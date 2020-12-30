@@ -1,6 +1,7 @@
 import React from 'react';
 import Navbar from 'react-bootstrap/Navbar'
 import Dropdown from 'react-bootstrap/Dropdown'
+import DropdownButton from 'react-bootstrap/DropdownButton'
 //import NavDropdown from 'react-bootstrap/NavDropdown'
 import Nav from 'react-bootstrap/Nav'
 import { FcMenu } from 'react-icons/fc'
@@ -25,9 +26,19 @@ class NavBar extends React.Component {
                         <Nav.Link href="/BnB">BnB</Nav.Link>
                         <Nav.Link href="/CasaVacanza">Casa Vacanza</Nav.Link>
                     </Nav>
-                        <Nav.Link href="/PaginaCliente">Area personale</Nav.Link>
-                        <Nav.Link href="/SecondaAutenticazioneAccedi" onClick = {this.onClick}>ESCI</Nav.Link>
-                </Navbar.Collapse>
+                     <Dropdown>
+                    <DropdownButton className="ticambio" title={Menu} menuAlign="right"
+><Menu />
+<Dropdown.Menu >
+               <Dropdown.Item href="/GestionePrenotazione" >Gestisci prenotazioni</Dropdown.Item>
+               <Dropdown.Item href="/DiventaHost">Diventa un Host</Dropdown.Item>
+               <Dropdown.Item href="/DatiPersonali">Dati personali</Dropdown.Item>
+               <Dropdown.Item href="/SecondaAutenticazioneAccedi" onClick = {this.onClick}>Logout</Dropdown.Item>
+               
+              </Dropdown.Menu></DropdownButton>
+                    
+                </Dropdown>
+             </Navbar.Collapse>
             </Navbar>
             );
         }
@@ -72,7 +83,7 @@ export default NavBar;
 
 function Menu (){
     return(
-        <FcMenu className="menu-prop" />
+        <CgProfile className="menu-prop" />
     )
 }
 /*<Dropdown>
@@ -85,4 +96,13 @@ function Menu (){
                <Dropdown.Item eventKey="3"></Dropdown.Item>
                
               </Dropdown.Menu>
-             </Dropdown>*/
+             </Dropdown>
+             
+             
+                <Nav.Link href="/GestionePrenotazione">Le tue prenotazioni</Nav.Link>
+                <Nav.Link href="/DiventaHost">Diventa un Host</Nav.Link>
+                <Nav.Link href="/SecondaAutenticazioneAccedi" onClick = {this.onClick}>Logout</Nav.Link>
+                <Nav.Link href="/DatiPersonali">Modifica Account</Nav.Link>
+             */
+
+             

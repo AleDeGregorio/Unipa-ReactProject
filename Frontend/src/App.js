@@ -25,6 +25,7 @@ import SecondaAutenticazioneRegistratiProprietario from './Autenticazione/second
 // Area personale del cliente
 import Cliente from './components/ClientePage'
 import GestionePrenotazione from './GestioneUtente/GestionePrenotazione'
+import DiventaHost from './GestioneUtente/DiventaHost'
 
 // Area personale del proprietario
 import ProprietarioPage from './GestioneProprietario/ProprietarioPage'
@@ -226,6 +227,12 @@ class App extends React.Component {
                 )}
               />
 
+              <Route
+                exact path="/DiventaHost"
+                render = { (props) => (
+                  <DiventaHost {...props}/>
+                )}
+              />
               <Route 
                 exact path="/PaginaProprietario"
                 render = { (props) => (
