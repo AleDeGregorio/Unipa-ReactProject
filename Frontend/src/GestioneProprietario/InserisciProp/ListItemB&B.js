@@ -190,7 +190,7 @@ const SelectArrowDown = styled.div`
   }
 `
 
-class ListItemCase extends Component {
+class ListItemBnB extends Component {
   constructor(props) {
     super(props);
 
@@ -353,4 +353,4 @@ class ListItemCase extends Component {
   }
 }
 
-export default ListItemCase
+export default ListItemBnB

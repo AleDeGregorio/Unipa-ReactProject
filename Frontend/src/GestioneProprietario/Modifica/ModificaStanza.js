@@ -150,6 +150,30 @@ class ModificaStanza extends React.Component {
     else {
       var stanza = this.state.dati_stanza;
 
+      var tipo_stanza = '';
+
+      switch(stanza.tipologia) {
+        case 1:
+          tipo_stanza = 'Singola';
+          break;
+
+        case 2:
+          tipo_stanza = 'Doppia';
+          break;
+
+        case 3:
+          tipo_stanza = 'Tripla';
+          break;
+
+        case 4:
+          tipo_stanza = 'Quadrupla';
+          break;
+
+        default:
+          tipo_stanza = stanza.tipologia + " persone";
+          break;
+      }
+
       return (
           <div className="background">
         <div className="containerNew">  
@@ -158,7 +182,7 @@ class ModificaStanza extends React.Component {
           <Accordion>
               <Card border="light">
                 <div className="head-update">
-                  <p>Tipologia stanza : {stanza.tipologia}</p>
+                  <p>Tipologia stanza attuale: {tipo_stanza}</p>
                 <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="1" />
                 </div>
                 <Accordion.Collapse eventKey="1">
@@ -174,20 +198,19 @@ class ModificaStanza extends React.Component {
     >
       <option value="1">Singola</option>
       <option value="2">Doppia</option>
-      <option value="3">Matrimoniale</option>
-      <option value="4">Doppia Matrimoniale</option>
-      <option value="5">Tripla</option>
+      <option value="3">Tripla</option>
+      <option value="4">Quadrupla</option>
       </Form.Control>
   </Form.Group>  
   <Button variant="primary" onClick = {this.onSubmit}>
-    Cambia tipologia di camera
+    Cambia tipologia di stanza
   </Button>
                   </Card.Body>
                 </Accordion.Collapse>
               </Card>
               <Card border="light">
                 <div className="head-update">
-                <p>Tariffa : {stanza.tariffa_stanza} </p>
+                <p>Tariffa attuale: {stanza.tariffa_stanza} euro</p>
                 <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="2" />
                 </div>
                 <Accordion.Collapse eventKey="2">
@@ -211,39 +234,15 @@ class ModificaStanza extends React.Component {
                   </Card.Body>
                 </Accordion.Collapse>
               </Card>
+              
               <Card border="light">
                 <div className="head-update">
-                <p>Descrizione</p>
-                <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="3" />
-                </div>
-                <Accordion.Collapse eventKey="3">
-                  <Card.Body>
-                    <form>
-                  <label htmlFor = "descrizione">Descrizione</label>
-                  <input
-                  type = "text"
-                  id = "descrizione"
-                  name = "descrizione"
-                  placeholder = "Descrizione camera"
-                  onChange = {this.onChange}
-                  className = "i"
-                  required
-                /> 
-                </form>
-                <Button variant="primary" onClick = {this.onSubmit}>
-    Cambia descrizione
-  </Button>
-                  </Card.Body>
-                </Accordion.Collapse>
-              </Card>
-              <Card border="light">
-                <div className="head-update">
-                  <p>Foto : </p>
+                  <p>Foto: </p>
                 <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="4" />
                 </div>
                 <Accordion.Collapse eventKey="4">
                   <Card.Body>
-                    <p>Foto attuali : </p>
+                    <p>Foto attuali: </p>
                     <img src = {this.state.imgST_path1SRC} alt = {"Foto 1 stanza " + this.state.id_stanza} ></img>
                     <img src = {this.state.imgST_path2SRC} alt = {"Foto 2 stanza " + this.state.id_stanza}></img>
                     <img src = {this.state.imgST_path3SRC} alt = {"Foto 3 stanza " + this.state.id_stanza}></img>

@@ -156,7 +156,7 @@ class ListBeB extends Component {
                           order={key}
                         >
                           <ListItemBeB
-                            dati_bb = {this.state.apiResponse[0] ? this.state.apiResponse[0] : ''}
+                            dati_bb = {this.state.apiResponse[key-1] ? this.state.apiResponse[key-1] : ''}
                             number={number}
                             dragging={snapshot.isDragging}
                             onDeleteItem={this.refreshItemsList}

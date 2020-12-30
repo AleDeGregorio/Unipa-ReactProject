@@ -333,7 +333,7 @@ class ListItemCase extends Component {
                         }
                       }}
                       >
-                      Modifica BnB
+                      Modifica B&B
                       </Link>
                     </div>
                     <div
@@ -348,7 +348,7 @@ class ListItemCase extends Component {
                         }
                       }}
                       >
-                      Modifica Camera BnB
+                      Modifica Stanza B&B
                       </Link>
                     </div>
                     <div
