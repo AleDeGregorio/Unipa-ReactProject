@@ -5,6 +5,8 @@ import moment from "moment";
 import { SingleDatePicker } from "react-dates";
 import './RicercaFinale.css'
 
+import { Redirect } from "react-router-dom"
+
 class RicercaFinale extends React.Component {
 
     constructor(props) {
@@ -20,7 +22,8 @@ class RicercaFinale extends React.Component {
             posti: 1,
             apiResponse: [],
             error: false,
-            errorMessage: ''
+            errorMessage: '',
+            success: false
         }
     }
 
@@ -65,7 +68,7 @@ class RicercaFinale extends React.Component {
         })
         .then((result) => result.text())
         .then((result) => {
-            console.log(JSON.parse(result));
+            //console.log(JSON.parse(result));
             this.setState({ apiResponse: JSON.parse(result) });
 
             if(this.state.apiResponse.status === 'error') {
@@ -73,7 +76,8 @@ class RicercaFinale extends React.Component {
                 this.setState({ errorMessage: this.state.apiResponse.message });
             }
             else {
-                // redirect
+                //momentaneamente solo case vacanza, poi anche b&b
+                this.setState({ success: true })
             }
         });
     }
@@ -103,6 +107,16 @@ class RicercaFinale extends React.Component {
       }; */
 
     render() {
+        if(this.state.success) {
+            return <Redirect 
+            to = {{
+              pathname: "/CaseVacanza",
+              state: {
+                case: this.state.apiResponse
+              }
+            }}
+          />
+        }
         return(
             <form onSubmit = {this.onSubmit}>
                 <div class="product-search">
