@@ -5,12 +5,149 @@ import Title from "./title";
 
 import './CaseVacanzaFiltro.css'
 // get all unique values
-const getUnique = (items, value) => {
+/*const getUnique = (items, value) => {
     if(items)
   return [...new Set(items.map(item => item[value]))];
+};*/
+
+class CaseVacanzaFilter extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      servizi: this.props.servizi ? this.props.servizi : [],
+      case: this.props.case ? this.props.case : [],
+      type: '',
+      localita: '',
+      posti: '',
+      tariffa: 200,
+      minTariffa: 0,
+      maxTariffa: 700,
+      minSize: '',
+      maxSize: ''
+    }
+  }
+
+  handleChange = (e) => {
+    this.setState({ [e.target.id]: e.target.value });
+  }
+
+  render() {
+    return (
+      <section className="filter-container">
+        <form className="filter-form">
+          {/* select type */}
+          <div className="form-group">
+            <label htmlFor="type">CasaVacanza type</label>
+            <select
+              name="type"
+              id="type"
+              onChange={this.handleChange}
+              className="form-control"
+            >
+            </select>
+          </div>
+          {/* end of select type */}
+          <div className="form-group">
+            <label htmlFor="localita">Località</label>
+            <select
+              name="localita"
+              id="localita"
+              onChange={this.handleChange}
+              className="form-control"
+            >
+            </select>
+          </div>
+          {/* guests  */}
+          <div className="form-group">
+            <label htmlFor="posti">Ospiti</label>
+            <select
+              name="posti"
+              id="posti"
+              onChange={this.handleChange}
+              className="form-control"
+              value={this.state.posti}
+            >
+              <option></option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+            </select>
+          </div>
+          {/* end of guests */}
+          {/* casaVacanza price */}
+          <div className="form-group">
+            <label htmlFor="tariffa">prezzo CasaVacanza €{this.state.tariffa}</label>
+            <input
+              type="range"
+              name="tariffa"
+              min={this.state.minTariffa}
+              max={this.state.maxTariffa}
+              id="tariffa"
+              onChange={this.handleChange}
+              className="form-control"
+              defaultValue = {this.state.tariffa}
+            />
+          </div>
+          {/* end of casaVacanza price*/}
+          {/* size */}
+          <div className="form-group-size">
+            <label htmlFor="price">room size </label>
+            <div className="size-inputs">
+              <input
+                type="number"
+                name="minSize"
+                id = "minSize"
+                onChange={this.handleChange}
+                className="size-input"
+                placeholder = "min"
+                min = '1'
+                max = '10'
+              />
+              <input
+                type="number"
+                name="maxSize"
+                id = "maxSize"
+                onChange={this.handleChange}
+                className="size-input"
+                placeholder = "max"
+                min = '1'
+                max = '10'
+              />
+            </div>
+          </div>
+          {/* end of select type */}
+        </form>
+        {/* extras */}
+        <div className="form-group-extra">
+          {this.props.servizi.map(item => {
+            return(
+              <div className="single-extra">
+                <input
+                  type="checkbox"
+                  name={item.servizio}
+                  id={item.servizio}
+                  onChange={this.handleChange}
+                />
+                <label htmlFor={item.servizio}>{item.servizio}</label>
+              </div>
+            )
+          })}
+          </div>
+          {/* end of extras type */}
+      </section>
+    );
+  }
 };
 
-const CaseVacanzaFilter = ({ caseVacanza }) => {
+/*const CaseVacanzaFilter = ({ caseVacanza }) => {
   // react hooks
   const context = useContext(CasaVacanzaContext);
   const {
@@ -33,7 +170,7 @@ const CaseVacanzaFilter = ({ caseVacanza }) => {
   return (
     <section className="filter-container">
       <form className="filter-form">
-        {/* select type */}
+        {/* select type }
         <div className="form-group">
           <label htmlFor="type">CasaVacanza type</label>
           <select
@@ -46,7 +183,7 @@ const CaseVacanzaFilter = ({ caseVacanza }) => {
             
           </select>
         </div>
-        {/* end of select type */}
+        {/* end of select type }
         <div className="form-group">
           <label htmlFor="type">Località</label>
           <select
@@ -58,7 +195,7 @@ const CaseVacanzaFilter = ({ caseVacanza }) => {
           >
           </select>
         </div>
-        {/* guests  */}
+        {/* guests  }
         <div className="form-group">
           <label htmlFor="capacity">Ospiti</label>
           <select
@@ -81,8 +218,8 @@ const CaseVacanzaFilter = ({ caseVacanza }) => {
             <option value="10">10</option>
           </select>
         </div>
-        {/* end of guests */}
-        {/* casaVacanza price */}
+        {/* end of guests }
+        {/* casaVacanza price }
         <div className="form-group">
           <label htmlFor="price">prezzo CasaVacanza ${price}</label>
           <input
@@ -96,8 +233,8 @@ const CaseVacanzaFilter = ({ caseVacanza }) => {
             className="form-control"
           />
         </div>
-        {/* end of casaVacanza price*/}
-        {/* size */}
+        {/* end of casaVacanza price}
+        {/* size }
         <div className="form-group-size">
           <label htmlFor="price">room size </label>
           <div className="size-inputs">
@@ -117,9 +254,9 @@ const CaseVacanzaFilter = ({ caseVacanza }) => {
             />
           </div>
         </div>
-        {/* end of select type */}
+        {/* end of select type }
       </form>
-      {/* extras */}
+      {/* extras }
       <div className="form-group-extra">
           <div className="single-extra">
             <input
@@ -177,9 +314,9 @@ const CaseVacanzaFilter = ({ caseVacanza }) => {
             <label htmlFor="breakfast">Misure extra per la salute</label>
           </div>
         </div>
-        {/* end of extras type */}
+        {/* end of extras type }
     </section>
   );
-};
+};*/
 
 export default CaseVacanzaFilter;
