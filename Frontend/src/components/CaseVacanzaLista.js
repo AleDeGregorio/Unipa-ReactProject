@@ -3,7 +3,30 @@ import CasaVacanza from "./CasaVacanza";
 
 import './CaseVacanzaLista';
 
-const CaseVacanzaList = ({ caseVacanza }) => {
+class CaseVacanzaList extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      case: this.props.case ? this.props.case : []
+    }
+  }
+
+  render() {
+    return (
+      <section className="caseVacanzalist">
+        <div className="caseVacanzalistDiv">
+          {this.state.case.map(item => {
+            return <CasaVacanza key={item.id} casaVacanza={item} />;
+          })}
+        </div>
+      </section>
+    );
+  }
+};
+
+/*const CaseVacanzaList = ({ caseVacanza }) => {
   if (caseVacanza.length === 0) {
     return (
       <div className="empty-search">
@@ -20,6 +43,6 @@ const CaseVacanzaList = ({ caseVacanza }) => {
       </div>
     </section>
   );
-};
+};*/
 
 export default CaseVacanzaList;

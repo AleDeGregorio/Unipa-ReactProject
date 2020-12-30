@@ -4,6 +4,7 @@ import Hero from "../components/Hero";
 import Banner from "../components/Banner";
 import { Link } from "react-router-dom";
 import { CasaVacanzaContext } from "../CasaVacanza/context";
+import {Col, Row} from "react-bootstrap"
 import './Riepilogo.css'
 import StyledHero from "../components/StyledHero";
 export default class SingleCasaVacanza extends Component {
@@ -70,42 +71,30 @@ export default class SingleCasaVacanza extends Component {
                 <h3>DETTAGLI</h3>
                 <p>{description}</p>
               </article>
+              <div className="sistemaPagina">
               <article className="info">
                 <h3>INFO</h3>
-                <h6>Prezzo: ${price}</h6>
-                <h6>Dimensioni: {size} SQFT</h6>
+                <h6>Prezzo: {price}€</h6>
+                <h6>Dimensioni: {size} m²</h6>
                 <h6>
-                  Capacità massima: 
-                  {capacity >  1 ? `${capacity} persone` : `${capacity}  persona`}
+                  Capacità massima: {capacity >  1 ? `${capacity} persone` : `${capacity}  persona`}
                 </h6>
                 <h6>{wify ? "Animali consentiti" : "Animali non consentiti"}</h6>
                 <h6>{ariaCondizionata && "Colazione inclusa"}</h6>
               </article>
+              <article className="room-extras">
+                <h3>SERVIZI</h3>
+                <ul className="extras">
+                  {extras.map((item, index) => (
+                  <li key={index}>- {item}</li>
+                  ))}
+                </ul>
+              </article>
+              </div>
             </div>
           </section>
-          <div className="row">
-          <section className="room-extras">
-            <h3>SERVIZI</h3>
-            <ul className="extras">
-              {extras.map((item, index) => (
-                <li key={index}>- {item}</li>
-              ))}
-            </ul>
-          </section>
-          <div className="contenitorePrenota">
-            <div className="prenota">
-              <h3>Prenota la tua esperienza!</h3>
-              <form className="formPerPrenotare">
-                <label>Check-in</label>
-                <input type="date"></input>
-                <label>Check-out</label>
-                <input type="date"></input>
-              </form>
-              <button>PRENOTA</button>
-            </div>
+              <button className="bottonePrenota">PRENOTA</button>
           </div>
-          </div>
-        </div>
       </>
     );
   }
