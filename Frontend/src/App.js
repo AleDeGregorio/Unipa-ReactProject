@@ -10,6 +10,7 @@ import Footer from './components/Footer'
 import HomePage from './components/HomePage'
 import ErrorPage from './components/ErrorPage'
 import CaseVacanza from './Pagine/CaseVacanza'
+import CaseVacanzaContainer from "./components/CaseVacanzaContainer";
 import RiepilogoCasaVacanza from './Pagine/RiepilogoCasaVacanza';
 import BandB from './Pagine/B&B'
 //import PaginaDettagli from './PaginaDettagli/PaginaDettagli'
@@ -138,24 +139,36 @@ class App extends React.Component {
 
             <Switch>
 
-              <Route exact path="/">
-                <HomePage/>
-              </Route>
+              <Route 
+                exact path="/"
+                render = { (props) => (
+                  <HomePage {...props}/>
+                )}
+              />
               <Route 
                 exact path = '/ErrorPage'
                 render = { (props) => (
                   <ErrorPage {...props} 
                 />)}
               />
-              <Route exact path="/CaseVacanza/">
-                <CaseVacanza />
-              </Route>
-              <Route exact path="/CaseVacanza/:slug">
-                <RiepilogoCasaVacanza />
-              </Route>
-              <Route exact path="/B&B/">
-                <BandB />
-              </Route>
+              <Route 
+                exact path="/CaseVacanza"
+                render = { (props) => (
+                  <CaseVacanza {...props}/>
+                )}
+              />
+              <Route 
+                exact path="/CaseVacanza/:slug"
+                render = { (props) => (
+                  <RiepilogoCasaVacanza {...props}/>
+                )}
+              />
+              <Route 
+                exact path="/B&B"
+                render = { (props) => (
+                  <BandB {...props}/>
+                )}
+              />
 
               <Route 
                 exact path = '/Autenticazione'
@@ -181,65 +194,116 @@ class App extends React.Component {
                   />
                 )}
               />
-              <Route exact path = '/secondaAutenticazioneRegistrati'>
-                <SecondaAutenticazioneRegistrati/>
-              </Route>
-              <Route exact path = '/secondaAutenticazioneRegistratiCliente'>
-                <SecondaAutenticazioneRegistratiCliente />
-              </Route>
-              <Route exact path= '/secondaAutenticazioneRegistratiProprietario'>
-                <SecondaAutenticazioneRegistratiProprietario />
-              </Route>
+              <Route 
+                exact path="/secondaAutenticazioneRegistrati"
+                render = { (props) => (
+                  <SecondaAutenticazioneRegistrati {...props}/>
+                )}
+              />
+              <Route 
+                exact path="/secondaAutenticazioneRegistratiCliente"
+                render = { (props) => (
+                  <SecondaAutenticazioneRegistratiCliente {...props}/>
+                )}
+              />
+              <Route 
+                exact path="/secondaAutenticazioneRegistratiProprietario"
+                render = { (props) => (
+                  <SecondaAutenticazioneRegistratiProprietario {...props}/>
+                )}
+              />
 
-              <Route exact path = "/PaginaCliente">
-                <Cliente />
-              </Route>
-              <Route exact path = '/GestionePrenotazione'>
-                <GestionePrenotazione/>
-              </Route>
+              <Route 
+                exact path="/PaginaCliente"
+                render = { (props) => (
+                  <Cliente {...props}/>
+                )}
+              />
+              <Route 
+                exact path="/GestionePrenotazione"
+                render = { (props) => (
+                  <GestionePrenotazione {...props}/>
+                )}
+              />
 
-              <Route exact path = '/PaginaProprietario'>
-                <ProprietarioPage/>
-              </Route>
-              <Route exact path="/Testina">
-                <Testina />
-              </Route>
-              <Route exact path = '/Checkin'>
-                <Checkin />
-              </Route>
-              <Route exact path = '/CheckinEffettuato'>
-                <CheckinEffettuato />
-              </Route>
-              <Route exact path = '/InserimentoProprietà'>
-                <InserimentoProprietà />
-              </Route>
-              <Route exact path = '/InserimentoCasaVacanza'>
-                <InserimentoCasaVacanza/>
-              </Route>
-              <Route exact path = '/InserimentoBnB'>
-                <InserimentoBnB/>
-              </Route>
-              <Route exact path="/ElencoBnB2">
-                <ElencoBnB2 />
-              </Route>
-              <Route exact path="/InserimentoStanzaBnB">
-                <InserimentoStanzaBnB />
-              </Route>
-              <Route exact path = '/SceltaModifica'>
-                <SceltaModifica/>
-              </Route>
-              <Route exact path = '/ElencoCasaVacanza'>
-                <ElencoCasaVacanza/>
-              </Route>
+              <Route 
+                exact path="/PaginaProprietario"
+                render = { (props) => (
+                  <ProprietarioPage {...props}/>
+                )}
+              />
+              <Route 
+                exact path="/Testina"
+                render = { (props) => (
+                  <Testina {...props}/>
+                )}
+              />
+              <Route 
+                exact path="/Checkin"
+                render = { (props) => (
+                  <Checkin {...props}/>
+                )}
+              />
+              <Route 
+                exact path="/CheckinEffettuato"
+                render = { (props) => (
+                  <CheckinEffettuato {...props}/>
+                )}
+              />
+              <Route 
+                exact path="/InserimentoProprietà"
+                render = { (props) => (
+                  <InserimentoProprietà {...props}/>
+                )}
+              />
+              <Route 
+                exact path="/InserimentoCasaVacanza"
+                render = { (props) => (
+                  <InserimentoCasaVacanza {...props}/>
+                )}
+              />
+              <Route 
+                exact path="/InserimentoBnb"
+                render = { (props) => (
+                  <InserimentoBnB {...props}/>
+                )}
+              />
+              <Route 
+                exact path="/ElencoBnB2"
+                render = { (props) => (
+                  <ElencoBnB2 {...props}/>
+                )}
+              />
+              <Route 
+                exact path="/InserimentoStanzaBnB"
+                render = { (props) => (
+                  <InserimentoStanzaBnB {...props}/>
+                )}
+              />
+              <Route 
+                exact path="/SceltaModifica"
+                render = { (props) => (
+                  <SceltaModifica {...props}/>
+                )}
+              />
+              <Route 
+                exact path="/ElencoCasaVacanza"
+                render = { (props) => (
+                  <ElencoCasaVacanza {...props}/>
+                )}
+              />
               <Route 
                 exact path = '/ModificaCasaVacanza'
                 render = { (props) => (
                   <ModificaCasaVacanza {...props}/>
                 )}
               />
-              <Route exact path = '/ElencoB&B'>
-                <ElencoBeB/>
-              </Route>
+              <Route 
+                exact path="/ElencoB&B"
+                render = { (props) => (
+                  <ElencoBeB {...props}/>
+                )}
+              />
               <Route 
                 exact path = '/ModificaB&B'
                 render = { (props) => (
@@ -258,12 +322,18 @@ class App extends React.Component {
                   <ModificaStanza {...props}/>
                 )}
               />
-              <Route exact path = '/DatiPersonali'>
-                <DatiPersonali/>
-              </Route>
-              <Route exact path = '/Earning'>
-                <Earning2/>
-              </Route>
+              <Route 
+                exact path="/DatiPersonali"
+                render = { (props) => (
+                  <DatiPersonali {...props}/>
+                )}
+              />
+              <Route 
+                exact path="/Earning"
+                render = { (props) => (
+                  <Earning2 {...props}/>
+                )}
+              />
 
             </Switch> 
 
