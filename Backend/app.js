@@ -33,6 +33,7 @@ var casaRouter = require('./routes/case_vacanza');
 var bbRouter = require('./routes/b_and_b');
 var stanzaRouter = require('./routes/stanze');
 var clienteRouter = require('./routes/clienti');
+var servizioRouter = require('./routes/servizi');
 var soggiornanteRouter = require('./routes/soggiornanti');
 var prenotazioneRouter = require('./routes/prenotazioni');
 var tassaRouter = require('./routes/tasse_soggiorno');
@@ -218,6 +219,14 @@ app.use('/insertCliente', clienteRouter);
 // login di un cliente utilizzando password criptata
 // indirizzo: /loginCliente/clienteLogged
 app.use('/loginCliente', clienteRouter);
+
+// TABELLA SERVIZI
+// lista di tutti i servizi
+// indirizzo: /servizi/all
+app.use('/servizi', servizioRouter);
+// inserimento di un nuovo servizio
+// indirizzo: /insertServizio/new
+app.use('/insertServizo', servizioRouter);
 
 // TABELLA SOGGIORNANTE
 // lista di tutti i soggiornanti

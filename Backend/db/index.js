@@ -10,6 +10,7 @@ var Cliente = require('./cliente');
 var Prenotazione = require('./prenotazione');
 var Proprieta = require('./proprieta');
 var Proprietario = require('./proprietario');
+var Servizio = require('./servizio');
 var Soggiornante = require('./soggiornante');
 var Stanza = require('./stanza');
 var Tassa_soggiorno = require('./tassa_soggiorno');
@@ -29,6 +30,7 @@ module.exports = {
     Prenotazione,
     Proprieta,
     Proprietario,
+    Servizio,
     Soggiornante,
     Stanza,
     Tassa_soggiorno,

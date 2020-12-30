@@ -381,7 +381,13 @@ const ricercaAlloggio = async(req) => {
             'SELECT @fine := "'+ (req.checkOut == '' ? '1970-01-01' : + req.checkOut) + '"; ' +
             'SELECT DISTINCT p.nome_proprieta, p.indirizzo, p.localita, p.tipo_proprieta, ' +
                 'IF(@tipo = "cv", c.tariffa_casa, s.tariffa_stanza) AS tariffa, ' +
-                'IF(@tipo = "cv", c.posti_letto, s.tipologia) AS posti, p.descrizione ' +
+                'IF(@tipo = "cv", c.posti_letto, s.tipologia) AS posti, p.descrizione, ' +
+                'IF(@tipo = "cv", c.imgCV_path1, s.imgST_path1) AS img1, ' +
+                'IF(@tipo = "cv", c.imgCV_path2, s.imgST_path2) AS img2, ' +
+                'IF(@tipo = "cv", c.imgCV_path3, s.imgST_path3) AS img3, ' +
+                'IF(@tipo = "cv", c.imgCV_path4, s.imgST_path4) AS img4, ' +
+                'IF(@tipo = "bb", b.check_in, null) AS check_in, ' +
+                'IF(@tipo = "bb", b.check_out, null) AS check_out ' +
             'FROM proprieta p, casa_vacanza c, b_and_b b, stanza s ' +
             'WHERE p.id_proprieta = IF(@tipo = "cv", c.ref_proprieta_cv, b.ref_proprieta_bb) AND b.ref_proprieta_bb = s.ref_bb AND ' +
                 'p.localita LIKE @localita AND p.provincia LIKE @provincia AND ' +
