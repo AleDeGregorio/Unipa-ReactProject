@@ -407,7 +407,7 @@ INSERT INTO tassa_soggiorno (ref_soggiornante, ref_prenotazione, ref_proprietari
 -- SELECT @localita := 'Torino';
 -- SELECT @provincia := '%%';
 -- SELECT @posti := 2;
--- SELECT @tariffa := '%%';
+-- SELECT @tariffa := 300;
 -- SELECT @inizio := '1970-01-01'; -- jolly
 -- SELECT @fine := '1970-01-01'; -- jolly
 -- SELECT DISTINCT p.nome_proprieta, p.indirizzo, p.localita, p.tipo_proprieta,
@@ -422,10 +422,34 @@ INSERT INTO tassa_soggiorno (ref_soggiornante, ref_prenotazione, ref_proprietari
 -- FROM proprieta p, casa_vacanza c, b_and_b b, stanza s
 -- WHERE p.id_proprieta = IF(@tipo = 'cv', c.ref_proprieta_cv, b.ref_proprieta_bb) AND b.ref_proprieta_bb = s.ref_bb AND
 	 -- p.localita LIKE @localita AND p.provincia LIKE @provincia AND 
-	 -- (c.posti_letto >= @posti OR s.tipologia >= @posti) AND (c.tariffa_casa LIKE @tariffa OR s.tariffa_stanza LIKE @tariffa) AND
+	 -- (c.posti_letto >= @posti OR s.tipologia >= @posti) AND (c.tariffa_casa <= @tariffa AND s.tariffa_stanza <= @tariffa) AND
      -- p.tipo_proprieta LIKE @tipo AND
      -- (((@inizio <= c.non_disponibile_inizio_cv AND @fine <= c.non_disponibile_inizio_cv) OR (@inizio >= c.non_disponibile_fine_cv AND @fine >= c.non_disponibile_fine_cv)) 
      -- AND ((@inizio <= s.non_disponibile_inizio_st AND @fine <= s.non_disponibile_inizio_st) OR (@inizio >= s.non_disponibile_fine_st AND @fine >= s.non_disponibile_fine_st)));
+
+-- SELECT @tipo := "%%";
+-- SELECT @localita := "%%";
+-- SELECT @provincia := "%%";
+-- SELECT @posti := 2;
+-- SELECT @tariffa := 9999 ;
+-- SELECT @inizio := "1/1/2021";
+-- SELECT @fine := "2/1/2021";
+-- SELECT DISTINCT p.nome_proprieta, p.indirizzo, p.localita, p.tipo_proprieta,
+	-- c.tariffa_casa, s.tariffa_stanza, 
+	-- c.posti_letto, s.tipologia, p.descrizione,
+	-- c.imgCV_path1 AS img1CV, s.imgST_path1 AS img1ST,
+	-- c.imgCV_path2 AS img2CV, s.imgST_path2 AS img2ST,
+	-- c.imgCV_path3 AS img3CV, s.imgST_path3 AS img3ST,
+	-- c.imgCV_path4 AS img4CV, s.imgST_path4 AS img4ST,
+	-- b.check_in AS check_in,
+	-- b.check_out AS check_out
+-- FROM proprieta p, casa_vacanza c, b_and_b b, stanza s
+-- WHERE p.id_proprieta = c.ref_proprieta_cv AND p.id_proprieta = b.ref_proprieta_bb AND b.ref_proprieta_bb = s.ref_bb AND
+	-- p.localita LIKE @localita AND p.provincia LIKE @provincia AND
+	-- s.tipologia >= @posti AND s.tariffa_stanza <= @tariffa AND 
+    -- c.posti_letto >= @posti AND c.tariffa_casa <= @tariffa AND
+	-- (@fine <= s.non_disponibile_inizio_st OR @inizio >= s.non_disponibile_fine_st) OR
+	-- (@fine <= c.non_disponibile_inizio_cv OR @inizio >= c.non_disponibile_fine_cv);
 
 -- ----------PROVA CARICAMENTO STANZA CON FOTO ----------
 -- INSERT INTO stanza (ref_bb, tipologia, tariffa_stanza) VALUES 
