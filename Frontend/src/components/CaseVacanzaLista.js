@@ -8,26 +8,23 @@ class CaseVacanzaList extends React.Component {
   render() {
     var datiCase = this.props.case ? this.props.case : [];
 
-    if(Array.isArray(this.props.case)) {
+    if (datiCase.length === 0) {
       return (
-        <section className="caseVacanzalist">
-          <div className="caseVacanzalistDiv">
-            {datiCase.map(item => {
-              return <CasaVacanza key={item.id} casaVacanza={item} />;
-            })}
-          </div>
-        </section>
+        <div className="empty-search">
+          <h3>Nessun alloggio trovato...</h3>
+        </div>
       );
     }
-    else {
-      return (
-        <section className="caseVacanzalist">
-          <div className="caseVacanzalistDiv">
-            <p>Sto caricando</p>
-          </div>
-        </section>
-      )
-    }
+
+    return (
+      <section className="caseVacanzalist">
+        <div className="caseVacanzalistDiv">
+          {datiCase.map(item => {
+            return <CasaVacanza key={item.id} casaVacanza={item} />;
+          })}
+        </div>
+      </section>
+    );
   }
 };
 

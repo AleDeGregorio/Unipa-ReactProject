@@ -43,61 +43,64 @@ class CasaVacanzaContainer extends React.Component {
   }
 
   onChange = (e) => {
-    this.setState({ 
-      posti: e.posti,
-      datiRicerca: e
-    });
-
-    const data = {
-      tipo: 'cv',
-      localita: this.state.datiRicerca.localita ? this.state.datiRicerca.localita : '',
-      provincia: '',
-      servizi: '',
-      posti: this.state.datiRicerca.posti ? this.state.datiRicerca.posti : 1,
-      tariffa: this.state.datiRicerca.tariffa ? this.state.datiRicerca.tariffa : '',
-      checkIn: '',
-      checkOut: ''
-    };
-
-  fetch('http://localhost:9000/ricercaAlloggio/risultati', {
-      method: "POST",
-      headers: {
-          'Content-type': 'application/json'
-      },
-      body: JSON.stringify(data)
-  })
-  .then((result) => result.text())
-  .then((result) => {
-      console.log(JSON.parse(result));
-      this.setState({ case: JSON.parse(result) });
-
-      if(this.state.case.status === 'error') {
-          this.setState({ error: true });
-          this.setState({ errorMessage: this.state.case.message });
-      }
+    this.setState({ posti: e.posti, datiRicerca: e }, () => {
+      const data = {
+        tipo: 'cv',
+        localita: this.state.datiRicerca.localita ? this.state.datiRicerca.localita : '',
+        provincia: '',
+        servizi: '',
+        posti: this.state.datiRicerca.posti ? this.state.datiRicerca.posti : 1,
+        tariffa: this.state.datiRicerca.tariffa ? this.state.datiRicerca.tariffa : '',
+        checkIn: '',
+        checkOut: ''
+      };
+  
+      fetch('http://localhost:9000/ricercaAlloggio/risultati', {
+          method: "POST",
+          headers: {
+              'Content-type': 'application/json'
+          },
+          body: JSON.stringify(data)
+      })
+      .then((result) => result.text())
+      .then((result) => {
+          //console.log(JSON.parse(result));
+          this.setState({ case: JSON.parse(result) });
+  
+          if(this.state.case.status === 'error') {
+            this.setState({ error: true });
+            this.setState({ errorMessage: this.state.case.message });
+          }
+          else {
+            this.setState({ loading: false });
+          }
+        }
+      );
     });
   }
 
   render() {
     if (this.state.error) {
       return <Redirect 
-      to = {{
-        pathname: "/ErrorPage",
-        state: {
-          error: true,
-          errorMessage: this.state.errorMessage
-        }
-      }}
-    />
-  }
-    return (
-      <>
-        <CaseVacanzaFilter servizi={this.state.apiResponse} posti = {this.props.posti} onChange = {this.onChange} />
-        <div className="ListaProp">
-          <CaseVacanzaList case={this.state.case} />
-        </div>
-      </>
-    );
+        to = {{
+          pathname: "/ErrorPage",
+          state: {
+            error: true,
+            errorMessage: this.state.errorMessage
+          }
+        }}
+      />
+    }
+    else {
+      return (
+        <>
+          <CaseVacanzaFilter servizi={this.state.apiResponse} posti = {this.props.posti} onChange = {this.onChange} />
+          <div className="ListaProp">
+            <CaseVacanzaList case={this.state.case}/>
+          </div>
+        </>
+      );
+    }
   }
 }
 

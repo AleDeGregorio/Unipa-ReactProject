@@ -10,7 +10,7 @@ class CaseVacanza extends React.Component {
 
     this.state = {
       case: this.props.history.location.state.case ? this.props.history.location.state.case : [],
-      posti: this.props.history.location.state.ospiti ? this.props.history.location.state.ospiti : 1
+      posti: this.props.history.location.state.posti ? this.props.history.location.state.posti : 1
     }
   }
 
