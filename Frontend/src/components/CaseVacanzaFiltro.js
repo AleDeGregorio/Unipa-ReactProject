@@ -19,17 +19,21 @@ class CaseVacanzaFilter extends React.Component {
       case: this.props.case ? this.props.case : [],
       type: '',
       localita: '',
-      posti: '',
-      tariffa: 200,
+      posti: this.props.posti ? this.props.posti : 1,
+      tariffa: 1000,
       minTariffa: 0,
-      maxTariffa: 700,
+      maxTariffa: 1000,
       minSize: '',
-      maxSize: ''
+      maxSize: '',
+      error: false,
+      errorMessage: ''
     }
   }
 
   handleChange = (e) => {
     this.setState({ [e.target.id]: e.target.value });
+
+    this.props.onChange(this.state);
   }
 
   render() {

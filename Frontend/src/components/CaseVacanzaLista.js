@@ -5,24 +5,29 @@ import './CaseVacanzaLista';
 
 class CaseVacanzaList extends React.Component {
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      case: this.props.case ? this.props.case : []
-    }
-  }
-
   render() {
-    return (
-      <section className="caseVacanzalist">
-        <div className="caseVacanzalistDiv">
-          {this.state.case.map(item => {
-            return <CasaVacanza key={item.id} casaVacanza={item} />;
-          })}
-        </div>
-      </section>
-    );
+    var datiCase = this.props.case ? this.props.case : [];
+
+    if(Array.isArray(this.props.case)) {
+      return (
+        <section className="caseVacanzalist">
+          <div className="caseVacanzalistDiv">
+            {datiCase.map(item => {
+              return <CasaVacanza key={item.id} casaVacanza={item} />;
+            })}
+          </div>
+        </section>
+      );
+    }
+    else {
+      return (
+        <section className="caseVacanzalist">
+          <div className="caseVacanzalistDiv">
+            <p>Sto caricando</p>
+          </div>
+        </section>
+      )
+    }
   }
 };
 
