@@ -267,10 +267,10 @@ INSERT INTO casa_vacanza VALUES
 -- Memorizzo i path delle immagini di ciascuna struttura, per poi poterle caricare nel front end
 -- Il nome di ciascuna immagine è del tipo 'ref_proprieta_cv_1.jpg', 'ref_proprieta_cv_2.jpg'...
 -- Esempio: se ref_proprieta_cv = 100, allora imgCV_path1 = './Images/100_1.jpg', imgCV_path2 = './Images/100_2.jpg'...
-(100, 2, 100, '1970-01-01', '1970-01-01', './Images/100_1.jpg', './Images/100_2.jpg', './Images/100_3.jpg', './Images/100_4.jpg'),
-(102, 3, 200, '1970-01-01', '1970-01-01', './Images/102_1.jpg', './Images/102_2.jpg', './Images/102_3.jpg', './Images/102_4.jpg'),
-(105, 1, 80, '1970-01-01', '1970-01-01', './Images/105_1.jpg', './Images/105_2.jpg', './Images/105_3.jpg', './Images/105_4.jpg'),
-(107, 5, 400, '1970-01-01', '1970-01-01', './Images/107_1.jpg', './Images/107_2.jpg', './Images/107_3.jpg', './Images/107_4.jpg');
+(100, 2, 50, '1970-01-01', '1970-01-01', './Images/100_1.jpg', './Images/100_2.jpg', './Images/100_3.jpg', './Images/100_4.jpg'),
+(102, 3, 70, '1970-01-01', '1970-01-01', './Images/102_1.jpg', './Images/102_2.jpg', './Images/102_3.jpg', './Images/102_4.jpg'),
+(105, 1, 20, '1970-01-01', '1970-01-01', './Images/105_1.jpg', './Images/105_2.jpg', './Images/105_3.jpg', './Images/105_4.jpg'),
+(107, 5, 100, '1970-01-01', '1970-01-01', './Images/107_1.jpg', './Images/107_2.jpg', './Images/107_3.jpg', './Images/107_4.jpg');
 
 INSERT INTO b_and_b VALUES
 -- (REF_PROPRIETA_BB, check_in, check_out)
@@ -281,14 +281,14 @@ INSERT INTO b_and_b VALUES
 
 INSERT INTO stanza (ref_bb, tipologia, tariffa_stanza, non_disponibile_inizio_st, non_disponibile_fine_st) VALUES
 -- (ID_STANZA, ref_bb, tipologia, tariffa_stanza, imgST_path1, imgST_path2, imgST_path3, imgST_path4)
-(101, 1, 50, '1970-01-01', '1970-01-01'), -- ID 300
-(101, 2, 90, '1970-01-01', '1970-01-01'), -- ID 301
-(103, 3, 140, '1970-01-01', '1970-01-01'), -- ID 302
-(103, 2, 100, '1970-01-01', '1970-01-01'), -- ID 303
+(101, 1, 10, '1970-01-01', '1970-01-01'), -- ID 300
+(101, 2, 30, '1970-01-01', '1970-01-01'), -- ID 301
+(103, 3, 50, '1970-01-01', '1970-01-01'), -- ID 302
+(103, 2, 60, '1970-01-01', '1970-01-01'), -- ID 303
 (104, 1, 80, '1970-01-01', '1970-01-01'), -- ID 304
-(104, 3, 120, '1970-01-01', '1970-01-01'), -- ID 305
-(106, 2, 80, '1970-01-01', '1970-01-01'), -- ID 306
-(106, 1, 90, '1970-01-01', '1970-01-01'); -- ID 307
+(104, 3, 40, '1970-01-01', '1970-01-01'), -- ID 305
+(106, 2, 20, '1970-01-01', '1970-01-01'), -- ID 306
+(106, 1, 40, '1970-01-01', '1970-01-01'); -- ID 307
 -- Memorizzo i path delle immagini di ciascuna stanza, per poi poterle caricare nel front end
 -- Il nome di ciascuna immagine è del tipo 'id_stanza_ref_bb_1.jpg', 'id_stanza_ref_bb_2.jpg'...
 -- Esempio: se id_stanza = 300 e ref_bb = 101, allora imgST_path1 = './Images/300_101_1.jpg', imgST_path2 = './Images/300_101_2.jpg'...
