@@ -2,6 +2,7 @@ import React from "react";
 import { useContext } from "react";
 import { CasaVacanzaContext } from "../CasaVacanza/context";
 import Title from "./title";
+import { SingleDatePicker } from "react-dates";
 
 import './CaseVacanzaFiltro.css'
 // get all unique values
@@ -15,14 +16,16 @@ class CaseVacanzaFilter extends React.Component {
     super(props);
 
     this.state = {
-      servizi: this.props.servizi ? this.props.servizi : [],
       case: this.props.case ? this.props.case : [],
       type: '',
-      localita: '',
+      localita: this.props.case ? this.props.case[0].localita : '',
       posti: this.props.posti ? this.props.posti : 1,
-      tariffa: 1000,
-      minTariffa: 0,
-      maxTariffa: 1000,
+      checkIn: this.props.checkIn ? this.props.checkIn : '',
+      checkOut: this.props.checkIn ? this.props.checkOut : '',
+      searchServizi: [],
+      costo: 1000,
+      minCosto: 0,
+      maxCosto: 1000,
       minSize: '',
       maxSize: '',
       error: false,
@@ -34,6 +37,25 @@ class CaseVacanzaFilter extends React.Component {
     this.setState({ [e.target.id]: e.target.value }, () => {
       this.props.onChange(this.state);
     });
+  }
+
+  onChangeServizi = (e) => {
+    if(e.target.checked) {
+      this.setState({
+        searchServizi: [...new Set(this.state.searchServizi.concat(e.target.id).sort())]
+      }, () => {
+        this.props.onChangeServizi(this.state);
+      });
+    }
+    else {
+      var filtraServizi = this.state.searchServizi.filter(servizio => servizio !== e.target.id);
+
+      this.setState({
+        searchServizi: filtraServizi
+      }, () => {
+        this.props.onChangeServizi(this.state);
+      });
+    }
   }
 
   render() {
@@ -54,13 +76,15 @@ class CaseVacanzaFilter extends React.Component {
           {/* end of select type */}
           <div className="form-group">
             <label htmlFor="localita">Località</label>
-            <select
+            <input
+              type = "text"
               name="localita"
               id="localita"
               onChange={this.handleChange}
               className="form-control"
+              value = {this.state.localita}
             >
-            </select>
+            </input>
           </div>
           {/* guests  */}
           <div className="form-group">
@@ -88,16 +112,17 @@ class CaseVacanzaFilter extends React.Component {
           {/* end of guests */}
           {/* casaVacanza price */}
           <div className="form-group">
-            <label htmlFor="tariffa">prezzo CasaVacanza €{this.state.tariffa}</label>
+            <label htmlFor="costo">costo CasaVacanza €{this.state.costo}</label>
             <input
               type="range"
-              name="tariffa"
-              min={this.state.minTariffa}
-              max={this.state.maxTariffa}
-              id="tariffa"
+              step = "50"
+              name="costo"
+              min={this.state.minCosto}
+              max={this.state.maxCosto}
+              id="costo"
               onChange={this.handleChange}
               className="form-control"
-              defaultValue = {this.state.tariffa}
+              defaultValue = {this.state.costo}
             />
           </div>
           {/* end of casaVacanza price*/}
@@ -138,7 +163,7 @@ class CaseVacanzaFilter extends React.Component {
                   type="checkbox"
                   name={item.servizio}
                   id={item.servizio}
-                  onChange={this.handleChange}
+                  onChange={this.onChangeServizi}
                 />
                 <label htmlFor={item.servizio}>&nbsp;{item.servizio}</label>
               </div>

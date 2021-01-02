@@ -16,6 +16,9 @@ class CasaVacanzaContainer extends React.Component {
     this.state = {
       case: this.props.case ? this.props.case : [],
       posti: this.props.posti ? this.props.posti : 1,
+      checkIn: this.props.checkIn ? this.props.checkIn : '',
+      checkOut: this.props.checkOut ? this.props.checkOut : '',
+      searchServizi: [],
       datiRicerca: '',
       apiResponse: [],
       error: false,
@@ -50,9 +53,46 @@ class CasaVacanzaContainer extends React.Component {
         provincia: '',
         servizi: '',
         posti: this.state.datiRicerca.posti ? this.state.datiRicerca.posti : 1,
-        tariffa: this.state.datiRicerca.tariffa ? this.state.datiRicerca.tariffa : '',
-        checkIn: '',
-        checkOut: ''
+        costo: this.state.datiRicerca.costo ? this.state.datiRicerca.costo : '',
+        checkIn: this.state.checkIn,
+        checkOut: this.state.checkOut
+      };
+  
+      fetch('http://localhost:9000/ricercaAlloggio/risultati', {
+          method: "POST",
+          headers: {
+              'Content-type': 'application/json'
+          },
+          body: JSON.stringify(data)
+      })
+      .then((result) => result.text())
+      .then((result) => {
+          //console.log(JSON.parse(result));
+          this.setState({ case: JSON.parse(result) });
+  
+          if(this.state.case.status === 'error') {
+            this.setState({ error: true });
+            this.setState({ errorMessage: this.state.case.message });
+          }
+          else {
+            this.setState({ loading: false });
+          }
+        }
+      );
+    });
+  }
+
+  onChangeServizi = (e) => {
+    this.setState({ posti: e.posti, datiRicerca: e }, () => {
+      const data = {
+        tipo: 'cv',
+        localita: this.state.datiRicerca.localita ? this.state.datiRicerca.localita : '',
+        provincia: '',
+        servizi: e.searchServizi,
+        posti: this.state.datiRicerca.posti ? this.state.datiRicerca.posti : 1,
+        costo: this.state.datiRicerca.costo ? this.state.datiRicerca.costo : '',
+        checkIn: this.state.checkIn,
+        checkOut: this.state.checkOut
       };
   
       fetch('http://localhost:9000/ricercaAlloggio/risultati', {
@@ -94,7 +134,15 @@ class CasaVacanzaContainer extends React.Component {
     else {
       return (
         <>
-          <CaseVacanzaFilter servizi={this.state.apiResponse} posti = {this.props.posti} onChange = {this.onChange} />
+          <CaseVacanzaFilter 
+            servizi={this.state.apiResponse} 
+            posti = {this.props.posti} 
+            checkIn = {this.state.checkIn}
+            checkOut = {this.state.checkOut}
+            onChange = {this.onChange} 
+            onChangeServizi = {this.onChangeServizi}
+            case = {this.state.case}
+          />
           <div className="ListaProp">
             <CaseVacanzaList case={this.state.case}/>
           </div>

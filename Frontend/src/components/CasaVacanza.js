@@ -4,7 +4,7 @@ import defaultImg from "../images/room-1.jpeg";
 import PropTypes from "prop-types";
 import { memo } from "react";
 import {CasaVacanzaProvider} from "../CasaVacanza/context";
-
+import { Redirect } from 'react-router-dom';
 import './CasaVacanza.css';
 
 class CasaVacanza extends React.Component {
@@ -18,12 +18,21 @@ class CasaVacanza extends React.Component {
           <img src={dati_casa.img1} alt="single casaVacanza" />
           <div className="info">
           <div className="price-top">
-            <h6>€{dati_casa.tariffa}/notte</h6>
+            <h6>€{dati_casa.costo} ({dati_casa.ngiorni} {dati_casa.ngiorni === 1 ? 'giorno' : 'giorni'})</h6>
           </div>
             <p className="casaVacanza-info">{dati_casa.nome_proprieta}</p>
+            <p className="casaVacanza-info">{dati_casa.localita}</p>
             <p className="casaVacanza-info">Per {dati_casa.posti} {dati_casa.posti === 1 ? 'ospite' : 'ospiti'}</p>
-            <Link to={""} className="vai">
-            Visualizza dettagli
+            <Link 
+              to = {{
+                pathname: "/Casa",
+                state: {
+                  dati_casa: {dati_casa}
+                }
+              }}
+              className = "vai"
+            >
+              Visualizza dettagli
             </Link>
         </div>
       </article>
