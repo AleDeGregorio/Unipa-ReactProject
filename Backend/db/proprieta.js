@@ -369,6 +369,26 @@ const getProprietaProvinciaTipoServizi = async(req) => {
 // elaborazione del form di ricerca di un alloggio, nel caso più generale
 // ----------METODO PRINCIPALE DA USARE PER LA RICERCA----------
 const ricercaAlloggio = async(req) => {
+    var str1 = req.checkIn;
+    var dmy1 = str1.split("/");
+
+    var str2 = req.checkOut;
+    var dmy2 = str2.split("/");
+
+    var partenza = new Date(dmy1[2], dmy1[1] - 1, dmy1[0]);
+    var ritorno = new Date(dmy2[2], dmy2[1] - 1, dmy2[0]);
+
+    const utc1 = Date.UTC(partenza.getFullYear(), partenza.getMonth(), partenza.getDate());
+    const utc2 = Date.UTC(ritorno.getFullYear(), ritorno.getMonth(), ritorno.getDate());
+
+    const ngiorni = Math.floor((utc2 - utc1) / (1000 * 60 * 60 * 24));
+
+    var servizi = '%';
+
+    for(var i = 0; i < req.servizi.length; i++) {
+        servizi = servizi + req.servizi[i] + '%';
+    }
+
     return new Promise((resolve, reject) => {
 
         if(req.tipo === 'cv') {
@@ -376,11 +396,14 @@ const ricercaAlloggio = async(req) => {
                 'SELECT @localita := "' + (req.localita === '' ? '%%' : req.localita) + '"; ' +
                 'SELECT @provincia := "' + (req.provincia === '' ? '%%' : req.provincia) + '"; ' +
                 'SELECT @posti := ' + req.posti + '; ' +
-                'SELECT @tariffa := ' + (req.tariffa === '' ? 99999 : req.tariffa) + '; ' +
+                'SELECT @costo := ' + (req.costo === '' ? 99999 : req.costo) + '; ' +
                 'SELECT @inizio := "'+ (req.checkIn === '' ? '1970-01-01' : req.checkIn) + '"; ' +
                 'SELECT @fine := "'+ (req.checkOut === '' ? '1970-01-01' : req.checkOut) + '"; ' +
-                'SELECT DISTINCT p.nome_proprieta, p.indirizzo, p.localita, p.tipo_proprieta, ' +
+                'SELECT @servizi := "' + servizi + '"; ' +
+                'SELECT DISTINCT p.nome_proprieta, p.indirizzo, p.localita, p.tipo_proprieta, p.servizi, p.provincia, ' +
+                    'c.tariffa_casa* ' + ngiorni + ' AS costo, ' +
                     'c.tariffa_casa AS tariffa, ' +
+                    ngiorni + ' AS ngiorni, ' +
                     'c.posti_letto AS posti, p.descrizione, ' +
                     'c.imgCV_path1 AS img1, ' +
                     'c.imgCV_path2 AS img2, ' +
@@ -391,8 +414,10 @@ const ricercaAlloggio = async(req) => {
                 'FROM proprieta p, casa_vacanza c ' +
                 'WHERE p.id_proprieta = c.ref_proprieta_cv AND ' +
                     'p.localita LIKE @localita AND p.provincia LIKE @provincia AND ' +
-                    'c.posti_letto = @posti AND c.tariffa_casa <= @tariffa AND ' +
-                    '(@fine <= c.non_disponibile_inizio_cv OR @inizio >= c.non_disponibile_fine_cv);',
+                    'p.servizi LIKE @servizi AND ' +
+                    'c.posti_letto = @posti AND ' +
+                    '(@fine <= c.non_disponibile_inizio_cv OR @inizio >= c.non_disponibile_fine_cv) ' +
+                'HAVING c.tariffa_casa*' + ngiorni + ' <= @costo; ',
                 (err, results) => {
                     if(err) {
                         console.log(err);
@@ -401,8 +426,7 @@ const ricercaAlloggio = async(req) => {
                     if(results.length < 1) {
                         return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
                     }
-                    
-                    resolve(results[6]);
+                    resolve(results[7]);
                 }
             );
         }
@@ -412,11 +436,14 @@ const ricercaAlloggio = async(req) => {
                 'SELECT @localita := "' + (req.localita === '' ? '%%' : req.localita) + '"; ' +
                 'SELECT @provincia := "' + (req.provincia === '' ? '%%' : req.provincia) + '"; ' +
                 'SELECT @posti := ' + req.posti + '; ' +
-                'SELECT @tariffa := ' + (req.tariffa === '' ? 99999 : req.tariffa) + '; ' +
+                'SELECT @costo := ' + (req.costo === '' ? 99999 : req.costo) + '; ' +
                 'SELECT @inizio := "'+ (req.checkIn === '' ? '1970-01-01' : req.checkIn) + '"; ' +
                 'SELECT @fine := "'+ (req.checkOut === '' ? '1970-01-01' : req.checkOut) + '"; ' +
-                'SELECT DISTINCT p.nome_proprieta, p.indirizzo, p.localita, p.tipo_proprieta, ' +
+                'SELECT @servizi := "' + servizi + '"; ' +
+                'SELECT DISTINCT p.nome_proprieta, p.indirizzo, p.localita, p.tipo_proprieta, p.servizi, p.provincia, ' +
+                    's.tariffa_stanza* ' + ngiorni + ' AS costo, ' +
                     's.tariffa_stanza AS tariffa, ' +
+                    ngiorni + ' AS ngiorni, ' +
                     's.tipologia AS posti, p.descrizione, ' +
                     's.imgST_path1 AS img1, ' +
                     's.imgST_path2 AS img2, ' +
@@ -427,8 +454,10 @@ const ricercaAlloggio = async(req) => {
                 'FROM proprieta p, b_and_b b, stanza s ' +
                 'WHERE p.id_proprieta = b.ref_proprieta_bb AND b.ref_proprieta_bb = s.ref_bb AND ' +
                     'p.localita LIKE @localita AND p.provincia LIKE @provincia AND ' +
-                    's.tipologia = @posti AND s.tariffa_stanza <= @tariffa AND ' +
-                    '(@fine <= s.non_disponibile_inizio_st OR @inizio >= s.non_disponibile_fine_st);',
+                    'p.servizi LIKE @servizi AND ' +
+                    's.tipologia = @posti AND ' +
+                    '(@fine <= s.non_disponibile_inizio_st OR @inizio >= s.non_disponibile_fine_st) ' +
+                'HAVING s.tariffa_stanza*' + ngiorni + ' <= @costo; ',
                 (err, results) => {
                     if(err) {
                         console.log(err);
@@ -438,7 +467,7 @@ const ricercaAlloggio = async(req) => {
                         return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
                     }
                     
-                    resolve(results[6]);
+                    resolve(results[7]);
                 }
             );
         }
@@ -448,11 +477,14 @@ const ricercaAlloggio = async(req) => {
                 'SELECT @localita := "' + (req.localita === '' ? '%%' : req.localita) + '"; ' +
                 'SELECT @provincia := "' + (req.provincia === '' ? '%%' : req.provincia) + '"; ' +
                 'SELECT @posti := ' + req.posti + '; ' +
-                'SELECT @tariffa := ' + (req.tariffa === '' ? 99999 : req.tariffa) + '; ' +
+                'SELECT @costo := ' + (req.costo === '' ? 99999 : req.costo) + '; ' +
                 'SELECT @inizio := "'+ (req.checkIn === '' ? '1970-01-01' : req.checkIn) + '"; ' +
                 'SELECT @fine := "'+ (req.checkOut === '' ? '1970-01-01' : req.checkOut) + '"; ' +
-                'SELECT DISTINCT p.nome_proprieta, p.indirizzo, p.localita, p.tipo_proprieta, ' +
+                'SELECT @servizi := "' + servizi + '"; ' +
+                'SELECT DISTINCT p.nome_proprieta, p.indirizzo, p.localita, p.tipo_proprieta, p.servizi, p.provincia, ' +
+                    'c.tariffa_casa* ' + ngiorni + ' AS costo, ' +
                     'c.tariffa_casa AS tariffa, ' +
+                    ngiorni + ' AS ngiorni, ' +
                     'c.posti_letto AS posti, p.descrizione, ' +
                     'c.imgCV_path1 AS img1, ' +
                     'c.imgCV_path2 AS img2, ' +
@@ -463,10 +495,12 @@ const ricercaAlloggio = async(req) => {
                 'FROM proprieta p, casa_vacanza c ' +
                 'WHERE p.id_proprieta = c.ref_proprieta_cv AND ' +
                     'p.localita LIKE @localita AND p.provincia LIKE @provincia AND ' +
-                    'c.posti_letto = @posti AND c.tariffa_casa <= @tariffa AND ' +
-                    '(@fine <= c.non_disponibile_inizio_cv OR @inizio >= c.non_disponibile_fine_cv);',
+                    'p.servizi LIKE @servizi AND ' + 
+                    'c.posti_letto = @posti AND ' +
+                    '(@fine <= c.non_disponibile_inizio_cv OR @inizio >= c.non_disponibile_fine_cv) ' +
+                'HAVING c.tariffa_casa*' + ngiorni + ' <= @costo; ',
                 (err, results) => {
-                    var resCV = results[6];
+                    var resCV = results[7];
 
                     if(err) {
                         console.log(err);
@@ -480,11 +514,14 @@ const ricercaAlloggio = async(req) => {
                         'SELECT @localita := "' + (req.localita === '' ? '%%' : req.localita) + '"; ' +
                         'SELECT @provincia := "' + (req.provincia === '' ? '%%' : req.provincia) + '"; ' +
                         'SELECT @posti := ' + req.posti + '; ' +
-                        'SELECT @tariffa := ' + (req.tariffa === '' ? 99999 : req.tariffa) + '; ' +
+                        'SELECT @costo := ' + (req.costo === '' ? 99999 : req.costo) + '; ' +
                         'SELECT @inizio := "'+ (req.checkIn === '' ? '1970-01-01' : req.checkIn) + '"; ' +
                         'SELECT @fine := "'+ (req.checkOut === '' ? '1970-01-01' : req.checkOut) + '"; ' +
-                        'SELECT DISTINCT p.nome_proprieta, p.indirizzo, p.localita, p.tipo_proprieta, ' +
+                        'SELECT @servizi := "' + servizi + '"; ' +
+                        'SELECT DISTINCT p.nome_proprieta, p.indirizzo, p.localita, p.tipo_proprieta, p.provincia, ' +
+                            's.tariffa_stanza* ' + ngiorni + ' AS costo, ' +
                             's.tariffa_stanza AS tariffa, ' +
+                            ngiorni + ' AS ngiorni, ' +
                             's.tipologia AS posti, p.descrizione, ' +
                             's.imgST_path1 AS img1, ' +
                             's.imgST_path2 AS img2, ' +
@@ -495,8 +532,10 @@ const ricercaAlloggio = async(req) => {
                         'FROM proprieta p, b_and_b b, stanza s ' +
                         'WHERE p.id_proprieta = b.ref_proprieta_bb AND b.ref_proprieta_bb = s.ref_bb AND ' +
                             'p.localita LIKE @localita AND p.provincia LIKE @provincia AND ' +
-                            's.tipologia = @posti AND s.tariffa_stanza <= @tariffa AND ' +
-                            '(@fine <= s.non_disponibile_inizio_st OR @inizio >= s.non_disponibile_fine_st);',
+                            'p.servizi LIKE @servizi AND ' +
+                            's.tipologia = @posti AND ' +
+                            '(@fine <= s.non_disponibile_inizio_st OR @inizio >= s.non_disponibile_fine_st) ' +
+                        'HAVING s.tariffa_stanza*' + ngiorni + ' <= @costo; ',
                         (err, results) => {
                             if(err) {
                                 console.log(err);
@@ -506,7 +545,7 @@ const ricercaAlloggio = async(req) => {
                                 return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
                             }
                             
-                            var resBB = results[6];
+                            var resBB = results[7];
 
                             var resTot = resCV.concat(resBB);
 
