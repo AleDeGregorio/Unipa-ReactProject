@@ -49,6 +49,9 @@ class RicercaFinale extends React.Component {
 
     onSubmit = (e) => {
         e.preventDefault();
+
+        var inizio = new Date(this.state.startDate.format()).toLocaleDateString();
+        var fine = this.state.endDate ? new Date(this.state.endDate.format()).toLocaleDateString() : ''
         
         const data = {
             tipo: this.state.tipo,
@@ -56,7 +59,9 @@ class RicercaFinale extends React.Component {
             provincia: '',
             servizi: '',
             posti: this.state.posti,
-            tariffa: ''
+            tariffa: '',
+            checkIn: inizio,
+            checkOut: fine
         };
 
         fetch('http://localhost:9000/ricercaAlloggio/risultati', {
@@ -68,7 +73,7 @@ class RicercaFinale extends React.Component {
         })
         .then((result) => result.text())
         .then((result) => {
-            //console.log(JSON.parse(result));
+            console.log(JSON.parse(result));
             this.setState({ apiResponse: JSON.parse(result) });
 
             if(this.state.apiResponse.status === 'error') {
@@ -112,7 +117,8 @@ class RicercaFinale extends React.Component {
             to = {{
               pathname: "/CaseVacanza",
               state: {
-                case: this.state.apiResponse
+                case: this.state.apiResponse,
+                posti: this.state.posti
               }
             }}
           />

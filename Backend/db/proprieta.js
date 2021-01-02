@@ -371,14 +371,160 @@ const getProprietaProvinciaTipoServizi = async(req) => {
 const ricercaAlloggio = async(req) => {
     return new Promise((resolve, reject) => {
 
-        Connection.query(
+        if(req.tipo === 'cv') {
+            Connection.query(
+                'SELECT @localita := "' + (req.localita === '' ? '%%' : req.localita) + '"; ' +
+                'SELECT @provincia := "' + (req.provincia === '' ? '%%' : req.provincia) + '"; ' +
+                'SELECT @posti := ' + req.posti + '; ' +
+                'SELECT @tariffa := ' + (req.tariffa === '' ? 99999 : req.tariffa) + '; ' +
+                'SELECT @inizio := "'+ (req.checkIn === '' ? '1970-01-01' : req.checkIn) + '"; ' +
+                'SELECT @fine := "'+ (req.checkOut === '' ? '1970-01-01' : req.checkOut) + '"; ' +
+                'SELECT DISTINCT p.nome_proprieta, p.indirizzo, p.localita, p.tipo_proprieta, ' +
+                    'c.tariffa_casa AS tariffa, ' +
+                    'c.posti_letto AS posti, p.descrizione, ' +
+                    'c.imgCV_path1 AS img1, ' +
+                    'c.imgCV_path2 AS img2, ' +
+                    'c.imgCV_path3 AS img3, ' +
+                    'c.imgCV_path4 AS img4, ' +
+                    'null AS check_in, ' +
+                    'null AS check_out ' +
+                'FROM proprieta p, casa_vacanza c ' +
+                'WHERE p.id_proprieta = c.ref_proprieta_cv AND ' +
+                    'p.localita LIKE @localita AND p.provincia LIKE @provincia AND ' +
+                    'c.posti_letto = @posti AND c.tariffa_casa <= @tariffa AND ' +
+                    '(@fine <= c.non_disponibile_inizio_cv OR @inizio >= c.non_disponibile_fine_cv);',
+                (err, results) => {
+                    if(err) {
+                        console.log(err);
+                        return reject(new GeneralError('Si è verificato un errore'));
+                    }
+                    if(results.length < 1) {
+                        return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
+                    }
+                    
+                    resolve(results[6]);
+                }
+            );
+        }
+
+        else if(req.tipo === 'bb') {
+            Connection.query(
+                'SELECT @localita := "' + (req.localita === '' ? '%%' : req.localita) + '"; ' +
+                'SELECT @provincia := "' + (req.provincia === '' ? '%%' : req.provincia) + '"; ' +
+                'SELECT @posti := ' + req.posti + '; ' +
+                'SELECT @tariffa := ' + (req.tariffa === '' ? 99999 : req.tariffa) + '; ' +
+                'SELECT @inizio := "'+ (req.checkIn === '' ? '1970-01-01' : req.checkIn) + '"; ' +
+                'SELECT @fine := "'+ (req.checkOut === '' ? '1970-01-01' : req.checkOut) + '"; ' +
+                'SELECT DISTINCT p.nome_proprieta, p.indirizzo, p.localita, p.tipo_proprieta, ' +
+                    's.tariffa_stanza AS tariffa, ' +
+                    's.tipologia AS posti, p.descrizione, ' +
+                    's.imgST_path1 AS img1, ' +
+                    's.imgST_path2 AS img2, ' +
+                    's.imgST_path3 AS img3, ' +
+                    's.imgST_path4 AS img4, ' +
+                    'b.check_in AS check_in, ' +
+                    'b.check_out AS check_out ' +
+                'FROM proprieta p, b_and_b b, stanza s ' +
+                'WHERE p.id_proprieta = b.ref_proprieta_bb AND b.ref_proprieta_bb = s.ref_bb AND ' +
+                    'p.localita LIKE @localita AND p.provincia LIKE @provincia AND ' +
+                    's.tipologia = @posti AND s.tariffa_stanza <= @tariffa AND ' +
+                    '(@fine <= s.non_disponibile_inizio_st OR @inizio >= s.non_disponibile_fine_st);',
+                (err, results) => {
+                    if(err) {
+                        console.log(err);
+                        return reject(new GeneralError('Si è verificato un errore'));
+                    }
+                    if(results.length < 1) {
+                        return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
+                    }
+                    
+                    resolve(results[6]);
+                }
+            );
+        }
+
+        else {
+            Connection.query(
+                'SELECT @localita := "' + (req.localita === '' ? '%%' : req.localita) + '"; ' +
+                'SELECT @provincia := "' + (req.provincia === '' ? '%%' : req.provincia) + '"; ' +
+                'SELECT @posti := ' + req.posti + '; ' +
+                'SELECT @tariffa := ' + (req.tariffa === '' ? 99999 : req.tariffa) + '; ' +
+                'SELECT @inizio := "'+ (req.checkIn === '' ? '1970-01-01' : req.checkIn) + '"; ' +
+                'SELECT @fine := "'+ (req.checkOut === '' ? '1970-01-01' : req.checkOut) + '"; ' +
+                'SELECT DISTINCT p.nome_proprieta, p.indirizzo, p.localita, p.tipo_proprieta, ' +
+                    'c.tariffa_casa AS tariffa, ' +
+                    'c.posti_letto AS posti, p.descrizione, ' +
+                    'c.imgCV_path1 AS img1, ' +
+                    'c.imgCV_path2 AS img2, ' +
+                    'c.imgCV_path3 AS img3, ' +
+                    'c.imgCV_path4 AS img4, ' +
+                    'null AS check_in, ' +
+                    'null AS check_out ' +
+                'FROM proprieta p, casa_vacanza c ' +
+                'WHERE p.id_proprieta = c.ref_proprieta_cv AND ' +
+                    'p.localita LIKE @localita AND p.provincia LIKE @provincia AND ' +
+                    'c.posti_letto = @posti AND c.tariffa_casa <= @tariffa AND ' +
+                    '(@fine <= c.non_disponibile_inizio_cv OR @inizio >= c.non_disponibile_fine_cv);',
+                (err, results) => {
+                    var resCV = results[6];
+
+                    if(err) {
+                        console.log(err);
+                        return reject(new GeneralError('Si è verificato un errore'));
+                    }
+                    if(results.length < 1) {
+                        return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
+                    }
+                    
+                    Connection.query(
+                        'SELECT @localita := "' + (req.localita === '' ? '%%' : req.localita) + '"; ' +
+                        'SELECT @provincia := "' + (req.provincia === '' ? '%%' : req.provincia) + '"; ' +
+                        'SELECT @posti := ' + req.posti + '; ' +
+                        'SELECT @tariffa := ' + (req.tariffa === '' ? 99999 : req.tariffa) + '; ' +
+                        'SELECT @inizio := "'+ (req.checkIn === '' ? '1970-01-01' : req.checkIn) + '"; ' +
+                        'SELECT @fine := "'+ (req.checkOut === '' ? '1970-01-01' : req.checkOut) + '"; ' +
+                        'SELECT DISTINCT p.nome_proprieta, p.indirizzo, p.localita, p.tipo_proprieta, ' +
+                            's.tariffa_stanza AS tariffa, ' +
+                            's.tipologia AS posti, p.descrizione, ' +
+                            's.imgST_path1 AS img1, ' +
+                            's.imgST_path2 AS img2, ' +
+                            's.imgST_path3 AS img3, ' +
+                            's.imgST_path4 AS img4, ' +
+                            'b.check_in AS check_in, ' +
+                            'b.check_out AS check_out ' +
+                        'FROM proprieta p, b_and_b b, stanza s ' +
+                        'WHERE p.id_proprieta = b.ref_proprieta_bb AND b.ref_proprieta_bb = s.ref_bb AND ' +
+                            'p.localita LIKE @localita AND p.provincia LIKE @provincia AND ' +
+                            's.tipologia = @posti AND s.tariffa_stanza <= @tariffa AND ' +
+                            '(@fine <= s.non_disponibile_inizio_st OR @inizio >= s.non_disponibile_fine_st);',
+                        (err, results) => {
+                            if(err) {
+                                console.log(err);
+                                return reject(new GeneralError('Si è verificato un errore'));
+                            }
+                            if(results.length < 1) {
+                                return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
+                            }
+                            
+                            var resBB = results[6];
+
+                            var resTot = resCV.concat(resBB);
+
+                            resolve(resTot);
+                        }
+                    );
+                }
+            );
+        }
+        
+        /*Connection.query(
             'SELECT @tipo := "' + (req.tipo == '' ? '%%' : req.tipo) + '"; ' +
             'SELECT @localita := "' + (req.localita == '' ? '%%' : req.localita) + '"; ' +
             'SELECT @provincia := "' + (req.provincia == '' ? '%%' : req.provincia) + '"; ' +
             'SELECT @posti := ' + req.posti + '; ' +
             'SELECT @tariffa := ' + (req.tariffa == '' ? 99999 : req.tariffa) + '; ' +
-            'SELECT @inizio := "'+ (req.checkIn == '' ? '1970-01-01' : + req.checkIn) + '"; ' +
-            'SELECT @fine := "'+ (req.checkOut == '' ? '1970-01-01' : + req.checkOut) + '"; ' +
+            'SELECT @inizio := "'+ (req.checkIn == '' ? '1970-01-01' : req.checkIn) + '"; ' +
+            'SELECT @fine := "'+ (req.checkOut == '' ? '1970-01-01' : req.checkOut) + '"; ' +
             'SELECT DISTINCT p.nome_proprieta, p.indirizzo, p.localita, p.tipo_proprieta, ' +
                 'IF(@tipo = "cv", c.tariffa_casa, s.tariffa_stanza) AS tariffa, ' +
                 'IF(@tipo = "cv", c.posti_letto, s.tipologia) AS posti, p.descrizione, ' +
@@ -406,8 +552,8 @@ const ricercaAlloggio = async(req) => {
                 
                 resolve(results[7]);
             }
-        )
-    })
+        )*/
+    });
 }
 
 // update fields

@@ -9,18 +9,10 @@ import './CasaVacanza.css';
 
 class CasaVacanza extends React.Component {
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      dati_casa: this.props.casaVacanza ? this.props.casaVacanza : ''
-    }
-  }
-
   render() {
     //const { name, slug, images, price } = casaVacanza;
     // console.log(name);
-    var dati_casa = this.state.dati_casa;
+    var dati_casa = this.props.casaVacanza ? this.props.casaVacanza : '';
     return (
       <article className="casaVacanza">
           <img src={dati_casa.img1} alt="single casaVacanza" />

@@ -267,10 +267,10 @@ INSERT INTO casa_vacanza VALUES
 -- Memorizzo i path delle immagini di ciascuna struttura, per poi poterle caricare nel front end
 -- Il nome di ciascuna immagine è del tipo 'ref_proprieta_cv_1.jpg', 'ref_proprieta_cv_2.jpg'...
 -- Esempio: se ref_proprieta_cv = 100, allora imgCV_path1 = './Images/100_1.jpg', imgCV_path2 = './Images/100_2.jpg'...
-(100, 2, 100, '1970-01-01', '1970-01-01', './Images/100_1.jpg', './Images/100_2.jpg', './Images/100_3.jpg', './Images/100_4.jpg'),
-(102, 3, 200, '1970-01-01', '1970-01-01', './Images/102_1.jpg', './Images/102_2.jpg', './Images/102_3.jpg', './Images/102_4.jpg'),
-(105, 1, 80, '1970-01-01', '1970-01-01', './Images/105_1.jpg', './Images/105_2.jpg', './Images/105_3.jpg', './Images/105_4.jpg'),
-(107, 5, 400, '1970-01-01', '1970-01-01', './Images/107_1.jpg', './Images/107_2.jpg', './Images/107_3.jpg', './Images/107_4.jpg');
+(100, 2, 50, '1970-01-01', '1970-01-01', './Images/100_1.jpg', './Images/100_2.jpg', './Images/100_3.jpg', './Images/100_4.jpg'),
+(102, 3, 70, '1970-01-01', '1970-01-01', './Images/102_1.jpg', './Images/102_2.jpg', './Images/102_3.jpg', './Images/102_4.jpg'),
+(105, 1, 20, '1970-01-01', '1970-01-01', './Images/105_1.jpg', './Images/105_2.jpg', './Images/105_3.jpg', './Images/105_4.jpg'),
+(107, 5, 100, '1970-01-01', '1970-01-01', './Images/107_1.jpg', './Images/107_2.jpg', './Images/107_3.jpg', './Images/107_4.jpg');
 
 INSERT INTO b_and_b VALUES
 -- (REF_PROPRIETA_BB, check_in, check_out)
@@ -281,14 +281,14 @@ INSERT INTO b_and_b VALUES
 
 INSERT INTO stanza (ref_bb, tipologia, tariffa_stanza, non_disponibile_inizio_st, non_disponibile_fine_st) VALUES
 -- (ID_STANZA, ref_bb, tipologia, tariffa_stanza, imgST_path1, imgST_path2, imgST_path3, imgST_path4)
-(101, 1, 50, '1970-01-01', '1970-01-01'), -- ID 300
-(101, 2, 90, '1970-01-01', '1970-01-01'), -- ID 301
-(103, 3, 140, '1970-01-01', '1970-01-01'), -- ID 302
-(103, 2, 100, '1970-01-01', '1970-01-01'), -- ID 303
+(101, 1, 10, '1970-01-01', '1970-01-01'), -- ID 300
+(101, 2, 30, '1970-01-01', '1970-01-01'), -- ID 301
+(103, 3, 50, '1970-01-01', '1970-01-01'), -- ID 302
+(103, 2, 60, '1970-01-01', '1970-01-01'), -- ID 303
 (104, 1, 80, '1970-01-01', '1970-01-01'), -- ID 304
-(104, 3, 120, '1970-01-01', '1970-01-01'), -- ID 305
-(106, 2, 80, '1970-01-01', '1970-01-01'), -- ID 306
-(106, 1, 90, '1970-01-01', '1970-01-01'); -- ID 307
+(104, 3, 40, '1970-01-01', '1970-01-01'), -- ID 305
+(106, 2, 20, '1970-01-01', '1970-01-01'), -- ID 306
+(106, 1, 40, '1970-01-01', '1970-01-01'); -- ID 307
 -- Memorizzo i path delle immagini di ciascuna stanza, per poi poterle caricare nel front end
 -- Il nome di ciascuna immagine è del tipo 'id_stanza_ref_bb_1.jpg', 'id_stanza_ref_bb_2.jpg'...
 -- Esempio: se id_stanza = 300 e ref_bb = 101, allora imgST_path1 = './Images/300_101_1.jpg', imgST_path2 = './Images/300_101_2.jpg'...
@@ -407,7 +407,7 @@ INSERT INTO tassa_soggiorno (ref_soggiornante, ref_prenotazione, ref_proprietari
 -- SELECT @localita := 'Torino';
 -- SELECT @provincia := '%%';
 -- SELECT @posti := 2;
--- SELECT @tariffa := '%%';
+-- SELECT @tariffa := 300;
 -- SELECT @inizio := '1970-01-01'; -- jolly
 -- SELECT @fine := '1970-01-01'; -- jolly
 -- SELECT DISTINCT p.nome_proprieta, p.indirizzo, p.localita, p.tipo_proprieta,
@@ -422,10 +422,34 @@ INSERT INTO tassa_soggiorno (ref_soggiornante, ref_prenotazione, ref_proprietari
 -- FROM proprieta p, casa_vacanza c, b_and_b b, stanza s
 -- WHERE p.id_proprieta = IF(@tipo = 'cv', c.ref_proprieta_cv, b.ref_proprieta_bb) AND b.ref_proprieta_bb = s.ref_bb AND
 	 -- p.localita LIKE @localita AND p.provincia LIKE @provincia AND 
-	 -- (c.posti_letto >= @posti OR s.tipologia >= @posti) AND (c.tariffa_casa LIKE @tariffa OR s.tariffa_stanza LIKE @tariffa) AND
+	 -- (c.posti_letto >= @posti OR s.tipologia >= @posti) AND (c.tariffa_casa <= @tariffa AND s.tariffa_stanza <= @tariffa) AND
      -- p.tipo_proprieta LIKE @tipo AND
      -- (((@inizio <= c.non_disponibile_inizio_cv AND @fine <= c.non_disponibile_inizio_cv) OR (@inizio >= c.non_disponibile_fine_cv AND @fine >= c.non_disponibile_fine_cv)) 
      -- AND ((@inizio <= s.non_disponibile_inizio_st AND @fine <= s.non_disponibile_inizio_st) OR (@inizio >= s.non_disponibile_fine_st AND @fine >= s.non_disponibile_fine_st)));
+
+-- SELECT @tipo := "%%";
+-- SELECT @localita := "%%";
+-- SELECT @provincia := "%%";
+-- SELECT @posti := 2;
+-- SELECT @tariffa := 9999 ;
+-- SELECT @inizio := "1/1/2021";
+-- SELECT @fine := "2/1/2021";
+-- SELECT DISTINCT p.nome_proprieta, p.indirizzo, p.localita, p.tipo_proprieta,
+	-- c.tariffa_casa, s.tariffa_stanza, 
+	-- c.posti_letto, s.tipologia, p.descrizione,
+	-- c.imgCV_path1 AS img1CV, s.imgST_path1 AS img1ST,
+	-- c.imgCV_path2 AS img2CV, s.imgST_path2 AS img2ST,
+	-- c.imgCV_path3 AS img3CV, s.imgST_path3 AS img3ST,
+	-- c.imgCV_path4 AS img4CV, s.imgST_path4 AS img4ST,
+	-- b.check_in AS check_in,
+	-- b.check_out AS check_out
+-- FROM proprieta p, casa_vacanza c, b_and_b b, stanza s
+-- WHERE p.id_proprieta = c.ref_proprieta_cv AND p.id_proprieta = b.ref_proprieta_bb AND b.ref_proprieta_bb = s.ref_bb AND
+	-- p.localita LIKE @localita AND p.provincia LIKE @provincia AND
+	-- s.tipologia >= @posti AND s.tariffa_stanza <= @tariffa AND 
+    -- c.posti_letto >= @posti AND c.tariffa_casa <= @tariffa AND
+	-- (@fine <= s.non_disponibile_inizio_st OR @inizio >= s.non_disponibile_fine_st) OR
+	-- (@fine <= c.non_disponibile_inizio_cv OR @inizio >= c.non_disponibile_fine_cv);
 
 -- ----------PROVA CARICAMENTO STANZA CON FOTO ----------
 -- INSERT INTO stanza (ref_bb, tipologia, tariffa_stanza) VALUES 

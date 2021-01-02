@@ -16,6 +16,8 @@ class NavBar extends React.Component {
 
     render() {
         if(localStorage.getItem('logged') && localStorage.getItem('cliente')) {
+            var nome = localStorage.getObj('user_data')[0].nome_cl;
+            var cognome = localStorage.getObj('user_data')[0].cognome_cl;
             return(
                 <Navbar bg="light" expand="lg">
                 <Navbar.Brand href="/">Sito Progetto</Navbar.Brand>
@@ -28,10 +30,10 @@ class NavBar extends React.Component {
                     </Nav>
                      <Dropdown>
                     <DropdownButton className="ticambio" title={Menu} menuAlign="right"
-><Menu />
+><Menu />{nome} {cognome}
 <Dropdown.Menu >
                <Dropdown.Item href="/GestionePrenotazione" >Gestisci prenotazioni</Dropdown.Item>
-               <Dropdown.Item href="/DiventaHost">Diventa un Host</Dropdown.Item>
+               <Dropdown.Item href="/DiventaHost">Diventa un host</Dropdown.Item>
                <Dropdown.Item href="/DatiPersonali">Dati personali</Dropdown.Item>
                <Dropdown.Item href="/SecondaAutenticazioneAccedi" onClick = {this.onClick}>Logout</Dropdown.Item>
                
