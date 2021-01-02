@@ -163,7 +163,7 @@ class App extends React.Component {
                 )}
               />
               <Route 
-                exact path="/CaseVacanza/:slug"
+                exact path="/Casa/"
                 render = { (props) => (
                   <RiepilogoCasaVacanza {...props}/>
                 )}
