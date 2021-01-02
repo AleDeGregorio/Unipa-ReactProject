@@ -85,8 +85,8 @@ class ProprietarioPage extends React.Component {
         <Link to = "/Testina" className="LinK">
         <Card className="prop">
             <FaClipboardList className="imageProp"/>
-            <Card.Title>Gestisci Prenotazioni</Card.Title>
-            <Card.Text>Gestisci le prenotazioni in attesa e quelle già accettate.</Card.Text>
+            <Card.Title className="TitoloCard">Gestisci Prenotazioni</Card.Title>
+            <Card.Text className="TestoCard">Gestisci le prenotazioni in attesa e quelle già accettate.</Card.Text>
         </Card>
         </Link>
         <Link to = "" className="LinK">
