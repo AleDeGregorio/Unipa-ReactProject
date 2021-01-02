@@ -14,6 +14,8 @@ import CaseVacanzaContainer from "./components/CaseVacanzaContainer";
 import RiepilogoCasaVacanza from './Pagine/RiepilogoCasaVacanza';
 import BandB from './Pagine/B&B'
 //import PaginaDettagli from './PaginaDettagli/PaginaDettagli'
+//Prenotazione
+import Prenota from './Prenota/Prenota'
 
 // Login e registrazione
 import Autenticazione from './Autenticazione/Autenticazione'
@@ -176,6 +178,12 @@ class App extends React.Component {
                 )}
               />
 
+              <Route
+                exact path="/Prenota"
+                  render= { (props) =>(
+                    <Prenota {...props} />
+                  )}
+              />
               <Route 
                 exact path = '/Autenticazione'
                 render = { (props) => (
