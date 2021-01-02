@@ -14,8 +14,15 @@ export default class SingleCasaVacanza extends Component {
     super(props);
 
     this.state = {
-      dati_casa: this.props.history.location.state.dati_casa.dati_casa ? this.props.history.location.state.dati_casa.dati_casa : []
+      dati_casa: this.props.history.location.state.dati_casa.dati_casa ? this.props.history.location.state.dati_casa.dati_casa : [],
+      servizi: []
     };
+  }
+
+  componentDidMount() {
+    this.setState({
+      servizi: this.state.dati_casa.servizi.replace(/\s*,\s*/g, ",").split(',')
+    });
   }
 
   render() {
@@ -32,7 +39,7 @@ export default class SingleCasaVacanza extends Component {
     
     var dati_casa = this.state.dati_casa;
     var images = [dati_casa.img1, dati_casa.img2, dati_casa.img3, dati_casa.img4];
-    console.log(images);
+    var servizi = this.state.servizi;
 
     return (
        <>
@@ -69,8 +76,8 @@ export default class SingleCasaVacanza extends Component {
                <article className="room-extras">
                  <h3>SERVIZI</h3>
                  <ul className="extras">
-                   {images.map((item, index) => (
-                   <li key={index}>- {item}</li>
+                   {servizi.map(item => (
+                   <li>- {item}</li>
                    ))}
                  </ul>
                </article>

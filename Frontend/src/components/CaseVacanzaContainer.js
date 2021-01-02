@@ -18,6 +18,7 @@ class CasaVacanzaContainer extends React.Component {
       posti: this.props.posti ? this.props.posti : 1,
       checkIn: this.props.checkIn ? this.props.checkIn : '',
       checkOut: this.props.checkOut ? this.props.checkOut : '',
+      localita: this.props.localita ? this.props.localita : '',
       searchServizi: [],
       datiRicerca: '',
       apiResponse: [],
@@ -142,6 +143,7 @@ class CasaVacanzaContainer extends React.Component {
             onChange = {this.onChange} 
             onChangeServizi = {this.onChangeServizi}
             case = {this.state.case}
+            localita = {this.state.localita}
           />
           <div className="ListaProp">
             <CaseVacanzaList case={this.state.case}/>

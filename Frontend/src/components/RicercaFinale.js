@@ -127,7 +127,8 @@ class RicercaFinale extends React.Component {
                 case: this.state.apiResponse,
                 posti: this.state.posti,
                 checkIn: this.state.checkIn,
-                checkOut: this.state.checkOut
+                checkOut: this.state.checkOut,
+                localita: this.state.localita
               }
             }}
           />
