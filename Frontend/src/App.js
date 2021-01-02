@@ -10,7 +10,6 @@ import Footer from './components/Footer'
 import HomePage from './components/HomePage'
 import ErrorPage from './components/ErrorPage'
 import CaseVacanza from './Pagine/CaseVacanza'
-import CaseVacanzaContainer from "./components/CaseVacanzaContainer";
 import RiepilogoCasaVacanza from './Pagine/RiepilogoCasaVacanza';
 import BandB from './Pagine/B&B'
 //import PaginaDettagli from './PaginaDettagli/PaginaDettagli'
@@ -166,7 +165,7 @@ class App extends React.Component {
                 )}
               />
               <Route 
-                exact path="/CaseVacanza/:slug"
+                exact path="/Casa/"
                 render = { (props) => (
                   <RiepilogoCasaVacanza {...props}/>
                 )}

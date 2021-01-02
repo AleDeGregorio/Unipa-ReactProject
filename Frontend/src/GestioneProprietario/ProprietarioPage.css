@@ -4,14 +4,15 @@
   flex-wrap: wrap;
 }
 
+
 .prop {
 display: flex;
 justify-content: center;
+color: black;
 }
 
 
 .LinK:hover{
-color:  #008cc8;
 text-decoration: none;
 }
 

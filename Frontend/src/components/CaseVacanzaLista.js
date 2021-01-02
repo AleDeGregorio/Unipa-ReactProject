@@ -5,19 +5,21 @@ import './CaseVacanzaLista';
 
 class CaseVacanzaList extends React.Component {
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      case: this.props.case ? this.props.case : []
-    }
-  }
-
   render() {
+    var datiCase = this.props.case ? this.props.case : [];
+
+    if (datiCase.length === 0) {
+      return (
+        <div className="empty-search">
+          <h3>Nessun alloggio trovato...</h3>
+        </div>
+      );
+    }
+
     return (
       <section className="caseVacanzalist">
         <div className="caseVacanzalistDiv">
-          {this.state.case.map(item => {
+          {datiCase.map(item => {
             return <CasaVacanza key={item.id} casaVacanza={item} />;
           })}
         </div>

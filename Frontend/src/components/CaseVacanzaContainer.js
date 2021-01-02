@@ -14,7 +14,12 @@ class CasaVacanzaContainer extends React.Component {
     super(props);
 
     this.state = {
-      case: this.props.case ? this.props.case : '',
+      case: this.props.case ? this.props.case : [],
+      posti: this.props.posti ? this.props.posti : 1,
+      checkIn: this.props.checkIn ? this.props.checkIn : '',
+      checkOut: this.props.checkOut ? this.props.checkOut : '',
+      searchServizi: [],
+      datiRicerca: '',
       apiResponse: [],
       error: false,
       errorMessage: ''
@@ -40,26 +45,110 @@ class CasaVacanzaContainer extends React.Component {
     });
   }
 
+  onChange = (e) => {
+    this.setState({ posti: e.posti, datiRicerca: e }, () => {
+      const data = {
+        tipo: 'cv',
+        localita: this.state.datiRicerca.localita ? this.state.datiRicerca.localita : '',
+        provincia: '',
+        servizi: '',
+        posti: this.state.datiRicerca.posti ? this.state.datiRicerca.posti : 1,
+        costo: this.state.datiRicerca.costo ? this.state.datiRicerca.costo : '',
+        checkIn: this.state.checkIn,
+        checkOut: this.state.checkOut
+      };
+  
+      fetch('http://localhost:9000/ricercaAlloggio/risultati', {
+          method: "POST",
+          headers: {
+              'Content-type': 'application/json'
+          },
+          body: JSON.stringify(data)
+      })
+      .then((result) => result.text())
+      .then((result) => {
+          //console.log(JSON.parse(result));
+          this.setState({ case: JSON.parse(result) });
+  
+          if(this.state.case.status === 'error') {
+            this.setState({ error: true });
+            this.setState({ errorMessage: this.state.case.message });
+          }
+          else {
+            this.setState({ loading: false });
+          }
+        }
+      );
+    });
+  }
+
+  onChangeServizi = (e) => {
+    this.setState({ posti: e.posti, datiRicerca: e }, () => {
+      const data = {
+        tipo: 'cv',
+        localita: this.state.datiRicerca.localita ? this.state.datiRicerca.localita : '',
+        provincia: '',
+        servizi: e.searchServizi,
+        posti: this.state.datiRicerca.posti ? this.state.datiRicerca.posti : 1,
+        costo: this.state.datiRicerca.costo ? this.state.datiRicerca.costo : '',
+        checkIn: this.state.checkIn,
+        checkOut: this.state.checkOut
+      };
+  
+      fetch('http://localhost:9000/ricercaAlloggio/risultati', {
+          method: "POST",
+          headers: {
+              'Content-type': 'application/json'
+          },
+          body: JSON.stringify(data)
+      })
+      .then((result) => result.text())
+      .then((result) => {
+          //console.log(JSON.parse(result));
+          this.setState({ case: JSON.parse(result) });
+  
+          if(this.state.case.status === 'error') {
+            this.setState({ error: true });
+            this.setState({ errorMessage: this.state.case.message });
+          }
+          else {
+            this.setState({ loading: false });
+          }
+        }
+      );
+    });
+  }
+
   render() {
     if (this.state.error) {
       return <Redirect 
-      to = {{
-        pathname: "/ErrorPage",
-        state: {
-          error: true,
-          errorMessage: this.state.errorMessage
-        }
-      }}
-    />
-  }
-    return (
-      <>
-        <CaseVacanzaFilter servizi={this.state.apiResponse} />
-        <div className="ListaProp">
-        <CaseVacanzaList case={this.state.case} />
-        </div>
-      </>
-    );
+        to = {{
+          pathname: "/ErrorPage",
+          state: {
+            error: true,
+            errorMessage: this.state.errorMessage
+          }
+        }}
+      />
+    }
+    else {
+      return (
+        <>
+          <CaseVacanzaFilter 
+            servizi={this.state.apiResponse} 
+            posti = {this.props.posti} 
+            checkIn = {this.state.checkIn}
+            checkOut = {this.state.checkOut}
+            onChange = {this.onChange} 
+            onChangeServizi = {this.onChangeServizi}
+            case = {this.state.case}
+          />
+          <div className="ListaProp">
+            <CaseVacanzaList case={this.state.case}/>
+          </div>
+        </>
+      );
+    }
   }
 }
 

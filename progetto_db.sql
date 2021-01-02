@@ -57,22 +57,23 @@ CREATE TABLE proprieta
     localita varchar(45) NOT NULL,
     provincia varchar(45) NOT NULL,
     tipo_proprieta varchar(45) NOT NULL, -- cv oppure bb per casa vacanza e b&b
-    servizio1 varchar(200),
-    servizio2 varchar(200),
-    servizio3 varchar(200),
-    servizio4 varchar(200),
-    servizio5 varchar(200),
-    servizio6 varchar(200),
+    servizi varchar(500),
+    -- servizio1 varchar(200),
+    -- servizio2 varchar(200),
+    -- servizio3 varchar(200),
+    -- servizio4 varchar(200),
+    -- servizio5 varchar(200),
+    -- servizio6 varchar(200),
     ref_proprietario char(45) NOT NULL,
     descrizione varchar(400) NOT NULL,
     PRIMARY KEY (id_proprieta),
-    FOREIGN KEY (ref_proprietario) REFERENCES proprietario (email_prop),
-    FOREIGN KEY (servizio1) REFERENCES servizi (servizio),
-    FOREIGN KEY (servizio2) REFERENCES servizi (servizio),
-    FOREIGN KEY (servizio3) REFERENCES servizi (servizio),
-    FOREIGN KEY (servizio4) REFERENCES servizi (servizio),
-    FOREIGN KEY (servizio5) REFERENCES servizi (servizio),
-    FOREIGN KEY (servizio6) REFERENCES servizi (servizio)
+    FOREIGN KEY (ref_proprietario) REFERENCES proprietario (email_prop)
+    -- FOREIGN KEY (servizio1) REFERENCES servizi (servizio),
+    -- FOREIGN KEY (servizio2) REFERENCES servizi (servizio),
+    -- FOREIGN KEY (servizio3) REFERENCES servizi (servizio),
+    -- FOREIGN KEY (servizio4) REFERENCES servizi (servizio),
+    -- FOREIGN KEY (servizio5) REFERENCES servizi (servizio),
+    -- FOREIGN KEY (servizio6) REFERENCES servizi (servizio)
 );
 
 ALTER TABLE proprieta AUTO_INCREMENT = 100;
@@ -250,16 +251,27 @@ INSERT INTO servizi (servizio) VALUES
 ('Accesso ospiti disabili'),
 ('Misure extra per la salute');
 
-INSERT INTO proprieta (nome_proprieta, indirizzo, localita, provincia, tipo_proprieta, servizio1, servizio2, servizio3, servizio4, servizio5, servizio6, ref_proprietario, descrizione) VALUES
+-- INSERT INTO proprieta (nome_proprieta, indirizzo, localita, provincia, tipo_proprieta, servizio1, servizio2, servizio3, servizio4, servizio5, servizio6, ref_proprietario, descrizione) VALUES
 -- (ID_PROPRIETA, nome_proprieta, indirizzo, localita, provincia, tipo_proprieta, servizi001, servizio2, servizio3, servizio4, servizio5, servizio6, ref_proprietario, descrizione)
-('Casa Sofia', 'Via Roma, 32', 'Torino', 'TO', 'cv', 'Wi-Fi', 'Parcheggio gratuito', 'Misure extra per la salute', null, null, null, 'alessio@gmail.it', 'Situato nel centro di Torino, a soli 550 metri dal famoso Museo del Cinema e a 10 minuti a piedi minuti a piedi da Piazza Castello, si offrono sistemazioni con WiFi gratuito e ampio parcheggio.'), -- ID 100
-('Villa Marcello', 'Via Garibaldi, 72', 'Roma', 'RM', 'bb', 'Wi-Fi', 'Aria condizionata', null, null, null, null, 'mario@gmail.it', 'Posta nel centro storico di Roma, a 100 metri da Piazza Navona, la residenza offre connessione WiFi gratuita e camere recentemente ristrutturate con aria condizionata.'), -- ID 101
-('Casa Rossi', 'Corso Calatafimi, 13', 'Palermo', 'PA', 'cv', 'Parcheggio gratuito', 'Misure extra per la salute', 'Animali ammessi', null, null, null, 'luigi@gmail.it', 'Situato a meno di 1 km dalla Cattedrale di Palermo e a 1,7 km dal Palazzo dei Normanni, la residenza offre un ampio parcheggio gratuito e sistemazione dotata di cucina, balcone e area salotto.'), -- ID 102
-('Villa Mazzini', 'Via Mazzini, 69', 'Milano', 'MI', 'bb', 'Wi-Fi', 'Aria condizionata', 'Parcheggio gratuito', 'Accesso ospiti disabili', null, null, 'matteo@gmail.it', 'Situato a soli 350 metri dalla stazione della metropolitana di Piola, a Milano, la struttura offre camere con connessione Wi-Fi gratuita, aria condizionata e pavimenti in parquet.'), -- ID 103
-('Casa Garibaldi', 'Via Garibaldi, 48', 'Torino', 'TO', 'bb', 'Wi-Fi', 'Aria condizionata', 'Misure extra per la salute', 'Accesso ospiti disabili', null, null, 'alessio@gmail.it', 'Situato a 2 km dalla Mole Antonelliana e a 3,9 km dal Politecnico di Torino, la struttura offre sistemazioni con connessione WiFi gratuita, aria condizionata e TV a schermo piatto.'), -- ID 104
-('Villa Gioia', 'Corso dei milla, 20', 'Roma', 'RM', 'cv', 'Wi-Fi', 'Parcheggio gratuito', 'Animali ammessi', null, null, null, 'mario@gmail.it', 'La residenza offre una sistemazione a ristorazione indipendente con connessione WiFi gratuita a 700 metri dal Pantheon e a meno di 2 km dal Colosseo. '), -- ID 105
-('Casa Bianchi', 'Via Dante, 20', 'Palermo', 'PA', 'bb', 'Wi-Fi', 'Aria condizionata', 'Misure extra per la salute', null, null, null, 'luigi@gmail.it', "A 5 minuti a piedi dalla via dello shopping Via Maqueda di Palermo, la struttura offre la connessione WiFi gratuita, una prima colazione all'italiana e camere ultra-moderne con aria condizionata."), -- ID 106
-('Villa Giulia', 'Piazza Duomo, 38', 'Milano', 'MI', 'cv', 'Aria condizionata', 'Animali ammessi', 'Misure extra per la salute', null, null, null, 'matteo@gmail.it', 'Situato in una posizione esclusiva in Piazza Duomo, a pochi passi dal Duomo stesso, la residenza si trova nel cuore storico di Milano e offre una sistemazione moderna con aria condizionata e terrazza privata.'); -- ID 107
+-- ('Casa Sofia', 'Via Roma, 32', 'Torino', 'TO', 'cv', 'Wi-Fi', 'Parcheggio gratuito', 'Misure extra per la salute', null, null, null, 'alessio@gmail.it', 'Situato nel centro di Torino, a soli 550 metri dal famoso Museo del Cinema e a 10 minuti a piedi minuti a piedi da Piazza Castello, si offrono sistemazioni con WiFi gratuito e ampio parcheggio.'), -- ID 100
+-- ('Villa Marcello', 'Via Garibaldi, 72', 'Roma', 'RM', 'bb', 'Wi-Fi', 'Aria condizionata', null, null, null, null, 'mario@gmail.it', 'Posta nel centro storico di Roma, a 100 metri da Piazza Navona, la residenza offre connessione WiFi gratuita e camere recentemente ristrutturate con aria condizionata.'), -- ID 101
+-- ('Casa Rossi', 'Corso Calatafimi, 13', 'Palermo', 'PA', 'cv', 'Parcheggio gratuito', 'Misure extra per la salute', 'Animali ammessi', null, null, null, 'luigi@gmail.it', 'Situato a meno di 1 km dalla Cattedrale di Palermo e a 1,7 km dal Palazzo dei Normanni, la residenza offre un ampio parcheggio gratuito e sistemazione dotata di cucina, balcone e area salotto.'), -- ID 102
+-- ('Villa Mazzini', 'Via Mazzini, 69', 'Milano', 'MI', 'bb', 'Wi-Fi', 'Aria condizionata', 'Parcheggio gratuito', 'Accesso ospiti disabili', null, null, 'matteo@gmail.it', 'Situato a soli 350 metri dalla stazione della metropolitana di Piola, a Milano, la struttura offre camere con connessione Wi-Fi gratuita, aria condizionata e pavimenti in parquet.'), -- ID 103
+-- ('Casa Garibaldi', 'Via Garibaldi, 48', 'Torino', 'TO', 'bb', 'Wi-Fi', 'Aria condizionata', 'Misure extra per la salute', 'Accesso ospiti disabili', null, null, 'alessio@gmail.it', 'Situato a 2 km dalla Mole Antonelliana e a 3,9 km dal Politecnico di Torino, la struttura offre sistemazioni con connessione WiFi gratuita, aria condizionata e TV a schermo piatto.'), -- ID 104
+-- ('Villa Gioia', 'Corso dei milla, 20', 'Roma', 'RM', 'cv', 'Wi-Fi', 'Parcheggio gratuito', 'Animali ammessi', null, null, null, 'mario@gmail.it', 'La residenza offre una sistemazione a ristorazione indipendente con connessione WiFi gratuita a 700 metri dal Pantheon e a meno di 2 km dal Colosseo. '), -- ID 105
+-- ('Casa Bianchi', 'Via Dante, 20', 'Palermo', 'PA', 'bb', 'Wi-Fi', 'Aria condizionata', 'Misure extra per la salute', null, null, null, 'luigi@gmail.it', "A 5 minuti a piedi dalla via dello shopping Via Maqueda di Palermo, la struttura offre la connessione WiFi gratuita, una prima colazione all'italiana e camere ultra-moderne con aria condizionata."), -- ID 106
+-- ('Villa Giulia', 'Piazza Duomo, 38', 'Milano', 'MI', 'cv', 'Aria condizionata', 'Animali ammessi', 'Misure extra per la salute', null, null, null, 'matteo@gmail.it', 'Situato in una posizione esclusiva in Piazza Duomo, a pochi passi dal Duomo stesso, la residenza si trova nel cuore storico di Milano e offre una sistemazione moderna con aria condizionata e terrazza privata.'); -- ID 107
+
+INSERT INTO proprieta (nome_proprieta, indirizzo, localita, provincia, tipo_proprieta, servizi, ref_proprietario, descrizione) VALUES
+-- (ID_PROPRIETA, nome_proprieta, indirizzo, localita, provincia, tipo_proprieta, servizi001, servizio2, servizio3, servizio4, servizio5, servizio6, ref_proprietario, descrizione)
+('Casa Sofia', 'Via Roma, 32', 'Torino', 'TO', 'cv', 'Misure extra per la salute, Parcheggio gratuito, Wi-Fi', 'alessio@gmail.it', 'Situato nel centro di Torino, a soli 550 metri dal famoso Museo del Cinema e a 10 minuti a piedi minuti a piedi da Piazza Castello, si offrono sistemazioni con WiFi gratuito e ampio parcheggio.'), -- ID 100
+('Villa Marcello', 'Via Garibaldi, 72', 'Roma', 'RM', 'bb', 'Aria condizionata, Wi-Fi', 'mario@gmail.it', 'Posta nel centro storico di Roma, a 100 metri da Piazza Navona, la residenza offre connessione WiFi gratuita e camere recentemente ristrutturate con aria condizionata.'), -- ID 101
+('Casa Rossi', 'Corso Calatafimi, 13', 'Palermo', 'PA', 'cv', 'Animali ammessi, Misure extra per la salute, Parcheggio gratuito', 'luigi@gmail.it', 'Situato a meno di 1 km dalla Cattedrale di Palermo e a 1,7 km dal Palazzo dei Normanni, la residenza offre un ampio parcheggio gratuito e sistemazione dotata di cucina, balcone e area salotto.'), -- ID 102
+('Villa Mazzini', 'Via Mazzini, 69', 'Milano', 'MI', 'bb', 'Accesso ospiti disabili, Aria condizionata, Parcheggio gratuito, Wi-Fi', 'matteo@gmail.it', 'Situato a soli 350 metri dalla stazione della metropolitana di Piola, a Milano, la struttura offre camere con connessione Wi-Fi gratuita, aria condizionata e pavimenti in parquet.'), -- ID 103
+('Casa Garibaldi', 'Via Garibaldi, 48', 'Torino', 'TO', 'bb', 'Accesso ospiti disabili, Aria condizionata, Misure extra per la salute, Wi-Fi', 'alessio@gmail.it', 'Situato a 2 km dalla Mole Antonelliana e a 3,9 km dal Politecnico di Torino, la struttura offre sistemazioni con connessione WiFi gratuita, aria condizionata e TV a schermo piatto.'), -- ID 104
+('Villa Gioia', 'Corso dei mille, 20', 'Roma', 'RM', 'cv', 'Animali ammessi, Parcheggio gratuito, Wi-Fi', 'mario@gmail.it', 'La residenza offre una sistemazione a ristorazione indipendente con connessione WiFi gratuita a 700 metri dal Pantheon e a meno di 2 km dal Colosseo. '), -- ID 105
+('Casa Bianchi', 'Via Dante, 20', 'Palermo', 'PA', 'bb', 'Aria condizionata, Misure extra per la salute, Wi-Fi', 'luigi@gmail.it', "A 5 minuti a piedi dalla via dello shopping Via Maqueda di Palermo, la struttura offre la connessione WiFi gratuita, una prima colazione all'italiana e camere ultra-moderne con aria condizionata."), -- ID 106
+('Villa Giulia', 'Piazza Duomo, 38', 'Milano', 'MI', 'cv', 'Animali ammessi, Aria condizionata, Misure extra per la salute', 'matteo@gmail.it', 'Situato in una posizione esclusiva in Piazza Duomo, a pochi passi dal Duomo stesso, la residenza si trova nel cuore storico di Milano e offre una sistemazione moderna con aria condizionata e terrazza privata.'); -- ID 107
 
 
 INSERT INTO casa_vacanza VALUES
@@ -267,10 +279,10 @@ INSERT INTO casa_vacanza VALUES
 -- Memorizzo i path delle immagini di ciascuna struttura, per poi poterle caricare nel front end
 -- Il nome di ciascuna immagine è del tipo 'ref_proprieta_cv_1.jpg', 'ref_proprieta_cv_2.jpg'...
 -- Esempio: se ref_proprieta_cv = 100, allora imgCV_path1 = './Images/100_1.jpg', imgCV_path2 = './Images/100_2.jpg'...
-(100, 2, 100, '1970-01-01', '1970-01-01', './Images/100_1.jpg', './Images/100_2.jpg', './Images/100_3.jpg', './Images/100_4.jpg'),
-(102, 3, 200, '1970-01-01', '1970-01-01', './Images/102_1.jpg', './Images/102_2.jpg', './Images/102_3.jpg', './Images/102_4.jpg'),
-(105, 1, 80, '1970-01-01', '1970-01-01', './Images/105_1.jpg', './Images/105_2.jpg', './Images/105_3.jpg', './Images/105_4.jpg'),
-(107, 5, 400, '1970-01-01', '1970-01-01', './Images/107_1.jpg', './Images/107_2.jpg', './Images/107_3.jpg', './Images/107_4.jpg');
+(100, 2, 50, '1970-01-01', '1970-01-01', './Images/100_1.jpg', './Images/100_2.jpg', './Images/100_3.jpg', './Images/100_4.jpg'),
+(102, 3, 70, '1970-01-01', '1970-01-01', './Images/102_1.jpg', './Images/102_2.jpg', './Images/102_3.jpg', './Images/102_4.jpg'),
+(105, 1, 20, '1970-01-01', '1970-01-01', './Images/105_1.jpg', './Images/105_2.jpg', './Images/105_3.jpg', './Images/105_4.jpg'),
+(107, 5, 100, '1970-01-01', '1970-01-01', './Images/107_1.jpg', './Images/107_2.jpg', './Images/107_3.jpg', './Images/107_4.jpg');
 
 INSERT INTO b_and_b VALUES
 -- (REF_PROPRIETA_BB, check_in, check_out)
@@ -281,14 +293,14 @@ INSERT INTO b_and_b VALUES
 
 INSERT INTO stanza (ref_bb, tipologia, tariffa_stanza, non_disponibile_inizio_st, non_disponibile_fine_st) VALUES
 -- (ID_STANZA, ref_bb, tipologia, tariffa_stanza, imgST_path1, imgST_path2, imgST_path3, imgST_path4)
-(101, 1, 50, '1970-01-01', '1970-01-01'), -- ID 300
-(101, 2, 90, '1970-01-01', '1970-01-01'), -- ID 301
-(103, 3, 140, '1970-01-01', '1970-01-01'), -- ID 302
-(103, 2, 100, '1970-01-01', '1970-01-01'), -- ID 303
+(101, 1, 10, '1970-01-01', '1970-01-01'), -- ID 300
+(101, 2, 30, '1970-01-01', '1970-01-01'), -- ID 301
+(103, 3, 50, '1970-01-01', '1970-01-01'), -- ID 302
+(103, 2, 60, '1970-01-01', '1970-01-01'), -- ID 303
 (104, 1, 80, '1970-01-01', '1970-01-01'), -- ID 304
-(104, 3, 120, '1970-01-01', '1970-01-01'), -- ID 305
-(106, 2, 80, '1970-01-01', '1970-01-01'), -- ID 306
-(106, 1, 90, '1970-01-01', '1970-01-01'); -- ID 307
+(104, 3, 40, '1970-01-01', '1970-01-01'), -- ID 305
+(106, 2, 20, '1970-01-01', '1970-01-01'), -- ID 306
+(106, 1, 40, '1970-01-01', '1970-01-01'); -- ID 307
 -- Memorizzo i path delle immagini di ciascuna stanza, per poi poterle caricare nel front end
 -- Il nome di ciascuna immagine è del tipo 'id_stanza_ref_bb_1.jpg', 'id_stanza_ref_bb_2.jpg'...
 -- Esempio: se id_stanza = 300 e ref_bb = 101, allora imgST_path1 = './Images/300_101_1.jpg', imgST_path2 = './Images/300_101_2.jpg'...
@@ -407,7 +419,7 @@ INSERT INTO tassa_soggiorno (ref_soggiornante, ref_prenotazione, ref_proprietari
 -- SELECT @localita := 'Torino';
 -- SELECT @provincia := '%%';
 -- SELECT @posti := 2;
--- SELECT @tariffa := '%%';
+-- SELECT @tariffa := 300;
 -- SELECT @inizio := '1970-01-01'; -- jolly
 -- SELECT @fine := '1970-01-01'; -- jolly
 -- SELECT DISTINCT p.nome_proprieta, p.indirizzo, p.localita, p.tipo_proprieta,
@@ -422,10 +434,34 @@ INSERT INTO tassa_soggiorno (ref_soggiornante, ref_prenotazione, ref_proprietari
 -- FROM proprieta p, casa_vacanza c, b_and_b b, stanza s
 -- WHERE p.id_proprieta = IF(@tipo = 'cv', c.ref_proprieta_cv, b.ref_proprieta_bb) AND b.ref_proprieta_bb = s.ref_bb AND
 	 -- p.localita LIKE @localita AND p.provincia LIKE @provincia AND 
-	 -- (c.posti_letto >= @posti OR s.tipologia >= @posti) AND (c.tariffa_casa LIKE @tariffa OR s.tariffa_stanza LIKE @tariffa) AND
+	 -- (c.posti_letto >= @posti OR s.tipologia >= @posti) AND (c.tariffa_casa <= @tariffa AND s.tariffa_stanza <= @tariffa) AND
      -- p.tipo_proprieta LIKE @tipo AND
      -- (((@inizio <= c.non_disponibile_inizio_cv AND @fine <= c.non_disponibile_inizio_cv) OR (@inizio >= c.non_disponibile_fine_cv AND @fine >= c.non_disponibile_fine_cv)) 
      -- AND ((@inizio <= s.non_disponibile_inizio_st AND @fine <= s.non_disponibile_inizio_st) OR (@inizio >= s.non_disponibile_fine_st AND @fine >= s.non_disponibile_fine_st)));
+
+-- SELECT @tipo := "%%";
+-- SELECT @localita := "%%";
+-- SELECT @provincia := "%%";
+-- SELECT @posti := 2;
+-- SELECT @tariffa := 9999 ;
+-- SELECT @inizio := "1/1/2021";
+-- SELECT @fine := "2/1/2021";
+-- SELECT DISTINCT p.nome_proprieta, p.indirizzo, p.localita, p.tipo_proprieta,
+	-- c.tariffa_casa, s.tariffa_stanza, 
+	-- c.posti_letto, s.tipologia, p.descrizione,
+	-- c.imgCV_path1 AS img1CV, s.imgST_path1 AS img1ST,
+	-- c.imgCV_path2 AS img2CV, s.imgST_path2 AS img2ST,
+	-- c.imgCV_path3 AS img3CV, s.imgST_path3 AS img3ST,
+	-- c.imgCV_path4 AS img4CV, s.imgST_path4 AS img4ST,
+	-- b.check_in AS check_in,
+	-- b.check_out AS check_out
+-- FROM proprieta p, casa_vacanza c, b_and_b b, stanza s
+-- WHERE p.id_proprieta = c.ref_proprieta_cv AND p.id_proprieta = b.ref_proprieta_bb AND b.ref_proprieta_bb = s.ref_bb AND
+	-- p.localita LIKE @localita AND p.provincia LIKE @provincia AND
+	-- s.tipologia >= @posti AND s.tariffa_stanza <= @tariffa AND 
+    -- c.posti_letto >= @posti AND c.tariffa_casa <= @tariffa AND
+	-- (@fine <= s.non_disponibile_inizio_st OR @inizio >= s.non_disponibile_fine_st) OR
+	-- (@fine <= c.non_disponibile_inizio_cv OR @inizio >= c.non_disponibile_fine_cv);
 
 -- ----------PROVA CARICAMENTO STANZA CON FOTO ----------
 -- INSERT INTO stanza (ref_bb, tipologia, tariffa_stanza) VALUES 
@@ -449,8 +485,14 @@ INSERT INTO tassa_soggiorno (ref_soggiornante, ref_prenotazione, ref_proprietari
 	-- imgST_path4 = CONCAT("./Images/", CAST(@id AS CHAR), "_", CAST(@ref_bb AS CHAR), "_4.jpg")
 -- WHERE id_stanza = @id;
 
--- PROVA RICERCA PROPRIETA PER SERVIZI
+-- PROVA RICERCA PROPRIETA PER SERVIZI (VECCHIA)
 -- 
 -- SELECT *
 -- FROM proprieta
 -- WHERE servizi LIKE '%Wi-Fi%' AND servizi LIKE '%Aria condizionata%';
+
+-- PROVA RICERCA PROPRIETA PER SERVIZI (NUOVA)
+--
+-- SELECT *
+-- FROM proprieta p
+-- WHERE servizi LIKE '%Aria condizionata%Wi-Fi';

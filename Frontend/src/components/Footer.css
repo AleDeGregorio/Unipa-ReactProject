@@ -13,16 +13,12 @@
   }
   
   .title {
-    color: #00bec8;
-    border-bottom: solid 2px #00bec8;
+    color: black;
+    border-bottom: solid 2px black;
     padding-top: 1rem;
     margin-right: 10px;
   }
 
-  .title:hover {
-    cursor: pointer;
-    color: #01686b;
-  }
   
   img {
     width: 180px;
