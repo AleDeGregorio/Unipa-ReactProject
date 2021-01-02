@@ -18,7 +18,7 @@ class CaseVacanzaFilter extends React.Component {
     this.state = {
       case: this.props.case ? this.props.case : [],
       type: '',
-      localita: this.props.case ? this.props.case.localita : '',
+      localita: this.props.localita ? this.props.localita : '',
       posti: this.props.posti ? this.props.posti : 1,
       checkIn: this.props.checkIn ? this.props.checkIn : '',
       checkOut: this.props.checkIn ? this.props.checkOut : '',

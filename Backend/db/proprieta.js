@@ -413,8 +413,8 @@ const ricercaAlloggio = async(req) => {
                     'null AS check_out ' +
                 'FROM proprieta p, casa_vacanza c ' +
                 'WHERE p.id_proprieta = c.ref_proprieta_cv AND ' +
-                    'p.localita LIKE @localita AND p.provincia LIKE @provincia AND ' +
-                    'p.servizi LIKE @servizi AND ' +
+                    'LOWER(p.localita) LIKE LOWER(@localita) AND LOWER(p.provincia) LIKE LOWER(@provincia) AND ' +
+                    'LOWER(p.servizi) LIKE LOWER(@servizi) AND ' +
                     'c.posti_letto = @posti AND ' +
                     '(@fine <= c.non_disponibile_inizio_cv OR @inizio >= c.non_disponibile_fine_cv) ' +
                 'HAVING c.tariffa_casa*' + ngiorni + ' <= @costo; ',
@@ -453,8 +453,8 @@ const ricercaAlloggio = async(req) => {
                     'b.check_out AS check_out ' +
                 'FROM proprieta p, b_and_b b, stanza s ' +
                 'WHERE p.id_proprieta = b.ref_proprieta_bb AND b.ref_proprieta_bb = s.ref_bb AND ' +
-                    'p.localita LIKE @localita AND p.provincia LIKE @provincia AND ' +
-                    'p.servizi LIKE @servizi AND ' +
+                    'LOWER(p.localita) LIKE LOWER(@localita) AND LOWER(p.provincia) LIKE LOWER(@provincia) AND ' +
+                    'LOWER(p.servizi) LIKE LOWER(@servizi) AND ' +
                     's.tipologia = @posti AND ' +
                     '(@fine <= s.non_disponibile_inizio_st OR @inizio >= s.non_disponibile_fine_st) ' +
                 'HAVING s.tariffa_stanza*' + ngiorni + ' <= @costo; ',
@@ -494,8 +494,8 @@ const ricercaAlloggio = async(req) => {
                     'null AS check_out ' +
                 'FROM proprieta p, casa_vacanza c ' +
                 'WHERE p.id_proprieta = c.ref_proprieta_cv AND ' +
-                    'p.localita LIKE @localita AND p.provincia LIKE @provincia AND ' +
-                    'p.servizi LIKE @servizi AND ' + 
+                    'LOWER(p.localita) LIKE LOWER(@localita) AND LOWER(p.provincia) LIKE LOWER(@provincia) AND ' +
+                    'LOWER(p.servizi) LIKE LOWER(@servizi) AND ' + 
                     'c.posti_letto = @posti AND ' +
                     '(@fine <= c.non_disponibile_inizio_cv OR @inizio >= c.non_disponibile_fine_cv) ' +
                 'HAVING c.tariffa_casa*' + ngiorni + ' <= @costo; ',
@@ -531,8 +531,8 @@ const ricercaAlloggio = async(req) => {
                             'b.check_out AS check_out ' +
                         'FROM proprieta p, b_and_b b, stanza s ' +
                         'WHERE p.id_proprieta = b.ref_proprieta_bb AND b.ref_proprieta_bb = s.ref_bb AND ' +
-                            'p.localita LIKE @localita AND p.provincia LIKE @provincia AND ' +
-                            'p.servizi LIKE @servizi AND ' +
+                            'LOWER(p.localita) LIKE LOWER(@localita) AND LOWER(p.provincia) LIKE LOWER(@provincia) AND ' +
+                            'LOWER(p.servizi) LIKE LOWER(@servizi) AND ' +
                             's.tipologia = @posti AND ' +
                             '(@fine <= s.non_disponibile_inizio_st OR @inizio >= s.non_disponibile_fine_st) ' +
                         'HAVING s.tariffa_stanza*' + ngiorni + ' <= @costo; ',
