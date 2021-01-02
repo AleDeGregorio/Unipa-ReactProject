@@ -57,22 +57,23 @@ CREATE TABLE proprieta
     localita varchar(45) NOT NULL,
     provincia varchar(45) NOT NULL,
     tipo_proprieta varchar(45) NOT NULL, -- cv oppure bb per casa vacanza e b&b
-    servizio1 varchar(200),
-    servizio2 varchar(200),
-    servizio3 varchar(200),
-    servizio4 varchar(200),
-    servizio5 varchar(200),
-    servizio6 varchar(200),
+    servizi varchar(500),
+    -- servizio1 varchar(200),
+    -- servizio2 varchar(200),
+    -- servizio3 varchar(200),
+    -- servizio4 varchar(200),
+    -- servizio5 varchar(200),
+    -- servizio6 varchar(200),
     ref_proprietario char(45) NOT NULL,
     descrizione varchar(400) NOT NULL,
     PRIMARY KEY (id_proprieta),
-    FOREIGN KEY (ref_proprietario) REFERENCES proprietario (email_prop),
-    FOREIGN KEY (servizio1) REFERENCES servizi (servizio),
-    FOREIGN KEY (servizio2) REFERENCES servizi (servizio),
-    FOREIGN KEY (servizio3) REFERENCES servizi (servizio),
-    FOREIGN KEY (servizio4) REFERENCES servizi (servizio),
-    FOREIGN KEY (servizio5) REFERENCES servizi (servizio),
-    FOREIGN KEY (servizio6) REFERENCES servizi (servizio)
+    FOREIGN KEY (ref_proprietario) REFERENCES proprietario (email_prop)
+    -- FOREIGN KEY (servizio1) REFERENCES servizi (servizio),
+    -- FOREIGN KEY (servizio2) REFERENCES servizi (servizio),
+    -- FOREIGN KEY (servizio3) REFERENCES servizi (servizio),
+    -- FOREIGN KEY (servizio4) REFERENCES servizi (servizio),
+    -- FOREIGN KEY (servizio5) REFERENCES servizi (servizio),
+    -- FOREIGN KEY (servizio6) REFERENCES servizi (servizio)
 );
 
 ALTER TABLE proprieta AUTO_INCREMENT = 100;
@@ -250,16 +251,27 @@ INSERT INTO servizi (servizio) VALUES
 ('Accesso ospiti disabili'),
 ('Misure extra per la salute');
 
-INSERT INTO proprieta (nome_proprieta, indirizzo, localita, provincia, tipo_proprieta, servizio1, servizio2, servizio3, servizio4, servizio5, servizio6, ref_proprietario, descrizione) VALUES
+-- INSERT INTO proprieta (nome_proprieta, indirizzo, localita, provincia, tipo_proprieta, servizio1, servizio2, servizio3, servizio4, servizio5, servizio6, ref_proprietario, descrizione) VALUES
 -- (ID_PROPRIETA, nome_proprieta, indirizzo, localita, provincia, tipo_proprieta, servizi001, servizio2, servizio3, servizio4, servizio5, servizio6, ref_proprietario, descrizione)
-('Casa Sofia', 'Via Roma, 32', 'Torino', 'TO', 'cv', 'Wi-Fi', 'Parcheggio gratuito', 'Misure extra per la salute', null, null, null, 'alessio@gmail.it', 'Situato nel centro di Torino, a soli 550 metri dal famoso Museo del Cinema e a 10 minuti a piedi minuti a piedi da Piazza Castello, si offrono sistemazioni con WiFi gratuito e ampio parcheggio.'), -- ID 100
-('Villa Marcello', 'Via Garibaldi, 72', 'Roma', 'RM', 'bb', 'Wi-Fi', 'Aria condizionata', null, null, null, null, 'mario@gmail.it', 'Posta nel centro storico di Roma, a 100 metri da Piazza Navona, la residenza offre connessione WiFi gratuita e camere recentemente ristrutturate con aria condizionata.'), -- ID 101
-('Casa Rossi', 'Corso Calatafimi, 13', 'Palermo', 'PA', 'cv', 'Parcheggio gratuito', 'Misure extra per la salute', 'Animali ammessi', null, null, null, 'luigi@gmail.it', 'Situato a meno di 1 km dalla Cattedrale di Palermo e a 1,7 km dal Palazzo dei Normanni, la residenza offre un ampio parcheggio gratuito e sistemazione dotata di cucina, balcone e area salotto.'), -- ID 102
-('Villa Mazzini', 'Via Mazzini, 69', 'Milano', 'MI', 'bb', 'Wi-Fi', 'Aria condizionata', 'Parcheggio gratuito', 'Accesso ospiti disabili', null, null, 'matteo@gmail.it', 'Situato a soli 350 metri dalla stazione della metropolitana di Piola, a Milano, la struttura offre camere con connessione Wi-Fi gratuita, aria condizionata e pavimenti in parquet.'), -- ID 103
-('Casa Garibaldi', 'Via Garibaldi, 48', 'Torino', 'TO', 'bb', 'Wi-Fi', 'Aria condizionata', 'Misure extra per la salute', 'Accesso ospiti disabili', null, null, 'alessio@gmail.it', 'Situato a 2 km dalla Mole Antonelliana e a 3,9 km dal Politecnico di Torino, la struttura offre sistemazioni con connessione WiFi gratuita, aria condizionata e TV a schermo piatto.'), -- ID 104
-('Villa Gioia', 'Corso dei milla, 20', 'Roma', 'RM', 'cv', 'Wi-Fi', 'Parcheggio gratuito', 'Animali ammessi', null, null, null, 'mario@gmail.it', 'La residenza offre una sistemazione a ristorazione indipendente con connessione WiFi gratuita a 700 metri dal Pantheon e a meno di 2 km dal Colosseo. '), -- ID 105
-('Casa Bianchi', 'Via Dante, 20', 'Palermo', 'PA', 'bb', 'Wi-Fi', 'Aria condizionata', 'Misure extra per la salute', null, null, null, 'luigi@gmail.it', "A 5 minuti a piedi dalla via dello shopping Via Maqueda di Palermo, la struttura offre la connessione WiFi gratuita, una prima colazione all'italiana e camere ultra-moderne con aria condizionata."), -- ID 106
-('Villa Giulia', 'Piazza Duomo, 38', 'Milano', 'MI', 'cv', 'Aria condizionata', 'Animali ammessi', 'Misure extra per la salute', null, null, null, 'matteo@gmail.it', 'Situato in una posizione esclusiva in Piazza Duomo, a pochi passi dal Duomo stesso, la residenza si trova nel cuore storico di Milano e offre una sistemazione moderna con aria condizionata e terrazza privata.'); -- ID 107
+-- ('Casa Sofia', 'Via Roma, 32', 'Torino', 'TO', 'cv', 'Wi-Fi', 'Parcheggio gratuito', 'Misure extra per la salute', null, null, null, 'alessio@gmail.it', 'Situato nel centro di Torino, a soli 550 metri dal famoso Museo del Cinema e a 10 minuti a piedi minuti a piedi da Piazza Castello, si offrono sistemazioni con WiFi gratuito e ampio parcheggio.'), -- ID 100
+-- ('Villa Marcello', 'Via Garibaldi, 72', 'Roma', 'RM', 'bb', 'Wi-Fi', 'Aria condizionata', null, null, null, null, 'mario@gmail.it', 'Posta nel centro storico di Roma, a 100 metri da Piazza Navona, la residenza offre connessione WiFi gratuita e camere recentemente ristrutturate con aria condizionata.'), -- ID 101
+-- ('Casa Rossi', 'Corso Calatafimi, 13', 'Palermo', 'PA', 'cv', 'Parcheggio gratuito', 'Misure extra per la salute', 'Animali ammessi', null, null, null, 'luigi@gmail.it', 'Situato a meno di 1 km dalla Cattedrale di Palermo e a 1,7 km dal Palazzo dei Normanni, la residenza offre un ampio parcheggio gratuito e sistemazione dotata di cucina, balcone e area salotto.'), -- ID 102
+-- ('Villa Mazzini', 'Via Mazzini, 69', 'Milano', 'MI', 'bb', 'Wi-Fi', 'Aria condizionata', 'Parcheggio gratuito', 'Accesso ospiti disabili', null, null, 'matteo@gmail.it', 'Situato a soli 350 metri dalla stazione della metropolitana di Piola, a Milano, la struttura offre camere con connessione Wi-Fi gratuita, aria condizionata e pavimenti in parquet.'), -- ID 103
+-- ('Casa Garibaldi', 'Via Garibaldi, 48', 'Torino', 'TO', 'bb', 'Wi-Fi', 'Aria condizionata', 'Misure extra per la salute', 'Accesso ospiti disabili', null, null, 'alessio@gmail.it', 'Situato a 2 km dalla Mole Antonelliana e a 3,9 km dal Politecnico di Torino, la struttura offre sistemazioni con connessione WiFi gratuita, aria condizionata e TV a schermo piatto.'), -- ID 104
+-- ('Villa Gioia', 'Corso dei milla, 20', 'Roma', 'RM', 'cv', 'Wi-Fi', 'Parcheggio gratuito', 'Animali ammessi', null, null, null, 'mario@gmail.it', 'La residenza offre una sistemazione a ristorazione indipendente con connessione WiFi gratuita a 700 metri dal Pantheon e a meno di 2 km dal Colosseo. '), -- ID 105
+-- ('Casa Bianchi', 'Via Dante, 20', 'Palermo', 'PA', 'bb', 'Wi-Fi', 'Aria condizionata', 'Misure extra per la salute', null, null, null, 'luigi@gmail.it', "A 5 minuti a piedi dalla via dello shopping Via Maqueda di Palermo, la struttura offre la connessione WiFi gratuita, una prima colazione all'italiana e camere ultra-moderne con aria condizionata."), -- ID 106
+-- ('Villa Giulia', 'Piazza Duomo, 38', 'Milano', 'MI', 'cv', 'Aria condizionata', 'Animali ammessi', 'Misure extra per la salute', null, null, null, 'matteo@gmail.it', 'Situato in una posizione esclusiva in Piazza Duomo, a pochi passi dal Duomo stesso, la residenza si trova nel cuore storico di Milano e offre una sistemazione moderna con aria condizionata e terrazza privata.'); -- ID 107
+
+INSERT INTO proprieta (nome_proprieta, indirizzo, localita, provincia, tipo_proprieta, servizi, ref_proprietario, descrizione) VALUES
+-- (ID_PROPRIETA, nome_proprieta, indirizzo, localita, provincia, tipo_proprieta, servizi001, servizio2, servizio3, servizio4, servizio5, servizio6, ref_proprietario, descrizione)
+('Casa Sofia', 'Via Roma, 32', 'Torino', 'TO', 'cv', 'Misure extra per la salute, Parcheggio gratuito, Wi-Fi', 'alessio@gmail.it', 'Situato nel centro di Torino, a soli 550 metri dal famoso Museo del Cinema e a 10 minuti a piedi minuti a piedi da Piazza Castello, si offrono sistemazioni con WiFi gratuito e ampio parcheggio.'), -- ID 100
+('Villa Marcello', 'Via Garibaldi, 72', 'Roma', 'RM', 'bb', 'Aria condizionata, Wi-Fi', 'mario@gmail.it', 'Posta nel centro storico di Roma, a 100 metri da Piazza Navona, la residenza offre connessione WiFi gratuita e camere recentemente ristrutturate con aria condizionata.'), -- ID 101
+('Casa Rossi', 'Corso Calatafimi, 13', 'Palermo', 'PA', 'cv', 'Animali ammessi, Misure extra per la salute, Parcheggio gratuito', 'luigi@gmail.it', 'Situato a meno di 1 km dalla Cattedrale di Palermo e a 1,7 km dal Palazzo dei Normanni, la residenza offre un ampio parcheggio gratuito e sistemazione dotata di cucina, balcone e area salotto.'), -- ID 102
+('Villa Mazzini', 'Via Mazzini, 69', 'Milano', 'MI', 'bb', 'Accesso ospiti disabili, Aria condizionata, Parcheggio gratuito, Wi-Fi', 'matteo@gmail.it', 'Situato a soli 350 metri dalla stazione della metropolitana di Piola, a Milano, la struttura offre camere con connessione Wi-Fi gratuita, aria condizionata e pavimenti in parquet.'), -- ID 103
+('Casa Garibaldi', 'Via Garibaldi, 48', 'Torino', 'TO', 'bb', 'Accesso ospiti disabili, Aria condizionata, Misure extra per la salute, Wi-Fi', 'alessio@gmail.it', 'Situato a 2 km dalla Mole Antonelliana e a 3,9 km dal Politecnico di Torino, la struttura offre sistemazioni con connessione WiFi gratuita, aria condizionata e TV a schermo piatto.'), -- ID 104
+('Villa Gioia', 'Corso dei mille, 20', 'Roma', 'RM', 'cv', 'Animali ammessi, Parcheggio gratuito, Wi-Fi', 'mario@gmail.it', 'La residenza offre una sistemazione a ristorazione indipendente con connessione WiFi gratuita a 700 metri dal Pantheon e a meno di 2 km dal Colosseo. '), -- ID 105
+('Casa Bianchi', 'Via Dante, 20', 'Palermo', 'PA', 'bb', 'Aria condizionata, Misure extra per la salute, Wi-Fi', 'luigi@gmail.it', "A 5 minuti a piedi dalla via dello shopping Via Maqueda di Palermo, la struttura offre la connessione WiFi gratuita, una prima colazione all'italiana e camere ultra-moderne con aria condizionata."), -- ID 106
+('Villa Giulia', 'Piazza Duomo, 38', 'Milano', 'MI', 'cv', 'Animali ammessi, Aria condizionata, Misure extra per la salute', 'matteo@gmail.it', 'Situato in una posizione esclusiva in Piazza Duomo, a pochi passi dal Duomo stesso, la residenza si trova nel cuore storico di Milano e offre una sistemazione moderna con aria condizionata e terrazza privata.'); -- ID 107
 
 
 INSERT INTO casa_vacanza VALUES
@@ -473,8 +485,14 @@ INSERT INTO tassa_soggiorno (ref_soggiornante, ref_prenotazione, ref_proprietari
 	-- imgST_path4 = CONCAT("./Images/", CAST(@id AS CHAR), "_", CAST(@ref_bb AS CHAR), "_4.jpg")
 -- WHERE id_stanza = @id;
 
--- PROVA RICERCA PROPRIETA PER SERVIZI
+-- PROVA RICERCA PROPRIETA PER SERVIZI (VECCHIA)
 -- 
 -- SELECT *
 -- FROM proprieta
 -- WHERE servizi LIKE '%Wi-Fi%' AND servizi LIKE '%Aria condizionata%';
+
+-- PROVA RICERCA PROPRIETA PER SERVIZI (NUOVA)
+--
+-- SELECT *
+-- FROM proprieta p
+-- WHERE servizi LIKE '%Aria condizionata%Wi-Fi';
