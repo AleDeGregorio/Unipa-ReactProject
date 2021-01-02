@@ -1,0 +1,22 @@
+.prenota-cont{
+    display:flex;
+    flex-direction:row;
+}
+.prenota-sx-cont{
+    display:flex;
+    flex-direction: column;
+    width:60%;
+}
+.infoviaggio{
+    display: flex;
+    flex-direction: column;
+}
+.headaccpren{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-right: 40px;
+    margin-left:40px;
+    height : 4rem;
+    border-top:1px solid black;
+}
