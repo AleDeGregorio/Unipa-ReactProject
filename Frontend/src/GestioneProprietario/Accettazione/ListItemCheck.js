@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styled, { ThemeProvider } from 'styled-components'
 import { theme } from '../shared/theme'
 import {Link} from 'react-router-dom'
-//import './ListItem.css'
+import './Accettazione.css'
 const ListItemWrapper = styled.div`
 
   padding: 10px 0;
@@ -296,13 +296,12 @@ class ListItemCheck extends Component {
               
                  : (
                   <span onClick={this.toggleEditName}>{textValue}</span>
-                )}
+                )} Prenotazione di {ref_cliente} su {ref_proprieta} - {nome}
+                  id : {id_prenotazione}
               </ListItemText>
               <ListItemTextSecond>
-                <div className="ALFIOSTILIZZA2 ">
-               <p>Cliente: {ref_cliente} </p>
+                <div className="text-div-style">
                <p>Partenza-Ritorno: {new Date(data_partenza).toLocaleDateString()},  {new Date(data_ritorno).toLocaleDateString()}</p>
-               <p>Struttura: {ref_proprieta} - {nome}</p>
                 <p style = {{display: stanza === '' ? 'none' : 'inline'}}>Stanza: {stanza}</p>
                </div>
               </ListItemTextSecond>

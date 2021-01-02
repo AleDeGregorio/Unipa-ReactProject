@@ -16,12 +16,40 @@ class Prenota extends React.Component {
                         <div className="headaccpren">
                             <p>Data :</p>
                             <p>Visualizza data</p>
-                            <Accordion.Toggle as={Button} eventKey="0">
+                            <Accordion.Toggle  eventKey="0">
                                 Modifica
                             </Accordion.Toggle>
                         </div>
                             <Accordion.Collapse eventKey="0">
-                                <p>QUA CI METTIAMO IL COSO X CAMBIARE DATA</p>
+                                <div>
+                            <Form>
+                                                                    <Form.Row>
+                                                                        <Form.Group as={Col} controlId="formGridDate">
+                                                                            <Form.Label>Data di inizio</Form.Label>
+                                                                            <Form.Control 
+                                                                                type="date" 
+                                                                                placeholder="Inserisci data di inizio" 
+                                                                                id = 'data_partenza'
+                                                                                name = 'data_partenza'
+                                                                                onChange = {this.onChange}
+                                                                            />
+                                                                        </Form.Group>
+                                                                        <Form.Group as={Col} controlId="formGridDate1">
+                                                                            <Form.Label>Data fine</Form.Label>
+                                                                            <Form.Control 
+                                                                                type="date" 
+                                                                                placeholder="Inserisci data di fine" 
+                                                                                id = 'data_ritorno'
+                                                                                name = 'data_ritorno'
+                                                                                onChange = {this.onChange}
+                                                                            />
+                                                                        </Form.Group>
+                                                                    </Form.Row>
+                                                                </Form>
+                                                                <Button variant="primary" type="submit">
+                                                                Modifica data
+                                                                 </Button>
+                                                                 </div>
                             </Accordion.Collapse>
                         <div className="headaccpren">
                             <p>Ospiti : </p>
@@ -55,7 +83,16 @@ class Prenota extends React.Component {
                                 </div>
                         </div>
                     </div>
-                    
+                    <div>
+                        <h3>Inserisci dati del cliente che sta prenotando </h3>
+                        <p>FORM INSERIMENTO DATI</p>
+                    </div> 
+                    <div>
+                        <h3>Simulazione pagamento </h3>
+                    </div>   
+                    <div>
+                        <h3>Hai dei bisogni particolari? Contatta il gestore!</h3>
+                    </div>     
                 </div>
                 <div className="prenota-dx-cont">
                     <Card>

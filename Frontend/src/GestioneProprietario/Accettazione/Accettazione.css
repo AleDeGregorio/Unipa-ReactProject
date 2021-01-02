@@ -60,3 +60,10 @@
     display:flex;
     justify-content: space-around;
 }
+.text-div-style{
+    display:flex;
+    flex-direction:column;
+    height:7rem;
+    align-items:flex-start;
+    justify-content: last baseline;
+}

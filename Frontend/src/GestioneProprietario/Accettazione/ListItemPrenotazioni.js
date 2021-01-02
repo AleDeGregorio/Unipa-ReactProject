@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styled, { ThemeProvider } from 'styled-components'
 import { theme } from '../shared/theme'
 import {Link} from 'react-router-dom'
-//import './ListItem.css'
+import './Accettazione.css'
 const ListItemWrapper = styled.div`
 
   padding: 10px 0;
@@ -107,6 +107,7 @@ const ListItemText = styled.form`
 const ListItemTextSecond = styled.div`
   font-size: 20px;
   color: ${props => props.theme.mediumGray};
+  
 `
 
 
@@ -297,19 +298,17 @@ class ListItemPrenotazioni extends Component {
                     onChange={this.handleChange}
                     onClick={this.selectInput}
                   />)
-              
+                  
                  : (
                   <span onClick={this.toggleEditName}></span>
-                )}
+                )} Richiesta di "{ref_cliente}" su:  "{nome}"  {stanza}
+                <br />ID Richiesta : {id_prenotazione}
               </ListItemText>
               <ListItemTextSecond>
-                <div className="ALFIOSTILIZZA ">
-                <p>Struttura: {nome}</p>
-                <p style = {{display: stanza === '' ? 'none' : 'inline'}}>Stanza: {stanza}</p>
-               <p>Cliente: {ref_cliente}</p>
-               <p>Num persone: {num_soggiornanti}</p>
-               <p>Costo: {costo}</p>
+                <div className="text-div-style">
+               <p> Num persone: {num_soggiornanti} Costo: {costo} </p>          
                <p>Partenza-Ritorno: {new Date(data_partenza).toLocaleDateString()},  {new Date(data_ritorno).toLocaleDateString()}</p>
+           
                </div>
               </ListItemTextSecond>
             </ListItemInfo>
@@ -340,14 +339,9 @@ class ListItemPrenotazioni extends Component {
                       showSelect ? 'listitem__select__list--show' : ''
                     }`}
                   >
-                    <div
-                      className="listitem__select__list__item"
-                      
-                   
-                    >
+                    <div className="listitem__select__list__item">
                       <div className="LinkList" //qua va modificato in modo che permetta di accettare la prenotazione
-                        onClick={this.accettaPren}
-                       
+                        onClick={this.accettaPren}                       
                       >
                       Accetta 
                       </div>
@@ -356,7 +350,7 @@ class ListItemPrenotazioni extends Component {
                       className="listitem__select__list__item"
                       onClick={this.deleteItem}
                     >
-                      Rifiuta
+                    Rifiuta
                     </div>
                   </div>
                 )}
