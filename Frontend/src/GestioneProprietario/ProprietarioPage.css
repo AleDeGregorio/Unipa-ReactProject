@@ -11,6 +11,10 @@ justify-content: center;
 color: black;
 }
 
+.prop:hover {
+  cursor: pointer;
+}
+
 
 .LinK:hover{
 text-decoration: none;
