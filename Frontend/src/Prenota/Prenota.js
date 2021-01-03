@@ -71,28 +71,31 @@ class Prenota extends React.Component {
 
                         <div>
                             <h4>Scegli come pagare</h4>
+                            <div className="row-flex">
+                            <Form>
                                 <div>
                                     <h5>Paga per intero</h5>
-                                    <p>Paga subito o ti sfascio</p>
-                                    <input type="radio" />
+                                    <div className="row-flex">
+                                        <Form.Check inline label="Paga adesso" type="radio" id="now" checked />
+                                    </div>
                                 </div>
                                 <div>
-                                    <h5>Paga metà ora metà dopo</h5>
-                                    <p>Cumpa paghi chiu picca uara</p>
-                                    <input type="radio" />
+                                    <h5>Paga una parte</h5>
+                                    <div className="row-flex">
+                                    <Form.Check inline label="Paga dopo" type="radio" id="later" checked/>
+                                    </div>
                                 </div>
+                                </Form>
+                            </div>
                         </div>
                     </div>
-                    <div>
-                        <h3>Inserisci dati del cliente che sta prenotando </h3>
-                        <p>FORM INSERIMENTO DATI</p>
-                    </div> 
                     <div>
                         <h3>Simulazione pagamento </h3>
                     </div>   
                     <div>
                         <h3>Hai dei bisogni particolari? Contatta il gestore!</h3>
-                    </div>     
+                    </div> 
+                    <button>Prenota</button>    
                 </div>
                 <div className="prenota-dx-cont">
                     <Card>
