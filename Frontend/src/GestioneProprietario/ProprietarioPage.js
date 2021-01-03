@@ -88,6 +88,7 @@ class ProprietarioPage extends React.Component {
             <Card.Text className="TestoCard">Gestisci le prenotazioni in attesa e quelle già accettate.</Card.Text>
         </Card>
         </Link>
+<<<<<<< HEAD
         <Link to = "" className="LinK" >
         <Card className="prop">
             <RiMailSendLine className="imageProp"/>
@@ -95,6 +96,30 @@ class ProprietarioPage extends React.Component {
             <Card.Text>Effettua l'invio dei dati relativi ai soggiornanti all'ufficio del Turismo.</Card.Text>
         </Card>
         </Link>
+=======
+        <Card className="prop" onClick = {this.handleShow}>
+                    <RiMailSendLine className="imageProp"/>
+                    <Card.Title>Invio dati Turismo </Card.Title>
+                    <Card.Text>Effettua l'invio dei dati relativi ai soggiornanti all'ufficio del Turismo.</Card.Text>
+                </Card>
+                <Modal show={this.state.show} onHide={this.handleClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Invio dati all'ufficio del turismo</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                       <div className="turismocont">
+                           <p>Ultimo invio dei dati all'ufficio competente: {data_invio} </p>
+                           <p>Desideri inviare i dati nuovamente?</p>
+                       </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                     <Button variant="secondary" /*funzione invia dationClick={}*/>Invia dati</Button>
+                     <Button variant="secondary" onClick={this.handleClose}>
+                      Chiudi
+                    </Button>                    
+                   </Modal.Footer>
+                </Modal>
+>>>>>>> 2cca23db2ace85f0cebfdaa6ea2e7895c936da6c
         </div>
         <div className="carte_prop">
         <Link to = "/InserimentoProprietà" className="LinK">
