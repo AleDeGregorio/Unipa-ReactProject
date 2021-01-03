@@ -123,11 +123,11 @@ class DatiPersonali extends React.Component {
             var num_documento = this.state.num_documento;
 
             return(
-                <Form className="contenitore">
-                            <div className="contentNewCheck">
+                <Form className="contenitoreDatiPersonali">
+                            <div className="DatiPersonali">
                             <h2>Qui puoi modificare i tuoi dati personali!</h2>
                             <Accordion >
-                            <Card border="light">
+                            <Card id="DatiPersonaliCarta" border="light">
                                  <div className="first-cont">
                                    <CgProfile className="imgprof" />
                                    <div className="datiprofilo">
@@ -137,12 +137,12 @@ class DatiPersonali extends React.Component {
                                    </div>
                                 </div>
                             </Card>
-                            <Card border="light">
+                            {/*<Card id="DatiPersonaliCarta" border="light">
                                     <div className="view-cont">
                                     <div className="sx-head">
                                     <p>indirizzo, codice postale, città, provincia nazione</p>
                                     </div>
-                                    <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="1">
+                                    <Accordion.Toggle as={AiOutlineEdit} className="penna" variant="link" eventKey="1">
                                     </Accordion.Toggle>
                                     </div>
                                 <Accordion.Collapse eventKey="1">
@@ -534,13 +534,13 @@ class DatiPersonali extends React.Component {
                             </Button>
                                     </Card.Body>
                                 </Accordion.Collapse>
-                            </Card>
-                            <Card border="light">
+                            </Card>*/}
+                            <Card id="DatiPersonaliCarta" border="light">
                                     <div className="view-cont">
                                     <div className="sx-head">
                                         <p>Documento : {num_documento}</p>
                                     </div>
-                                    <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="2">
+                                    <Accordion.Toggle as={AiOutlineEdit} className="penna" variant="link" eventKey="2">
                                     Modifica
                                     </Accordion.Toggle>
                                     </div>
@@ -573,12 +573,12 @@ class DatiPersonali extends React.Component {
                                     </Card.Body>
                                 </Accordion.Collapse>
                             </Card>
-                            <Card border="light">
+                            <Card id="DatiPersonaliCarta" border="light">
                                     <div className="view-cont">
                                     <div className="sx-head">
                                         <p>Cambia la tua password</p>
                                     </div>
-                                    <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="3">
+                                    <Accordion.Toggle as={AiOutlineEdit} className="penna" variant="link" eventKey="3">
                                     </Accordion.Toggle>
                                     </div>
                                 <Accordion.Collapse eventKey="3"> 
@@ -629,12 +629,12 @@ class DatiPersonali extends React.Component {
                                     </Card.Body>
                                 </Accordion.Collapse>
                             </Card>
-                            <Card border="light">
+                            <Card id="DatiPersonaliCarta" border="light">
                                     <div className="view-cont">
                                     <div className="sx-head">
                                         <p>Numero di telefono: {telefono}</p>
                                         </div>
-                                        <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="4">
+                                        <Accordion.Toggle as={AiOutlineEdit} className="penna" variant="link" eventKey="4">
                                     </Accordion.Toggle>
                                     </div>
                                 <Accordion.Collapse eventKey="4">

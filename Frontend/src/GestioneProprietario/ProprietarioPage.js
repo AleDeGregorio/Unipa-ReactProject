@@ -82,25 +82,17 @@ class ProprietarioPage extends React.Component {
                 <div className="col">
         <div className="carte_prop" >
         <Link to = "/Testina" className="LinK">
-        <Card className="prop">
+        <Card id="prop">
             <FaClipboardList className="imageProp"/>
             <Card.Title className="TitoloCard">Gestisci Prenotazioni</Card.Title>
             <Card.Text className="TestoCard">Gestisci le prenotazioni in attesa e quelle già accettate.</Card.Text>
         </Card>
         </Link>
-<<<<<<< HEAD
-        <Link to = "" className="LinK" >
-        <Card className="prop">
-            <RiMailSendLine className="imageProp"/>
-            <Card.Title>Invio dati Turismo </Card.Title>
-            <Card.Text>Effettua l'invio dei dati relativi ai soggiornanti all'ufficio del Turismo.</Card.Text>
-        </Card>
-        </Link>
-=======
         <Card className="prop" onClick = {this.handleShow}>
+        <Card id="prop" onClick = {this.handleShow}>
                     <RiMailSendLine className="imageProp"/>
                     <Card.Title>Invio dati Turismo </Card.Title>
-                    <Card.Text>Effettua l'invio dei dati relativi ai soggiornanti all'ufficio del Turismo.</Card.Text>
+                    <Card.Text>Effettua l'invio dei dati relativi ai soggiornanti all'ufficio del turismo.</Card.Text>
                 </Card>
                 <Modal show={this.state.show} onHide={this.handleClose}>
                     <Modal.Header closeButton>
@@ -119,34 +111,34 @@ class ProprietarioPage extends React.Component {
                     </Button>                    
                    </Modal.Footer>
                 </Modal>
->>>>>>> 2cca23db2ace85f0cebfdaa6ea2e7895c936da6c
+
         </div>
         <div className="carte_prop">
         <Link to = "/InserimentoProprietà" className="LinK">
-        <Card className="prop">
+        <Card id="prop">
             <FaHotel className="imageProp"/>
             <Card.Title>Inserisci Proprietà</Card.Title>
             <Card.Text>Scegli tra le tipologie di strutture presenti nel sistema e inserisci la tua! </Card.Text>
         </Card>
         </Link>
         <Link to = "/SceltaModifica" className="LinK">
-        <Card  className="prop">
+        <Card  id="prop">
             <BsTools className="imageProp"/>
             <Card.Title>Modifica Proprietà</Card.Title>
             <Card.Text>Scegli tra le strutture possedute ed effettua i cambiamenti che preferisci.</Card.Text>
         </Card>
         </Link>
+        </div>
+        <div className="carte_prop">
         <Link to = "/DatiPersonali" className="LinK">
-        <Card className="prop">
+        <Card id="prop">
             <RiAccountBoxLine className="imageProp"></RiAccountBoxLine>
             <Card.Title>Gestione Account</Card.Title>
             <Card.Text>Vedi le opzioni disponibili</Card.Text>
         </Card>
         </Link>
-        </div>
-        <div className="carte_prop">
         <Link to = "/Earning" className="LinK">
-        <Card className="prop">
+        <Card id="prop">
           <SiCashapp className="imageProp"></SiCashapp>
             <Card.Title>Resoconto Guadagni</Card.Title>
             <Card.Text>Visualizza </Card.Text>
