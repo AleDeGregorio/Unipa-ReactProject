@@ -127,14 +127,14 @@ class DatiPersonali extends React.Component {
                             <div className="DatiPersonali">
                             <h2>Qui puoi modificare i tuoi dati personali!</h2>
                             <Accordion >
-                            <Card id="DatiPersonaliCarta" border="light">
+                            <Card id="DatiPersonaliCarta1" border="no">
                                  <div className="first-cont">
-                                   <CgProfile className="imgprof" />
                                    <div className="datiprofilo">
                                      <p> Nome : {nome} </p>
                                      <p> Cognome :  {cognome}</p>
                                      <p>Email : {email} </p>
                                    </div>
+                                   <CgProfile className="imgprof" />
                                 </div>
                             </Card>
                             {/*<Card id="DatiPersonaliCarta" border="light">
