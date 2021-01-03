@@ -52,7 +52,6 @@ class ProprietarioPage extends React.Component {
         })
     }
 
-
     handleClose = () => {
         this.setState({
             show: false
@@ -89,6 +88,7 @@ class ProprietarioPage extends React.Component {
             <Card.Text className="TestoCard">Gestisci le prenotazioni in attesa e quelle già accettate.</Card.Text>
         </Card>
         </Link>
+        <Card className="prop" onClick = {this.handleShow}>
         <Card id="prop" onClick = {this.handleShow}>
                     <RiMailSendLine className="imageProp"/>
                     <Card.Title>Invio dati Turismo </Card.Title>
@@ -111,6 +111,7 @@ class ProprietarioPage extends React.Component {
                     </Button>                    
                    </Modal.Footer>
                 </Modal>
+
         </div>
         <div className="carte_prop">
         <Link to = "/InserimentoProprietà" className="LinK">
@@ -151,3 +152,4 @@ class ProprietarioPage extends React.Component {
 }
 
 export default ProprietarioPage;
+
