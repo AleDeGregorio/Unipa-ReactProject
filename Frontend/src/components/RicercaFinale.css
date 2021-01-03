@@ -67,7 +67,6 @@
   color: white;
   background-color: #00bec8;
   height: 25px;
-  width: 100%;
 }
 
 .search-button:hover {
@@ -83,6 +82,10 @@
   }
 
   .search-element {
+    width: 100%;
+  }
+
+  .search-button{
     width: 100%;
   }
 

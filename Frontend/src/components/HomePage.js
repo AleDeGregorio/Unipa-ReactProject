@@ -15,7 +15,7 @@ function HomePage(){
             <div className="scritta">
                 <h1>Enjoy A Luxury Experience</h1>
             </div>
-            <div>
+            <div className="ricerca">
                 <RicercaFinale/>
             </div>
             {/*<div className="containerCarosello">

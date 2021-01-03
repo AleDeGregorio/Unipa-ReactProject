@@ -173,7 +173,6 @@ class InserimentoCasaVacanza extends React.Component {
     }
     else {
       return (
-        <div className = "background">
             <div className = "containerNew">  
                 <div className = "contentNew">
                     <form onSubmit = {this.onSubmitInsert}>
@@ -256,7 +255,7 @@ class InserimentoCasaVacanza extends React.Component {
                     />
                     <Form.Group controlId = "posti_Letto" id = 'posti_letto' name = 'posti_letto' >
                       <Form.Label>Posti Letto</Form.Label>
-                      <Form.Control 
+                      <select 
                         id = 'posti_letto'
                         name = 'posti_letto'
                         defaultValue = '1'
@@ -272,7 +271,7 @@ class InserimentoCasaVacanza extends React.Component {
                         <option>6</option>
                         <option>7</option>
                         <option>8</option>
-                        </Form.Control>
+                        </select>
                     </Form.Group>
                     <Form.Group>
                         <label>Inserisci delle foto della tua struttura</label>
@@ -317,16 +316,15 @@ class InserimentoCasaVacanza extends React.Component {
                         required
                         />
                         <img src = {this.state.foto4SRC} alt = "Foto 4" ></img>
+                        <button className="bottoniScelta" type="submit">
+                          Carica
+                        </button>
                     </Form.Row>
                     </Form.Group>
                     <Link to="/InserimentoProprietà">Torna indietro</Link>
-                    <Button variant="primary" type="submit">
-                      Carica
-                    </Button>
                     </form>
                 </div>
             </div>
-        </div>
       );}
     }
 }

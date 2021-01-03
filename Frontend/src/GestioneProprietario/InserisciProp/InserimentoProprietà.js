@@ -18,15 +18,15 @@ class InserimentoProprietà extends React.Component {
           <h2>Seleziona il tipo di struttura che stai inserendo</h2>
           <Form.Group>
             <Form.Row className="justify-content-center">
-            <Button variant="primary" className="bottoniScelta" href="/InserimentoCasaVacanza">
+            <a className="bottoniScelta" href="/InserimentoCasaVacanza">
               Casa Vacanza
-            </Button>
-            <Button variant="primary" className="bottoniScelta" href="/InserimentoBnB">
+            </a>
+            <a  className="bottoniScelta" href="/InserimentoBnB">
               B&B
-            </Button>
-            <Button variant="primary" className="bottoniScelta" href="/ElencoBnB2">
+            </a>
+            <a className="bottoniScelta" href="/ElencoBnB2">
               Stanza B&B
-            </Button>
+            </a>
             </Form.Row>
           </Form.Group>
         </form>

@@ -221,10 +221,10 @@ class InserimentoBnB extends React.Component {
               className = "i"
               onChange = {this.onChange}
             />
-            <Link to="/InserimentoProprietà">Torna indietro</Link>
-            <Button variant="primary" type="submit">
+            <button className="bottoniScelta1" type="submit">
               Carica
-            </Button>
+            </button>
+            <Link to="/InserimentoProprietà">Torna indietro</Link>
           </form>
         </div>
       </div>

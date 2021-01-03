@@ -1,6 +1,9 @@
 .App {
   text-align: center;
-  background-color: #33333321;
+  background-image: url(https://images.pexels.com/photos/1267438/pexels-photo-1267438.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 ul {

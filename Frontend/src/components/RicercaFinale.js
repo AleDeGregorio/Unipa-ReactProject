@@ -213,8 +213,9 @@ class RicercaFinale extends React.Component {
                             <option value="10">10</option>
                         </select>
                     </div>
+                    <button type="submit" class="search-button">Ricerca</button>
                 </div>
-                <button type="submit" class="search-button">Ricerca</button>
+                
             </form>
         );
     }
