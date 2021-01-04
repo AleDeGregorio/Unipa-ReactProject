@@ -49,14 +49,11 @@ class ListBeB extends Component {
     this.state = {
       listTitle: "ELENCO B&B",
       listBreadcrumb: "Nome / Chek-in/Check-out",
-      items: [
-        {
-          
-        }
-      ],
+      items: [],
       apiResponse: [],
       error: false,
-      errorMessage: ''
+      errorMessage: '',
+      empty: false
     };
   }
 
@@ -79,22 +76,28 @@ class ListBeB extends Component {
         
         var res = JSON.parse(result);
 
-        for(var i = 0; i < res.length; i++) {
-          this.setState({
-            items: [...this.state.items, {
-              id: i,
-              hasActions: true,
-              textValue: res[i].nome_proprieta,
-              checkin: res[i].check_in + '0/',
-              checkout: res[i].check_out + '0',
-              image: res[i].imgBB_path1
-            }]
-          });
+        if(res.length < 1 || (res.code && res.code === 404)) {
+          this.setState({ empty: true, errorMessage: res.message });
         }
-    
-        if(this.state.apiResponse.status === 'error') {
-            this.setState({ error: true });
-            this.setState({ errorMessage: this.state.apiResponse.message });
+
+        else if(this.state.apiResponse.status === 'error') {
+          this.setState({ error: true });
+          this.setState({ errorMessage: this.state.apiResponse.message });
+        }
+
+        else {
+          for(var i = 0; i < res.length; i++) {
+            this.setState({
+              items: [...this.state.items, {
+                id: i,
+                hasActions: true,
+                textValue: res[i].nome_proprieta,
+                checkin: res[i].check_in + '0/',
+                checkout: res[i].check_out + '0',
+                image: res[i].imgBB_path1
+              }]
+            });
+          }
         }
     });
   }
@@ -121,7 +124,18 @@ class ListBeB extends Component {
   };
 
   render() {
-    if(this.state.error) {
+    if(!localStorage.getItem('logged') || !localStorage.getItem('proprietario')) {
+      return <Redirect
+          to={{
+              pathname: "/ErrorPage",
+              state: { 
+                error: true,
+                errorMessage: "Utente non autorizzato" 
+              }
+          }}
+      />
+    }
+    else if(this.state.error) {
       return <Redirect
           to={{
               pathname: "/ErrorPage",
@@ -131,6 +145,22 @@ class ListBeB extends Component {
               }
           }}
       />
+  }
+  else if(this.state.empty) {
+    const { listTitle, listBreadcrumb, items } = this.state;
+    return (
+      <ThemeProvider theme={theme}>
+        <ListWrapper>
+          <ListTitle>{listTitle}</ListTitle>
+          <ListBreadcrumb>{listBreadcrumb}</ListBreadcrumb>
+          <DragDropContext onDragEnd={this.onDragEnd}>
+            <Droppable droppableId="droppabe-list">
+              <p>Si è verificato un errore: {this.state.errorMessage}</p>
+            </Droppable>
+          </DragDropContext>
+        </ListWrapper>
+      </ThemeProvider>
+    );
   }
   else {
     const { listTitle, listBreadcrumb, items } = this.state;
@@ -156,7 +186,7 @@ class ListBeB extends Component {
                           order={key}
                         >
                           <ListItemBeB
-                            dati_bb = {this.state.apiResponse[key-1] ? this.state.apiResponse[key-1] : ''}
+                            dati_bb = {this.state.apiResponse[key] ? this.state.apiResponse[key] : ''}
                             number={number}
                             dragging={snapshot.isDragging}
                             onDeleteItem={this.refreshItemsList}

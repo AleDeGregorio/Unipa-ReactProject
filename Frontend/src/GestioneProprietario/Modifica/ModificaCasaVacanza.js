@@ -42,7 +42,8 @@ class ModificaCasaVacanza extends React.Component {
       apiResponse: [],
       error: false,
       errorMessage: '',
-      success: false
+      success: false,
+      empty: false
     }
   }
 
@@ -79,12 +80,17 @@ class ModificaCasaVacanza extends React.Component {
     .then((result) => {
       this.setState({ apiResponse: result });
 
-      if(this.state.apiResponse && this.state.apiResponse.status === 'error') {
-        this.setState({
-          error: true,
-          errorMessage: this.state.apiResponse.message
-        });
+      var res = JSON.parse(result);
+
+      if(res.length < 1 || (res.code && res.code === 404)) {
+        this.setState({ empty: true, errorMessage: res.message });
       }
+
+      else if(this.state.apiResponse.status === 'error') {
+        this.setState({ error: true });
+        this.setState({ errorMessage: this.state.apiResponse.message });
+      }
+
       else {
         const data2 = {
           posti_letto: this.state.posti_letto,
@@ -110,12 +116,17 @@ class ModificaCasaVacanza extends React.Component {
         .then((result) => {
           this.setState({ apiResponse: result });
     
-          if(this.state.apiResponse && this.state.apiResponse.status === 'error') {
-            this.setState({
-              error: true,
-              errorMessage: this.state.apiResponse.message
-            });
+          var res2 = JSON.parse(result);
+
+          if(res2.length < 1 || (res2.code && res2.code === 404)) {
+            this.setState({ empty: true, errorMessage: res2.message });
           }
+
+          else if(this.state.apiResponse.status === 'error') {
+            this.setState({ error: true });
+            this.setState({ errorMessage: this.state.apiResponse.message });
+          }
+
           else {
             var form = new FormData();
             if(this.state.imgCV_path1) {
@@ -139,10 +150,17 @@ class ModificaCasaVacanza extends React.Component {
             .then((result) => {
               this.setState({ apiResponse: result });
 
-            if(this.state.apiResponse.status === 'error') {
+            var res3 = JSON.parse(result);
+
+            if(res3.length < 1 || (res3.code && res3.code === 404)) {
+              this.setState({ empty: true, errorMessage: res3.message });
+            }
+
+            else if(this.state.apiResponse.status === 'error') {
               this.setState({ error: true });
               this.setState({ errorMessage: this.state.apiResponse.message });
             }
+
             else {
               this.setState({ success: true });
             }
@@ -181,6 +199,20 @@ class ModificaCasaVacanza extends React.Component {
         <div className = "Errore">
           <h1>Modifiche avvenute con successo!</h1>
           <p>La tua casa vacanza è stata modificata correttamente all'interno del sistema</p>
+        </div>
+      );
+    }
+    else if(this.state.empty) {
+      var casa = this.state.dati_casa;
+
+      return (
+          <div className="background">
+        <div className="containerNew"> 
+          <div className="contentNew">
+          <h2>Modifica la tua casa vacanza con le informazioni che preferisci!</h2>
+          <p>Si è verificato un errore: {this.state.errorMessage}</p>
+          </div>
+        </div>
         </div>
       );
     }

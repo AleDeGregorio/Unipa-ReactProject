@@ -36,7 +36,8 @@ class ModificaStanza extends React.Component {
       apiResponse: [],
       error: false,
       errorMessage: '',
-      success: false
+      success: false,
+      empty: false
     }
   }
 
@@ -74,12 +75,15 @@ class ModificaStanza extends React.Component {
     .then((result) => {result.text()})
     .then((result) => {
       this.setState({ apiResponse: result });
+      var res = JSON.parse(result);
 
-      if(this.state.apiResponse && this.state.apiResponse.status === 'error') {
-        this.setState({
-          error: true,
-          errorMessage: this.state.apiResponse.message
-        });
+      if(res.length < 1 || (res.code && res.code === 404)) {
+        this.setState({ empty: true, errorMessage: res.message });
+      }
+
+      else if(this.state.apiResponse.status === 'error') {
+        this.setState({ error: true });
+        this.setState({ errorMessage: this.state.apiResponse.message });
       }
       else {
         var form = new FormData();
@@ -103,11 +107,16 @@ class ModificaStanza extends React.Component {
         .then((result) => result.text())
         .then((result) => {
           this.setState({ apiResponse: result });
+          var res2 = JSON.parse(result);
 
-        if(this.state.apiResponse.status === 'error') {
-          this.setState({ error: true });
-          this.setState({ errorMessage: this.state.apiResponse.message });
-        }
+          if(res2.length < 1 || (res2.code && res2.code === 404)) {
+            this.setState({ empty: true, errorMessage: res2.message });
+          }
+    
+          else if(this.state.apiResponse.status === 'error') {
+            this.setState({ error: true });
+            this.setState({ errorMessage: this.state.apiResponse.message });
+          }
         else {
           this.setState({ success: true });
         }
@@ -144,6 +153,25 @@ class ModificaStanza extends React.Component {
         <div className = "Errore">
           <h1>Modifiche avvenute con successo!</h1>
           <p>La tua stanza è stata modificata correttamente all'interno del sistema</p>
+        </div>
+      );
+    }
+    else if(this.state.empty) {
+      var stanza = this.state.dati_stanza;
+
+      var tipo_stanza = '';
+
+      return (
+          <div className="background">
+        <div className="containerNew">  
+          <div className="contentNew">
+          <h2>Modifica le informazioni della tua stanza come preferisci!</h2>
+          <Accordion>
+              <p>Si è verificato un errore: {this.state.errorMessage}</p>
+            </Accordion>
+           
+          </div>
+        </div>
         </div>
       );
     }

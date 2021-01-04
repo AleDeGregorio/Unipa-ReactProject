@@ -21,7 +21,8 @@ class SecondaAutenticazioneRegistratiCliente extends React.Component {
             apiResponse: [],
             error:false,
             errorMessage:'',
-            success: false
+            success: false,
+            empty: false
         };
     }
 
@@ -51,10 +52,15 @@ class SecondaAutenticazioneRegistratiCliente extends React.Component {
         .then((result) => result.text())
         .then((result)=>{
             this.setState({ apiResponse:JSON.parse(result) });
+            var res = JSON.parse(result);
 
-            if(this.state.apiResponse.status === 'error') {
-                this.setState({ error: true });
-                this.setState({ errorMessage: this.state.apiResponse.message });
+            if(res.length < 1 || (res.code && res.code === 404)) {
+              this.setState({ empty: true, errorMessage: res.message });
+            }
+      
+            else if(this.state.apiResponse.status === 'error') {
+              this.setState({ error: true });
+              this.setState({ errorMessage: this.state.apiResponse.message });
             }
             else {
                 this.setState({ success: true })
@@ -81,6 +87,17 @@ class SecondaAutenticazioneRegistratiCliente extends React.Component {
               }
             }}
           />
+        }
+        else if(this.state.empty) {
+            return(
+                <Form className="contenitoreAutenticazione" onSubmit={this.onSubmitInsert}>
+                    <div className="contentNewCheckAutenticazione">
+                        <h2>Iscriviti</h2>
+                        <p>Si è verificato un errore: {this.state.errorMessage}</p>
+                    <Link to="/secondaAutenticazioneRegistrati">Torna indietro</Link>
+                </div>
+                </Form>
+            );
         }
         else {
             return(

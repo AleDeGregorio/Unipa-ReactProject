@@ -41,7 +41,8 @@ class DatiPersonali extends React.Component {
             apiResponse: [],
             error: false,
             errorMessage: '',
-            show: false
+            show: false, 
+            empty: false
         }
     }
 
@@ -72,10 +73,15 @@ class DatiPersonali extends React.Component {
         .then((result) => result.text())
         .then((result)=>{
             this.setState({ apiResponse:JSON.parse(result) });
+            var res = JSON.parse(result);
 
-            if(this.state.apiResponse.status === 'error') {
-                this.setState({ error: true });
-                this.setState({ errorMessage: this.state.apiResponse.message });
+            if(res.length < 1 || (res.code && res.code === 404)) {
+              this.setState({ empty: true, errorMessage: res.message });
+            }
+      
+            else if(this.state.apiResponse.status === 'error') {
+              this.setState({ error: true });
+              this.setState({ errorMessage: this.state.apiResponse.message });
             }
             else {
                 this.setState({ success: true })
@@ -84,7 +90,6 @@ class DatiPersonali extends React.Component {
     }
 
     render() {
-        /*
         if(this.state.success) {
             return (
                 <div className = 'Errore'>
@@ -103,7 +108,7 @@ class DatiPersonali extends React.Component {
             }}
           />
         }
-        if(!localStorage.getItem('logged') || !localStorage.getItem('proprietario')) {
+        else if(!localStorage.getItem('logged') || !localStorage.getItem('proprietario')) {
             return <Redirect
                 to={{
                     pathname: "/ErrorPage",
@@ -114,7 +119,28 @@ class DatiPersonali extends React.Component {
                 }}
             />
         }
-        else*/ {
+        else if(this.state.empty) {
+            var nome = this.state.nome;
+            var cognome = this.state.cognome;
+            var nascita = this.state.nascita
+            var email = this.state.email;
+            var telefono = this.state.telefono;
+            var num_documento = this.state.num_documento;
+
+            return(
+                <Form className="contenitoreDatiPersonali">
+                    <div className="DatiPersonali">
+                        <h2>Qui puoi modificare i tuoi dati personali!</h2>
+                            <Accordion >
+                                <p>Si è verificato un errore: {this.state.errorMessage}</p>
+                            </Accordion>
+                    </div>
+                </Form>
+                            
+                        
+            );
+        }
+        else {
             var nome = this.state.nome;
             var cognome = this.state.cognome;
             var nascita = this.state.nascita

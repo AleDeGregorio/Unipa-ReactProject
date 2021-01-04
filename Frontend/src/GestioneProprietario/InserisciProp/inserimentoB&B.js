@@ -27,7 +27,8 @@ class InserimentoBnB extends React.Component {
       apiResponse: [],
       error: false,
       errorMessage: '',
-      success: false
+      success: false,
+      empty: false
     };
   }
 
@@ -60,7 +61,13 @@ class InserimentoBnB extends React.Component {
     .then((result) => {
       this.setState({ apiResponse: JSON.parse(result) });
 
-      if(this.state.apiResponse.status === 'error') {
+      var res = JSON.parse(result);
+
+      if(res.length < 1 || (res.code && res.code === 404)) {
+        this.setState({ empty: true, errorMessage: res.message });
+      }
+
+      else if(this.state.apiResponse.status === 'error') {
         this.setState({ error: true });
         this.setState({ errorMessage: this.state.apiResponse.message });
       }
@@ -82,7 +89,13 @@ class InserimentoBnB extends React.Component {
       .then((result) => {
         this.setState({ apiResponse: result });
 
-        if(this.state.apiResponse.status === 'error') {
+        var res2 = JSON.parse(result);
+
+        if(res2.length < 1 || (res2.code && res2.code === 404)) {
+          this.setState({ empty: true, errorMessage: res2.message });
+        }
+
+        else if(this.state.apiResponse.status === 'error') {
           this.setState({ error: true });
           this.setState({ errorMessage: this.state.apiResponse.message });
         }
@@ -123,6 +136,18 @@ class InserimentoBnB extends React.Component {
           <p>Il tuo B&B è stato registrato correttamente all'interno del sistema</p>
         </div>
       );
+    }
+    else if(this.state.empty) {
+      return(
+        <div className = "background">
+        <div className = "containerNew">  
+            <div className = "contentNew">
+                <p>Si è verificato un errore: {this.state.errorMessage}</p>
+            <Link to="/InserimentoProprietà">Torna indietro</Link>
+        </div>
+      </div>
+      </div>
+       );
     }
     else {
       return(

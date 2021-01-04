@@ -15,6 +15,7 @@ export default class SingleCasaVacanza extends Component {
 
     this.state = {
       dati_casa: this.props.history.location.state.dati_casa.dati_casa ? this.props.history.location.state.dati_casa.dati_casa : [],
+      datiRicerca: this.props.history.location.state.datiRicerca.datiRicerca ? this.props.history.location.state.datiRicerca.datiRicerca : [],
       servizi: []
     };
   }
@@ -30,8 +31,18 @@ export default class SingleCasaVacanza extends Component {
       return (
         <div className="error">
           <h3> Casa vacanza non trovata...</h3>
-          <Link to="/CaseVacanza" className="return">
-          Ritorna alla pagina di ricerca
+          <Link 
+            to = {{
+              pathname: "/CaseVacanza",
+              state: {
+                case: this.state.datiRicerca,
+                posti: this.state.dati_casa.posti,
+                localita: this.state.dati_casa.localita
+              }
+            }}
+            className = "return"
+          >
+            Ritorna alla pagina di ricerca
           </Link>
         </div>
       );
@@ -46,9 +57,19 @@ export default class SingleCasaVacanza extends Component {
          <div className="contenitoreRiepilogo">
            <StyledHero img={dati_casa.img1}>
              <Banner title={dati_casa.nome_proprieta}>
-               <Link to="/CaseVacanza" className="return">
+              <Link 
+                to = {{
+                  pathname: "/CaseVacanza",
+                  state: {
+                    case: this.state.datiRicerca,
+                    posti: this.state.dati_casa.posti,
+                    localita: this.state.dati_casa.localita
+                  }
+                }}
+                className = "return"
+              >
                 Ritorna alla pagina di ricerca
-               </Link>
+              </Link>
              </Banner>
            </StyledHero>
            
@@ -84,7 +105,17 @@ export default class SingleCasaVacanza extends Component {
                </div>
              </div>
            </section>
-               <button className="bottonePrenota">PRENOTA</button>
+           <Link 
+              to = {{
+                pathname: "/Prenota",
+                state: {
+                  dati: ''
+                }
+              }}
+              className = "return"
+            >
+              <button className="bottonePrenota">PRENOTA</button>
+            </Link>
            </div>
        </>
      );

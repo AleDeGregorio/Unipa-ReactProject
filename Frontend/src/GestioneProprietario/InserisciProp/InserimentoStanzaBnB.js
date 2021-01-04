@@ -33,7 +33,8 @@ class InserimentoStanzaBnB extends React.Component {
       apiResponse: [],
       error: false,
       errorMessage: '',
-      success: false
+      success: false,
+      empty: false
     };
   }
 
@@ -66,7 +67,13 @@ class InserimentoStanzaBnB extends React.Component {
     .then((result) => {
       this.setState({ apiResponse: JSON.parse(result) });
 
-      if(this.state.apiResponse.status === 'error') {
+      var res = JSON.parse(result);
+
+      if(res.length < 1 || (res.code && res.code === 404)) {
+        this.setState({ empty: true, errorMessage: res.message });
+      }
+
+      else if(this.state.apiResponse.status === 'error') {
         this.setState({ error: true });
         this.setState({ errorMessage: this.state.apiResponse.message });
       }
@@ -95,13 +102,19 @@ class InserimentoStanzaBnB extends React.Component {
       .then((result) => {
         this.setState({ apiResponse: result });
 
-      if(this.state.apiResponse.status === 'error') {
-        this.setState({ error: true });
-        this.setState({ errorMessage: this.state.apiResponse.message });
-      }
-      else {
-        this.setState({ success: true });
-      }
+        var res = JSON.parse(result);
+
+        if(res.length < 1 || (res.code && res.code === 404)) {
+          this.setState({ empty: true, errorMessage: res.message });
+        }
+  
+        else if(this.state.apiResponse.status === 'error') {
+          this.setState({ error: true });
+          this.setState({ errorMessage: this.state.apiResponse.message });
+        }
+        else {
+          this.setState({ success: true });
+        }
     });
   });
   }
@@ -135,6 +148,18 @@ class InserimentoStanzaBnB extends React.Component {
           <h1>Inserimento avvenuto con successo!</h1>
           <p>La tua casa vacanza è stata registrata correttamente all'interno del sistema</p>
         </div>
+      );
+    }
+    else if(this.state.empty) {
+      return(
+        <div className = "background">
+        <div className = "containerNew">  
+            <div className = "contentNew">
+                <p>Si è verificato un errore: {this.state.errorMessage}</p>
+            <Link to="/InserimentoProprietà">Torna indietro</Link>
+        </div>
+      </div>
+      </div>
       );
     }
     else {

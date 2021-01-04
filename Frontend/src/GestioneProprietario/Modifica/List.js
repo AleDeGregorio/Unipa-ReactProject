@@ -52,7 +52,8 @@ class List extends Component {
       dati_bb: this.props.dati_bb ? this.props.dati_bb : '',
       apiResponse: [],
       error:false,
-      errorMessage: ''
+      errorMessage: '',
+      empty: false
     };
   }
   componentDidMount(){
@@ -73,21 +74,27 @@ class List extends Component {
         
         var res = JSON.parse(result);
 
-        for(var i = 0; i < res.length; i++) {
-          this.setState({
-            items: [...this.state.items, {
-              id: i,
-              hasActions: true,
-              textValue: res[i].id_stanza,
-              tipologia: res[i].tipologia === 1 ? res[i].tipologia + ' ospite' : res[i].tipologia + ' ospiti',
-              image: res[i].imgST_path1
-            }]
-          });
+        if(res.length < 1 || (res.code && res.code === 404)) {
+          this.setState({ empty: true, errorMessage: res.message });
         }
-    
-        if(this.state.apiResponse.status === 'error') {
-            this.setState({ error: true });
-            this.setState({ errorMessage: this.state.apiResponse.message });
+
+        else if(this.state.apiResponse.status === 'error') {
+          this.setState({ error: true });
+          this.setState({ errorMessage: this.state.apiResponse.message });
+        }
+
+        else {
+          for(var i = 0; i < res.length; i++) {
+            this.setState({
+              items: [...this.state.items, {
+                id: i,
+                hasActions: true,
+                textValue: res[i].id_stanza,
+                tipologia: res[i].tipologia === 1 ? res[i].tipologia + ' ospite' : res[i].tipologia + ' ospiti',
+                image: res[i].imgST_path1
+              }]
+            });
+          }
         }
     });
   }
@@ -123,7 +130,26 @@ class List extends Component {
                   errorMessage: this.state.errorMessage 
               }
           }}
-      />}
+      />
+    }
+    
+    else if(this.state.empty) {
+      const { listTitle, listBreadcrumb, items } = this.state;
+      return (
+        <ThemeProvider theme={theme}>
+          <ListWrapper>
+            <ListTitle>{listTitle}</ListTitle>
+            <ListBreadcrumb>{listBreadcrumb}</ListBreadcrumb>
+            <DragDropContext onDragEnd={this.onDragEnd}>
+              <Droppable droppableId="droppabe-list">
+                <p>Si è verificato un errore: {this.state.errorMessage}</p>
+              </Droppable>
+            </DragDropContext>
+          </ListWrapper>
+        </ThemeProvider>
+      );
+    }
+
     else {
       const { listTitle, listBreadcrumb, items } = this.state;
       return (

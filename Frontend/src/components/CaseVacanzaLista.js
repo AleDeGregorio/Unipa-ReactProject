@@ -20,7 +20,7 @@ class CaseVacanzaList extends React.Component {
       <section className="caseVacanzalist">
         <div className="caseVacanzalistDiv">
           {datiCase.map(item => {
-            return <CasaVacanza key={item.id} casaVacanza={item} />;
+            return <CasaVacanza key={item.id} casaVacanza={item} datiRicerca = {datiCase}/>;
           })}
         </div>
       </section>

@@ -53,52 +53,58 @@ class ElencoCheck extends Component {
       apiResponse_accettate: [],
       email_prop: localStorage.getItem('email'),
       error: false,
-      errorMessage: ''
+      errorMessage: '',
+      empty: false
     };
   }
 
-    componentDidMount() {
-        const data = {
-            ref_proprietario: this.state.email_prop
-        };
+  componentDidMount() {
+    const data = {
+      ref_proprietario: this.state.email_prop
+    };
 
-        fetch('http://localhost:9000/getPrenotazioniAccettate/prenotazioniAccettate', {
-            method: "POST",
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-        .then((result) => result.text())
-        .then((result) => {
-            this.setState({ apiResponse_accettate: JSON.parse(result) });
-            var res = JSON.parse(result);
+    fetch('http://localhost:9000/getPrenotazioniAccettate/prenotazioniAccettate', {
+      method: "POST",
+      headers: {
+          'Content-type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then((result) => result.text())
+    .then((result) => {
+      this.setState({ apiResponse_accettate: JSON.parse(result) });
+      var res = JSON.parse(result);
 
-            console.log(res);
+      if(res.length < 1 || (res.code && res.code === 404)) {
+        this.setState({ empty: true, errorMessage: res.message });
+      }
 
-            for(var i = 0; i < res.length; i++) {
-              this.setState({
-                items: [...this.state.items, {
-                  id: i,
-                  hasActions: true,
-                  image: res[i].img,
-                  nome: res[i].nome_proprieta,
-                  stanza: res[i].id_stanza ? res[i].id_stanza : '',
-                  textValue: res[i].ref_proprieta,
-                  id_prenotazione: res[i].id_prenotazione,
-                  ref_cliente: res[i].ref_cliente,
-                  ref_proprieta:res[i].ref_proprieta,
-                  data_partenza:res[i].data_partenza,
-                  data_ritorno:res[i].data_ritorno              
-                }]
-              });
-            }
-            if(this.state.apiResponse_accettate.status === 'error') {
-                this.setState({ error: true });
-                this.setState({ errorMessage: this.state.apiResponse_accettate.message });
-            }
-        });
-    }
+      else if(this.state.apiResponse_accettate.status === 'error') {
+        this.setState({ error: true });
+        this.setState({ errorMessage: this.state.apiResponse_accettate.message });
+      }
+
+      else {
+        for(var i = 0; i < res.length; i++) {
+          this.setState({
+            items: [...this.state.items, {
+              id: i,
+              hasActions: true,
+              image: res[i].img,
+              nome: res[i].nome_proprieta,
+              stanza: res[i].id_stanza ? res[i].id_stanza : '',
+              textValue: res[i].ref_proprieta,
+              id_prenotazione: res[i].id_prenotazione,
+              ref_cliente: res[i].ref_cliente,
+              ref_proprieta:res[i].ref_proprieta,
+              data_partenza:res[i].data_partenza,
+              data_ritorno:res[i].data_ritorno              
+            }]
+          });
+        }
+      }
+    });
+  }
 
        
   reorderItems = (startIndex, endIndex) => {
@@ -124,6 +130,7 @@ class ElencoCheck extends Component {
 
   render() {
   if(this.state.error) {
+    console.log("check");
       return <Redirect
           to={{
               pathname: "/ErrorPage",
@@ -133,6 +140,26 @@ class ElencoCheck extends Component {
               }
           }}
       />
+  }
+  else if(this.state.empty) {
+    const { listTitle, listBreadcrumb, items } = this.state;
+    return (
+      <ThemeProvider theme={theme}>
+        <ListWrapper>
+          <ListTitle>{listTitle}</ListTitle>
+          <ListBreadcrumb>{listBreadcrumb}</ListBreadcrumb>
+          <DragDropContext onDragEnd={this.onDragEnd}>
+            <Droppable droppableId="droppabe-list">
+              {(provided, snapshot) => (
+                <div ref={provided.innerRef}>
+                  <p>Attualmente non è presente nessuna prenotazione accettata</p>
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
+        </ListWrapper>
+      </ThemeProvider>
+    );
   }
   else {
     const { listTitle, listBreadcrumb, items } = this.state;

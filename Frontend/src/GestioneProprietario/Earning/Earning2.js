@@ -21,7 +21,8 @@ class Earning2 extends React.Component {
       data_2: '',
       tipo_struttura: '',
       id_struttura: '',
-      nome_struttura: ''
+      nome_struttura: '',
+      empty: false
     }
   }
 
@@ -65,7 +66,13 @@ class Earning2 extends React.Component {
         .then((result) => {
             this.setState({ apiResponse: JSON.parse(result) });
         
-            if(this.state.apiResponse.status === 'error') {
+            var res = JSON.parse(result);
+
+            if(res.length < 1 || (res.code && res.code === 404)) {
+              this.setState({ empty: true, errorMessage: res.message });
+            }
+        
+            else if(this.state.apiResponse.status === 'error') {
               this.setState({ error: true });
               this.setState({ errorMessage: this.state.apiResponse.message });
             }
@@ -92,10 +99,16 @@ class Earning2 extends React.Component {
         .then((result) => {
           this.setState({ apiResponse: JSON.parse(result) });
       
-          if(this.state.apiResponse.status === 'error') {
+          var res = JSON.parse(result);
+
+            if(res.length < 1 || (res.code && res.code === 404)) {
+              this.setState({ empty: true, errorMessage: res.message });
+            }
+        
+            else if(this.state.apiResponse.status === 'error') {
               this.setState({ error: true });
               this.setState({ errorMessage: this.state.apiResponse.message });
-          }
+            }
         });
   }
 
@@ -119,9 +132,15 @@ class Earning2 extends React.Component {
         .then((result) => {
             this.setState({ apiResponse: JSON.parse(result) });
         
-            if(this.state.apiResponse.status === 'error') {
-                this.setState({ error: true });
-                this.setState({ errorMessage: this.state.apiResponse.message });
+            var res = JSON.parse(result);
+
+            if(res.length < 1 || (res.code && res.code === 404)) {
+              this.setState({ empty: true, errorMessage: res.message });
+            }
+        
+            else if(this.state.apiResponse.status === 'error') {
+              this.setState({ error: true });
+              this.setState({ errorMessage: this.state.apiResponse.message });
             }
         });
   }
@@ -134,17 +153,23 @@ class Earning2 extends React.Component {
     fetch('http://localhost:9000/searchProprietaProprietario/proprietaProprietario', {
         method: "POST",
         headers: {
-            'Content-type': 'application/json'
+          'Content-type': 'application/json'
         },
         body: JSON.stringify(data)
     })
     .then((result) => result.text())
     .then((result) => {
         this.setState({ apiResponse_strutture: JSON.parse(result) });
+
+        var res = JSON.parse(result);
+
+        if(res.length < 1 || (res.code && res.code === 404)) {
+          this.setState({ empty: true, errorMessage: res.message });
+        }
     
-        if(this.state.apiResponse_strutture.status === 'error') {
-            this.setState({ error: true });
-            this.setState({ errorMessage: this.state.apiResponse_strutture.message });
+        else if(this.state.apiResponse_strutture.status === 'error') {
+          this.setState({ error: true });
+          this.setState({ errorMessage: this.state.apiResponse_strutture.message });
         }
     });
   }
@@ -171,6 +196,32 @@ class Earning2 extends React.Component {
               }
           }}
       />
+  }
+  else if(this.state.empty) {
+    var tipo_struttura = '';
+
+    if(this.state.tipo_struttura === 'cv') {
+      tipo_struttura = 'Casa Vacanza'
+    }
+    else if(this.state.tipo_struttura === 'bb') {
+      tipo_struttura = 'B&B'
+    }
+
+    return(
+      <div className="paginaEarning">
+          <div className ="containerSx">
+          <div className="earningDescrizione">
+            <h2 className="h2Earning">RESOCONTO GUADAGNI</h2>
+            <p>QUI PUOI VEDERE I TUOI GUADAGNI, GRAZIE A TRE FILTRI DIVERSI </p>
+          </div>
+          <div className="containerEarning">
+            <div className="col containerAccordion">
+              <p>Si è verificato un errore: {this.state.error_message}</p>
+            </div>
+          </div>
+          </div>
+        </div>
+    );
   }
   else {
     var tipo_struttura = '';

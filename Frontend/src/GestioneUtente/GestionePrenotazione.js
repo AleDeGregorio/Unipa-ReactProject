@@ -16,7 +16,8 @@ class GestionePrenotazione extends React.Component {
             email: localStorage.getItem('email'),  //variabili di cui abbiamo bisogno
             apiResponse: [] ,
             error: false,
-            errorMessage: ''
+            errorMessage: '',
+            empty: false
         }
     }
 
@@ -35,12 +36,15 @@ class GestionePrenotazione extends React.Component {
         .then((result)=> result.text())                  //risultato interrogazione 
         .then((result)=> {
             this.setState({ apiResponse:JSON.parse(result) }); //rende array il risultato
+            var res = JSON.parse(result);
 
-            if(this.state.apiResponse.status==='error') {       //gestione errori
-                this.setState({
-                    error:true, 
-                    errorMessage:'this.state.apiResponse.message'
-                });
+            if(res.length < 1 || (res.code && res.code === 404)) {
+              this.setState({ empty: true, errorMessage: res.message });
+            }
+      
+            else if(this.state.apiResponse.status === 'error') {
+              this.setState({ error: true });
+              this.setState({ errorMessage: this.state.apiResponse.message });
             }
         })
    }
@@ -76,10 +80,15 @@ class GestionePrenotazione extends React.Component {
         .then((result) => result.text())
         .then((result)=>{
             this.setState({ apiResponse:JSON.parse(result) });
+            var res = JSON.parse(result);
 
-            if(this.state.apiResponse.status === 'error') {
-                this.setState({ error: true });
-                this.setState({ errorMessage: this.state.apiResponse.message });
+            if(res.length < 1 || (res.code && res.code === 404)) {
+              this.setState({ empty: true, errorMessage: res.message });
+            }
+      
+            else if(this.state.apiResponse.status === 'error') {
+              this.setState({ error: true });
+              this.setState({ errorMessage: this.state.apiResponse.message });
             }
             else {
                 this.setState({ success: true })
@@ -104,10 +113,15 @@ class GestionePrenotazione extends React.Component {
         .then((result) => result.text())
         .then((result)=>{
             this.setState({ apiResponse:JSON.parse(result) });
+            var res = JSON.parse(result);
 
-            if(this.state.apiResponse.status === 'error') {
-                this.setState({ error: true });
-                this.setState({ errorMessage: this.state.apiResponse.message });
+            if(res.length < 1 || (res.code && res.code === 404)) {
+              this.setState({ empty: true, errorMessage: res.message });
+            }
+      
+            else if(this.state.apiResponse.status === 'error') {
+              this.setState({ error: true });
+              this.setState({ errorMessage: this.state.apiResponse.message });
             }
             else {
                 this.setState({ success: true })
@@ -137,6 +151,16 @@ class GestionePrenotazione extends React.Component {
                     }
                 }}
             />
+        }
+        else if(this.state.empty) {
+            return (
+                <div className="containerGP">
+                    <div>
+                        <h1>Gestisci le tue prenotazioni</h1>
+                        <p>Si è verificato un errore: {this.state.errorMessage}</p>
+                    </div>
+                </div>
+            );
         }
         else {
             return (

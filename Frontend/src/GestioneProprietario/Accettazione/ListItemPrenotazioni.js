@@ -269,17 +269,20 @@ class ListItemPrenotazioni extends Component {
       isAlive
     } = this.state
     const {//definisci variabili
+      hasActions,
+      image,
+      nome,
+      stanza
+    } = this.props.number
+    const {
       id_prenotazione,
       ref_cliente,
       data_partenza,
       data_ritorno,
       costo,
       num_soggiornanti,
-      hasActions,
-      image,
-      nome,
-      stanza
-    } = this.props.number
+      ref_soggiornante
+    } = this.props.dati_casa
     let listItemContentClass = ``
     if (isDeleted) listItemContentClass += ` list-item-content--deleted`
     return (
@@ -302,12 +305,14 @@ class ListItemPrenotazioni extends Component {
                  : (
                   <span onClick={this.toggleEditName}></span>
                 )} Richiesta di "{ref_cliente}" su:  "{nome}"  {stanza}
-                <br />ID Richiesta : {id_prenotazione}
+                <br />ID Richiesta: {id_prenotazione}
+ 
               </ListItemText>
               <ListItemTextSecond>
                 <div className="text-div-style">
-               <p> Num persone: {num_soggiornanti} Costo: {costo} </p>          
+               <p>Num persone: {num_soggiornanti} Costo: {costo} </p>          
                <p>Partenza-Ritorno: {new Date(data_partenza).toLocaleDateString()},  {new Date(data_ritorno).toLocaleDateString()}</p>
+               <p>CF Soggiornante: {ref_soggiornante}</p>
            
                </div>
               </ListItemTextSecond>

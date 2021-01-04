@@ -6,10 +6,23 @@ import {Form, Button} from "react-bootstrap"
 
 import "./InserimentoProprietà.css";
 
+import { Redirect } from 'react-router-dom'
+
 
 class InserimentoProprietà extends React.Component {
   
  render(){
+  if(!localStorage.getItem('logged') || !localStorage.getItem('proprietario')) {
+    return <Redirect
+        to={{
+            pathname: "/ErrorPage",
+            state: { 
+              error: true,
+              errorMessage: "Utente non autorizzato" 
+            }
+        }}
+    />
+  }
   return (
     <div className="background">
     <div className="containerNewSelezione">  

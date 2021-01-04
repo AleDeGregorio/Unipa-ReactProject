@@ -23,33 +23,33 @@ class Prenota extends React.Component {
                             <Accordion.Collapse eventKey="0">
                                 <div>
                             <Form>
-                                                                    <Form.Row>
-                                                                        <Form.Group as={Col} controlId="formGridDate">
-                                                                            <Form.Label>Data di inizio</Form.Label>
-                                                                            <Form.Control 
-                                                                                type="date" 
-                                                                                placeholder="Inserisci data di inizio" 
-                                                                                id = 'data_partenza'
-                                                                                name = 'data_partenza'
-                                                                                onChange = {this.onChange}
-                                                                            />
-                                                                        </Form.Group>
-                                                                        <Form.Group as={Col} controlId="formGridDate1">
-                                                                            <Form.Label>Data fine</Form.Label>
-                                                                            <Form.Control 
-                                                                                type="date" 
-                                                                                placeholder="Inserisci data di fine" 
-                                                                                id = 'data_ritorno'
-                                                                                name = 'data_ritorno'
-                                                                                onChange = {this.onChange}
-                                                                            />
-                                                                        </Form.Group>
-                                                                    </Form.Row>
-                                                                </Form>
-                                                                <Button variant="primary" type="submit">
-                                                                Modifica data
-                                                                 </Button>
-                                                                 </div>
+                                <Form.Row>
+                                    <Form.Group as={Col} controlId="formGridDate">
+                                        <Form.Label>Data di inizio</Form.Label>
+                                        <Form.Control 
+                                            type="date" 
+                                            placeholder="Inserisci data di inizio" 
+                                            id = 'data_partenza'
+                                            name = 'data_partenza'
+                                            onChange = {this.onChange}
+                                        />
+                                    </Form.Group>
+                                    <Form.Group as={Col} controlId="formGridDate1">
+                                        <Form.Label>Data fine</Form.Label>
+                                        <Form.Control 
+                                            type="date" 
+                                            placeholder="Inserisci data di fine" 
+                                            id = 'data_ritorno'
+                                            name = 'data_ritorno'
+                                            onChange = {this.onChange}
+                                        />
+                                    </Form.Group>
+                                </Form.Row>
+                            </Form>
+                            <Button variant="primary" type="submit">
+                            Modifica data
+                                </Button>
+                                </div>
                             </Accordion.Collapse>
                         <div className="headaccpren">
                             <p>Ospiti : </p>

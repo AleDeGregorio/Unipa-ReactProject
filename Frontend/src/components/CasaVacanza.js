@@ -13,6 +13,7 @@ class CasaVacanza extends React.Component {
     //const { name, slug, images, price } = casaVacanza;
     // console.log(name);
     var dati_casa = this.props.casaVacanza ? this.props.casaVacanza : '';
+    var datiRicerca = this.props.datiRicerca ? this.props.datiRicerca : '';
     return (
       <article className="casaVacanza">
           <img src={dati_casa.img1} alt="single casaVacanza" />
@@ -27,7 +28,8 @@ class CasaVacanza extends React.Component {
               to = {{
                 pathname: "/Casa",
                 state: {
-                  dati_casa: {dati_casa}
+                  dati_casa: {dati_casa},
+                  datiRicerca: {datiRicerca}
                 }
               }}
               className = "vai"

@@ -52,7 +52,8 @@ class ListCase extends Component {
       items: [],
       apiResponse: [],
       error: false,
-      errorMessage: ''
+      errorMessage: '',
+      empty: false
     };
   }
 
@@ -75,21 +76,27 @@ class ListCase extends Component {
         
         var res = JSON.parse(result);
 
-        for(var i = 0; i < res.length; i++) {
-          this.setState({
-            items: [...this.state.items, {
-              id: i,
-              hasActions: true,
-              textValue: res[i].nome_proprieta,
-              prezzo: res[i].tariffa_casa + " euro",
-              image: res[i].imgCV_path1
-            }]
-          });
+        if(res.length < 1 || (res.code && res.code === 404)) {
+          this.setState({ empty: true, errorMessage: res.message });
         }
-    
-        if(this.state.apiResponse.status === 'error') {
-            this.setState({ error: true });
-            this.setState({ errorMessage: this.state.apiResponse.message });
+
+        else if(this.state.apiResponse.status === 'error') {
+          this.setState({ error: true });
+          this.setState({ errorMessage: this.state.apiResponse.message });
+        }
+
+        else {
+          for(var i = 0; i < res.length; i++) {
+            this.setState({
+              items: [...this.state.items, {
+                id: i,
+                hasActions: true,
+                textValue: res[i].nome_proprieta,
+                prezzo: res[i].tariffa_casa + " euro",
+                image: res[i].imgCV_path1
+              }]
+            });
+          }
         }
     });
   }
@@ -126,6 +133,22 @@ class ListCase extends Component {
               }
           }}
       />
+  }
+  else if(this.state.empty) {
+    const { listTitle, listBreadcrumb, items } = this.state;
+    return (
+      <ThemeProvider theme={theme}>
+        <ListWrapper>
+          <ListTitle>{listTitle}</ListTitle>
+          <ListBreadcrumb>{listBreadcrumb}</ListBreadcrumb>
+          <DragDropContext onDragEnd={this.onDragEnd}>
+            <Droppable droppableId="droppabe-list">
+              <p>Si è verificato un errore: {this.state.errorMessage}</p>
+            </Droppable>
+          </DragDropContext>
+        </ListWrapper>
+      </ThemeProvider>
+    );
   }
   else {
     const { listTitle, listBreadcrumb, items } = this.state;

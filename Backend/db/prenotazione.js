@@ -136,7 +136,6 @@ const getPrenotazioneCliente = async(req) => {
                             res1[i].img = results[0].imgST_path1;
                             res1[i].id_stanza = results[i].id_stanza;
                         }
-                        console.log(res1);
                         resolve(res1);
                     }
                 )
