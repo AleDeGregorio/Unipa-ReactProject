@@ -13,6 +13,7 @@ import CaseVacanza from './Pagine/CaseVacanza'
 import RiepilogoCasaVacanza from './Pagine/RiepilogoCasaVacanza';
 import BandB from './Pagine/B&B'
 //import PaginaDettagli from './PaginaDettagli/PaginaDettagli'
+
 //Prenotazione
 import Prenota from './Prenota/Prenota'
 
