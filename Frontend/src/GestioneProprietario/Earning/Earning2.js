@@ -352,12 +352,12 @@ class Earning2 extends React.Component {
             <p>Codice truttura selezionata: {this.state.id_struttura} </p>
             <p>Tipo di struttura selezionata: {tipo_struttura} </p>
             <p>Date selezionate: &nbsp;
-              {this.state.data_1 ? new Date(this.state.data_1).toLocaleDateString() : 'Selezionare una data'} - 
+              {this.state.data_1 ? new Date(this.state.data_1).toLocaleDateString() : 'Selezionare una data'} - &nbsp;
               {this.state.data_2 ? new Date(this.state.data_2).toLocaleDateString() : 'Selezionare una data'} 
             </p>
             <p>Guadagni: &nbsp;
-              {typeof this.state.apiResponse[3] !== 'undefined' ? this.state.apiResponse[3][0].tot_guadagni : ".0"}
-              {(typeof this.state.apiResponse[4] !== 'undefined' && typeof this.state.apiResponse[4][0] !== 'undefined') ? this.state.apiResponse[4][0].tot_guadagni : ".0"} euro
+              {(this.state.apiResponse[3] && this.state.apiResponse[3][0]) ? this.state.apiResponse[3][0].tot_guadagni : ".0"}
+              {(this.state.apiResponse[4] && this.state.apiResponse[4][0]) ? this.state.apiResponse[4][0].tot_guadagni : ".0"} euro
             </p>
           </div>
         </div>

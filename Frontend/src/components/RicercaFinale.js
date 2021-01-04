@@ -64,7 +64,7 @@ class RicercaFinale extends React.Component {
                 localita: this.state.localita,
                 provincia: '',
                 servizi: '',
-                posti: this.state.posti,
+                posti: this.state.posti ? this.state.posti : '%%',
                 costo: '',
                 checkIn: this.state.checkIn,
                 checkOut: this.state.checkOut

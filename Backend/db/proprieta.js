@@ -395,7 +395,7 @@ const ricercaAlloggio = async(req) => {
             Connection.query(
                 'SELECT @localita := "' + (req.localita === '' ? '%%' : req.localita) + '"; ' +
                 'SELECT @provincia := "' + (req.provincia === '' ? '%%' : req.provincia) + '"; ' +
-                'SELECT @posti := ' + req.posti + '; ' +
+                'SELECT @posti := "' + req.posti + '"; ' +
                 'SELECT @costo := ' + (req.costo === '' ? 99999 : req.costo) + '; ' +
                 'SELECT @inizio := "'+ (req.checkIn === '' ? '1970-01-01' : req.checkIn) + '"; ' +
                 'SELECT @fine := "'+ (req.checkOut === '' ? '1970-01-01' : req.checkOut) + '"; ' +
@@ -415,7 +415,7 @@ const ricercaAlloggio = async(req) => {
                 'WHERE p.id_proprieta = c.ref_proprieta_cv AND ' +
                     'LOWER(p.localita) LIKE LOWER(@localita) AND LOWER(p.provincia) LIKE LOWER(@provincia) AND ' +
                     'LOWER(p.servizi) LIKE LOWER(@servizi) AND ' +
-                    'c.posti_letto = @posti AND ' +
+                    'c.posti_letto LIKE @posti AND ' +
                     '(@fine <= c.non_disponibile_inizio_cv OR @inizio >= c.non_disponibile_fine_cv) ' +
                 'HAVING c.tariffa_casa*' + ngiorni + ' <= @costo; ',
                 (err, results) => {
@@ -435,7 +435,7 @@ const ricercaAlloggio = async(req) => {
             Connection.query(
                 'SELECT @localita := "' + (req.localita === '' ? '%%' : req.localita) + '"; ' +
                 'SELECT @provincia := "' + (req.provincia === '' ? '%%' : req.provincia) + '"; ' +
-                'SELECT @posti := ' + req.posti + '; ' +
+                'SELECT @posti := "' + req.posti + '"; ' +
                 'SELECT @costo := ' + (req.costo === '' ? 99999 : req.costo) + '; ' +
                 'SELECT @inizio := "'+ (req.checkIn === '' ? '1970-01-01' : req.checkIn) + '"; ' +
                 'SELECT @fine := "'+ (req.checkOut === '' ? '1970-01-01' : req.checkOut) + '"; ' +
@@ -455,7 +455,7 @@ const ricercaAlloggio = async(req) => {
                 'WHERE p.id_proprieta = b.ref_proprieta_bb AND b.ref_proprieta_bb = s.ref_bb AND ' +
                     'LOWER(p.localita) LIKE LOWER(@localita) AND LOWER(p.provincia) LIKE LOWER(@provincia) AND ' +
                     'LOWER(p.servizi) LIKE LOWER(@servizi) AND ' +
-                    's.tipologia = @posti AND ' +
+                    's.tipologia LIKE @posti AND ' +
                     '(@fine <= s.non_disponibile_inizio_st OR @inizio >= s.non_disponibile_fine_st) ' +
                 'HAVING s.tariffa_stanza*' + ngiorni + ' <= @costo; ',
                 (err, results) => {
@@ -476,7 +476,7 @@ const ricercaAlloggio = async(req) => {
             Connection.query(
                 'SELECT @localita := "' + (req.localita === '' ? '%%' : req.localita) + '"; ' +
                 'SELECT @provincia := "' + (req.provincia === '' ? '%%' : req.provincia) + '"; ' +
-                'SELECT @posti := ' + req.posti + '; ' +
+                'SELECT @posti := "' + req.posti + '"; ' +
                 'SELECT @costo := ' + (req.costo === '' ? 99999 : req.costo) + '; ' +
                 'SELECT @inizio := "'+ (req.checkIn === '' ? '1970-01-01' : req.checkIn) + '"; ' +
                 'SELECT @fine := "'+ (req.checkOut === '' ? '1970-01-01' : req.checkOut) + '"; ' +
@@ -496,7 +496,7 @@ const ricercaAlloggio = async(req) => {
                 'WHERE p.id_proprieta = c.ref_proprieta_cv AND ' +
                     'LOWER(p.localita) LIKE LOWER(@localita) AND LOWER(p.provincia) LIKE LOWER(@provincia) AND ' +
                     'LOWER(p.servizi) LIKE LOWER(@servizi) AND ' + 
-                    'c.posti_letto = @posti AND ' +
+                    'c.posti_letto LIKE @posti AND ' +
                     '(@fine <= c.non_disponibile_inizio_cv OR @inizio >= c.non_disponibile_fine_cv) ' +
                 'HAVING c.tariffa_casa*' + ngiorni + ' <= @costo; ',
                 (err, results) => {
@@ -513,7 +513,7 @@ const ricercaAlloggio = async(req) => {
                     Connection.query(
                         'SELECT @localita := "' + (req.localita === '' ? '%%' : req.localita) + '"; ' +
                         'SELECT @provincia := "' + (req.provincia === '' ? '%%' : req.provincia) + '"; ' +
-                        'SELECT @posti := ' + req.posti + '; ' +
+                        'SELECT @posti := "' + req.posti + '"; ' +
                         'SELECT @costo := ' + (req.costo === '' ? 99999 : req.costo) + '; ' +
                         'SELECT @inizio := "'+ (req.checkIn === '' ? '1970-01-01' : req.checkIn) + '"; ' +
                         'SELECT @fine := "'+ (req.checkOut === '' ? '1970-01-01' : req.checkOut) + '"; ' +
@@ -533,7 +533,7 @@ const ricercaAlloggio = async(req) => {
                         'WHERE p.id_proprieta = b.ref_proprieta_bb AND b.ref_proprieta_bb = s.ref_bb AND ' +
                             'LOWER(p.localita) LIKE LOWER(@localita) AND LOWER(p.provincia) LIKE LOWER(@provincia) AND ' +
                             'LOWER(p.servizi) LIKE LOWER(@servizi) AND ' +
-                            's.tipologia = @posti AND ' +
+                            's.tipologia LIKE @posti AND ' +
                             '(@fine <= s.non_disponibile_inizio_st OR @inizio >= s.non_disponibile_fine_st) ' +
                         'HAVING s.tariffa_stanza*' + ngiorni + ' <= @costo; ',
                         (err, results) => {

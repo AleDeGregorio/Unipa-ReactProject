@@ -53,11 +53,12 @@ class CasaVacanzaContainer extends React.Component {
         localita: this.state.datiRicerca.localita ? this.state.datiRicerca.localita : '',
         provincia: '',
         servizi: '',
-        posti: this.state.datiRicerca.posti ? this.state.datiRicerca.posti : 1,
+        posti: this.state.datiRicerca.posti ? this.state.datiRicerca.posti : '%%',
         costo: this.state.datiRicerca.costo ? this.state.datiRicerca.costo : '',
         checkIn: this.state.checkIn,
         checkOut: this.state.checkOut
       };
+
   
       fetch('http://localhost:9000/ricercaAlloggio/risultati', {
           method: "POST",
@@ -90,7 +91,7 @@ class CasaVacanzaContainer extends React.Component {
         localita: this.state.datiRicerca.localita ? this.state.datiRicerca.localita : '',
         provincia: '',
         servizi: e.searchServizi,
-        posti: this.state.datiRicerca.posti ? this.state.datiRicerca.posti : 1,
+        posti: this.state.datiRicerca.posti ? this.state.datiRicerca.posti : '%%',
         costo: this.state.datiRicerca.costo ? this.state.datiRicerca.costo : '',
         checkIn: this.state.checkIn,
         checkOut: this.state.checkOut
