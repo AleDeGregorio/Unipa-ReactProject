@@ -62,7 +62,7 @@ const updateSoggiornante= async(req) => {
         Connection.query(
             'UPDATE soggiornante ' +
             'SET nome = "' + req.nome + '", cognome = "' + req.cognome +
-            '", nascita = "' + req.nascita + '" ' +
+            '", nascita = (STR_TO_DATE("' + req.nascita + '","%d/%m/%Y")) ' +
             'WHERE cf_sogg = "' + req.cf+ '"',
             (err, results) => {
                 if(err) {
@@ -84,7 +84,7 @@ const insertSoggiornante = async(req) => {
 
         Connection.query(
             'INSERT INTO soggiornante VALUES ' +
-            '("' + req.cf + '", "' + req.nome + '", "' + req.cognome + '", "' + req.nascita +  '")',
+            '("' + req.cf + '", "' + req.nome + '", "' + req.cognome + '", (STR_TO_DATE("' + req.nascita + '","%d/%m/%Y")))',
             (err, results) => {
                 if(err) {
                     console.log(err);

@@ -350,7 +350,7 @@ const accettaPrenotazione = async(req) => {
                 if(req.tipo_proprieta === 'cv') {
                     Connection.query(
                         'UPDATE casa_vacanza ' +
-                        'SET non_disponibile_inizio_cv = "' + req.data_partenza + '", non_disponibile_fine_cv = "' + req.data_ritorno + '" ' +
+                        'SET non_disponibile_inizio_cv = (STR_TO_DATE("' + req.data_partenza + '","%d/%m/%Y")), non_disponibile_fine_cv = (STR_TO_DATE("' + req.data_ritorno + '","%d/%m/%Y")) ' +
                         'WHERE ref_proprieta_cv = ' + req.ref_proprieta + '; ',
                         (err, results) => {
                             if(err) {
@@ -368,7 +368,7 @@ const accettaPrenotazione = async(req) => {
                 else {
                     Connection.query(
                         'UPDATE stanza ' + 
-                        'SET non_disponibile_inizio_st = "' + req.data_partenza + '", non_disponibile_fine_st = ' + req.data_ritorno + '" ' +
+                        'SET non_disponibile_inizio_st = (STR_TO_DATE("' + req.data_partenza + '","%d/%m/%Y")), non_disponibile_fine_st= (STR_TO_DATE("' + req.data_ritorno + '","%d/%m/%Y")) ' +
                         'WHERE id_stanza = ' + req.id_stanza + '; ',
                         (err, results) => {
                             if(err) {
@@ -397,7 +397,7 @@ const updatePrenotazione = async(req) => {
             'SET ref_soggiornante = "' + req.ref_soggiornante + '", ref_cliente = "' + req.ref_cliente +
             '", ref_proprietario = "' + req.ref_proprietario + '", ref_proprieta = ' + req.ref_proprieta +
             ', num_soggiornanti = ' + req.num_soggiornanti + ', costo = ' + req.costo + ', caparra = ' + req.caparra +
-            ', data_partenza = "' + req.data_partenza + '", data_ritorno = "' + req.data_ritorno + '", accettata = ' + req.accettata + ' ' +
+            ', data_partenza = (STR_TO_DATE("' + req.data_partenza + '","%d/%m/%Y")), data_ritorno = (STR_TO_DATE("' + req.data_ritorno + '","%d/%m/%Y")), accettata = ' + req.accettata + ' ' +
             'WHERE id_prenotazione = ' + req.id_prenotazione + '; ',
             (err, results) => {
                 if(err) {
@@ -419,7 +419,7 @@ const updateDatePrenotazione = async(req) => {
 
         Connection.query(
             'UDATE prenotazione ' +
-            'SET data_partenza = "' + req.data_partenza + '", data_ritorno = "' + req.data_ritorno + '", accettata = false ' +
+            'SET data_partenza = (STR_TO_DATE("' + req.data_partenza + '","%d/%m/%Y")), data_ritorno = (STR_TO_DATE("' + req.data_ritorno + '","%d/%m/%Y")), accettata = false ' +
             'WHERE id_prenotazione = ' + req.id_prenotazione + '; ',
             (err, results) => {
                 if(err) {
@@ -443,8 +443,8 @@ const insertPrenotazione = async(req) => {
             'INSERT INTO prenotazione (ref_soggiornante, ref_cliente, ref_proprietario, ref_proprieta, num_soggiornanti, ' +
                 'costo, caparra, data_partenza, data_ritorno, accettata) VALUES ' +
             '("' + req.ref_soggiornante + '", "' + req.ref_cliente + '", "' + req.ref_proprietario + '", ' + req.ref_proprieta + 
-            ', ' + req.num_soggiornanti + ', ' + req.costo + ', ' + req.caparra + ', "' + req.data_partenza + '", "' + 
-            req.data_ritorno + '", false)',
+            ', ' + req.num_soggiornanti + ', ' + req.costo + ', ' + req.caparra + ', (STR_TO_DATE("' + req.data_partenza + '","%d/%m/%Y")), ' + 
+            '(STR_TO_DATE("' + req.data_ritorno + '","%d/%m/%Y")), false)',
             (err, results) => {
                 if(err) {
                     console.log(err);

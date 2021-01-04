@@ -22,7 +22,9 @@ class ModificaCasaVacanza extends React.Component {
       localita: this.props.history.location.state ? this.props.history.location.state.dati_casa.localita : '',
       provincia: this.props.history.location.state ? this.props.history.location.state.dati_casa.provincia : '',
       tipo_proprieta: this.props.history.location.state ? this.props.history.location.state.dati_casa.tipo_proprieta : '',
-      servizi: this.props.history.location.state ? this.props.history.location.state.dati_casa.servizi : '',
+      servizi: this.props.history.location.state ? this.props.history.location.state.dati_casa.servizi : [],
+      listaServiziCasa: [],
+      listaServizi: [],
       descrizione: this.props.history.location.state ? this.props.history.location.state.dati_casa.descrizione : '',
       ref_proprieta_cv: this.props.history.location.state ? this.props.history.location.state.dati_casa.ref_proprieta_cv : '',
       posti_letto: this.props.history.location.state ? this.props.history.location.state.dati_casa.posti_letto : '',
@@ -47,6 +49,29 @@ class ModificaCasaVacanza extends React.Component {
     }
   }
 
+  componentDidMount() {
+
+    fetch('http://localhost:9000/servizi/all', {
+      method: "GET",
+      headers: {
+        'Content-type': 'application/json'
+      }
+    })
+    .then((result) => result.text())
+    .then((result) => {
+        this.setState({ listaServizi: JSON.parse(result) });
+    
+        if(this.state.listaServizi.status === 'error') {
+          this.setState({ error: true });
+          this.setState({ errorMessage: this.state.listaServizi.message });
+        }
+      });
+
+    this.setState({
+      listaServiziCasa: this.state.servizi.replace(/\s*,\s*/g, ",").split(',')
+    })
+  }
+
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   }
@@ -56,6 +81,21 @@ class ModificaCasaVacanza extends React.Component {
     this.setState({ [e.target.id]: e.target.files[0] });
   }
 
+  onChangeServizi = (e) => {
+    if(e.target.checked) {
+      this.setState({
+        listaServiziCasa: [...new Set(this.state.listaServiziCasa.concat(e.target.id).sort())]
+      });
+    }
+    else {
+      var filtraServizi = this.state.listaServiziCasa.filter(servizio => servizio !== e.target.id);
+
+      this.setState({
+        listaServiziCasa: filtraServizi
+      });
+    }
+  }
+
   onSubmit = (e) => {
     const data1 = {
       nome_proprieta: this.state.nome_proprieta,
@@ -63,10 +103,10 @@ class ModificaCasaVacanza extends React.Component {
       localita: this.state.localita,
       provincia: this.state.provincia,
       tipo_proprieta: this.state.tipo_proprieta,
-      servizi: this.state.servizi,
       ref_proprietario: this.state.ref_proprietario,
       descrizione: this.state.descrizione,
-      id_proprieta: this.state.id_proprieta
+      id_proprieta: this.state.id_proprieta,
+      servizi: this.state.listaServiziCasa
     };
 
     fetch('http://localhost:9000/updateProprieta/fields', {
@@ -80,13 +120,13 @@ class ModificaCasaVacanza extends React.Component {
     .then((result) => {
       this.setState({ apiResponse: result });
 
-      var res = JSON.parse(result);
+      var res = result;
 
-      if(res.length < 1 || (res.code && res.code === 404)) {
+      if((res && res.length < 1) || (res && res.code && res.code === 404)) {
         this.setState({ empty: true, errorMessage: res.message });
       }
 
-      else if(this.state.apiResponse.status === 'error') {
+      else if(this.state.apiResponse && this.state.apiResponse.status === 'error') {
         this.setState({ error: true });
         this.setState({ errorMessage: this.state.apiResponse.message });
       }
@@ -116,13 +156,13 @@ class ModificaCasaVacanza extends React.Component {
         .then((result) => {
           this.setState({ apiResponse: result });
     
-          var res2 = JSON.parse(result);
+          var res2 = result;
 
-          if(res2.length < 1 || (res2.code && res2.code === 404)) {
+          if((res2 && res2.length < 1) || (res2 && res2.code && res2.code === 404)) {
             this.setState({ empty: true, errorMessage: res2.message });
           }
 
-          else if(this.state.apiResponse.status === 'error') {
+          else if(this.state.apiResponse && this.state.apiResponse.status === 'error') {
             this.setState({ error: true });
             this.setState({ errorMessage: this.state.apiResponse.message });
           }
@@ -150,13 +190,13 @@ class ModificaCasaVacanza extends React.Component {
             .then((result) => {
               this.setState({ apiResponse: result });
 
-            var res3 = JSON.parse(result);
+            var res3 = result;
 
-            if(res3.length < 1 || (res3.code && res3.code === 404)) {
+            if((res && res3.length < 1) || (res && res3.code && res3.code === 404)) {
               this.setState({ empty: true, errorMessage: res3.message });
             }
 
-            else if(this.state.apiResponse.status === 'error') {
+            else if(this.state.apiResponse && this.state.apiResponse.status === 'error') {
               this.setState({ error: true });
               this.setState({ errorMessage: this.state.apiResponse.message });
             }
@@ -251,7 +291,7 @@ class ModificaCasaVacanza extends React.Component {
               </Card>
               <Card border="light">
               <div className="head-update">
-                <p>Località : {casa.localita}, {casa.indirizzo},{casa.provincia}</p>
+                <p>Località: {casa.localita} ({casa.provincia}), {casa.indirizzo}</p>
                 <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="2" />
                 </div>
                 <Accordion.Collapse eventKey="2">
@@ -295,7 +335,7 @@ class ModificaCasaVacanza extends React.Component {
               </Card>
               <Card border="light">
                 <div className="head-update">
-                <p> Servizi offerti :{casa.servizi}</p>
+                <p>Servizi offerti: {casa.servizi}</p>
                 <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="3" />
                 </div>
                 <Accordion.Collapse eventKey="3">
@@ -303,23 +343,34 @@ class ModificaCasaVacanza extends React.Component {
                     <Form.Row>
                       <Form.Group as={Col} controlId="formGridState">
                         <Form.Label>Servizi</Form.Label>
-                        <Form.Check type="checkbox" id="Wi-fi" label="Wi-fi"/>
-                        <Form.Check type="checkbox" id="Aria condizionata" label="Aria condizionata"/> 
-                        <Form.Check type="checkbox" id="Parcheggio gratuito" label="Parcheggio gratuito"/>
-                        <Form.Check type="checkbox" id="4" label="Animali annessi"/>
-                        <Form.Check type="checkbox" id="5" label="Accesso ospiti disabili"/>
-                        <Form.Check type="checkbox" id="6" label="Misure extra per la salute"/>
+                          {this.state.listaServizi.map(item => {
+                            return(
+                              <div>
+                                <Form.Check
+                                  type="checkbox"
+                                  name={item.servizio}
+                                  id={item.servizio}
+                                  onChange={this.onChangeServizi}
+                                  label = {item.servizio}
+                                  defaultChecked = {this.state.listaServiziCasa.includes(item.servizio) ? "true" : ""}
+                                />
+                              </div>
+                            )
+                          })}
                       </Form.Group>
                     </Form.Row>
                     <Button onClick = {this.onSubmit}>
-                Cambia servizi
-              </Button>
+                      Cambia servizi
+                    </Button>
+                    <Button /*onClick = da definire*/>
+                      Aggiungi servizio
+                    </Button>
                   </Card.Body>
                 </Accordion.Collapse>
               </Card>
               <Card border="light">
                 <div className="head-update">
-                <p> Descrizione : </p>
+                <p> Descrizione: </p>
                 <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="4" />
                 </div>
                 <Accordion.Collapse eventKey="4">
@@ -343,7 +394,7 @@ class ModificaCasaVacanza extends React.Component {
               </Card>
               <Card border="light">
                 <div className="head-update">
-                  <p>Posti letto : {casa.posti_letto}</p>
+                  <p>Posti letto: {casa.posti_letto}</p>
                   <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="5" />
 
                 </div>

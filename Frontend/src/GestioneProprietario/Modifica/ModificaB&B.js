@@ -22,7 +22,9 @@ class ModificaBeB extends React.Component {
       localita: this.props.history.location.state ? this.props.history.location.state.dati_bb.localita : '',
       provincia: this.props.history.location.state ? this.props.history.location.state.dati_bb.provincia : '',
       tipo_proprieta: this.props.history.location.state ? this.props.history.location.state.dati_bb.tipo_proprieta : '',
-      servizi: this.props.history.location.state ? this.props.history.location.state.dati_bb.servizi : '',
+      servizi: this.props.history.location.state ? this.props.history.location.state.dati_casa.servizi : [],
+      listaServiziBB: [],
+      listaServizi: [],
       descrizione: this.props.history.location.state ? this.props.history.location.state.dati_bb.descrizione : '',
       ref_proprieta_bb: this.props.history.location.state ? this.props.history.location.state.dati_bb.ref_proprieta_bb : '',
       check_in: this.props.history.location.state ? this.props.history.location.state.dati_bb.check_in : '',
@@ -35,8 +37,46 @@ class ModificaBeB extends React.Component {
     }
   }
 
+  componentDidMount() {
+
+    fetch('http://localhost:9000/servizi/all', {
+      method: "GET",
+      headers: {
+        'Content-type': 'application/json'
+      }
+    })
+    .then((result) => result.text())
+    .then((result) => {
+        this.setState({ listaServizi: JSON.parse(result) });
+    
+        if(this.state.listaServizi.status === 'error') {
+          this.setState({ error: true });
+          this.setState({ errorMessage: this.state.listaServizi.message });
+        }
+      });
+
+    this.setState({
+      listaServiziBB: this.state.servizi.replace(/\s*,\s*/g, ",").split(',')
+    })
+  }
+
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
+  }
+
+  onChangeServizi = (e) => {
+    if(e.target.checked) {
+      this.setState({
+        listaServiziBB: [...new Set(this.state.listaServiziBB.concat(e.target.id).sort())]
+      });
+    }
+    else {
+      var filtraServizi = this.state.listaServiziBB.filter(servizio => servizio !== e.target.id);
+
+      this.setState({
+        listaServiziBB: filtraServizi
+      });
+    }
   }
 
   onSubmit = (e) => {
@@ -46,7 +86,7 @@ class ModificaBeB extends React.Component {
       localita: this.state.localita,
       provincia: this.state.provincia,
       tipo_proprieta: this.state.tipo_proprieta,
-      servizi: this.state.servizi,
+      servizi: this.state.listaServiziBB,
       ref_proprietario: this.state.ref_proprietario,
       descrizione: this.state.descrizione,
       id_proprieta: this.state.id_proprieta
@@ -63,13 +103,13 @@ class ModificaBeB extends React.Component {
     .then((result) => {
       this.setState({ apiResponse: result });
 
-      var res = JSON.parse(result);
+      var res = result;
 
-      if(res.length < 1 || (res.code && res.code === 404)) {
+      if((res && res.length < 1) || (res && res.code && res.code === 404)) {
         this.setState({ empty: true, errorMessage: res.message });
       }
 
-      else if(this.state.apiResponse.status === 'error') {
+      else if(this.state.apiResponse && this.state.apiResponse.status === 'error') {
         this.setState({ error: true });
         this.setState({ errorMessage: this.state.apiResponse.message });
       }
@@ -92,13 +132,13 @@ class ModificaBeB extends React.Component {
         .then((result) => {
           this.setState({ apiResponse: result });
     
-          var res2 = JSON.parse(result);
+          var res2 = result;
 
-        if(res2.length < 1 || (res2.code && res2.code === 404)) {
+        if((res2 && res2.length < 1) || (res2 && res2.code && res2.code === 404)) {
           this.setState({ empty: true, errorMessage: res2.message });
         }
 
-        else if(this.state.apiResponse.status === 'error') {
+        else if(this.state.apiResponse && this.state.apiResponse.status === 'error') {
           this.setState({ error: true });
           this.setState({ errorMessage: this.state.apiResponse.message });
         }
@@ -243,17 +283,28 @@ class ModificaBeB extends React.Component {
                     <Form.Row>
                       <Form.Group as={Col} controlId="formGridState">
                         <Form.Label>Servizi</Form.Label>
-                        <Form.Check type="checkbox" id="Wi-fi" label="Wi-fi"/>
-                        <Form.Check type="checkbox" id="Aria condizionata" label="Aria condizionata"/> 
-                        <Form.Check type="checkbox" id="Parcheggio gratuito" label="Parcheggio gratuito"/>
-                        <Form.Check type="checkbox" id="4" label="Animali annessi"/>
-                        <Form.Check type="checkbox" id="5" label="Accesso ospiti disabili"/>
-                        <Form.Check type="checkbox" id="6" label="Misure extra per la salute"/>
+                        {this.state.listaServizi.map(item => {
+                            return(
+                              <div>
+                                <Form.Check
+                                  type="checkbox"
+                                  name={item.servizio}
+                                  id={item.servizio}
+                                  onChange={this.onChangeServizi}
+                                  label = {item.servizio}
+                                  defaultChecked = {this.state.listaServiziCasa.includes(item.servizio) ? "true" : ""}
+                                />
+                              </div>
+                            )
+                          })}
                       </Form.Group>
                     </Form.Row>
                     <Button onClick = {this.onSubmit}>
-                Cambia servizi
-              </Button>
+                      Cambia servizi
+                    </Button>
+                    <Button /*onClick = da definire*/>
+                      Aggiungi servizio
+                    </Button>
                   </Card.Body>
                 </Accordion.Collapse>
               </Card>

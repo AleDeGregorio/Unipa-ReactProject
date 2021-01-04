@@ -75,13 +75,13 @@ class ModificaStanza extends React.Component {
     .then((result) => {result.text()})
     .then((result) => {
       this.setState({ apiResponse: result });
-      var res = JSON.parse(result);
+      var res = result;
 
-      if(res.length < 1 || (res.code && res.code === 404)) {
+      if((res && res.length < 1) || (res && res.code && res.code === 404)) {
         this.setState({ empty: true, errorMessage: res.message });
       }
 
-      else if(this.state.apiResponse.status === 'error') {
+      else if(this.state.apiResponse && this.state.apiResponse.status === 'error') {
         this.setState({ error: true });
         this.setState({ errorMessage: this.state.apiResponse.message });
       }
@@ -107,13 +107,13 @@ class ModificaStanza extends React.Component {
         .then((result) => result.text())
         .then((result) => {
           this.setState({ apiResponse: result });
-          var res2 = JSON.parse(result);
+          var res2 = result;
 
-          if(res2.length < 1 || (res2.code && res2.code === 404)) {
+          if((res2 && res2.length < 1) || (res2 && res2.code && res2.code === 404)) {
             this.setState({ empty: true, errorMessage: res2.message });
           }
     
-          else if(this.state.apiResponse.status === 'error') {
+          else if(this.state.apiResponse && this.state.apiResponse.status === 'error') {
             this.setState({ error: true });
             this.setState({ errorMessage: this.state.apiResponse.message });
           }

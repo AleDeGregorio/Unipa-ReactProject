@@ -64,7 +64,7 @@ const updateUser = async(req) => {
         Connection.query(
             'UPDATE cliente ' +
             'SET nome_cl = "' + req.nome + '", cognome_cl = "' + req.cognome +
-            '", data_nascita_cl = "' + req.nascita + '", telefono_cl = "' + req.telefono + '" ' + 
+            '", data_nascita_cl = (STR_TO_DATE("' + req.nascita + '","%d/%m/%Y")), telefono_cl = "' + req.telefono + '" ' + 
             'WHERE email_cl = "' + req.email + '"',
             (err, results) => {
                 if(err) {
@@ -87,8 +87,8 @@ const insertUser = async(req) => {
         Connection.query(
             'SELECT @pass := SHA2("' + req.password + '", 512); ' +
             'INSERT INTO cliente VALUES ' +
-            '("' + req.email + '", @pass, "' + req.nome + '", "' + req.cognome + '", "' + 
-            req.nascita + '", "' + req.telefono + '"); ',
+            '("' + req.email + '", @pass, "' + req.nome + '", "' + req.cognome + '", ' + 
+            '(STR_TO_DATE("' + req.nascita + '","%d/%m/%Y")), "' + req.telefono + '"); ',
             (err, results) => {
                 if(err) {
                     console.log(err);

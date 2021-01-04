@@ -66,8 +66,8 @@ const getGuadagni = async(req) => {
         
         Connection.query(
             'SELECT @prop := "' + req.email + '"; ' +
-            'SELECT @data_1 := "' + req.data_1 + '"; ' +
-            'SELECT @data_2 := "' + req.data_2 + '"; ' +
+            'SELECT @data_1 := (STR_TO_DATE("' + req.data_1 + '","%d/%m/%Y")); ' +
+            'SELECT @data_2 := (STR_TO_DATE("' + req.data_2 + '","%d/%m/%Y")); ' +
             'SELECT pro.email_prop, (SUM(pre.costo) + SUM(pre.caparra)) AS tot_guadagni ' +
             'FROM prenotazione pre, proprietario pro ' +
             'WHERE pre.ref_proprietario = pro.email_prop AND pro.email_prop = @prop AND ' +
@@ -93,8 +93,8 @@ const getGuadagniTipo = async(req) => {
         
         Connection.query(
             'SELECT @prop := "' + req.email + '"; ' +
-            'SELECT @data_1 := "' + req.data_1 + '"; ' +
-            'SELECT @data_2 := "' + req.data_2 + '"; ' +
+            'SELECT @data_1 := (STR_TO_DATE("' + req.data_1 + '","%d/%m/%Y")); ' +
+            'SELECT @data_2 := (STR_TO_DATE("' + req.data_2 + '","%d/%m/%Y")); ' +
             'SELECT @tipo := "' + req.tipo + '"; ' +
             'SELECT pro.email_prop, (SUM(pre.costo) + SUM(pre.caparra)) AS tot_guadagni ' +
             'FROM prenotazione pre, proprietario pro, proprieta p ' +
@@ -122,8 +122,8 @@ const getGuadagniProprieta = async(req) => {
         
         Connection.query(
             'SELECT @prop := "' + req.email + '"; ' +
-            'SELECT @data_1 := "' + req.data_1 + '"; ' +
-            'SELECT @data_2 := "' + req.data_2 + '"; ' +
+            'SELECT @data_1 := (STR_TO_DATE("' + req.data_1 + '","%d/%m/%Y")); ' +
+            'SELECT @data_2 := (STR_TO_DATE("' + req.data_2 + '","%d/%m/%Y")); ' +
             'SELECT @id := "' + req.id + '"; ' +
             'SELECT pro.email_prop, (SUM(pre.costo) + SUM(pre.caparra)) AS tot_guadagni ' +
             'FROM prenotazione pre, proprietario pro, proprieta p ' +
@@ -153,7 +153,7 @@ const updateUser= async(req) => {
             'SELECT @pass := SHA2("' + req.password + '", 512); ' +
             'UPDATE proprietario ' +
             'SET password_prop = @pass, nome_prop = "' + req.nome + '", cognome_prop = "' + req.cognome +
-            '", data_nascita_prop = "' + req.nascita + '", num_documento = "' + req.num_documento +
+            '", data_nascita_prop = (STR_TO_DATE("' + req.nascita + '","%d/%m/%Y")), num_documento = "' + req.num_documento +
             '", telefono_prop = "' + req.telefono + '" ' +
             'WHERE email_prop = "' + req.email+ '"',
             (err, results) => {
@@ -194,7 +194,7 @@ const insertUser = async(req) => {
         Connection.query(
             'SELECT @pass := SHA2("' + req.password + '", 512); ' +
             'INSERT INTO proprietario VALUES ' +
-            '("' + req.email + '", @pass, "' + req.nome + '", "' + req.cognome + '", "' + req.nascita + '", "' + req.num_documento +
+            '("' + req.email + '", @pass, "' + req.nome + '", "' + req.cognome + '", (STR_TO_DATE("' + req.nascita + '","%d/%m/%Y")), "' + req.num_documento +
             '", "' + req.telefono + '", NULL); ',
             (err, results) => {
                 if(err) {
@@ -216,7 +216,7 @@ const invioDati = async(req) => {
 
         Connection.query(
             'UPDATE proprietario ' +
-            'SET ultimo_invio_dati = "' + req.data + '" ' +
+            'SET ultimo_invio_dati = (STR_TO_DATE("' + req.data + '","%d/%m/%Y")) ' +
             'WHERE email_prop = "' + req.email+ '"; ',
             (err, results) => {
                 if(err) {
