@@ -49,11 +49,7 @@ class ElencoCheck extends Component {
     this.state = {
       listTitle: "Ecco le prenotazioni Accettate",
       listBreadcrumb: "Scegli tra le prenotazioni presenti per effettuare il check-in",
-      items: [
-        {
-          
-        },
-      ],
+      items: [],
       apiResponse_accettate: [],
       email_prop: localStorage.getItem('email'),
       error: false,
@@ -163,7 +159,7 @@ class ElencoCheck extends Component {
                         >
                           <ListItemCheck //damodificare
                             
-                           dati_casa2 = {this.state.apiResponse_accettate[0] ? this.state.apiResponse_accettate[0] : ''}
+                           dati_casa2 = {this.state.apiResponse_accettate[key] ? this.state.apiResponse_accettate[key] : ''}
                             number={number}
                             dragging={snapshot.isDragging}
                             onDeleteItem={this.refreshItemsList}

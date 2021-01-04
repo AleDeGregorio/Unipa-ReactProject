@@ -49,11 +49,7 @@ class ListBeB extends Component {
     this.state = {
       listTitle: "ELENCO B&B",
       listBreadcrumb: "Nome / Chek-in/Check-out",
-      items: [
-        {
-          
-        }
-      ],
+      items: [],
       apiResponse: [],
       error: false,
       errorMessage: ''
@@ -156,7 +152,7 @@ class ListBeB extends Component {
                           order={key}
                         >
                           <ListItemBeB
-                            dati_bb = {this.state.apiResponse[key-1] ? this.state.apiResponse[key-1] : ''}
+                            dati_bb = {this.state.apiResponse[key] ? this.state.apiResponse[key] : ''}
                             number={number}
                             dragging={snapshot.isDragging}
                             onDeleteItem={this.refreshItemsList}

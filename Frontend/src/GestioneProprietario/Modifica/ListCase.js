@@ -49,11 +49,7 @@ class ListCase extends Component {
     this.state = {
       listTitle: "ELENCO Case Vacanza",
       listBreadcrumb: "Nome / Prezzo",
-      items: [
-        {
-          
-        },
-      ],
+      items: [],
       apiResponse: [],
       error: false,
       errorMessage: ''
@@ -155,7 +151,7 @@ class ListCase extends Component {
                           order={key}
                         >
                           <ListItemCase
-                            dati_casa = {this.state.apiResponse[key-1] ? this.state.apiResponse[key-1] : ''}
+                            dati_casa = {this.state.apiResponse[key] ? this.state.apiResponse[key] : ''}
                             number={number}
                             dragging={snapshot.isDragging}
                             onDeleteItem={this.refreshItemsList}

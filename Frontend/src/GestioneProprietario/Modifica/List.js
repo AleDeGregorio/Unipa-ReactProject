@@ -48,11 +48,7 @@ class List extends Component {
     this.state = {
       listTitle:"ELENCO STANZE B&B",
       listBreadcrumb: "Codice stanza / Numero ospiti",
-      items :[
-        {
-        
-        }
-      ],
+      items: [],
       dati_bb: this.props.dati_bb ? this.props.dati_bb : '',
       apiResponse: [],
       error:false,
@@ -152,7 +148,7 @@ class List extends Component {
                             order={key}
                           >
                             <ListItem
-                              dati_stanza = {this.state.apiResponse[key-1] ? this.state.apiResponse[key-1] : ''}
+                              dati_stanza = {this.state.apiResponse[key] ? this.state.apiResponse[key] : ''}
                               number={number}
                               dragging={snapshot.isDragging}
                               onDeleteItem={this.refreshItemsList}

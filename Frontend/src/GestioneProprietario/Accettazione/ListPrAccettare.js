@@ -49,11 +49,7 @@ class ListAccettare extends Component {
     this.state = {
       listTitle: "Ecco le prenotazioni da accettare",
       listBreadcrumb: "Proprietà / Info clienti",
-      items: [
-        {
-          
-        },
-      ],
+      items: [],
       apiResponse_accettazione: [],
       email_prop: localStorage.getItem('email'),
       error: false,
@@ -161,7 +157,7 @@ class ListAccettare extends Component {
                           order={key}
                         >
                           <ListItemPrenotazioni                          
-                           dati_casa = {this.state.apiResponse_accettazione[0] ? this.state.apiResponse_accettazione[0] : ''}
+                           dati_casa = {this.state.apiResponse_accettazione[key] ? this.state.apiResponse_accettazione[key] : ''}
                             number={number}
                             dragging={snapshot.isDragging}
                             onDeleteItem={this.refreshItemsList}
