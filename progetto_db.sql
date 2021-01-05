@@ -184,7 +184,7 @@ CREATE TABLE prenotazione
     caparra float(10),
     data_partenza date NOT NULL,
     data_ritorno date NOT NULL,
-    accettata boolean NOT NULL,
+    accettata boolean, -- true = accettata, false = rifiutata, null = in attesa di risposta
     PRIMARY KEY (id_prenotazione, ref_soggiornante),
     FOREIGN KEY (ref_cliente) REFERENCES cliente (email_cl),
     FOREIGN KEY (ref_proprietario) REFERENCES proprietario (email_prop),
@@ -365,13 +365,13 @@ INSERT INTO soggiornante VALUES
 INSERT INTO prenotazione (ref_soggiornante, ref_cliente, ref_proprietario, ref_proprieta, num_soggiornanti, costo, caparra, data_partenza, data_ritorno, accettata) VALUES
 -- (ID_PRENOTAZIONE, REF_SOGGIORNANTE, ref_cliente, ref_proprietario, ref_proprieta, num_soggiornanti, costo, (caparra), data_partenza, data_ritorno, 
 -- accettata)
-('LKJHGF49C73U649P', 'fellini@gmail.it', 'matteo@gmail.it', 103, 2, 200, 30, '2021-03-03', '2021-03-05', false), -- ID 500
-('PQLCME93N18X183J', 'fellini@gmail.it', 'matteo@gmail.it', 103, 2, 200, 30, '2021-03-03', '2021-03-05', false), -- ID 501
-('SWIMSL18F28N480L', 'mastroianni@gmail.it', 'luigi@gmail.it', 102, 3, 500, 100, '2021-02-02', '2021-02-07', false), -- ID 502
-('QPRHSL20E83H580P', 'mastroianni@gmail.it', 'luigi@gmail.it', 102, 3, 500, 100, '2021-02-02', '2021-02-07', false), -- ID 503
-('EJGLWW19H40N285N', 'mastroianni@gmail.it', 'luigi@gmail.it', 102, 3, 500, 100, '2021-02-02', '2021-02-07', false), -- ID 504
-('SWIMSL18F28N480L', 'mastroianni@gmail.it', 'luigi@gmail.it', 102, 3, 500, 100, '2020-04-05', '2020-04-08', false), -- ID 505
-('SWIMSL18F28N480L', 'mastroianni@gmail.it', 'luigi@gmail.it', 102, 3, 500, 100, '2021-03-03', '2021-03-09', false); -- ID 506
+('LKJHGF49C73U649P', 'fellini@gmail.it', 'matteo@gmail.it', 103, 2, 200, 30, '2021-03-03', '2021-03-05', null), -- ID 500
+('PQLCME93N18X183J', 'fellini@gmail.it', 'matteo@gmail.it', 103, 2, 200, 30, '2021-03-03', '2021-03-05', null), -- ID 501
+('SWIMSL18F28N480L', 'mastroianni@gmail.it', 'luigi@gmail.it', 102, 3, 500, 100, '2021-02-02', '2021-02-07', null), -- ID 502
+('QPRHSL20E83H580P', 'mastroianni@gmail.it', 'luigi@gmail.it', 102, 3, 500, 100, '2021-02-02', '2021-02-07', null), -- ID 503
+('EJGLWW19H40N285N', 'mastroianni@gmail.it', 'luigi@gmail.it', 102, 3, 500, 100, '2021-02-02', '2021-02-07', null), -- ID 504
+('SWIMSL18F28N480L', 'mastroianni@gmail.it', 'luigi@gmail.it', 102, 3, 500, 100, '2020-04-05', '2020-04-08', null), -- ID 505
+('SWIMSL18F28N480L', 'mastroianni@gmail.it', 'luigi@gmail.it', 102, 3, 500, 100, '2021-03-03', '2021-03-09', null); -- ID 506
 
 INSERT INTO tassa_soggiorno (ref_soggiornante, ref_prenotazione, ref_proprietario, ammontare) VALUES
 -- (ID_TASSA, ref_soggiornante, ref_prenotazione, ref_proprietario, ammontare)
