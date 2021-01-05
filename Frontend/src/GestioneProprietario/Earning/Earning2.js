@@ -1,6 +1,6 @@
 import React from 'react'
 import './Earning.css'
-import {Accordion, Form, Col, Button} from 'react-bootstrap'
+import {Accordion, Form, Col, Button, Card} from 'react-bootstrap'
 //import {Card, CardDeck, Row} from 'react-bootstrap'
 import {MdExpandMore} from 'react-icons/md'
 
@@ -184,19 +184,20 @@ class Earning2 extends React.Component {
 
     return(
       <div className="paginaEarning">
-          <div className ="containerSx">
           <div className="earningDescrizione">
-            <h2 className="h2Earning">RESOCONTO GUADAGNI</h2>
-            <p>QUI PUOI VEDERE I TUOI GUADAGNI, GRAZIE A TRE FILTRI DIVERSI </p>
+            <h2 className="h2Earning">Resoconto guadagni</h2>
+            <p className="h2Earning">Qui puoi vedere i tuoi guadagni grazie a tre filtri diversi, a secondo delle tue esigienze.</p>
           </div>
-          <div className="containerEarning">
-            <div className="col containerAccordion">
+          
+            <div className="containerAccordion">
               <Accordion>
+                <Card id="earningCard" border="light">
                   <div className="earning_head">
-                    <p>Filtra i tuoi guadagni in base alla data</p>
+                    <h6>Filtra i tuoi guadagni in base alla data</h6>
                     <Accordion.Toggle as={MdExpandMore} variant="link" eventKey="0" />
                   </div>
                  <Accordion.Collapse eventKey="0">
+                <Card.Body>
                      <div className="earning_body">
                       <Form className="formEarning">
                       <Form.Row>
@@ -212,12 +213,16 @@ class Earning2 extends React.Component {
                  </Form>
                       <Button onClick = {this.onSubmit_date} >Visualizza guadagni</Button>
                   </div>
+                  </Card.Body>
                  </Accordion.Collapse>
+                 </Card>
+                 <Card id="earningCard" border="light">
                  <div className="earning_head">
-                      <p>Filtra i tuoi guadagni in base al tipo di struttura e alla data</p>
+                      <h6>Filtra i tuoi guadagni in base al tipo di struttura e alla data</h6>
                       <Accordion.Toggle as={MdExpandMore} variant="link" eventKey="1" />                       
                   </div>
                   <Accordion.Collapse eventKey="1">
+                  <Card.Body>
                       <div className="earning_body">
                       <Form className="formEarning">
                    <Form.Row>
@@ -242,13 +247,17 @@ class Earning2 extends React.Component {
                    </Form.Row>
                  </Form>
                       <Button onClick = {this.onSubmit_tipo_struttura} >Visualizza guadagni</Button>
-                      </div>                        
+                      </div>  
+                      </Card.Body>                      
                   </Accordion.Collapse>
+                  </Card>
+                  <Card id="earningCard" border="light">
                   <div className="earning_head">
-                      <p>Filtra i tuoi guadagni in base alla struttura e alla data</p>
+                      <h6>Filtra i tuoi guadagni in base alla struttura e alla data</h6>
                       <Accordion.Toggle as={MdExpandMore} variant="link" eventKey="2" />                       
                   </div>
                 <Accordion.Collapse eventKey="2">
+                <Card.Body>
                   <div className="earning_body">
                   <Form className="formEarning">
                    <Form.Row>
@@ -279,10 +288,10 @@ class Earning2 extends React.Component {
                  </Form>
                  <Button onClick = {this.onSubmit_nome_struttura}>Visualizza guadagni</Button>
                   </div>
+                  </Card.Body>
                 </Accordion.Collapse>
+                </Card>
               </Accordion>
-            </div>
-            </div>
             </div>
             <div className="earningResult">
             <h5>Ecco il resoconto dei tuoi guadagni :</h5>

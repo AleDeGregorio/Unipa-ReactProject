@@ -1,37 +1,33 @@
 /*CSS COMPLETATO*/
 
 .paginaEarning{
-    background-color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     text-align: start;
     position: relative;
-    border-radius:  0 0 10px 10px;
-}
+    background: rgba(8, 1, 1, 0.7);
+    border: 2px solid white;
 
-.h2Earning{
-    color: blue;
 }
-/* PARTE SINISTRA DELLA PAGINA */
-.containerSx {
+.containerTop {
     width: 100%;
     height: 100%;
+    background: none;
 }
+.h2Earning{
+    color: white;
+}
+
 .containerAccordion {
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-    background-color: #ffffff;
-    width: 60%;
+    width: 100%;
     position: relative;
     height: 100%;
     margin-top: 20px;
     margin-bottom: 20px;
-    border-radius: 10px;
-    color: #00bec8;
-    padding: 20px;
+    padding-top: 20px;
+    padding-bottom:20px;
 }
 
 
@@ -48,18 +44,30 @@
 }
 
 .earningResult{
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-    background-color: #ffffff;
+    background: none;
     width: 100%;
     position: relative;
     height: 100%;
     margin-top: 20px;
     margin-bottom: 20px;
-    border-radius: 10px;
-    color: #00bec8;
+    color:white;
     padding: 20px;
+    border-radius:0;
+    margin-top: 20px;
+    margin-bottom: 20px; 
+}
+#earningCard{
+    background: none;
+    color: white;
+    text-align: left;
+    border-radius: 0;  
+}
+.earning_head{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height:4rem;
+    
 }
 
 @media only screen and (max-width: 600px) {
@@ -91,9 +99,3 @@
 }
 
 
-.earning_head{
-    display:flex;
-    flex-direction: row;
-    justify-content: space-between;
-    height:4rem;
-}
