@@ -195,9 +195,9 @@ class DatiPersonali extends React.Component {
                                 </Form.Control>
                                 </Form.Group>
                             </Form.Row>
-                            <Button variant="primary" type="submit" onClick = {this.onSubmit}>
+                            <button type="submit" onClick = {this.onSubmit}>
                                 Modifica 
-                            </Button>
+                            </button>
                                     </Card.Body>
                                 </Accordion.Collapse>
                             </Card>
@@ -251,9 +251,9 @@ class DatiPersonali extends React.Component {
                                 required/>
                         </Form.Group>
                                     </Form.Row>
-                                    <Button variant="primary" type="submit" onClick = {this.onSubmit}>
-                                Modifica password
-                            </Button>
+                                    <button type="submit" onClick = {this.onSubmit}>
+                                        Modifica password
+                                    </button>
                                     </Card.Body>
                                 </Accordion.Collapse>
                             </Card>
@@ -280,9 +280,9 @@ class DatiPersonali extends React.Component {
                             />
                         </Form.Group>
                                         </Form.Row>
-                                        <Button variant="primary" type="submit" onClick = {this.onSubmit}>
-                                Modifica numero
-                            </Button>
+                                        <button type="submit" onClick = {this.onSubmit}>
+                                            Modifica numero
+                                        </button>
                                     </Card.Body>
 
                                 </Accordion.Collapse>

@@ -8,6 +8,18 @@
     border: 2px solid white;
 }
 
+.contenitoreDatiPersonali button{
+    background-color: black;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 12px 45px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    width: 100%;
+}
+
 .DatiPersonali{
     background: rgba(8, 1, 1, 0.5);
 }

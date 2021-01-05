@@ -178,12 +178,12 @@ class InserimentoStanzaBnB extends React.Component {
                 />
 
                 <label htmlFor = "tipologia">Tipologia di stanza</label>
-                <Form.Control as="select" className="i" required onChange = {this.onChange} id = "tipologia" name = "tipologia">
+                <select className="i" required onChange = {this.onChange} id = "tipologia" name = "tipologia">
                     <option value="1">Singola</option>
                     <option value="2">Doppia</option>
                     <option value="3">Tripla</option>
                     <option value="4">Quadrupla</option>
-                  </Form.Control >
+                </select >
 
                 <label htmlFor = "tariffa_stanza">Tariffa stanza B&B</label>
                 <input
@@ -242,11 +242,12 @@ class InserimentoStanzaBnB extends React.Component {
                         />
                         <img src = {this.state.foto4SRC} alt = "Foto 4" ></img>
                     </Form.Row>
-                    </Form.Group>
+                    <button className="bottoniScelta1" type="submit">
+                      Carica
+                    </button>
+                </Form.Group>
             <Link to="/InserimentoProprietà">Torna indietro</Link>
-            <Button variant="primary" type="submit">
-              Carica
-            </Button>
+            
           </form>
         </div>
       </div>
