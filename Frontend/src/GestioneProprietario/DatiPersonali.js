@@ -108,7 +108,7 @@ class DatiPersonali extends React.Component {
             }}
           />
         }
-        else if(!localStorage.getItem('logged') || !localStorage.getItem('proprietario')) {
+        else if(!localStorage.getItem('logged') || !localStorage.getItem('proprietario') ) {
             return <Redirect
                 to={{
                     pathname: "/ErrorPage",

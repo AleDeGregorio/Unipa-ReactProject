@@ -378,10 +378,8 @@ class ListItemPrenotazioni extends Component {
                   />)
                   
                  : (
-                  <span onClick={this.toggleEditName}></span>
-                )} Richiesta di "{ref_cliente}" su:  "{nome}"  {id_stanza}
-                <br />ID Richiesta: {id_prenotazione}
- 
+                  <span onClick={this.toggleEditName}>ID : {id_prenotazione} Richiesta di "{ref_cliente}" su:  "{nome}"  {id_stanza}</span>
+                )} 
               </ListItemText>
               <ListItemTextSecond>
                 <div className="text-div-style">

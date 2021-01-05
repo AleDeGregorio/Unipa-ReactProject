@@ -1,6 +1,6 @@
 import React from 'react'
 import './Earning.css'
-import {Accordion, Form, Col, Button, Card} from 'react-bootstrap'
+import {Accordion, Form, Col, Button} from 'react-bootstrap'
 //import {Card, CardDeck, Row} from 'react-bootstrap'
 import {MdExpandMore} from 'react-icons/md'
 
@@ -21,8 +21,7 @@ class Earning2 extends React.Component {
       data_2: '',
       tipo_struttura: '',
       id_struttura: '',
-      nome_struttura: '',
-      empty: false
+      nome_struttura: ''
     }
   }
 
@@ -66,13 +65,7 @@ class Earning2 extends React.Component {
         .then((result) => {
             this.setState({ apiResponse: JSON.parse(result) });
         
-            var res = JSON.parse(result);
-
-            if(res.length < 1 || (res.code && res.code === 404)) {
-              this.setState({ empty: true, errorMessage: res.message });
-            }
-        
-            else if(this.state.apiResponse.status === 'error') {
+            if(this.state.apiResponse.status === 'error') {
               this.setState({ error: true });
               this.setState({ errorMessage: this.state.apiResponse.message });
             }
@@ -99,16 +92,10 @@ class Earning2 extends React.Component {
         .then((result) => {
           this.setState({ apiResponse: JSON.parse(result) });
       
-          var res = JSON.parse(result);
-
-            if(res.length < 1 || (res.code && res.code === 404)) {
-              this.setState({ empty: true, errorMessage: res.message });
-            }
-        
-            else if(this.state.apiResponse.status === 'error') {
+          if(this.state.apiResponse.status === 'error') {
               this.setState({ error: true });
               this.setState({ errorMessage: this.state.apiResponse.message });
-            }
+          }
         });
   }
 
@@ -132,15 +119,9 @@ class Earning2 extends React.Component {
         .then((result) => {
             this.setState({ apiResponse: JSON.parse(result) });
         
-            var res = JSON.parse(result);
-
-            if(res.length < 1 || (res.code && res.code === 404)) {
-              this.setState({ empty: true, errorMessage: res.message });
-            }
-        
-            else if(this.state.apiResponse.status === 'error') {
-              this.setState({ error: true });
-              this.setState({ errorMessage: this.state.apiResponse.message });
+            if(this.state.apiResponse.status === 'error') {
+                this.setState({ error: true });
+                this.setState({ errorMessage: this.state.apiResponse.message });
             }
         });
   }
@@ -153,23 +134,17 @@ class Earning2 extends React.Component {
     fetch('http://localhost:9000/searchProprietaProprietario/proprietaProprietario', {
         method: "POST",
         headers: {
-          'Content-type': 'application/json'
+            'Content-type': 'application/json'
         },
         body: JSON.stringify(data)
     })
     .then((result) => result.text())
     .then((result) => {
         this.setState({ apiResponse_strutture: JSON.parse(result) });
-
-        var res = JSON.parse(result);
-
-        if(res.length < 1 || (res.code && res.code === 404)) {
-          this.setState({ empty: true, errorMessage: res.message });
-        }
     
-        else if(this.state.apiResponse_strutture.status === 'error') {
-          this.setState({ error: true });
-          this.setState({ errorMessage: this.state.apiResponse_strutture.message });
+        if(this.state.apiResponse_strutture.status === 'error') {
+            this.setState({ error: true });
+            this.setState({ errorMessage: this.state.apiResponse_strutture.message });
         }
     });
   }
@@ -197,32 +172,6 @@ class Earning2 extends React.Component {
           }}
       />
   }
-  else if(this.state.empty) {
-    var tipo_struttura = '';
-
-    if(this.state.tipo_struttura === 'cv') {
-      tipo_struttura = 'Casa Vacanza'
-    }
-    else if(this.state.tipo_struttura === 'bb') {
-      tipo_struttura = 'B&B'
-    }
-
-    return(
-      <div className="paginaEarning">
-          <div className ="containerSx">
-          <div className="earningDescrizione">
-            <h2 className="h2Earning">RESOCONTO GUADAGNI</h2>
-            <p>QUI PUOI VEDERE I TUOI GUADAGNI, GRAZIE A TRE FILTRI DIVERSI </p>
-          </div>
-          <div className="containerEarning">
-            <div className="col containerAccordion">
-              <p>Si è verificato un errore: {this.state.error_message}</p>
-            </div>
-          </div>
-          </div>
-        </div>
-    );
-  }
   else {
     var tipo_struttura = '';
 
@@ -243,13 +192,11 @@ class Earning2 extends React.Component {
           <div className="containerEarning">
             <div className="col containerAccordion">
               <Accordion>
-                  <Card >
                   <div className="earning_head">
                     <p>Filtra i tuoi guadagni in base alla data</p>
                     <Accordion.Toggle as={MdExpandMore} variant="link" eventKey="0" />
                   </div>
                  <Accordion.Collapse eventKey="0">
-                 <Card.Body>
                      <div className="earning_body">
                       <Form className="formEarning">
                       <Form.Row>
@@ -265,16 +212,12 @@ class Earning2 extends React.Component {
                  </Form>
                       <Button onClick = {this.onSubmit_date} >Visualizza guadagni</Button>
                   </div>
-                  </Card.Body>
                  </Accordion.Collapse>
-                 </Card>
-                 <Card >
                  <div className="earning_head">
                       <p>Filtra i tuoi guadagni in base al tipo di struttura e alla data</p>
                       <Accordion.Toggle as={MdExpandMore} variant="link" eventKey="1" />                       
                   </div>
                   <Accordion.Collapse eventKey="1">
-                    <Card.Body>
                       <div className="earning_body">
                       <Form className="formEarning">
                    <Form.Row>
@@ -299,17 +242,13 @@ class Earning2 extends React.Component {
                    </Form.Row>
                  </Form>
                       <Button onClick = {this.onSubmit_tipo_struttura} >Visualizza guadagni</Button>
-                      </div> 
-                      </Card.Body>                       
+                      </div>                        
                   </Accordion.Collapse>
-                  </Card>
-                  <Card >
                   <div className="earning_head">
                       <p>Filtra i tuoi guadagni in base alla struttura e alla data</p>
                       <Accordion.Toggle as={MdExpandMore} variant="link" eventKey="2" />                       
                   </div>
                 <Accordion.Collapse eventKey="2">
-                  <Card.Body>
                   <div className="earning_body">
                   <Form className="formEarning">
                    <Form.Row>
@@ -340,9 +279,7 @@ class Earning2 extends React.Component {
                  </Form>
                  <Button onClick = {this.onSubmit_nome_struttura}>Visualizza guadagni</Button>
                   </div>
-                  </Card.Body>
                 </Accordion.Collapse>
-                </Card>
               </Accordion>
             </div>
             </div>
@@ -352,12 +289,12 @@ class Earning2 extends React.Component {
             <p>Codice truttura selezionata: {this.state.id_struttura} </p>
             <p>Tipo di struttura selezionata: {tipo_struttura} </p>
             <p>Date selezionate: &nbsp;
-              {this.state.data_1 ? new Date(this.state.data_1).toLocaleDateString() : 'Selezionare una data'} - &nbsp;
+              {this.state.data_1 ? new Date(this.state.data_1).toLocaleDateString() : 'Selezionare una data'} - 
               {this.state.data_2 ? new Date(this.state.data_2).toLocaleDateString() : 'Selezionare una data'} 
             </p>
             <p>Guadagni: &nbsp;
-              {(this.state.apiResponse[3] && this.state.apiResponse[3][0]) ? this.state.apiResponse[3][0].tot_guadagni : ".0"}
-              {(this.state.apiResponse[4] && this.state.apiResponse[4][0]) ? this.state.apiResponse[4][0].tot_guadagni : ".0"} euro
+              {typeof this.state.apiResponse[3] !== 'undefined' ? this.state.apiResponse[3][0].tot_guadagni : ".0"}
+              {(typeof this.state.apiResponse[4] !== 'undefined' && typeof this.state.apiResponse[4][0] !== 'undefined') ? this.state.apiResponse[4][0].tot_guadagni : ".0"} euro
             </p>
           </div>
         </div>

@@ -254,7 +254,7 @@ class ListItemCheck extends Component {
   }
  
   render() {
-    //const { dragging } = this.props
+
     const {
       showSelect,
       editName,
@@ -263,7 +263,7 @@ class ListItemCheck extends Component {
       isDeleted,
       isAlive
     } = this.state
-    const {//definisci variabili
+    const {
       id_prenotazione,
       ref_cliente,
       data_partenza,
@@ -294,11 +294,11 @@ class ListItemCheck extends Component {
                   />)
               
                  : (
-                  <span onClick={this.toggleEditName}>{id_prenotazione}</span>
-                )} Prenotazione di {ref_cliente} su {nome} (ID: {ref_proprieta})
+                  <span onClick={this.toggleEditName}>{id_prenotazione} Prenotazione di {ref_cliente} su {nome} (ID: {ref_proprieta})</span>
+                )} 
               </ListItemText>
               <ListItemTextSecond>
-                <div className="text-div-style">
+                <div className="text-div-style2">
                <p>Partenza-Ritorno: {new Date(data_partenza).toLocaleDateString()} - {new Date(data_ritorno).toLocaleDateString()}</p>
                 <p style = {{display: stanza === '' ? 'none' : 'inline'}}>Stanza: {stanza}</p>
                </div>
@@ -307,18 +307,10 @@ class ListItemCheck extends Component {
         
             {hasActions && (
               <ListItemSelect showSelect={showSelect}>
-                <div
-                  className="listitem__select__text"
-                  onClick={this.toggleSelect}
-                >
+                <div className="listitem__select__text" onClick={this.toggleSelect}>
                   Azioni
                   <SelectArrowDown>
-                    <svg
-                      x="0px"
-                      y="0px"
-                      viewBox="0 0 100 125"
-                      style={{ enableBackground: 'new 0 0 100 100' }}
-                    >
+                    <svg  x="0px" y="0px"viewBox="0 0 100 125" style={{ enableBackground: 'new 0 0 100 100' }}>
                       <g>
                         <polygon points="64.4,40.4 51.1,54 37.6,40.7 34.8,43.6 51.2,59.7 67.3,43.2  " />
                       </g>
@@ -331,23 +323,20 @@ class ListItemCheck extends Component {
                       showSelect ? 'listitem__select__list--show' : ''
                     }`}
                   >
-                    <div
-                      className="listitem__select__list__item"
-                      
-                   
-                    >
-                      <div
-                      className="listitem__select__list__item"
-                      //onClick={this.deleteItem} da fare
-                    >
-                      Accetta
+                    <div className="listitem__select__list__item">
+                      <div className="listitem__select__list__item" >
+                        <Link className="LinkList" to = {{
+                          pathname: "/Checkin",
+                          state: {
+                            dati_bb: this.props.dati_bb
+                          }
+                        }}
+                        >
+                          Effettua Check-in
+                        </Link>
                     </div>
                     </div>
-                    <div
-                      className="listitem__select__list__item"
-                      onClick={this.deleteItem}
-                    >
-                      Rifiuta
+                    <div className="listitem__select__list__item" onClick={this.deleteItem}>  Rifiuta
                     </div>
                   </div>
                 )}

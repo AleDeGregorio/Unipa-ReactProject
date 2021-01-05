@@ -67,3 +67,11 @@
     align-items:flex-start;
     justify-content: last baseline;
 }
+
+.text-div-style2{
+    display:flex;
+    flex-direction:column;
+    height:4rem;
+    align-items:flex-start;
+    justify-content: last baseline;
+}

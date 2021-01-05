@@ -322,9 +322,7 @@ class ListItemCase extends Component {
                     }`}
                   >
                     <div
-                      className="listitem__select__list__item"
-                      
-                   
+                      className="listitem__select__list__item" 
                     >
                       <Link className="LinkList" to = {{
                         pathname: "/ModificaB&B",

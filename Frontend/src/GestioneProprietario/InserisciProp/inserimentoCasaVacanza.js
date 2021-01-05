@@ -2,7 +2,7 @@
 
 import React from "react";
 //import camera from "../assets/camera.svg";   
-import {Form, Button} from "react-bootstrap"
+import {Form, Button, Col} from "react-bootstrap"
 import {Link} from "react-router-dom"
 
 import "./InserimentoProprietà.css";
@@ -45,7 +45,7 @@ class InserimentoCasaVacanza extends React.Component {
       empty: false
     };
   }
-
+  
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   }
@@ -153,10 +153,12 @@ class InserimentoCasaVacanza extends React.Component {
             else {
               this.setState({ success: true });
             }
+            
         });
       }
     });
   });
+  
   }
 
   render() {
@@ -249,18 +251,38 @@ class InserimentoCasaVacanza extends React.Component {
                 className = "i"
                 required
               />
-  
-              <label htmlFor = "servizi">Servizi</label>
-              <input
-                type = "text"
-                id = "servizi"
-                name = "servizi"
-                title = "Separare ogni servizio elencato con una virgola"
-                placeholder = "Elenco servizi offerti"
-                onChange = {this.onChange}
-                className = "i"
-                required
-              />
+              <Form.Row>
+                      <Form.Group as={Col} controlId="formGridState">
+                        <Form.Label>Servizi</Form.Label>
+                          {this.state.listaServizi.map(item => {
+                            return(
+                              <div>
+                                <Form.Check
+                                  type="checkbox"
+                                  name={item.servizio}
+                                  id={item.servizio}
+                                  onChange={this.onChangeServizi}
+                                  label = {item.servizio}
+                                  defaultChecked = {this.state.listaServiziCasa.includes(item.servizio) ? "true" : ""}
+                                />
+                              </div>
+                            )
+                          })}
+                      </Form.Group>
+                    </Form.Row>
+                    <Form.Group controlId="exampleForm.ControlTextarea1">
+                    <Form.Label>Inserisci servizio aggiuntivo</Form.Label>
+                     <Form.Control as="textarea" rows={1} />
+                     </Form.Group>
+                    <Button /*onClick = da definire*/>
+                      Aggiungi servizio
+                    </Button>
+                    <br />
+                    <br />
+                    <Button onClick = {this.onSubmit}>
+                      Cambia servizi
+                    </Button>
+            
                   <label htmlFor = "descrizione">Descrizione</label>
               <input
                 type = "text"
