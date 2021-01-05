@@ -1,7 +1,7 @@
 /*CSS FATTO*/ 
 
 import React from "react";
-import {Button} from "react-bootstrap"
+import {Button, Form, Col} from "react-bootstrap"
 import {Link} from "react-router-dom"
 
 import "./InserimentoProprietà.css";
@@ -201,17 +201,37 @@ class InserimentoBnB extends React.Component {
                   required
                 />
   
-                <label htmlFor = "servizi">Servizi</label>
-                <input
-                  type = "text"
-                  id = "servizi"
-                  name = "servizi"
-                  title = "Separare ogni servizio elencato con una virgola"
-                  placeholder = "Elenco servizi offerti"
-                  onChange = {this.onChange}
-                  className = "i"
-                  required
-                />
+                    <Form.Row>
+                      <Form.Group as={Col} controlId="formGridState">
+                        <Form.Label>Servizi</Form.Label>
+                          {this.state.listaServizi.map(item => {
+                            return(
+                              <div>
+                                <Form.Check
+                                  type="checkbox"
+                                  name={item.servizio}
+                                  id={item.servizio}
+                                  onChange={this.onChangeServizi}
+                                  label = {item.servizio}
+                                  defaultChecked = {this.state.listaServiziCasa.includes(item.servizio) ? "true" : ""}
+                                />
+                              </div>
+                            )
+                          })}
+                      </Form.Group>
+                    </Form.Row>
+                    <Form.Group controlId="exampleForm.ControlTextarea1">
+                    <Form.Label>Aggiungi servizio</Form.Label>
+                     <Form.Control as="textarea" rows={1} />
+                     </Form.Group>
+                    <Button /*onClick = da definire*/>
+                      Aggiungi servizio
+                    </Button>
+                    <br/>
+                    <br />
+                    <Button onClick = {this.onSubmit}>
+                      Inserisci servizi
+                    </Button>
                   <label htmlFor = "descrizione">Descrizione</label>
                   <input
                   type = "text"
