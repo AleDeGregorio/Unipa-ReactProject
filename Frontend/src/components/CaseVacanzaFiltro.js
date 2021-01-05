@@ -1,5 +1,5 @@
 import React from "react";
-
+import { SingleDatePicker } from "react-dates";
 import './CaseVacanzaFiltro.css'
 
 class CaseVacanzaFilter extends React.Component {
@@ -22,6 +22,22 @@ class CaseVacanzaFilter extends React.Component {
       error: false,
       errorMessage: ''
     }
+  }
+
+  set_focused_checkIn = (e) => {
+    this.setState({ checkInFocus: e });
+  }
+
+  set_focused_checkOut = (e) => {
+      this.setState({ checkOutFocus: e });
+  }
+
+  setStartDate = (e) => {
+      this.setState({ startDate: e });
+  }
+
+  setEndDate = (e) => {
+      this.setState({ endDate: e });
   }
 
   handleChange = (e) => {
@@ -53,99 +69,103 @@ class CaseVacanzaFilter extends React.Component {
     return (
       <section className="filter-container">
         <form className="filter-form">
-          {/* select type */}
-          <div className="form-group">
-            <label htmlFor="type">CasaVacanza type</label>
-            <select
-              name="type"
-              id="type"
-              onChange={this.handleChange}
-              className="form-control"
-            >
-            </select>
-          </div>
-          {/* end of select type */}
-          <div className="form-group">
-            <label htmlFor="localita">Località</label>
-            <input
-              type = "text"
-              name="localita"
-              id="localita"
-              onChange={this.handleChange}
-              className="form-control"
-              value = {this.state.localita}
-            >
-            </input>
-          </div>
-          {/* guests  */}
-          <div className="form-group">
-            <label htmlFor="posti">Ospiti</label>
-            <select
-              name="posti"
-              id="posti"
-              onChange={this.handleChange}
-              className="form-control"
-              value={this.state.posti}
-            >
-              <option></option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-              <option value="10">10</option>
-            </select>
-          </div>
-          {/* end of guests */}
-          {/* casaVacanza price */}
-          <div className="form-group">
-            <label htmlFor="costo">costo CasaVacanza €{this.state.costo}</label>
-            <input
-              type="range"
-              step = "50"
-              name="costo"
-              min={this.state.minCosto}
-              max={this.state.maxCosto}
-              id="costo"
-              onChange={this.handleChange}
-              className="form-control"
-              defaultValue = {this.state.costo}
-            />
-          </div>
+        <div class="product-search">
+                    <div class="search-element">
+                        <label class="search-label">Località</label>
+                        <input class="search-input" type="text" autocomplete="on" 
+                            placeholder="Località" id = 'localita' name="localita" onChange = {this.onChange}
+                        >
+                        </input>
+                    </div>
+                    <div class="search-element">
+                    <label class="search-label" htmlFor="start_date">Check-in</label>
+                        <SingleDatePicker
+                            class="search-element"
+                            date={this.state.startDate}
+                            onDateChange={date => this.setStartDate(date)}
+                            focused={this.state.checkInFocus}
+                            onFocusChange={({ focused }) => this.set_focused_checkIn(focused)}
+                            id="start_date"
+                            numberOfMonths={1}
+                            placeholder="gg/mm/aaaa"
+                            daySize={32}
+                            hideKeyboardShortcutsPanel={true}
+                            displayFormat="DD/MM/YYYY"
+                            block={true}
+                            verticalSpacing={8}
+                            showClearDate={this.state.checkInFocus}
+                            reopenPickerOnClearDate={true}
+                            noBorder={true}
+                        />
+                    </div>
+                    <div class="search-element">
+                    <label class="search-label" htmlFor="end_date">Check-out</label>
+                        <SingleDatePicker
+                            class="search-element"
+                            date={this.state.endDate}
+                            onDateChange={date => this.setEndDate(date)}
+                            focused={this.state.checkOutFocus}
+                            onFocusChange={({ focused }) => this.set_focused_checkOut(focused)}
+                            id="end_date"
+                            numberOfMonths={1}
+                            placeholder="gg/mm/aaaa"
+                            daySize={32}
+                            hideKeyboardShortcutsPanel={true}
+                            displayFormat="DD/MM/YYYY"
+                            block={true}
+                            isDayHighlighted={day =>
+                                day.isAfter(this.state.startDate) && day.isBefore(this.state.endDate)
+                            }
+                            verticalSpacing={8}
+                            anchorDirection="right"
+                            isDayBlocked={day => day.isBefore(this.state.startDate)}
+                            showClearDate={this.state.checkOutFocus}
+                            reopenPickerOnClearDate={true}
+                            noBorder={true}
+                        />
+                    </div>
+                    <div class="search-element">
+                        <label class="search-label">Tipo struttura</label>
+                        <select class="search-input" placeholder="Struttura" id = 'tipo' name = 'tipo' onChange = {this.onChange}>
+                            <option></option>
+                            <option value="cv">Casa Vacanza</option>
+                            <option value="bb">B&B</option>
+                        </select>
+                    </div>
+                    <div class="search-element-ospiti">
+                        <label class="search-label">Ospiti</label>
+                        <select class="search-input-ospiti" placeholder="Ospiti" id = 'posti' name = 'posti' onChange = {this.onChange}>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                    </div>
+                  </div>
           {/* end of casaVacanza price*/}
-          {/* size */}
-          <div className="form-group-size">
-            <label htmlFor="price">room size </label>
-            <div className="size-inputs">
-              <input
-                type="number"
-                name="minSize"
-                id = "minSize"
-                onChange={this.handleChange}
-                className="size-input"
-                placeholder = "min"
-                min = '1'
-                max = '10'
-              />
-              <input
-                type="number"
-                name="maxSize"
-                id = "maxSize"
-                onChange={this.handleChange}
-                className="size-input"
-                placeholder = "max"
-                min = '1'
-                max = '10'
-              />
-            </div>
-          </div>
           {/* end of select type */}
         </form>
         {/* extras */}
+        <div className="form-group">
+            <label htmlFor="costo">Costo €{this.state.costo}</label>
+              <input
+                type="range"
+                step = "50"
+                name="costo"
+                min={this.state.minCosto}
+                max={this.state.maxCosto}
+                id="costo"
+                onChange={this.handleChange}
+                className="form-control"
+                defaultValue = {this.state.costo}
+              />
+        </div>
         <div className="form-group-extra">
           {this.props.servizi.map(item => {
             return(

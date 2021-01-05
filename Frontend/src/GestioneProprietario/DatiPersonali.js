@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Col, Form, Accordion, Card} from 'react-bootstrap'
 import {AiOutlineEdit} from 'react-icons/ai'
-import {CgProfile} from 'react-icons/cg'
+import {RiAccountBoxLine} from 'react-icons/ri'
 //import { Row } from 'react-bootstrap'
 //import {Accordion, AccordionSummary, AccordionDetails} from '@material-ui/core'
 //import {MdExpandMore} from 'react-icons/md'
@@ -158,9 +158,9 @@ class DatiPersonali extends React.Component {
                                    <div className="datiprofilo">
                                      <p> Nome : {nome} </p>
                                      <p> Cognome :  {cognome}</p>
-                                     <p>Email : {email} </p>
+                                     <p> Email : {email} </p>
                                    </div>
-                                   <CgProfile className="imgprof" />
+                                   <RiAccountBoxLine className="imgprof" />
                                 </div>
                             </Card>
                             <Card id="DatiPersonaliCarta" border="light">

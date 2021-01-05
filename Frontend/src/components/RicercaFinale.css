@@ -99,16 +99,22 @@
     width: 100%;
   }
 
+  .search-element-ospiti{
+    width: 100%;
+  }
+
 }
 
 @media only screen and (min-width: 600px) and (max-width: 768px) {
 
   .search-element {
    width: 25%;
+   height: 115px;
   }
 
   .search-element-ospiti{
     width: 10%;
+    height: 115px;
   }
 
 }
@@ -118,10 +124,12 @@
 
   .search-element {
     width: 25%;
+    height: 115px;
   }
 
   .search-element-ospiti{
     width: 10%;
+    height: 115px;
   }
 
 }
