@@ -280,10 +280,10 @@ class ModificaBeB extends React.Component {
                 </div>
                 <Accordion.Collapse eventKey="3">
                   <Card.Body>
-                    <Form.Row>
+                  <Form.Row>
                       <Form.Group as={Col} controlId="formGridState">
                         <Form.Label>Servizi</Form.Label>
-                        {this.state.listaServizi.map(item => {
+                          {this.state.listaServizi.map(item => {
                             return(
                               <div>
                                 <Form.Check
@@ -299,12 +299,18 @@ class ModificaBeB extends React.Component {
                           })}
                       </Form.Group>
                     </Form.Row>
-                    <Button onClick = {this.onSubmit}>
-                      Cambia servizi
-                    </Button>
+                    <Form.Group controlId="exampleForm.ControlTextarea1">
+                    <Form.Label>Aggiungi servizio</Form.Label>
+                     <Form.Control as="textarea" rows={1} />
+                     </Form.Group>
                     <Button /*onClick = da definire*/>
                       Aggiungi servizio
                     </Button>
+                    <br/>
+                    <br />
+                    <Button onClick = {this.onSubmit}>
+                     Modifica servizi
+                    </Button>>
                   </Card.Body>
                 </Accordion.Collapse>
               </Card>

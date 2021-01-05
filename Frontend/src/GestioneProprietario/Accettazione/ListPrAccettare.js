@@ -40,6 +40,7 @@ const ListDragItem = styled.div`
   outline: none;
   position: relative;
   z-index: ${props => 99999 - props.order};
+  margin-bottom:40px;
 `;
 
 class ListAccettare extends Component {

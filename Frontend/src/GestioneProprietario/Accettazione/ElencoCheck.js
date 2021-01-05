@@ -40,6 +40,7 @@ const ListDragItem = styled.div`
   outline: none;
   position: relative;
   z-index: ${props => 99999 - props.order};
+  margin-bottom:40px;
 `;
 
 class ElencoCheck extends Component {
@@ -184,7 +185,7 @@ class ElencoCheck extends Component {
                           {...provided.dragHandleProps}
                           order={key}
                         >
-                          <ListItemCheck //damodificare
+                          <ListItemCheck 
                             
                            dati_casa2 = {this.state.apiResponse_accettate[key] ? this.state.apiResponse_accettate[key] : ''}
                             number={number}

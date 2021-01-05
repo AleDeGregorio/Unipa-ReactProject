@@ -21,8 +21,7 @@ class Earning2 extends React.Component {
       data_2: '',
       tipo_struttura: '',
       id_struttura: '',
-      nome_struttura: '',
-      empty: false
+      nome_struttura: ''
     }
   }
 
@@ -66,13 +65,7 @@ class Earning2 extends React.Component {
         .then((result) => {
             this.setState({ apiResponse: JSON.parse(result) });
         
-            var res = JSON.parse(result);
-
-            if(res.length < 1 || (res.code && res.code === 404)) {
-              this.setState({ empty: true, errorMessage: res.message });
-            }
-        
-            else if(this.state.apiResponse.status === 'error') {
+            if(this.state.apiResponse.status === 'error') {
               this.setState({ error: true });
               this.setState({ errorMessage: this.state.apiResponse.message });
             }
@@ -99,16 +92,10 @@ class Earning2 extends React.Component {
         .then((result) => {
           this.setState({ apiResponse: JSON.parse(result) });
       
-          var res = JSON.parse(result);
-
-            if(res.length < 1 || (res.code && res.code === 404)) {
-              this.setState({ empty: true, errorMessage: res.message });
-            }
-        
-            else if(this.state.apiResponse.status === 'error') {
+          if(this.state.apiResponse.status === 'error') {
               this.setState({ error: true });
               this.setState({ errorMessage: this.state.apiResponse.message });
-            }
+          }
         });
   }
 
@@ -132,15 +119,9 @@ class Earning2 extends React.Component {
         .then((result) => {
             this.setState({ apiResponse: JSON.parse(result) });
         
-            var res = JSON.parse(result);
-
-            if(res.length < 1 || (res.code && res.code === 404)) {
-              this.setState({ empty: true, errorMessage: res.message });
-            }
-        
-            else if(this.state.apiResponse.status === 'error') {
-              this.setState({ error: true });
-              this.setState({ errorMessage: this.state.apiResponse.message });
+            if(this.state.apiResponse.status === 'error') {
+                this.setState({ error: true });
+                this.setState({ errorMessage: this.state.apiResponse.message });
             }
         });
   }
@@ -153,23 +134,17 @@ class Earning2 extends React.Component {
     fetch('http://localhost:9000/searchProprietaProprietario/proprietaProprietario', {
         method: "POST",
         headers: {
-          'Content-type': 'application/json'
+            'Content-type': 'application/json'
         },
         body: JSON.stringify(data)
     })
     .then((result) => result.text())
     .then((result) => {
         this.setState({ apiResponse_strutture: JSON.parse(result) });
-
-        var res = JSON.parse(result);
-
-        if(res.length < 1 || (res.code && res.code === 404)) {
-          this.setState({ empty: true, errorMessage: res.message });
-        }
     
-        else if(this.state.apiResponse_strutture.status === 'error') {
-          this.setState({ error: true });
-          this.setState({ errorMessage: this.state.apiResponse_strutture.message });
+        if(this.state.apiResponse_strutture.status === 'error') {
+            this.setState({ error: true });
+            this.setState({ errorMessage: this.state.apiResponse_strutture.message });
         }
     });
   }
@@ -197,32 +172,6 @@ class Earning2 extends React.Component {
           }}
       />
   }
-  else if(this.state.empty) {
-    var tipo_struttura = '';
-
-    if(this.state.tipo_struttura === 'cv') {
-      tipo_struttura = 'Casa Vacanza'
-    }
-    else if(this.state.tipo_struttura === 'bb') {
-      tipo_struttura = 'B&B'
-    }
-
-    return(
-      <div className="paginaEarning">
-          <div className ="containerSx">
-          <div className="earningDescrizione">
-            <h2 className="h2Earning">RESOCONTO GUADAGNI</h2>
-            <p>QUI PUOI VEDERE I TUOI GUADAGNI, GRAZIE A TRE FILTRI DIVERSI </p>
-          </div>
-          <div className="containerEarning">
-            <div className="col containerAccordion">
-              <p>Si è verificato un errore: {this.state.error_message}</p>
-            </div>
-          </div>
-          </div>
-        </div>
-    );
-  }
   else {
     var tipo_struttura = '';
 
@@ -235,21 +184,20 @@ class Earning2 extends React.Component {
 
     return(
       <div className="paginaEarning">
-          <div className ="containerSx">
           <div className="earningDescrizione">
-            <h2 className="h2Earning">RESOCONTO GUADAGNI</h2>
-            <p>QUI PUOI VEDERE I TUOI GUADAGNI, GRAZIE A TRE FILTRI DIVERSI </p>
+            <h2 className="h2Earning">Resoconto guadagni</h2>
+            <p className="h2Earning">Qui puoi vedere i tuoi guadagni grazie a tre filtri diversi, a secondo delle tue esigienze.</p>
           </div>
-          <div className="containerEarning">
-            <div className="col containerAccordion">
+          
+            <div className="containerAccordion">
               <Accordion>
-                  <Card >
+                <Card id="earningCard" border="light">
                   <div className="earning_head">
-                    <p>Filtra i tuoi guadagni in base alla data</p>
+                    <h6>Filtra i tuoi guadagni in base alla data</h6>
                     <Accordion.Toggle as={MdExpandMore} variant="link" eventKey="0" />
                   </div>
                  <Accordion.Collapse eventKey="0">
-                 <Card.Body>
+                <Card.Body>
                      <div className="earning_body">
                       <Form className="formEarning">
                       <Form.Row>
@@ -268,13 +216,13 @@ class Earning2 extends React.Component {
                   </Card.Body>
                  </Accordion.Collapse>
                  </Card>
-                 <Card >
+                 <Card id="earningCard" border="light">
                  <div className="earning_head">
-                      <p>Filtra i tuoi guadagni in base al tipo di struttura e alla data</p>
+                      <h6>Filtra i tuoi guadagni in base al tipo di struttura e alla data</h6>
                       <Accordion.Toggle as={MdExpandMore} variant="link" eventKey="1" />                       
                   </div>
                   <Accordion.Collapse eventKey="1">
-                    <Card.Body>
+                  <Card.Body>
                       <div className="earning_body">
                       <Form className="formEarning">
                    <Form.Row>
@@ -299,17 +247,17 @@ class Earning2 extends React.Component {
                    </Form.Row>
                  </Form>
                       <Button onClick = {this.onSubmit_tipo_struttura} >Visualizza guadagni</Button>
-                      </div> 
-                      </Card.Body>                       
+                      </div>  
+                      </Card.Body>                      
                   </Accordion.Collapse>
                   </Card>
-                  <Card >
+                  <Card id="earningCard" border="light">
                   <div className="earning_head">
-                      <p>Filtra i tuoi guadagni in base alla struttura e alla data</p>
+                      <h6>Filtra i tuoi guadagni in base alla struttura e alla data</h6>
                       <Accordion.Toggle as={MdExpandMore} variant="link" eventKey="2" />                       
                   </div>
                 <Accordion.Collapse eventKey="2">
-                  <Card.Body>
+                <Card.Body>
                   <div className="earning_body">
                   <Form className="formEarning">
                    <Form.Row>
@@ -345,19 +293,17 @@ class Earning2 extends React.Component {
                 </Card>
               </Accordion>
             </div>
-            </div>
-            </div>
             <div className="earningResult">
             <h5>Ecco il resoconto dei tuoi guadagni :</h5>
             <p>Codice truttura selezionata: {this.state.id_struttura} </p>
             <p>Tipo di struttura selezionata: {tipo_struttura} </p>
             <p>Date selezionate: &nbsp;
-              {this.state.data_1 ? new Date(this.state.data_1).toLocaleDateString() : 'Selezionare una data'} - &nbsp;
+              {this.state.data_1 ? new Date(this.state.data_1).toLocaleDateString() : 'Selezionare una data'} - 
               {this.state.data_2 ? new Date(this.state.data_2).toLocaleDateString() : 'Selezionare una data'} 
             </p>
             <p>Guadagni: &nbsp;
-              {(this.state.apiResponse[3] && this.state.apiResponse[3][0]) ? this.state.apiResponse[3][0].tot_guadagni : ".0"}
-              {(this.state.apiResponse[4] && this.state.apiResponse[4][0]) ? this.state.apiResponse[4][0].tot_guadagni : ".0"} euro
+              {typeof this.state.apiResponse[3] !== 'undefined' ? this.state.apiResponse[3][0].tot_guadagni : ".0"}
+              {(typeof this.state.apiResponse[4] !== 'undefined' && typeof this.state.apiResponse[4][0] !== 'undefined') ? this.state.apiResponse[4][0].tot_guadagni : ".0"} euro
             </p>
           </div>
         </div>
