@@ -205,6 +205,11 @@ class ListItemPrenotazioni extends Component {
       textValue: '',
       isDeleted: false,
       isAlive: true,
+      apiResponse: [],
+      error: false,
+      errorMessage: '',
+      empty: false,
+      success: false
     }
   }
 
@@ -246,18 +251,85 @@ class ListItemPrenotazioni extends Component {
     this.setState({ textValue: event.target.value })
   }
 
-  deleteItem = () => {
-    this.setState({ isDeleted: true })
-    this.toggleSelect()
-    setTimeout(() => {
-      this.setState({ isAlive: false })
-    }, 150)
-   
+  rifiuta = (e) => {
+
+    const data = {
+      id_prenotazione: e
+    }
+
+    fetch('http://localhost:9000/accettaPrenotazione/accettata', {
+      method: "POST",
+      headers: {
+          'Content-type' : 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then((result) => result.text())
+    .then((result)=>{
+      this.setState({ apiResponse:JSON.parse(result) });
+      var res = JSON.parse(result);
+
+      if(res.length < 1 || (res.code && res.code === 404)) {
+        this.setState({ empty: true, errorMessage: res.message });
+      }
+
+      else if(this.state.apiResponse.status === 'error') {
+        this.setState({ error: true });
+        this.setState({ errorMessage: this.state.apiResponse.message });
+      }
+      else {
+        this.setState({ success: true })
+        this.setState({ isDeleted: true })
+        this.toggleSelect()
+        setTimeout(() => {
+          this.setState({ isAlive: false })
+        }, 150)
+      }
+    });
   }
-  /*accettaPren =() =>{
-    da inserire
+
+  accetta = (e) => {
+
+    const data = {
+      id_prenotazione: e.id_prenotazione,
+      data_partenza: new Date(e.data_partenza).toLocaleDateString(),
+      data_ritorno: new Date(e.data_ritorno).toLocaleDateString(),
+      ref_proprieta: e.ref_proprieta ? e.ref_proprieta : '',
+      tipo_proprieta: e.tipo_proprieta,
+      id_stanza: e.id_stanza ? e.id_stanza : ''
+    }
+
+    fetch('http://localhost:9000/accettaPrenotazione/accettata', {
+      method: "POST",
+      headers: {
+          'Content-type' : 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then((result) => result.text())
+    .then((result)=>{
+      this.setState({ apiResponse:JSON.parse(result) });
+      var res = JSON.parse(result);
+
+      if(res.length < 1 || (res.code && res.code === 404)) {
+        this.setState({ empty: true, errorMessage: res.message });
+      }
+
+      else if(this.state.apiResponse.status === 'error') {
+        this.setState({ error: true });
+        this.setState({ errorMessage: this.state.apiResponse.message });
+      }
+      else {
+        this.setState({ success: true })
+        this.setState({ isDeleted: true })
+        this.toggleSelect()
+        setTimeout(() => {
+          this.setState({ isAlive: false })
+        }, 150)
+      }
+    });
   }
-  */
+
   render() {
     //const { dragging } = this.props
     const {
@@ -281,6 +353,9 @@ class ListItemPrenotazioni extends Component {
       data_ritorno,
       costo,
       num_soggiornanti,
+      tipo_proprieta,
+      ref_proprieta,
+      id_stanza,
       ref_soggiornante
     } = this.props.dati_casa
     let listItemContentClass = ``
@@ -304,7 +379,7 @@ class ListItemPrenotazioni extends Component {
                   
                  : (
                   <span onClick={this.toggleEditName}></span>
-                )} Richiesta di "{ref_cliente}" su:  "{nome}"  {stanza}
+                )} Richiesta di "{ref_cliente}" su:  "{nome}"  {id_stanza}
                 <br />ID Richiesta: {id_prenotazione}
  
               </ListItemText>
@@ -345,17 +420,15 @@ class ListItemPrenotazioni extends Component {
                     }`}
                   >
                     <div className="listitem__select__list__item">
-                      <div className="LinkList" //qua va modificato in modo che permetta di accettare la prenotazione
-                        onClick={this.accettaPren}                       
-                      >
-                      Accetta 
+                      <div className="LinkList"      >
+                      <span onClick = {e => this.accetta({id_prenotazione, data_partenza, data_ritorno, tipo_proprieta, ref_proprieta, id_stanza})}>
+                        Accetta
+                      </span>
                       </div>
                     </div>
                     <div
-                      className="listitem__select__list__item"
-                      onClick={this.deleteItem}
-                    >
-                    Rifiuta
+                      className="listitem__select__list__item">
+                    <span onClick={e => this.rifiuta(id_prenotazione)}>Rifiuta</span>
                     </div>
                   </div>
                 )}

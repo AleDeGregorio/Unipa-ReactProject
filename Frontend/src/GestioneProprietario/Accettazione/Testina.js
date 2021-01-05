@@ -31,7 +31,7 @@ class Testina extends React.Component {
         }
         else {
             return( 
-                <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" className="vogliostilizzarti">
+                <Tabs defaultActiveKey="home" id="uncontrolled-tab-example" className="vogliostilizzarti">
                     <Tab eventKey="home" title="Accetta Prenotazioni" className="vogliostilizzarti2">
                         <ListPrAccettare />       
                     </Tab>

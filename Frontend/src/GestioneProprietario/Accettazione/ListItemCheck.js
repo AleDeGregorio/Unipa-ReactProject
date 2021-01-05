@@ -251,7 +251,6 @@ class ListItemCheck extends Component {
     setTimeout(() => {
       this.setState({ isAlive: false })
     }, 150)
-   
   }
  
   render() {
@@ -295,13 +294,12 @@ class ListItemCheck extends Component {
                   />)
               
                  : (
-                  <span onClick={this.toggleEditName}>{textValue}</span>
-                )} Prenotazione di {ref_cliente} su {ref_proprieta} - {nome}
-                  id : {id_prenotazione}
+                  <span onClick={this.toggleEditName}>{id_prenotazione}</span>
+                )} Prenotazione di {ref_cliente} su {nome} (ID: {ref_proprieta})
               </ListItemText>
               <ListItemTextSecond>
                 <div className="text-div-style">
-               <p>Partenza-Ritorno: {new Date(data_partenza).toLocaleDateString()},  {new Date(data_ritorno).toLocaleDateString()}</p>
+               <p>Partenza-Ritorno: {new Date(data_partenza).toLocaleDateString()} - {new Date(data_ritorno).toLocaleDateString()}</p>
                 <p style = {{display: stanza === '' ? 'none' : 'inline'}}>Stanza: {stanza}</p>
                </div>
               </ListItemTextSecond>
@@ -338,15 +336,12 @@ class ListItemCheck extends Component {
                       
                    
                     >
-                      <Link className="LinkList" to = {{ //qua va modificato in modo che permetta di accettare la prenotazione
-                        pathname: "/ModificaCasaVacanza",
-                        state: { 
-                          dati_casa: this.props.dati_casa
-                        }
-                      }}
-                      >
-                      Accetta 
-                      </Link>
+                      <div
+                      className="listitem__select__list__item"
+                      //onClick={this.deleteItem} da fare
+                    >
+                      Accetta
+                    </div>
                     </div>
                     <div
                       className="listitem__select__list__item"

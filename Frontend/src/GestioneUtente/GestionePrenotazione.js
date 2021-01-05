@@ -169,7 +169,7 @@ class GestionePrenotazione extends React.Component {
                         <h1>Gestisci le tue prenotazioni</h1>
                         <h5>Le tue prenotazioni: </h5>
                         {        
-                            this.state.apiResponse.map(((res)=>
+                            this.state.apiResponse.map(((res)=> 
                                 <div className="containeracc">
                                     <Accordion>
                                         <Card border="light">
@@ -177,7 +177,7 @@ class GestionePrenotazione extends React.Component {
                                                     <p>ID: {res.id_prenotazione}</p>
                                                     <p>Partenza: {new Date(res.data_partenza).toLocaleDateString()}</p>
                                                     <p>Ritorno: {new Date(res.data_ritorno).toLocaleDateString()}</p>
-                                                    <p>Stato: {res.accettata ? 'Accettata' : 'In attesa di accettazione'}</p>
+                                                    <p>Stato: {res.accettata === null ? 'In attesa di accettazione' : (res.accettata === 1 ? 'Accettata' : 'Rifiutata')}</p>
                                                     <Accordion.Toggle as={Button} variant="link" eventKey="0" onClick = {() => this.set_id(res.id_prenotazione)}>
                                                         Dettagli
                                                     </Accordion.Toggle>
