@@ -54,13 +54,17 @@
   }
   
   .contentNew form .i{
-    border: none;
     padding: 12px 15px;
     margin: 8px 0;
     width: 80%;
     height: 45px;
     margin-left:10%;
+    color: white;
+    background: rgba(8, 1, 1, 0.856);
+    border-bottom: 3px solid white;
   }
+  
+
 
   .contentNew form .i:focus{
     box-shadow:none;
@@ -159,6 +163,15 @@
     margin-bottom: 10px;
   }
 
+  .head-update{
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
+    height:4rem;
+    align-items:center;
+    margin-left:10px;
+  }
+
   @media only screen and (max-width: 600px) {
     .containerNew {
       width: 100%;
@@ -200,12 +213,3 @@
       position: relative;
     }
   }
-
-.head-update{
-  display:flex;
-  flex-direction:row;
-  justify-content:space-between;
-  height:4rem;
-  align-items:center;
-  margin-left:10px;
-}

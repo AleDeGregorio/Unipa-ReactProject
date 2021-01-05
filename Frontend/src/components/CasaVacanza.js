@@ -19,18 +19,20 @@ class CasaVacanza extends React.Component {
             <p className="casaVacanza-info">{dati_casa.nome_proprieta}</p>
             <p className="casaVacanza-info">{dati_casa.localita}</p>
             <p className="casaVacanza-info">Per {dati_casa.posti} {dati_casa.posti === 1 ? 'ospite' : 'ospiti'}</p>
-            <Link 
-              to = {{
-                pathname: "/Casa",
-                state: {
-                  dati_casa: {dati_casa},
-                  datiRicerca: {datiRicerca}
-                }
-              }}
-              className = "vai"
-            >
-              Visualizza dettagli
-            </Link>
+            <div className="bottoneLink">
+              <Link 
+                to = {{
+                  pathname: "/Casa",
+                  state: {
+                    dati_casa: {dati_casa},
+                    datiRicerca: {datiRicerca}
+                  }
+                }}
+                className = "vai"
+              >
+                Visualizza dettagli
+              </Link>
+            </div>
         </div>
       </article>
     );

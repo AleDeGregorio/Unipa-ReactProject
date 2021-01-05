@@ -47,6 +47,10 @@
   color: white;
 }
 
+.search-input{
+  color: black;
+}
+
 .search-input-ospiti{
   border: none;
   appearance: none;
@@ -61,12 +65,18 @@
   color: white;
 }
 
+.search-input-ospiti option{
+  color:black;
+}
+
 .search-button {
   text-align: center;
   border: 0;
   color: white;
   background-color: #00bec8;
-  height: 25px;
+  height: 100px;
+  margin: 5px;
+  padding: 5px;
 }
 
 .search-button:hover {
@@ -103,7 +113,7 @@
 
 }
 
-@media only screen and (min-width: 768px) and (max-width: 1280px) {
+@media only screen and (min-width: 768px){
 
 
   .search-element {
@@ -116,15 +126,5 @@
 
 }
 
-@media only screen and (min-width: 1280px){
 
-  .search-element {
-    width: 25%;
-  }
-
-  .search-element-ospiti{
-    width: 5%;
-  }
-
-}
 

@@ -12,11 +12,11 @@ import RicercaFinale from './RicercaFinale'
 function HomePage(){
     return(
         <div className="HomePage">
-            <div className="scritta">
-                <h1>Enjoy A Luxury Experience</h1>
-            </div>
             <div className="ricerca">
                 <RicercaFinale/>
+            </div>
+            <div className="scritta">
+                <h1>Enjoy A Luxury Experience</h1>
             </div>
             {/*<div className="containerCarosello">
                 <Carousello/>
