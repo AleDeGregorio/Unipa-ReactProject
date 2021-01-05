@@ -74,7 +74,7 @@ router.post('/prenotazioneProprieta', async(req, res, next) => {
     }
 });
 
-// show searched prenotazione with accettata = false (by ref_proprietario)
+// show searched prenotazione with accettata = null (by ref_proprietario)
 // indirizzo: /getPrenotazioniAccettazione/prenotazioniAccettazione
 router.post('/prenotazioniAccettazione', async(req, res, next) => {
     try {
@@ -108,7 +108,31 @@ router.post('/accettata', async(req, res, next) => {
     catch(e) {
         next(e);
     }
-})
+});
+
+// rifiuta prenotazione in pendenza (da id_prenotazione)
+// indirizzo: /rifiutaPrenotazione/rifiutata
+router.post('/rifiutata', async(req, res, next) => {
+    try {
+        let rifiuta = await DB.Prenotazione.rifiutaPrenotazione(req.body);
+        res.json(rifiuta);
+    }
+    catch(e) {
+        next(e);
+    }
+});
+
+// show searched prenotazione with accettata = false (by ref_proprietario)
+// indirizzo: /getPrenotazioniRifiutate/prenotazioniRifiutate
+router.post('/prenotazioniRifiutate', async(req, res, next) => {
+    try {
+        let prenRif = await DB.Prenotazione.getPrenotazioneRifiutata(req.body);
+        res.json(prenRif);
+    }
+    catch(e) {
+        next(e);
+    }
+});
 
 // update fields of table Prenotazione
 // indirizzo: /updatePrenotazione/fields

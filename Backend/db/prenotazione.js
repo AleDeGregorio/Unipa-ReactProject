@@ -193,7 +193,7 @@ const getPrenotazioneAccettazione = async(req) => {
         Connection.query(
             'SELECT * ' +
             'FROM prenotazione, proprieta ' +
-            'WHERE prenotazione.ref_proprietario = "' + req.ref_proprietario + '" AND accettata = false AND ref_proprieta = id_proprieta;',
+            'WHERE prenotazione.ref_proprietario = "' + req.ref_proprietario + '" AND accettata IS NULL AND ref_proprieta = id_proprieta;',
             (err, results) => {
                 if(err) {
                     console.log(err);
@@ -388,6 +388,104 @@ const accettaPrenotazione = async(req) => {
     });
 }
 
+// rifiuta prenotazione in pendenza
+const rifiutaPrenotazione = async(req) => {
+    return new Promise((resolve, reject) => {
+
+        Connection.query(
+            'UPDATE prenotazione ' +
+            'SET accettata = false ' +
+            'WHERE id_prenotazione = ' + req.id_prenotazione + '; ', 
+            (err, results) => {
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Prenotazione non trovata'));
+                }
+
+                resolve(results);
+            }
+        );
+    });
+}
+
+// get prenotazioni rifiutate from ref_proprietario
+const getPrenotazioneRifiutata = async(req) => {
+    return new Promise((resolve, reject) => {
+
+        Connection.query(
+            'SELECT * ' +
+            'FROM prenotazione, proprieta ' +
+            'WHERE prenotazione.ref_proprietario = "' + req.ref_proprietario + '" AND accettata = false AND ref_proprieta = id_proprieta;',
+            (err, results) => {
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                /*if(results.length < 1) {
+                    return reject(new NotFound('Nessuna prenotazione accettata'));
+                }*/
+
+                if(results.length < 1) {
+                    resolve(results);
+                }
+                
+                else {
+                    var res1 = results;
+                
+                    if(res1[0].tipo_proprieta === 'cv') {
+                        Connection.query(
+                            'SELECT * ' + 
+                            'FROM casa_vacanza ' +
+                            'WHERE ref_proprieta_cv = ' + res1[0].id_proprieta + '; ',
+                            (err, results) => {
+                                if(err) {
+                                    console.log(err);
+                                    return reject(new GeneralError('Si è verificato un errore'));
+                                }
+                                if(results.length < 1) {
+                                    return reject(new NotFound('Casa vacanza non trovata'));
+                                }
+
+                                for(var i = 0; i < res1.length; i++) {
+                                    res1[i].img = results[0].imgCV_path1;
+                                }
+
+                                resolve(res1);
+                            }
+                        )
+                    }
+                    else {
+                        Connection.query(
+                            'SELECT * ' +
+                            'FROM b_and_b, stanza ' +
+                            'WHERE ref_proprieta_bb = ' + res1[0].id_proprieta + ' AND ref_proprieta_bb = ref_bb ',
+                            (err, results) => {
+                                if(err) {
+                                    console.log(err);
+                                    return reject(new GeneralError('Si è verificato un errore'));
+                                }
+                                if(results.length < 1) {
+                                    return reject(new NotFound('B&B non trovato'));
+                                }
+
+                                for(var i = 0; i < res1.length; i++) {
+                                    res1[i].img = results[0].imgST_path1;
+                                    res1[i].id_stanza = results[i].id_stanza;
+                                }
+
+                                resolve(res1);
+                            }
+                        )
+                    }
+                }
+            }
+        );
+    });
+}
+
 // update fields
 const updatePrenotazione = async(req) => {
     return new Promise((resolve, reject) => {
@@ -419,7 +517,7 @@ const updateDatePrenotazione = async(req) => {
 
         Connection.query(
             'UDATE prenotazione ' +
-            'SET data_partenza = (STR_TO_DATE("' + req.data_partenza + '","%d/%m/%Y")), data_ritorno = (STR_TO_DATE("' + req.data_ritorno + '","%d/%m/%Y")), accettata = false ' +
+            'SET data_partenza = (STR_TO_DATE("' + req.data_partenza + '","%d/%m/%Y")), data_ritorno = (STR_TO_DATE("' + req.data_ritorno + '","%d/%m/%Y")), accettata = null ' +
             'WHERE id_prenotazione = ' + req.id_prenotazione + '; ',
             (err, results) => {
                 if(err) {
@@ -444,7 +542,7 @@ const insertPrenotazione = async(req) => {
                 'costo, caparra, data_partenza, data_ritorno, accettata) VALUES ' +
             '("' + req.ref_soggiornante + '", "' + req.ref_cliente + '", "' + req.ref_proprietario + '", ' + req.ref_proprieta + 
             ', ' + req.num_soggiornanti + ', ' + req.costo + ', ' + req.caparra + ', (STR_TO_DATE("' + req.data_partenza + '","%d/%m/%Y")), ' + 
-            '(STR_TO_DATE("' + req.data_ritorno + '","%d/%m/%Y")), false)',
+            '(STR_TO_DATE("' + req.data_ritorno + '","%d/%m/%Y")), null)',
             (err, results) => {
                 if(err) {
                     console.log(err);
@@ -523,6 +621,8 @@ module.exports = getPrenotazioneProprieta;
 module.exports = getPrenotazioneAccettazione;
 module.exports = getPrenotazioneAccettata;
 module.exports = accettaPrenotazione;
+module.exports = rifiutaPrenotazione;
+module.exports = getPrenotazioneRifiutata;
 module.exports = updatePrenotazione;
 module.exports = updateDatePrenotazione;
 module.exports = deletePrenotazione;
@@ -539,6 +639,8 @@ module.exports = {
     getPrenotazioneAccettazione,
     getPrenotazioneAccettata,
     accettaPrenotazione,
+    rifiutaPrenotazione,
+    getPrenotazioneRifiutata,
     updatePrenotazione,
     updateDatePrenotazione,
     deletePrenotazione,

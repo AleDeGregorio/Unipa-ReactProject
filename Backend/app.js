@@ -270,6 +270,12 @@ app.use('/getPrenotazioniAccettate', prenotazioneRouter);
 // accetta prenotazione in pendenza (da id_prenotazione)
 // indirizzo: /accettaPrenotazione/accettata
 app.use('/accettaPrenotazione', prenotazioneRouter);
+// rifiuta prenotazione in pendenza (da id_prenotazione)
+// indirizzo: /rifiutaPrenotazione/rifiutata
+app.use('/rifiutaPrenotazione', prenotazioneRouter);
+// mostra prenotazioni rifiutate (da ref_proprietario)
+// indirizzo: /getPrenotazioniRifiutate/prenotazioniRifiutate
+app.use('/getPrenotazioniRifiutate', prenotazioneRouter);
 // modifica dei campi di una prenotazione (fornendo l'id)
 // indirizzo: /updatePrenotazione/fields
 app.use('/updatePrenotazione', prenotazioneRouter);
