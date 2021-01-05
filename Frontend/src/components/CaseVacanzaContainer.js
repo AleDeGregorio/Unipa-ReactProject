@@ -1,6 +1,4 @@
 import React from "react";
-//import { withCasaVacanzaConsumer } from "../CasaVacanza/context"
-//import Loading from "./Loading";
 import CaseVacanzaFilter from './CaseVacanzaFiltro';
 import CaseVacanzaList from "./CaseVacanzaLista";
 

@@ -3,7 +3,6 @@ import defaultBcg from "../images/room-1.jpeg";
 import Hero from "../components/Hero";
 import Banner from "../components/Banner";
 import { Link } from "react-router-dom";
-import { CasaBandBContext } from "../B&B/context";
 
 //import StyledHero from "../components/StyledHero";
 export default class RiepilogoCasaBandb extends Component {

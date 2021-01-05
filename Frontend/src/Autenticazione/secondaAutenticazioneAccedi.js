@@ -47,9 +47,11 @@ class SecondaAutenticazioneAccedi extends React.Component {
                 </div>
             );
         }
+
         if(localStorage.getItem('logged') && localStorage.getItem('cliente')) {
             return <Redirect to = "/PaginaCliente" />
         }
+        
         if(localStorage.getItem('logged') && localStorage.getItem('proprietario')) {
             return <Redirect to = "/PaginaProprietario" />
         }

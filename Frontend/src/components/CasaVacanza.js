@@ -1,10 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import defaultImg from "../images/room-1.jpeg";
-import PropTypes from "prop-types";
-import { memo } from "react";
-import {CasaVacanzaProvider} from "../CasaVacanza/context";
-import { Redirect } from 'react-router-dom';
 import './CasaVacanza.css';
 
 class CasaVacanza extends React.Component {

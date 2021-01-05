@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import defaultImg from "../images/room-1.jpeg";
 import PropTypes from "prop-types";
 import { memo } from "react";
-import {CasaBandbProvider} from "../B&B/context";
+//import {CasaBandbProvider} from "../B&B/context";
 const CasaBandb = memo(({ casaBandb }) => {
   const { name, slug, images, price } = casaBandb;
   // console.log(name);

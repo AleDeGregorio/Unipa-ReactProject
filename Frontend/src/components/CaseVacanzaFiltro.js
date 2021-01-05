@@ -1,15 +1,6 @@
 import React from "react";
-import { useContext } from "react";
-import { CasaVacanzaContext } from "../CasaVacanza/context";
-import Title from "./title";
-import { SingleDatePicker } from "react-dates";
 
 import './CaseVacanzaFiltro.css'
-// get all unique values
-/*const getUnique = (items, value) => {
-    if(items)
-  return [...new Set(items.map(item => item[value]))];
-};*/
 
 class CaseVacanzaFilter extends React.Component {
   constructor(props) {

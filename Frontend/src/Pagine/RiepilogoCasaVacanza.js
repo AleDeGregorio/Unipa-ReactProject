@@ -3,7 +3,6 @@ import defaultBcg from "../images/room-1.jpeg";
 import Hero from "../components/Hero";
 import Banner from "../components/Banner";
 import { Link } from "react-router-dom";
-import { CasaVacanzaContext } from "../CasaVacanza/context";
 import {Col, Row} from "react-bootstrap"
 import './Riepilogo.css'
 import StyledHero from "../components/StyledHero";
