@@ -183,6 +183,7 @@ class Earning2 extends React.Component {
     }
 
     return(
+      <div className="contenitoreEarning">
       <div className="paginaEarning">
           <div className="earningDescrizione">
             <h2 className="h2Earning">Resoconto guadagni</h2>
@@ -211,7 +212,7 @@ class Earning2 extends React.Component {
                      </Form.Group>
                    </Form.Row>
                  </Form>
-                      <Button onClick = {this.onSubmit_date} >Visualizza guadagni</Button>
+                      <button onClick = {this.onSubmit_date} >Visualizza guadagni</button>
                   </div>
                   </Card.Body>
                  </Accordion.Collapse>
@@ -246,7 +247,7 @@ class Earning2 extends React.Component {
                      </Form.Group>
                    </Form.Row>
                  </Form>
-                      <Button onClick = {this.onSubmit_tipo_struttura} >Visualizza guadagni</Button>
+                      <button onClick = {this.onSubmit_tipo_struttura} >Visualizza guadagni</button>
                       </div>  
                       </Card.Body>                      
                   </Accordion.Collapse>
@@ -286,7 +287,7 @@ class Earning2 extends React.Component {
                      </Form.Group>
                    </Form.Row>
                  </Form>
-                 <Button onClick = {this.onSubmit_nome_struttura}>Visualizza guadagni</Button>
+                 <button onClick = {this.onSubmit_nome_struttura}>Visualizza guadagni</button>
                   </div>
                   </Card.Body>
                 </Accordion.Collapse>
@@ -306,6 +307,7 @@ class Earning2 extends React.Component {
               {(typeof this.state.apiResponse[4] !== 'undefined' && typeof this.state.apiResponse[4][0] !== 'undefined') ? this.state.apiResponse[4][0].tot_guadagni : ".0"} euro
             </p>
           </div>
+        </div>
         </div>
     );
   }

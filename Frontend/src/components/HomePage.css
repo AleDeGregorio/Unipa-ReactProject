@@ -3,11 +3,12 @@
     height: 100%;
 }
 
-h1{
+.HomePage h1{
     color: rgba(255, 255, 255, 0.836);
     position: relative;
     top: 40%;
 }
+
 
 .scritta{
     position: relative;

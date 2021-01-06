@@ -1,26 +1,29 @@
+.GestioneProprietario{
+  background-image: url(https://images.pexels.com/photos/1267438/pexels-photo-1267438.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .carte_prop{
   display:flex;
   justify-content: center;
   flex-wrap: wrap;
 }
 
-
 #prop {
-display: flex;
-justify-content: center;
-color: white;
-background: rgba(8, 1, 1, 0.5);
-border: 2px solid white;
-border-radius: 0;
+  display: flex;
+  justify-content: center;
+  color: white;
+  background: rgba(8, 1, 1, 0.5);
+  border: 2px solid white;
+  border-radius: 0;
 }
-
-
 
 #prop:hover {
   cursor: pointer;
   background: rgba(8, 1, 1, 0.8);
 }
-
 
 .LinK:hover{
 text-decoration: none;
