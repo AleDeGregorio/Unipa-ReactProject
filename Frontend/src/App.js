@@ -18,7 +18,6 @@ import BandB from './Pagine/B&B'
 import Prenota from './Prenota/Prenota'
 
 // Login e registrazione
-import Autenticazione from './Autenticazione/Autenticazione'
 import SecondaAutenticazioneAccedi from './Autenticazione/secondaAutenticazioneAccedi'
 import SecondaAutenticazioneRegistrati from './Autenticazione/secondaAutenticazioneRegistrati'
 import SecondaAutenticazioneRegistratiCliente from './Autenticazione/secondaAutenticazioneRegistratiCliente'
@@ -183,19 +182,6 @@ class App extends React.Component {
                   render= { (props) =>(
                     <Prenota {...props} />
                   )}
-              />
-              <Route 
-                exact path = '/Autenticazione'
-                render = { (props) => (
-                  <Autenticazione {...props}  
-                    onChange = {this.onChange}
-                    onSubmitLogin = {this.onSubmitLogin}
-                    error = {this.state.error}
-                    errorMessage = {this.state.errorMessage}
-                    successCliente = {this.state.successCliente}
-                    successProprietario = {this.state.successProprietario}
-                  />)
-                }
               />
               <Route 
                 exact path = '/secondaAutenticazioneAccedi'
