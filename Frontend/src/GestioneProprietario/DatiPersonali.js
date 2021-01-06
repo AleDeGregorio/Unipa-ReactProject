@@ -288,11 +288,6 @@ class DatiPersonali extends React.Component {
                                 </Accordion.Collapse>
                         </Card>
                             </Accordion>
-                            
-                            
-                
-                
-                            
                             </div>
                             </Form>
                             
