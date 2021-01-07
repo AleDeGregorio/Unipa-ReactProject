@@ -272,7 +272,7 @@ class ModificaStanza extends React.Component {
                     <p>Foto attuali: </p>        
                   <Form.Group className="centered">
     <label>Modifica le foto della tua stanza</label>
-    <Form.Row className = "justify-content-center">
+    <Form.Row className = "centered">
     <input
       id = "imgST_path1"
       name = "imgST_path1SRC"
@@ -328,85 +328,3 @@ class ModificaStanza extends React.Component {
 }
 
 export default ModificaStanza;
-/*
-<form>
-<h2>Modifica le informazioni della tua stanza come preferisci!</h2>
-  <Form.Group id = 'tipologia' name = 'tipologia' >
-    <Form.Label>Tipologia stanza - Numero ospiti</Form.Label>
-    <Form.Control 
-      id = 'tipologia'
-      name = 'tipologia'
-      defaultValue = {stanza.tipologia}
-      as = "select"   
-      onChange = {this.onChange}  
-    >
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-      <option>6</option>
-      <option>7</option>
-      <option>8</option>
-      </Form.Control>
-  </Form.Group>
-
-    <label htmlFor = "tariffa_stanza">Tariffa</label>
-    <input
-      type = "text"
-      pattern = "^\d+(.\d{1,2})?$"
-      title = "Inserire un valore numerico usando un punto per i valori decimali"
-      id = "tariffa_stanza"
-      name = "tariffa_stanza"
-      defaultValue = {stanza.tariffa_stanza}
-      onChange = {this.onChange}
-      className = "i"
-    />
-
-  <Form.Group>
-    <label>Modifica le foto della tua stanza</label>
-    <Form.Row className = "justify-content-center">
-    <input
-      id = "imgST_path1"
-      name = "imgST_path1SRC"
-      onChange = {this.onChangeImg}
-      type = "file"
-      className = "inputImg"
-      accept = "image/*"
-    />
-    <img src = {this.state.imgST_path1SRC} alt = {"Foto 1 stanza " + this.state.id_stanza} ></img>
-    <input
-      id = "imgST_path2"
-      name = "imgST_path2SRC"
-      onChange = {this.onChangeImg}
-      type = "file"
-      className = "inputImg"
-      accept = "image/*"
-    />
-    <img src = {this.state.imgST_path2SRC} alt = {"Foto 2 stanza " + this.state.id_stanza}></img>
-  <input
-      id = "imgST_path3"
-      name = "imgST_path3SRC"
-      onChange = {this.onChangeImg}
-      type = "file"
-      className = "inputImg"
-      accept = "image/*"
-    />
-    <img src = {this.state.imgST_path3SRC} alt = {"Foto 3 stanza " + this.state.id_stanza}></img>
-    <input
-      id = "imgST_path4"
-      name = "imgST_path4SRC"
-      onChange = {this.onChangeImg}
-      type = "file"
-      className = "inputImg"
-      accept = "image/*"
-    />
-    <img src = {this.state.imgST_path4SRC} alt = {"Foto 4 stanza " + this.state.id_stanza}></img>
-    </Form.Row>
-  </Form.Group>
-  
-
-  <Button variant="primary" onClick = {this.onSubmit}>
-    Carica
-  </Button>
-</form>*/

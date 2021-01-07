@@ -161,7 +161,7 @@ class GestionePrenotazione extends React.Component {
                     </div>
                 </div>
             );
-        }
+        } 
         else {
             return (
                 <div className="containerGP">
@@ -174,10 +174,10 @@ class GestionePrenotazione extends React.Component {
                                     <Accordion>
                                         <Card border="light" id="cardGP">
                                                 <div className="headcac">
-                                                    <p>ID: {res.id_prenotazione}</p>
-                                                    <p>Partenza: {new Date(res.data_partenza).toLocaleDateString()}</p>
-                                                    <p>Ritorno: {new Date(res.data_ritorno).toLocaleDateString()}</p>
-                                                    <p>Stato: {res.accettata === null ? 'In attesa di accettazione' : (res.accettata === 1 ? 'Accettata' : 'Rifiutata')}</p>
+                                                    <p className="bianco">ID: {res.id_prenotazione}</p>
+                                                    <p className="bianco">Partenza: {new Date(res.data_partenza).toLocaleDateString()}</p>
+                                                    <p className="bianco">Ritorno: {new Date(res.data_ritorno).toLocaleDateString()}</p>
+                                                    <p className="bianco">Stato: {res.accettata === null ? 'In attesa di accettazione' : (res.accettata === 1 ? 'Accettata' : 'Rifiutata')}</p>
                                                     <Accordion.Toggle as={Button} variant="link" eventKey="0" id="accbutt1" onClick = {() => this.set_id(res.id_prenotazione)}>
                                                         Dettagli
                                                     </Accordion.Toggle>
@@ -191,11 +191,11 @@ class GestionePrenotazione extends React.Component {
                                                     <Card.Title><h5>{res.nome_proprieta}</h5></Card.Title>
                                                     <Card.Img src={res.img}/>
                                                     <Card.Text>
-                                                    <p>Codice struttura: {res.ref_proprieta}, Tipo struttura: {res.tipo_proprieta === 'bb' ? 'B&B' : 'Casa vacanza'}</p>
-                                                    <p style = {{display: res.tipo_proprieta === 'bb' ? 'inline' : 'none'}}>Codice stanza: {res.id_stanza}</p>
-                                                    <p>Località: {res.localita} ({res.provincia}),Indirizzo: {res.indirizzo}</p>
-                                                    <p>Costo: {res.costo} euro</p>
-                                                    <p>Soggiornante: {res.nome_sogg} {res.cognome_sogg}</p>
+                                                    <p className="bianco">Codice struttura: {res.ref_proprieta}, Tipo struttura: {res.tipo_proprieta === 'bb' ? 'B&B' : 'Casa vacanza'}</p>
+                                                    <p className="bianco" style = {{display: res.tipo_proprieta === 'bb' ? 'inline' : 'none'}}>Codice stanza: {res.id_stanza}</p>
+                                                    <p className="bianco">Località: {res.localita} ({res.provincia}),Indirizzo: {res.indirizzo}</p>
+                                                    <p className="bianco">Costo: {res.costo} euro</p>
+                                                    <p className="bianco">Soggiornante: {res.nome_sogg} {res.cognome_sogg}</p>
                                                     </Card.Text>
                                                     </Card.Body>
                                                     </Card>
@@ -209,11 +209,11 @@ class GestionePrenotazione extends React.Component {
                                                             <Accordion.Toggle as={Button} variant="link" eventKey="3" id="accbutton">Contatta il gestore</Accordion.Toggle>
                                                             </div>
                                                             <Accordion.Collapse eventKey="1">
-                                                                <div className="tisfunnu">
+                                                                <div className="changeData">
                                                                 <Form>
                                                                     <Form.Row>
                                                                         <Form.Group as={Col} controlId="formGridDate">
-                                                                            <Form.Label>Data di inizio</Form.Label>
+                                                                            <Form.Label className="bianco">Data di inizio</Form.Label>
                                                                             <Form.Control 
                                                                                 type="date" 
                                                                                 placeholder="Inserisci data di inizio" 
@@ -223,7 +223,7 @@ class GestionePrenotazione extends React.Component {
                                                                             />
                                                                         </Form.Group>
                                                                         <Form.Group as={Col} controlId="formGridDate1">
-                                                                            <Form.Label>Data fine</Form.Label>
+                                                                            <Form.Label className="bianco">Data fine</Form.Label>
                                                                             <Form.Control 
                                                                                 type="date" 
                                                                                 placeholder="Inserisci data di fine" 
@@ -242,7 +242,7 @@ class GestionePrenotazione extends React.Component {
 
                                                             <Accordion.Collapse eventKey="2">
                                                                 <div>
-                                                                    <p>Sei sicuro di voler eliminare la tua prenotazione? Non riavrai indietro la caparra.</p>
+                                                                    <p className="bianco">Sei sicuro di voler eliminare la tua prenotazione? Non riavrai indietro la caparra.</p>
                                                                     <Button id="annulla1">Conferma</Button>
                                                                     <Button id="annulla2">Annulla</Button>
                                                                 </div>
@@ -252,9 +252,9 @@ class GestionePrenotazione extends React.Component {
                                                                 <Form className="formCG">
                                                                     <Form.Row>
                                                                         <Form.Group controlId="formGridContact">
-                                                                            <Form.Label>Inserisci email</Form.Label>
+                                                                            <Form.Label className="bianco">Inserisci email</Form.Label>
                                                                             <Form.Control type="email" placeholder="Inserisci tua email" />
-                                                                            <Form.Label>Inserisci messaggio da inviare al gestore</Form.Label>
+                                                                            <Form.Label className="bianco">Inserisci messaggio da inviare al gestore</Form.Label>
                                                                             <Form.Control as="textarea" placeholder="Inserisci testo" />
                                                                             
                                                                         </Form.Group>

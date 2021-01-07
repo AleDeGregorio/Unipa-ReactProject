@@ -383,9 +383,10 @@ class ListItemPrenotazioni extends Component {
               </ListItemText>
               <ListItemTextSecond>
                 <div className="text-div-style">
-               <p>Num persone: {num_soggiornanti} Costo: {costo} </p>          
-               <p>Partenza-Ritorno: {new Date(data_partenza).toLocaleDateString()},  {new Date(data_ritorno).toLocaleDateString()}</p>
-               <p>CF Soggiornante: {ref_soggiornante}</p>
+               Num persone: {num_soggiornanti} Costo: {costo}  
+               <br/>       
+              Partenza-Ritorno: {new Date(data_partenza).toLocaleDateString()},  {new Date(data_ritorno).toLocaleDateString()}<br/>  
+               CF Soggiornante: {ref_soggiornante}
            
                </div>
               </ListItemTextSecond>
