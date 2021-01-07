@@ -22,6 +22,9 @@ class InserimentoCasaVacanza extends React.Component {
       provincia: '',
       tipo_proprieta: 'cv',
       servizi: '',
+      listaServiziCasa: [],
+      listaServizi: [],
+      nuovoServizio: '',
       descrizione: '',
       ref_proprietario: localStorage.getItem('email'),
       posti_letto:'',
@@ -45,6 +48,29 @@ class InserimentoCasaVacanza extends React.Component {
       empty: false
     };
   }
+
+  componentDidMount() {
+
+    fetch('http://localhost:9000/servizi/all', {
+      method: "GET",
+      headers: {
+        'Content-type': 'application/json'
+      }
+    })
+    .then((result) => result.text())
+    .then((result) => {
+        this.setState({ listaServizi: JSON.parse(result) });
+    
+        if(this.state.listaServizi.status === 'error') {
+          this.setState({ error: true });
+          this.setState({ errorMessage: this.state.listaServizi.message });
+        }
+      });
+
+    this.setState({
+      listaServiziCasa: this.state.servizi.replace(/\s*,\s*/g, ",").split(',')
+    })
+  }
   
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
@@ -53,6 +79,21 @@ class InserimentoCasaVacanza extends React.Component {
   onChangeFoto = (e) => {
     this.setState({ [e.target.name]: URL.createObjectURL(e.target.files[0]) })
     this.setState({ [e.target.id]: e.target.files[0] });
+  }
+
+  onChangeServizi = (e) => {
+    if(e.target.checked) {
+      this.setState({
+        listaServiziCasa: [...new Set(this.state.listaServiziCasa.concat(e.target.id).sort())]
+      });
+    }
+    else {
+      var filtraServizi = this.state.listaServiziCasa.filter(servizio => servizio !== e.target.id);
+
+      this.setState({
+        listaServiziCasa: filtraServizi
+      });
+    }
   }
 
   onSubmitInsert = (e) => {
@@ -64,7 +105,7 @@ class InserimentoCasaVacanza extends React.Component {
       localita: this.state.localita,
       provincia: this.state.provincia,
       tipo_proprieta: 'cv',
-      servizi: this.state.servizi,
+      servizi: this.state.listaServiziCasa,
       ref_proprietario: this.state.ref_proprietario,
       descrizione: this.state.descrizione
     }
@@ -159,6 +200,40 @@ class InserimentoCasaVacanza extends React.Component {
     });
   });
   
+  }
+
+  aggiungiServizio = (e) => {
+    if(this.state.nuovoServizio !== '') {
+
+      const data = {
+        servizio: this.state.nuovoServizio
+      }
+
+      fetch('http://localhost:9000/insertServizio/new', {
+        method: "POST",
+        headers:{
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then((result) => result.text())
+      .then((result) => {
+        this.setState({ apiResponse: JSON.parse(result) });
+
+        var res = JSON.parse(result);
+
+        if(res.length < 1 || (res.code && res.code === 404)) {
+          this.setState({ empty: true, errorMessage: res.message });
+        }
+
+        if(this.state.apiResponse.status === 'error') {
+          this.setState({ error: true });
+          this.setState({ errorMessage: this.state.apiResponse.message });
+        }
+
+        window.location.reload();
+      });
+    }
   }
 
   render() {
@@ -272,16 +347,13 @@ class InserimentoCasaVacanza extends React.Component {
                     </Form.Row>
                     <Form.Group controlId="exampleForm.ControlTextarea1">
                     <Form.Label>Inserisci servizio aggiuntivo</Form.Label>
-                     <Form.Control as="textarea" rows={1} />
+                     <Form.Control as="textarea" rows={1} id = 'nuovoServizio' name = 'nuovoServizio' onChange = {this.onChange} />
                      </Form.Group>
-                    <Button /*onClick = da definire*/>
+                    <Button onClick = {this.aggiungiServizio}>
                       Aggiungi servizio
                     </Button>
                     <br />
                     <br />
-                    <Button onClick = {this.onSubmit}>
-                      Cambia servizi
-                    </Button>
             
                   <label htmlFor = "descrizione">Descrizione</label>
               <input

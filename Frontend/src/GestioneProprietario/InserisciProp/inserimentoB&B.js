@@ -20,6 +20,9 @@ class InserimentoBnB extends React.Component {
       provincia: '',
       tipo_proprieta: 'bb',
       servizi: '',
+      listaServiziBB: [],
+      listaServizi: [],
+      nuovoServizio: '',
       descrizione: '',
       ref_proprietario: localStorage.getItem('email'),
       check_in: '',
@@ -32,8 +35,46 @@ class InserimentoBnB extends React.Component {
     };
   }
 
+  componentDidMount() {
+
+    fetch('http://localhost:9000/servizi/all', {
+      method: "GET",
+      headers: {
+        'Content-type': 'application/json'
+      }
+    })
+    .then((result) => result.text())
+    .then((result) => {
+        this.setState({ listaServizi: JSON.parse(result) });
+    
+        if(this.state.listaServizi.status === 'error') {
+          this.setState({ error: true });
+          this.setState({ errorMessage: this.state.listaServizi.message });
+        }
+      });
+
+    this.setState({
+      listaServiziBB: this.state.servizi.replace(/\s*,\s*/g, ",").split(',')
+    })
+  }
+
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
+  }
+
+  onChangeServizi = (e) => {
+    if(e.target.checked) {
+      this.setState({
+        listaServiziBB: [...new Set(this.state.listaServiziBB.concat(e.target.id).sort())]
+      });
+    }
+    else {
+      var filtraServizi = this.state.listaServiziBB.filter(servizio => servizio !== e.target.id);
+
+      this.setState({
+        listaServiziBB: filtraServizi
+      });
+    }
   }
 
   onSubmitInsert = (e) => {
@@ -45,7 +86,7 @@ class InserimentoBnB extends React.Component {
       localita: this.state.localita,
       provincia: this.state.provincia,
       tipo_proprieta: 'bb',
-      servizi: this.state.servizi,
+      servizi: this.state.listaServiziBB,
       ref_proprietario: this.state.ref_proprietario,
       descrizione: this.state.descrizione
     }
@@ -104,6 +145,40 @@ class InserimentoBnB extends React.Component {
         }
       });
     });
+  }
+
+  aggiungiServizio = (e) => {
+    if(this.state.nuovoServizio !== '') {
+
+      const data = {
+        servizio: this.state.nuovoServizio
+      }
+
+      fetch('http://localhost:9000/insertServizio/new', {
+        method: "POST",
+        headers:{
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then((result) => result.text())
+      .then((result) => {
+        this.setState({ apiResponse: JSON.parse(result) });
+
+        var res = JSON.parse(result);
+
+        if(res.length < 1 || (res.code && res.code === 404)) {
+          this.setState({ empty: true, errorMessage: res.message });
+        }
+
+        if(this.state.apiResponse.status === 'error') {
+          this.setState({ error: true });
+          this.setState({ errorMessage: this.state.apiResponse.message });
+        }
+
+        window.location.reload();
+      });
+    }
   }
 
   render() {
@@ -204,7 +279,7 @@ class InserimentoBnB extends React.Component {
                     <Form.Row>
                       <Form.Group as={Col} controlId="formGridState">
                         <Form.Label>Servizi</Form.Label>
-                          {this.state.listaServizi.map(item => {
+                        {this.state.listaServizi.map(item => {
                             return(
                               <div>
                                 <Form.Check
@@ -213,7 +288,7 @@ class InserimentoBnB extends React.Component {
                                   id={item.servizio}
                                   onChange={this.onChangeServizi}
                                   label = {item.servizio}
-                                  defaultChecked = {this.state.listaServiziCasa.includes(item.servizio) ? "true" : ""}
+                                  defaultChecked = {this.state.listaServiziBB.includes(item.servizio) ? "true" : ""}
                                 />
                               </div>
                             )
@@ -222,16 +297,13 @@ class InserimentoBnB extends React.Component {
                     </Form.Row>
                     <Form.Group controlId="exampleForm.ControlTextarea1">
                     <Form.Label>Aggiungi servizio</Form.Label>
-                     <Form.Control as="textarea" rows={1} />
+                     <Form.Control as="textarea" rows={1} id = 'nuovoServizio' name = 'nuovoServizio' onChange = {this.onChange} />
                      </Form.Group>
-                    <Button /*onClick = da definire*/>
+                    <Button onClick = {this.aggiungiServizio}>
                       Aggiungi servizio
                     </Button>
                     <br/>
                     <br />
-                    <Button onClick = {this.onSubmit}>
-                      Inserisci servizi
-                    </Button>
                   <label htmlFor = "descrizione">Descrizione</label>
                   <input
                   type = "text"

@@ -22,9 +22,10 @@ class ModificaBeB extends React.Component {
       localita: this.props.history.location.state ? this.props.history.location.state.dati_bb.localita : '',
       provincia: this.props.history.location.state ? this.props.history.location.state.dati_bb.provincia : '',
       tipo_proprieta: this.props.history.location.state ? this.props.history.location.state.dati_bb.tipo_proprieta : '',
-      servizi: this.props.history.location.state ? this.props.history.location.state.dati_casa.servizi : [],
+      servizi: this.props.history.location.state ? this.props.history.location.state.dati_bb.servizi : [],
       listaServiziBB: [],
       listaServizi: [],
+      nuovoServizio: '',
       descrizione: this.props.history.location.state ? this.props.history.location.state.dati_bb.descrizione : '',
       ref_proprieta_bb: this.props.history.location.state ? this.props.history.location.state.dati_bb.ref_proprieta_bb : '',
       check_in: this.props.history.location.state ? this.props.history.location.state.dati_bb.check_in : '',
@@ -149,6 +150,40 @@ class ModificaBeB extends React.Component {
         });
       }
     });
+  }
+
+  aggiungiServizio = (e) => {
+    if(this.state.nuovoServizio !== '') {
+
+      const data = {
+        servizio: this.state.nuovoServizio
+      }
+
+      fetch('http://localhost:9000/insertServizio/new', {
+        method: "POST",
+        headers:{
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then((result) => result.text())
+      .then((result) => {
+        this.setState({ apiResponse: JSON.parse(result) });
+
+        var res = JSON.parse(result);
+
+        if(res.length < 1 || (res.code && res.code === 404)) {
+          this.setState({ empty: true, errorMessage: res.message });
+        }
+
+        if(this.state.apiResponse.status === 'error') {
+          this.setState({ error: true });
+          this.setState({ errorMessage: this.state.apiResponse.message });
+        }
+
+        window.location.reload();
+      });
+    }
   }
 
   render() {
@@ -292,7 +327,7 @@ class ModificaBeB extends React.Component {
                                   id={item.servizio}
                                   onChange={this.onChangeServizi}
                                   label = {item.servizio}
-                                  defaultChecked = {this.state.listaServiziCasa.includes(item.servizio) ? "true" : ""}
+                                  defaultChecked = {this.state.listaServiziBB.includes(item.servizio) ? "true" : ""}
                                 />
                               </div>
                             )
@@ -301,16 +336,16 @@ class ModificaBeB extends React.Component {
                     </Form.Row>
                     <Form.Group controlId="exampleForm.ControlTextarea1">
                     <Form.Label>Aggiungi servizio</Form.Label>
-                     <Form.Control as="textarea" rows={1} />
+                     <Form.Control as="textarea" rows={1} id = 'nuovoServizio' name = 'nuovoServizio' onChange = {this.onChange} />
                      </Form.Group>
-                    <Button /*onClick = da definire*/>
+                    <Button onClick = {this.aggiungiServizio}>
                       Aggiungi servizio
                     </Button>
                     <br/>
                     <br />
                     <Button onClick = {this.onSubmit}>
                      Modifica servizi
-                    </Button>>
+                    </Button>
                   </Card.Body>
                 </Accordion.Collapse>
               </Card>

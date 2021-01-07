@@ -25,6 +25,7 @@ class ModificaCasaVacanza extends React.Component {
       servizi: this.props.history.location.state ? this.props.history.location.state.dati_casa.servizi : [],
       listaServiziCasa: [],
       listaServizi: [],
+      nuovoServizio: '',
       descrizione: this.props.history.location.state ? this.props.history.location.state.dati_casa.descrizione : '',
       ref_proprieta_cv: this.props.history.location.state ? this.props.history.location.state.dati_casa.ref_proprieta_cv : '',
       posti_letto: this.props.history.location.state ? this.props.history.location.state.dati_casa.posti_letto : '',
@@ -211,6 +212,40 @@ class ModificaCasaVacanza extends React.Component {
     });
   }
 
+  aggiungiServizio = (e) => {
+    if(this.state.nuovoServizio !== '') {
+
+      const data = {
+        servizio: this.state.nuovoServizio
+      }
+
+      fetch('http://localhost:9000/insertServizio/new', {
+        method: "POST",
+        headers:{
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then((result) => result.text())
+      .then((result) => {
+        this.setState({ apiResponse: JSON.parse(result) });
+
+        var res = JSON.parse(result);
+
+        if(res.length < 1 || (res.code && res.code === 404)) {
+          this.setState({ empty: true, errorMessage: res.message });
+        }
+
+        if(this.state.apiResponse.status === 'error') {
+          this.setState({ error: true });
+          this.setState({ errorMessage: this.state.apiResponse.message });
+        }
+
+        window.location.reload();
+      });
+    }
+  }
+
   render() {
     if(!localStorage.getItem('logged') || !localStorage.getItem('proprietario')) {
       return <Redirect
@@ -361,9 +396,9 @@ class ModificaCasaVacanza extends React.Component {
                     </Form.Row>
                     <Form.Group controlId="exampleForm.ControlTextarea1">
                     <Form.Label>Aggiungi servizio</Form.Label>
-                     <Form.Control as="textarea" rows={1} />
+                     <Form.Control as="textarea" rows={1} id = 'nuovoServizio' name = 'nuovoServizio' onChange = {this.onChange} />
                      </Form.Group>
-                    <Button /*onClick = da definire*/>
+                    <Button onClick = {this.aggiungiServizio}>
                       Aggiungi servizio
                     </Button>
                     <br/>
