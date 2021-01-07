@@ -18,10 +18,10 @@ import BandB from './Pagine/B&B'
 import Prenota from './Prenota/Prenota'
 
 // Login e registrazione
-import SecondaAutenticazioneAccedi from './Autenticazione/secondaAutenticazioneAccedi'
-import SecondaAutenticazioneRegistrati from './Autenticazione/secondaAutenticazioneRegistrati'
-import SecondaAutenticazioneRegistratiCliente from './Autenticazione/secondaAutenticazioneRegistratiCliente'
-import SecondaAutenticazioneRegistratiProprietario from './Autenticazione/secondaAutenticazioneRegistratiProprietario'
+import AutenticazioneAccedi from './Autenticazione/autenticazioneAccedi'
+import AutenticazioneRegistrati from './Autenticazione/autenticazioneRegistrati'
+import AutenticazioneRegistratiCliente from './Autenticazione/autenticazioneRegistratiCliente'
+import AutenticazioneRegistratiProprietario from './Autenticazione/autenticazioneRegistratiProprietario'
 
 // Area personale del cliente
 import Cliente from './components/ClientePage'
@@ -184,9 +184,9 @@ class App extends React.Component {
                   )}
               />
               <Route 
-                exact path = '/secondaAutenticazioneAccedi'
+                exact path = '/autenticazioneAccedi'
                 render = { (props) => (
-                  <SecondaAutenticazioneAccedi {...props}
+                  <AutenticazioneAccedi {...props}
                     onChange = {this.onChange}
                     onSubmitLogin = {this.onSubmitLogin}
                     error = {this.state.error}
@@ -195,21 +195,21 @@ class App extends React.Component {
                 )}
               />
               <Route 
-                exact path="/secondaAutenticazioneRegistrati"
+                exact path="/autenticazioneRegistrati"
                 render = { (props) => (
-                  <SecondaAutenticazioneRegistrati {...props}/>
+                  <AutenticazioneRegistrati {...props}/>
                 )}
               />
               <Route 
-                exact path="/secondaAutenticazioneRegistratiCliente"
+                exact path="/autenticazioneRegistratiCliente"
                 render = { (props) => (
-                  <SecondaAutenticazioneRegistratiCliente {...props}/>
+                  <AutenticazioneRegistratiCliente {...props}/>
                 )}
               />
               <Route 
-                exact path="/secondaAutenticazioneRegistratiProprietario"
+                exact path="/autenticazioneRegistratiProprietario"
                 render = { (props) => (
-                  <SecondaAutenticazioneRegistratiProprietario {...props}/>
+                  <AutenticazioneRegistratiProprietario {...props}/>
                 )}
               />
 

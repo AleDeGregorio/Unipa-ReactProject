@@ -4,11 +4,11 @@ import React from 'react';
 import {Form, Col, Button} from 'react-bootstrap'
 //import { Row } from 'react-bootstrap'
 import {Link} from 'react-router-dom'
-import './secondaAutenticazione.css'
+import './autenticazione.css'
 
 import { Redirect } from 'react-router-dom';
 
-class SecondaAutenticazioneAccedi extends React.Component {
+class autenticazioneAccedi extends React.Component {
 
     constructor(props) {
         super(props);
@@ -39,7 +39,7 @@ class SecondaAutenticazioneAccedi extends React.Component {
                                 <Form.Control type="password" name = "password" placeholder="Password" onChange = {this.handleChange} required/>
                             </Form.Group>
                             <p style={{color: 'red'}}>Nome utente o password errati</p>
-                            <label>Non sei iscritto?<Link to="/secondaAutenticazioneRegistrati"> REGISTRATI</Link></label>
+                            <label>Non sei iscritto?<Link to="/autenticazioneRegistrati"> REGISTRATI</Link></label>
                         <Button variant="primary" type="submit" className="pulsante">
                             Accedi
                         </Button>
@@ -67,7 +67,7 @@ class SecondaAutenticazioneAccedi extends React.Component {
                         <Form.Group as={Col} controlId="formGridPassword">
                             <Form.Control type="password" name = "password" placeholder="Password" onChange = {this.handleChange} required/>
                         </Form.Group>
-                        <label>Non sei iscritto?<Link to="/secondaAutenticazioneRegistrati"> REGISTRATI</Link></label>
+                        <label>Non sei iscritto?<Link to="/autenticazioneRegistrati"> REGISTRATI</Link></label>
                     <Button variant="primary" type="submit" className="pulsante">
                         Accedi
                     </Button>
@@ -77,4 +77,4 @@ class SecondaAutenticazioneAccedi extends React.Component {
     }
 }
 
-export default SecondaAutenticazioneAccedi
+export default autenticazioneAccedi

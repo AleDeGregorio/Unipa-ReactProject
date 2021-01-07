@@ -2,11 +2,11 @@ import React from 'react';
 import {Form, Col, Button} from 'react-bootstrap'
 //import { Row } from 'react-bootstrap
 import {Link} from 'react-router-dom'
-import './secondaAutenticazione.css'
+import './autenticazione.css'
 
 import { Redirect } from 'react-router-dom';
 
-class SecondaAutenticazioneRegistratiProprietario extends React.Component {
+class autenticazioneRegistratiProprietario extends React.Component {
     
     constructor(props) {
         super(props);
@@ -97,7 +97,7 @@ class SecondaAutenticazioneRegistratiProprietario extends React.Component {
                         <h2>Iscriviti</h2>
                         <p>Si è verificato un errore: {this.state.errorMessage}</p>
 
-                        <Link to="/secondaAutenticazioneRegistrati">Torna indietro</Link>
+                        <Link to="/autenticazioneRegistrati">Torna indietro</Link>
                     </div>
                 </Form>
             );
@@ -192,7 +192,7 @@ class SecondaAutenticazioneRegistratiProprietario extends React.Component {
                             />
                         </Form.Group>
 
-                        <Link to="/secondaAutenticazioneRegistrati">Torna indietro</Link>
+                        <Link to="/autenticazioneRegistrati">Torna indietro</Link>
                     </div>
                 
                     <Button variant="primary" className="pulsante" onClick = {this.onSubmitInsert}>
@@ -203,4 +203,4 @@ class SecondaAutenticazioneRegistratiProprietario extends React.Component {
         }
     }
 }
-export default SecondaAutenticazioneRegistratiProprietario
+export default autenticazioneRegistratiProprietario

@@ -17,8 +17,8 @@ class CaseVacanzaFilter extends React.Component {
       checkOut: this.props.checkOut ? this.props.checkOut : '',
       checkInFocus: null,
       checkOutFocus: null,
-      startDate: this.props.checkIn ? moment(this.props.checkIn, "DD-MM-YYYY") : null,
-      endDate: this.props.checkOut ? moment(this.props.checkOut, "DD-MM-YYYY") : null,
+      startDate: null,
+      endDate: null,
       searchServizi: [],
       costo: 1000,
       minCosto: 0,
@@ -31,16 +31,22 @@ class CaseVacanzaFilter extends React.Component {
   }
 
   componentDidMount() {
-    var ngiorni = this.state.endDate.diff(this.state.startDate, 'days');
-
-    if(ngiorni < 1) {
-      ngiorni = 1;
-    }
-
     this.setState({
-      maxCosto: ngiorni * 150,
-      costo: ngiorni*150
-    })
+      startDate: this.state.checkIn ? moment(this.state.checkIn, "DD-MM-YYYY") : null,
+      endDate: this.state.checkOut ? moment(this.state.checkOut, "DD-MM-YYYY") : null
+    }, () => {
+      
+      var ngiorni = this.state.endDate ? this.state.endDate.diff(this.state.startDate, 'days') : 1;
+
+      if(ngiorni < 1) {
+        ngiorni = 1;
+      }
+
+      this.setState({
+        maxCosto: ngiorni * 150,
+        costo: ngiorni*150
+      });
+    });
   }
 
   set_focused_checkIn = (e) => {

@@ -35,7 +35,7 @@ class NavBar extends React.Component {
                <Dropdown.Item href="/GestionePrenotazione" >Gestisci prenotazioni</Dropdown.Item>
                <Dropdown.Item href="/DiventaHost">Diventa un host</Dropdown.Item>
                <Dropdown.Item href="/DatiPersonali">Dati personali</Dropdown.Item>
-               <Dropdown.Item href="/SecondaAutenticazioneAccedi" onClick = {this.onClick}>Logout</Dropdown.Item>
+               <Dropdown.Item href="/autenticazioneAccedi" onClick = {this.onClick}>Logout</Dropdown.Item>
                
               </Dropdown.Menu></DropdownButton>
                     
@@ -45,7 +45,7 @@ class NavBar extends React.Component {
             );
         }
         //<Nav.Link href="/PaginaProprietario">Area personale</Nav.Link>
-       //<Nav.Link href="/SecondaAutenticazioneAccedi" onClick = {this.onClick}>ESCI</Nav.Link>
+       //<Nav.Link href="/autenticazioneAccedi" onClick = {this.onClick}>ESCI</Nav.Link>
         if(localStorage.getItem('logged') && localStorage.getItem('proprietario')) {
             return(
                 <Navbar bg="light" expand="lg">
@@ -58,7 +58,7 @@ class NavBar extends React.Component {
                         <Nav.Link href="/CasaVacanza">Casa Vacanza</Nav.Link>
                     </Nav>
                 <Nav.Link href="/PaginaProprietario">Area personale</Nav.Link>
-                <Nav.Link href="/SecondaAutenticazioneAccedi" onClick = {this.onClick}>ESCI</Nav.Link>
+                <Nav.Link href="/autenticazioneAccedi" onClick = {this.onClick}>ESCI</Nav.Link>
                   
                 </Navbar.Collapse>
             </Navbar>
@@ -74,7 +74,7 @@ class NavBar extends React.Component {
                         <Nav.Link href="/BnB">BnB</Nav.Link>
                         <Nav.Link href="/CasaVacanza">Casa Vacanza</Nav.Link>
                     </Nav>
-                        <Nav.Link href="/secondaAutenticazioneAccedi">ACCEDI</Nav.Link>
+                        <Nav.Link href="/autenticazioneAccedi">ACCEDI</Nav.Link>
                 </Navbar.Collapse>
             </Navbar>
         );
@@ -103,7 +103,7 @@ function Menu (){
              
                 <Nav.Link href="/GestionePrenotazione">Le tue prenotazioni</Nav.Link>
                 <Nav.Link href="/DiventaHost">Diventa un Host</Nav.Link>
-                <Nav.Link href="/SecondaAutenticazioneAccedi" onClick = {this.onClick}>Logout</Nav.Link>
+                <Nav.Link href="/autenticazioneAccedi" onClick = {this.onClick}>Logout</Nav.Link>
                 <Nav.Link href="/DatiPersonali">Modifica Account</Nav.Link>
              */
 

@@ -2,11 +2,11 @@ import React from 'react';
 import {Form, Col, Button} from 'react-bootstrap'
 //import { Row } from 'react-bootstrap'
 import {Link} from 'react-router-dom'
-import './secondaAutenticazione.css'
+import './autenticazione.css'
 
 import { Redirect } from 'react-router-dom';
 
-class SecondaAutenticazioneRegistratiCliente extends React.Component {
+class autenticazioneRegistratiCliente extends React.Component {
 
     constructor(props) {
         super(props);
@@ -94,7 +94,7 @@ class SecondaAutenticazioneRegistratiCliente extends React.Component {
                     <div className="contentNewCheckAutenticazione">
                         <h2>Iscriviti</h2>
                         <p>Si è verificato un errore: {this.state.errorMessage}</p>
-                    <Link to="/secondaAutenticazioneRegistrati">Torna indietro</Link>
+                    <Link to="/autenticazioneRegistrati">Torna indietro</Link>
                 </div>
                 </Form>
             );
@@ -145,7 +145,7 @@ class SecondaAutenticazioneRegistratiCliente extends React.Component {
                     <Form.Label>Data di nascita</Form.Label>
                     <Form.Control type="date" required className="inputSignUp" id = 'nascita' name = 'nascita' onChange={this.onChange} />
                     </Form.Group>
-                    <Link to="/secondaAutenticazioneRegistrati">Torna indietro</Link>
+                    <Link to="/autenticazioneRegistrati">Torna indietro</Link>
                 </div>
                 
                 <Button variant="primary" type="submit" className="pulsante">
@@ -156,4 +156,4 @@ class SecondaAutenticazioneRegistratiCliente extends React.Component {
         }
     }
 }
-export default SecondaAutenticazioneRegistratiCliente
+export default autenticazioneRegistratiCliente
