@@ -53,6 +53,7 @@ export default class SingleCasaVacanza extends Component {
 
     return (
        <>
+       <div className="contieneContenitore">
          <div className="contenitoreRiepilogo">
            <StyledHero img={dati_casa.img1}>
              <Banner title={dati_casa.nome_proprieta}>
@@ -115,6 +116,7 @@ export default class SingleCasaVacanza extends Component {
             >
               <button className="bottonePrenota">PRENOTA</button>
             </Link>
+           </div>
            </div>
        </>
      );
@@ -211,6 +213,7 @@ export default class SingleCasaVacanza extends Component {
           </section>
               <button className="bottonePrenota">PRENOTA</button>
           </div>
+          
       </>
     );
   }

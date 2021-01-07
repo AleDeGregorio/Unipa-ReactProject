@@ -211,7 +211,7 @@ class CaseVacanzaFilter extends React.Component {
           {/* end of select type */}
         </form>
         {/* extras */}
-        <div className="form-group">
+        <div className="form-gruppo">
             <label htmlFor="costo">Costo €{this.state.costo}</label>
               <input
                 type="range"
@@ -225,7 +225,7 @@ class CaseVacanzaFilter extends React.Component {
                 defaultValue = {this.state.costo}
               />
         </div>
-        <div className="form-group-extra">
+        <div className="form-gruppo-extra">
           {this.props.servizi.map(item => {
             return(
               <div className="single-extra">

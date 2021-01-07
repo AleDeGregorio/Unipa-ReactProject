@@ -1,8 +1,61 @@
 .cdh{
-    height: 200px;
-    width: 200px;
+    height: 250px;
+    width: 250px;
+}
+#cdh1{
+    display: flex;
+  justify-content: center;
+  color: white;
+  background: rgba(8, 1, 1, 0.7);
+  border: 2px solid white;
+  border-radius: 0;
 }
 .top {
+
     display: flex;
     flex-direction: row;
+    background: rgba(8, 1, 1, 0.5);
+}
+.containerFormDH{
+    margin-top:20px;
+}
+
+.formDH{
+    margin-top:20px;
+    width:90%;
+    background: rgba(8, 1, 1, 0.3);
+    border:2px solid white;
+    position:relative;
+    left:5%;
+    height:75%;
+}
+.colorLabel{
+    margin-top:10px;
+    color:white;
+}
+#form-select{
+    width:80%;
+    position:relative;
+    left:10%;
+}
+#form-select1{
+    width:80%;
+    position:relative;
+    left:10%;
+    color:white;
+}
+#dhbutton{
+    color:white;
+    background-color: black;
+    border:none;
+}
+#jumbo{
+    background-color:red;
+    position:relative;
+    left:20%;
+    top:10%;
+}
+.containerFormSV{
+    margin-bottom:50px;
+    margin-top:30px;
 }

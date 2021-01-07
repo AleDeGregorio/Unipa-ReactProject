@@ -10,11 +10,10 @@ import './secondaAutenticazione.css'
 function SecondaAutenticazioneRegistrati(){
     return(
 
-        <Form className="contenitoreAutenticazione">
+        <Form className="contenitoreAutenticazioneRegistrati">
             <div className="contentNewCheckAutenticazione">
                 <h2>Iscriviti</h2>
-                
-                <div>
+                <div className="contenitorePulsanti">
                     <Button variant="primary" type="submit" className="pulsanti" href="/secondaAutenticazioneRegistratiCliente">
                         Cliente
                     </Button>

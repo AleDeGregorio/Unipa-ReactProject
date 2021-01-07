@@ -172,22 +172,23 @@ class GestionePrenotazione extends React.Component {
                             this.state.apiResponse.map(((res)=> 
                                 <div className="containeracc">
                                     <Accordion>
-                                        <Card border="light">
+                                        <Card border="light" id="cardGP">
                                                 <div className="headcac">
                                                     <p>ID: {res.id_prenotazione}</p>
                                                     <p>Partenza: {new Date(res.data_partenza).toLocaleDateString()}</p>
                                                     <p>Ritorno: {new Date(res.data_ritorno).toLocaleDateString()}</p>
                                                     <p>Stato: {res.accettata === null ? 'In attesa di accettazione' : (res.accettata === 1 ? 'Accettata' : 'Rifiutata')}</p>
-                                                    <Accordion.Toggle as={Button} variant="link" eventKey="0" onClick = {() => this.set_id(res.id_prenotazione)}>
+                                                    <Accordion.Toggle as={Button} variant="link" eventKey="0" id="accbutt1" onClick = {() => this.set_id(res.id_prenotazione)}>
                                                         Dettagli
                                                     </Accordion.Toggle>
                                                 </div>
                                             <Accordion.Collapse eventKey="0">
                                                 <Card.Body>
+                                                    <div className="infopren">
                                                     <h4>Dettagli struttura </h4>
-                                                    <Card className="propcard">
+                                                    <Card className="propcard" id="cardGP">
                                                     <Card.Body>
-                                                    <Card.Title>{res.nome_proprieta}</Card.Title>
+                                                    <Card.Title><h5>{res.nome_proprieta}</h5></Card.Title>
                                                     <Card.Img src={res.img}/>
                                                     <Card.Text>
                                                     <p>Codice struttura: {res.ref_proprieta}, Tipo struttura: {res.tipo_proprieta === 'bb' ? 'B&B' : 'Casa vacanza'}</p>
@@ -198,14 +199,15 @@ class GestionePrenotazione extends React.Component {
                                                     </Card.Text>
                                                     </Card.Body>
                                                     </Card>
-                                                   
+                                                    </div>
                                                     
                                                     <Accordion>
                                                         <div className="acc3">
-                                                            <Accordion.Toggle as={Button} onClick={this.nomeFunzione} variant="link" eventKey="1">Modifica data prenotazione</Accordion.Toggle>
-                                                            <Accordion.Toggle as={Button} variant="link" eventKey="2">Elimina prenotazione</Accordion.Toggle>
-                                                            <Accordion.Toggle as={Button} variant="link" eventKey="3">Contatta il gestore</Accordion.Toggle>
-
+                                                            <div className="just-cont">
+                                                            <Accordion.Toggle as={Button} onClick={this.nomeFunzione} id="accbutton" variant="link" eventKey="1">Modifica data prenotazione</Accordion.Toggle>
+                                                            <Accordion.Toggle as={Button} variant="link" eventKey="2" id="accbutton">Elimina prenotazione</Accordion.Toggle>
+                                                            <Accordion.Toggle as={Button} variant="link" eventKey="3" id="accbutton">Contatta il gestore</Accordion.Toggle>
+                                                            </div>
                                                             <Accordion.Collapse eventKey="1">
                                                                 <div className="tisfunnu">
                                                                 <Form>
@@ -232,7 +234,7 @@ class GestionePrenotazione extends React.Component {
                                                                         </Form.Group>
                                                                     </Form.Row>
                                                                 </Form>
-                                                                <Button variant="primary" type="submit">
+                                                                <Button id="cambiadata" type="submit">
                                                                 Modifica data
                                                                  </Button>
                                                                  </div>
@@ -241,22 +243,25 @@ class GestionePrenotazione extends React.Component {
                                                             <Accordion.Collapse eventKey="2">
                                                                 <div>
                                                                     <p>Sei sicuro di voler eliminare la tua prenotazione? Non riavrai indietro la caparra.</p>
-                                                                    <Button>Conferma</Button>
-                                                                    <Button>Annulla</Button>
+                                                                    <Button id="annulla1">Conferma</Button>
+                                                                    <Button id="annulla2">Annulla</Button>
                                                                 </div>
                                                             </Accordion.Collapse>
 
                                                             <Accordion.Collapse eventKey="3" onClick = {() => this.set_emailProprietario(res.ref_proprietario)}>
-                                                                <Form>
+                                                                <Form className="formCG">
                                                                     <Form.Row>
                                                                         <Form.Group controlId="formGridContact">
                                                                             <Form.Label>Inserisci email</Form.Label>
                                                                             <Form.Control type="email" placeholder="Inserisci tua email" />
                                                                             <Form.Label>Inserisci messaggio da inviare al gestore</Form.Label>
                                                                             <Form.Control as="textarea" placeholder="Inserisci testo" />
+                                                                            
                                                                         </Form.Group>
+                                                                        
                                                                     </Form.Row>
-                                                                    <Button>Invia comunicazione</Button>
+                                                                    <Button id="formCG1">Invia comunicazione</Button>
+
                                                                 </Form>
                                                             </Accordion.Collapse>
                                                         </div>
