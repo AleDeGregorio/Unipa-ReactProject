@@ -1,18 +1,24 @@
 import React from "react";
 import { SingleDatePicker } from "react-dates";
 import './CaseVacanzaFiltro.css'
+import moment from "moment";
 
 class CaseVacanzaFilter extends React.Component {
+
   constructor(props) {
     super(props);
 
     this.state = {
       case: this.props.case ? this.props.case : [],
-      type: '',
+      tipo: this.props.tipo ? this.props.tipo : '',
       localita: this.props.localita ? this.props.localita : '',
       posti: this.props.posti ? this.props.posti : 1,
       checkIn: this.props.checkIn ? this.props.checkIn : '',
-      checkOut: this.props.checkIn ? this.props.checkOut : '',
+      checkOut: this.props.checkOut ? this.props.checkOut : '',
+      checkInFocus: null,
+      checkOutFocus: null,
+      startDate: this.props.checkIn ? moment(this.props.checkIn, "DD-MM-YYYY") : null,
+      endDate: this.props.checkOut ? moment(this.props.checkOut, "DD-MM-YYYY") : null,
       searchServizi: [],
       costo: 1000,
       minCosto: 0,
@@ -24,6 +30,19 @@ class CaseVacanzaFilter extends React.Component {
     }
   }
 
+  componentDidMount() {
+    var ngiorni = this.state.endDate.diff(this.state.endDate, 'days');
+
+    if(ngiorni < 1) {
+      ngiorni = 1;
+    }
+
+    this.setState({
+      maxCosto: ngiorni * 150,
+      costo: ngiorni*150
+    })
+  }
+
   set_focused_checkIn = (e) => {
     this.setState({ checkInFocus: e });
   }
@@ -33,11 +52,51 @@ class CaseVacanzaFilter extends React.Component {
   }
 
   setStartDate = (e) => {
-      this.setState({ startDate: e });
+    this.setState({ startDate: e }, () => {
+
+      var ngiorni = this.state.endDate.diff(this.state.startDate, 'days');
+
+      if(ngiorni > 1) {
+        ngiorni = 1;
+
+        this.setState({
+          maxCosto: ngiorni * 150,
+          costo: ngiorni*150
+        }, () => {
+          this.props.onChange(this.state);
+        });
+      }
+      
+      if(this.state.startDate.isAfter(this.state.endDate)) {
+        this.setState({ endDate: this.state.startDate.add(1, 'days'), startDate: this.state.startDate.subtract(1, 'days') }, () => {
+          var ngiorni = this.state.endDate.diff(this.state.startDate, 'days');
+
+          this.setState({
+            maxCosto: ngiorni * 150,
+            costo: ngiorni*150
+          }, () => {
+            this.props.onChange(this.state);
+          })
+        })
+      }
+    });
   }
 
   setEndDate = (e) => {
-      this.setState({ endDate: e });
+      this.setState({ endDate: e }, () => {
+        var ngiorni = this.state.endDate.diff(this.state.startDate, 'days');
+
+        if(ngiorni < 1) {
+          ngiorni = 1;
+        }
+
+        this.setState({
+          maxCosto: ngiorni * 150,
+          costo: ngiorni*150
+        }, () => {
+          this.props.onChange(this.state);
+        })
+      });
   }
 
   handleChange = (e) => {
@@ -73,7 +132,7 @@ class CaseVacanzaFilter extends React.Component {
                     <div class="search-element">
                         <label class="search-label">Località</label>
                         <input class="search-input" type="text" autocomplete="on" 
-                            placeholder="Località" id = 'localita' name="localita" onChange = {this.onChange}
+                          placeholder="Località" id = 'localita' name="localita" onChange = {this.handleChange} defaultValue = {this.state.localita}
                         >
                         </input>
                     </div>
@@ -126,7 +185,7 @@ class CaseVacanzaFilter extends React.Component {
                     </div>
                     <div class="search-element">
                         <label class="search-label">Tipo struttura</label>
-                        <select class="search-input" placeholder="Struttura" id = 'tipo' name = 'tipo' onChange = {this.onChange}>
+                        <select class="search-input" placeholder="Struttura" id = 'tipo' name = 'tipo' onChange = {this.handleChange} defaultValue = {this.state.tipo}>
                             <option></option>
                             <option value="cv">Casa Vacanza</option>
                             <option value="bb">B&B</option>
@@ -134,7 +193,7 @@ class CaseVacanzaFilter extends React.Component {
                     </div>
                     <div class="search-element-ospiti">
                         <label class="search-label">Ospiti</label>
-                        <select class="search-input-ospiti" placeholder="Ospiti" id = 'posti' name = 'posti' onChange = {this.onChange}>
+                        <select class="search-input-ospiti" placeholder="Ospiti" id = 'posti' name = 'posti' onChange = {this.handleChange} defaultValue = {this.state.posti}>
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -156,7 +215,7 @@ class CaseVacanzaFilter extends React.Component {
             <label htmlFor="costo">Costo €{this.state.costo}</label>
               <input
                 type="range"
-                step = "50"
+                step = "20"
                 name="costo"
                 min={this.state.minCosto}
                 max={this.state.maxCosto}

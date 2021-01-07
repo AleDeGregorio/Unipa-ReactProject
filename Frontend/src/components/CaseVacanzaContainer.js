@@ -4,6 +4,8 @@ import CaseVacanzaList from "./CaseVacanzaLista";
 
 import './CaseVacanzaLista.css'
 
+import moment from "moment";
+
 import { Redirect } from "react-router-dom";
 
 class CasaVacanzaContainer extends React.Component {
@@ -17,6 +19,7 @@ class CasaVacanzaContainer extends React.Component {
       checkIn: this.props.checkIn ? this.props.checkIn : '',
       checkOut: this.props.checkOut ? this.props.checkOut : '',
       localita: this.props.localita ? this.props.localita : '',
+      tipo: this.props.tipo ? this.props.tipo : '',
       searchServizi: [],
       datiRicerca: '',
       apiResponse: [],
@@ -45,18 +48,21 @@ class CasaVacanzaContainer extends React.Component {
   }
 
   onChange = (e) => {
-    this.setState({ posti: e.posti, datiRicerca: e }, () => {
+
+    this.setState({ posti: e.posti ? e.posti : this.state.posti, datiRicerca: e }, () => {
+      var inizio = this.state.datiRicerca.endDate ? new Date(this.state.datiRicerca.startDate.format()).toLocaleDateString() : new Date(moment().format()).toLocaleDateString();
+      var fine = this.state.datiRicerca.endDate ? new Date(this.state.datiRicerca.endDate.format()).toLocaleDateString() : new Date(moment().add(1, 'days').format()).toLocaleDateString();
+      
       const data = {
-        tipo: 'cv',
+        tipo: this.state.datiRicerca.tipo ? this.state.datiRicerca.tipo : '',
         localita: this.state.datiRicerca.localita ? this.state.datiRicerca.localita : '',
         provincia: '',
         servizi: '',
         posti: this.state.datiRicerca.posti ? this.state.datiRicerca.posti : '%%',
         costo: this.state.datiRicerca.costo ? this.state.datiRicerca.costo : '',
-        checkIn: this.state.checkIn,
-        checkOut: this.state.checkOut
+        checkIn: inizio,
+        checkOut: fine
       };
-
   
       fetch('http://localhost:9000/ricercaAlloggio/risultati', {
           method: "POST",
@@ -67,7 +73,6 @@ class CasaVacanzaContainer extends React.Component {
       })
       .then((result) => result.text())
       .then((result) => {
-          //console.log(JSON.parse(result));
           this.setState({ case: JSON.parse(result) });
   
           if(this.state.case.status === 'error') {
@@ -83,16 +88,20 @@ class CasaVacanzaContainer extends React.Component {
   }
 
   onChangeServizi = (e) => {
-    this.setState({ posti: e.posti, datiRicerca: e }, () => {
+
+    this.setState({ posti: e.posti ? e.posti : this.state.posti, datiRicerca: e }, () => {
+      var inizio = this.state.datiRicerca.endDate ? new Date(this.state.datiRicerca.startDate.format()).toLocaleDateString() : new Date(moment().format()).toLocaleDateString();
+      var fine = this.state.datiRicerca.endDate ? new Date(this.state.datiRicerca.endDate.format()).toLocaleDateString() : new Date(moment().add(1, 'days').format()).toLocaleDateString();
+      
       const data = {
-        tipo: 'cv',
+        tipo: this.state.datiRicerca.tipo ? this.state.datiRicerca.tipo : '',
         localita: this.state.datiRicerca.localita ? this.state.datiRicerca.localita : '',
         provincia: '',
         servizi: e.searchServizi,
         posti: this.state.datiRicerca.posti ? this.state.datiRicerca.posti : '%%',
         costo: this.state.datiRicerca.costo ? this.state.datiRicerca.costo : '',
-        checkIn: this.state.checkIn,
-        checkOut: this.state.checkOut
+        checkIn: inizio,
+        checkOut: fine
       };
   
       fetch('http://localhost:9000/ricercaAlloggio/risultati', {
@@ -143,6 +152,7 @@ class CasaVacanzaContainer extends React.Component {
             onChangeServizi = {this.onChangeServizi}
             case = {this.state.case}
             localita = {this.state.localita}
+            tipo = {this.state.tipo}
           />
           <div className="ListaProp">
             <CaseVacanzaList case={this.state.case}/>

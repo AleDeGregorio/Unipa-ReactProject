@@ -120,6 +120,7 @@ class RicercaFinale extends React.Component {
 
     render() {
         if(this.state.success) {
+            //var a = moment(this.state.checkIn, "DD-MM-YYYY");
             return <Redirect 
             to = {{
               pathname: "/CaseVacanza",
@@ -128,7 +129,8 @@ class RicercaFinale extends React.Component {
                 posti: this.state.posti,
                 checkIn: this.state.checkIn,
                 checkOut: this.state.checkOut,
-                localita: this.state.localita
+                localita: this.state.localita,
+                tipo: this.state.tipo
               }
             }}
           />

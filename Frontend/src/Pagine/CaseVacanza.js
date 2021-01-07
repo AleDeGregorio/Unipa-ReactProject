@@ -13,7 +13,8 @@ class CaseVacanza extends React.Component {
       posti: this.props.history.location.state.posti ? this.props.history.location.state.posti : 1,
       checkIn: this.props.history.location.state.checkIn ? this.props.history.location.state.checkIn : '',
       checkOut: this.props.history.location.state.checkOut ? this.props.history.location.state.checkOut : '',
-      localita: this.props.history.location.state.localita ? this.props.history.location.state.localita : ''
+      localita: this.props.history.location.state.localita ? this.props.history.location.state.localita : '',
+      tipo: this.props.history.location.state.tipo ? this.props.history.location.state.tipo : '',
     }
   }
 
@@ -26,6 +27,7 @@ class CaseVacanza extends React.Component {
           checkIn = {this.state.checkIn} 
           checkOut = {this.state.checkOut}
           localita = {this.state.localita}
+          tipo = {this.state.tipo}
         />
       </>
     );
