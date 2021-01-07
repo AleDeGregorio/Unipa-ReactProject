@@ -340,12 +340,11 @@ class DatiPersonali extends React.Component {
                                     required
                                 />
                             </Form.Group>
-                                            </Form.Row>
-                                            <button type="submit" onClick = {this.onSubmit}>
-                                                Modifica numero
-                                            </button>
-                                        </Card.Body>
-    
+                                </Form.Row>
+                                    <button type="submit" onClick = {this.onSubmit}>
+                                        Modifica numero
+                                    </button>
+                                </Card.Body>
                                     </Accordion.Collapse>
                             </Card>
                                 </Accordion>

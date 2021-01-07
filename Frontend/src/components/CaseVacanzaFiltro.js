@@ -1,5 +1,6 @@
 import React from "react";
 import { SingleDatePicker } from "react-dates";
+import {Accordion} from 'react-bootstrap'
 import './CaseVacanzaFiltro.css'
 import moment from "moment";
 
@@ -132,127 +133,254 @@ class CaseVacanzaFilter extends React.Component {
 
   render() {
     return (
-      <section className="filter-container">
-        <form className="filter-form">
-        <div class="product-search">
-                    <div class="search-element">
-                        <label class="search-label">Località</label>
-                        <input class="search-input" type="text" autocomplete="on" 
-                          placeholder="Località" id = 'localita' name="localita" onChange = {this.handleChange} defaultValue = {this.state.localita}
-                        >
-                        </input>
-                    </div>
-                    <div class="search-element">
-                    <label class="search-label" htmlFor="start_date">Check-in</label>
-                        <SingleDatePicker
-                            class="search-element"
-                            date={this.state.startDate}
-                            onDateChange={date => this.setStartDate(date)}
-                            focused={this.state.checkInFocus}
-                            onFocusChange={({ focused }) => this.set_focused_checkIn(focused)}
-                            id="start_date"
-                            numberOfMonths={1}
-                            placeholder="gg/mm/aaaa"
-                            daySize={32}
-                            hideKeyboardShortcutsPanel={true}
-                            displayFormat="DD/MM/YYYY"
-                            block={true}
-                            verticalSpacing={8}
-                            showClearDate={this.state.checkInFocus}
-                            reopenPickerOnClearDate={true}
-                            noBorder={true}
-                        />
-                    </div>
-                    <div class="search-element">
-                    <label class="search-label" htmlFor="end_date">Check-out</label>
-                        <SingleDatePicker
-                            class="search-element"
-                            date={this.state.endDate}
-                            onDateChange={date => this.setEndDate(date)}
-                            focused={this.state.checkOutFocus}
-                            onFocusChange={({ focused }) => this.set_focused_checkOut(focused)}
-                            id="end_date"
-                            numberOfMonths={1}
-                            placeholder="gg/mm/aaaa"
-                            daySize={32}
-                            hideKeyboardShortcutsPanel={true}
-                            displayFormat="DD/MM/YYYY"
-                            block={true}
-                            isDayHighlighted={day =>
-                                day.isAfter(this.state.startDate) && day.isBefore(this.state.endDate)
-                            }
-                            verticalSpacing={8}
-                            anchorDirection="right"
-                            isDayBlocked={day => day.isBefore(this.state.startDate)}
-                            showClearDate={this.state.checkOutFocus}
-                            reopenPickerOnClearDate={true}
-                            noBorder={true}
-                        />
-                    </div>
-                    <div class="search-element">
-                        <label class="search-label">Tipo struttura</label>
-                        <select class="search-input" placeholder="Struttura" id = 'tipo' name = 'tipo' onChange = {this.handleChange} defaultValue = {this.state.tipo}>
-                            <option></option>
-                            <option value="cv">Casa Vacanza</option>
-                            <option value="bb">B&B</option>
-                        </select>
-                    </div>
-                    <div class="search-element-ospiti">
-                        <label class="search-label">Ospiti</label>
-                        <select class="search-input-ospiti" placeholder="Ospiti" id = 'posti' name = 'posti' onChange = {this.handleChange} defaultValue = {this.state.posti}>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                        </select>
-                    </div>
+      <div>
+        <div className="schermiGrandi">
+          <section className="filter-container">
+            <form className="filter-form">
+            <div class="product-search">
+                        <div class="search-element">
+                            <label class="search-label">Località</label>
+                            <input class="search-input" type="text" autocomplete="on" 
+                              placeholder="Località" id = 'localita' name="localita" onChange = {this.handleChange} defaultValue = {this.state.localita}
+                            >
+                            </input>
+                        </div>
+                        <div class="search-element">
+                        <label class="search-label" htmlFor="start_date">Check-in</label>
+                            <SingleDatePicker
+                                class="search-element"
+                                date={this.state.startDate}
+                                onDateChange={date => this.setStartDate(date)}
+                                focused={this.state.checkInFocus}
+                                onFocusChange={({ focused }) => this.set_focused_checkIn(focused)}
+                                id="start_date"
+                                numberOfMonths={1}
+                                placeholder="gg/mm/aaaa"
+                                daySize={32}
+                                hideKeyboardShortcutsPanel={true}
+                                displayFormat="DD/MM/YYYY"
+                                block={true}
+                                verticalSpacing={8}
+                                showClearDate={this.state.checkInFocus}
+                                reopenPickerOnClearDate={true}
+                                noBorder={true}
+                            />
+                        </div>
+                        <div class="search-element">
+                        <label class="search-label" htmlFor="end_date">Check-out</label>
+                            <SingleDatePicker
+                                class="search-element"
+                                date={this.state.endDate}
+                                onDateChange={date => this.setEndDate(date)}
+                                focused={this.state.checkOutFocus}
+                                onFocusChange={({ focused }) => this.set_focused_checkOut(focused)}
+                                id="end_date"
+                                numberOfMonths={1}
+                                placeholder="gg/mm/aaaa"
+                                daySize={32}
+                                hideKeyboardShortcutsPanel={true}
+                                displayFormat="DD/MM/YYYY"
+                                block={true}
+                                isDayHighlighted={day =>
+                                    day.isAfter(this.state.startDate) && day.isBefore(this.state.endDate)
+                                }
+                                verticalSpacing={8}
+                                anchorDirection="right"
+                                isDayBlocked={day => day.isBefore(this.state.startDate)}
+                                showClearDate={this.state.checkOutFocus}
+                                reopenPickerOnClearDate={true}
+                                noBorder={true}
+                            />
+                        </div>
+                        <div class="search-element">
+                            <label class="search-label">Tipo struttura</label>
+                            <select class="search-input" placeholder="Struttura" id = 'tipo' name = 'tipo' onChange = {this.handleChange} defaultValue = {this.state.tipo}>
+                                <option></option>
+                                <option value="cv">Casa Vacanza</option>
+                                <option value="bb">B&B</option>
+                            </select>
+                        </div>
+                        <div class="search-element-ospiti">
+                            <label class="search-label">Ospiti</label>
+                            <select class="search-input-ospiti" placeholder="Ospiti" id = 'posti' name = 'posti' onChange = {this.handleChange} defaultValue = {this.state.posti}>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+                      </div>
+              {/* end of casaVacanza price*/}
+              {/* end of select type */}
+            </form>
+            {/* extras */}
+            <div className="form-gruppo">
+                <label htmlFor="costo">Costo €{this.state.costo}</label>
+                  <input
+                    type="range"
+                    step = "20"
+                    name="costo"
+                    min={this.state.minCosto}
+                    max={this.state.maxCosto}
+                    id="costo"
+                    onChange={this.handleChange}
+                    className="form-control"
+                    defaultValue = {this.state.costo}
+                  />
+            </div>
+            <div className="form-gruppo-extra">
+              {this.props.servizi.map(item => {
+                return(
+                  <div className="single-extra">
+                    <input
+                      type="checkbox"
+                      name={item.servizio}
+                      id={item.servizio}
+                      onChange={this.onChangeServizi}
+                    />
+                    <label htmlFor={item.servizio}>&nbsp;{item.servizio}</label>
                   </div>
-          {/* end of casaVacanza price*/}
-          {/* end of select type */}
-        </form>
-        {/* extras */}
-        <div className="form-gruppo">
-            <label htmlFor="costo">Costo €{this.state.costo}</label>
-              <input
-                type="range"
-                step = "20"
-                name="costo"
-                min={this.state.minCosto}
-                max={this.state.maxCosto}
-                id="costo"
-                onChange={this.handleChange}
-                className="form-control"
-                defaultValue = {this.state.costo}
-              />
-        </div>
-        <div className="form-gruppo-extra">
-          {this.props.servizi.map(item => {
-            return(
-              <div className="single-extra">
-                <input
-                  type="checkbox"
-                  name={item.servizio}
-                  id={item.servizio}
-                  onChange={this.onChangeServizi}
-                />
-                <label htmlFor={item.servizio}>&nbsp;{item.servizio}</label>
+                )
+              })}
               </div>
-            )
-          })}
+              {/* end of extras type */}
+          </section>
           </div>
-          {/* end of extras type */}
-      </section>
+          <div className="schermiPiccoli">
+          <Accordion>
+              <Accordion.Toggle eventKey="0" id="bottoneDrop">Filtri</Accordion.Toggle >
+                <Accordion.Collapse eventKey="0">
+                <section className="filter-container">
+                  <form className="filter-form">
+                  <div class="product-search">
+                              <div class="search-element">
+                                  <label class="search-label">Località</label>
+                                  <input class="search-input" type="text" autocomplete="on" 
+                                    placeholder="Località" id = 'localita' name="localita" onChange = {this.handleChange} defaultValue = {this.state.localita}
+                                  >
+                                  </input>
+                              </div>
+                              <div class="search-element">
+                              <label class="search-label" htmlFor="start_date">Check-in</label>
+                                  <SingleDatePicker
+                                      class="search-element"
+                                      date={this.state.startDate}
+                                      onDateChange={date => this.setStartDate(date)}
+                                      focused={this.state.checkInFocus}
+                                      onFocusChange={({ focused }) => this.set_focused_checkIn(focused)}
+                                      id="start_date"
+                                      numberOfMonths={1}
+                                      placeholder="gg/mm/aaaa"
+                                      daySize={32}
+                                      hideKeyboardShortcutsPanel={true}
+                                      displayFormat="DD/MM/YYYY"
+                                      block={true}
+                                      verticalSpacing={8}
+                                      showClearDate={this.state.checkInFocus}
+                                      reopenPickerOnClearDate={true}
+                                      noBorder={true}
+                                  />
+                              </div>
+                              <div class="search-element">
+                              <label class="search-label" htmlFor="end_date">Check-out</label>
+                                  <SingleDatePicker
+                                      class="search-element"
+                                      date={this.state.endDate}
+                                      onDateChange={date => this.setEndDate(date)}
+                                      focused={this.state.checkOutFocus}
+                                      onFocusChange={({ focused }) => this.set_focused_checkOut(focused)}
+                                      id="end_date"
+                                      numberOfMonths={1}
+                                      placeholder="gg/mm/aaaa"
+                                      daySize={32}
+                                      hideKeyboardShortcutsPanel={true}
+                                      displayFormat="DD/MM/YYYY"
+                                      block={true}
+                                      isDayHighlighted={day =>
+                                          day.isAfter(this.state.startDate) && day.isBefore(this.state.endDate)
+                                      }
+                                      verticalSpacing={8}
+                                      anchorDirection="right"
+                                      isDayBlocked={day => day.isBefore(this.state.startDate)}
+                                      showClearDate={this.state.checkOutFocus}
+                                      reopenPickerOnClearDate={true}
+                                      noBorder={true}
+                                  />
+                              </div>
+                              <div class="search-element">
+                                  <label class="search-label">Tipo struttura</label>
+                                  <select class="search-input" placeholder="Struttura" id = 'tipo' name = 'tipo' onChange = {this.handleChange} defaultValue = {this.state.tipo}>
+                                      <option></option>
+                                      <option value="cv">Casa Vacanza</option>
+                                      <option value="bb">B&B</option>
+                                  </select>
+                              </div>
+                              <div class="search-element-ospiti">
+                                  <label class="search-label">Ospiti</label>
+                                  <select class="search-input-ospiti" placeholder="Ospiti" id = 'posti' name = 'posti' onChange = {this.handleChange} defaultValue = {this.state.posti}>
+                                      <option value="1">1</option>
+                                      <option value="2">2</option>
+                                      <option value="3">3</option>
+                                      <option value="4">4</option>
+                                      <option value="5">5</option>
+                                      <option value="6">6</option>
+                                      <option value="7">7</option>
+                                      <option value="8">8</option>
+                                      <option value="9">9</option>
+                                      <option value="10">10</option>
+                                  </select>
+                              </div>
+                            </div>
+                    {/* end of casaVacanza price*/}
+                    {/* end of select type */}
+                  </form>
+                  {/* extras */}
+                  <div className="form-gruppo">
+                      <label htmlFor="costo">Costo €{this.state.costo}</label>
+                        <input
+                          type="range"
+                          step = "20"
+                          name="costo"
+                          min={this.state.minCosto}
+                          max={this.state.maxCosto}
+                          id="costo"
+                          onChange={this.handleChange}
+                          className="form-control"
+                          defaultValue = {this.state.costo}
+                        />
+                  </div>
+                  <div className="form-gruppo-extra">
+                    {this.props.servizi.map(item => {
+                      return(
+                        <div className="single-extra">
+                          <input
+                            type="checkbox"
+                            name={item.servizio}
+                            id={item.servizio}
+                            onChange={this.onChangeServizi}
+                          />
+                          <label htmlFor={item.servizio}>&nbsp;{item.servizio}</label>
+                        </div>
+                      )
+                    })}
+                    </div>
+                    {/* end of extras type */}
+                </section>
+                </Accordion.Collapse>
+              </Accordion>    
+          </div>
+      </div>
     );
   }
 };
 
-/*const CaseVacanzaFilter = ({ caseVacanza }) => {
+{/*const CaseVacanzaFilter = ({ caseVacanza }) => {
   // react hooks
   const context = useContext(CasaVacanzaContext);
   const {
@@ -422,6 +550,6 @@ class CaseVacanzaFilter extends React.Component {
         {/* end of extras type }
     </section>
   );
-};*/
+};*/}
 
 export default CaseVacanzaFilter;
