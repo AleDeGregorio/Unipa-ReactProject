@@ -256,7 +256,7 @@ class DatiPersonali extends React.Component {
                                     </Form.Control>
                                     </Form.Group>
                                 </Form.Row>
-                                <button type="submit" onClick = {this.onSubmit}>
+                                <button  type="submit" onClick = {this.onSubmit}>
                                     Modifica 
                                 </button>
                                         </Card.Body>

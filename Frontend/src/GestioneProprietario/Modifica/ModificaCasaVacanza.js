@@ -501,7 +501,7 @@ class ModificaCasaVacanza extends React.Component {
                   <Card.Body>
                   <Form.Group className="centered">
     <label>Modifica le foto della tua struttura</label>
-    <Form.Row className = "justify-content-center">
+    <Form.Row className = "centered">
     <input
       id = "imgCV_path1"
       name = "imgCV_path1SRC"
