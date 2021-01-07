@@ -300,14 +300,14 @@ class ModificaCasaVacanza extends React.Component {
           <div className="contentNew">
           <h2>Modifica la tua casa vacanza con le informazioni che preferisci!</h2>
           <Accordion>
-              <Card border="light">
+              <Card id="newStyle" border="light">
                 <div className="head-update">
                   <p>Nome: {casa.nome_proprieta}</p>
                   <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="1" />
                 </div>
                 <Accordion.Collapse eventKey="1">
                   <Card.Body>
-                    <form>
+                    <form className="centered">
                     <label htmlFor = "nome_proprieta">Nome</label>
                     <input
                     type = "text"
@@ -317,21 +317,21 @@ class ModificaCasaVacanza extends React.Component {
                     onChange = {this.onChange}
                     className = "i"
                     />
-                    </form>
-                    <Button onClick = {this.onSubmit}>
+                    <button className="bottoniSceltaModifica" onClick = {this.onSubmit}>
                 Modifica nome
-              </Button>
+              </button>
+                    </form>       
                   </Card.Body>
                 </Accordion.Collapse>
               </Card>
-              <Card border="light">
+              <Card id="newStyle" border="light">
               <div className="head-update">
                 <p>Località: {casa.localita} ({casa.provincia}), {casa.indirizzo}</p>
                 <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="2" />
                 </div>
                 <Accordion.Collapse eventKey="2">
                   <Card.Body>
-                  <form>
+                  <form className="centered">
                   <label htmlFor = "localita">Città</label>
                 <input
                   type = "text"
@@ -364,11 +364,11 @@ class ModificaCasaVacanza extends React.Component {
                   <Button onClick = {this.onSubmit}>
                 Modifica località
               </Button>
-                  </form>
+                  </form >
                 </ Card.Body>
                 </Accordion.Collapse>
               </Card>
-              <Card border="light">
+              <Card id="newStyle" border="light">
                 <div className="head-update">
                 <p>Servizi offerti: {casa.servizi}</p>
                 <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="3" />
@@ -409,14 +409,14 @@ class ModificaCasaVacanza extends React.Component {
                   </Card.Body>
                 </Accordion.Collapse>
               </Card>
-              <Card border="light">
+              <Card id="newStyle" border="light">
                 <div className="head-update">
                 <p> Descrizione: </p>
                 <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="4" />
                 </div>
                 <Accordion.Collapse eventKey="4">
                   <Card.Body>
-                    <form>
+                    <form className="centered">
                     <label htmlFor = "descrizione">Descrizione attuale: {casa.descrizione}</label>
                 <textarea 
                   id = 'descrizione'
@@ -433,7 +433,7 @@ class ModificaCasaVacanza extends React.Component {
                   </Card.Body>
                 </Accordion.Collapse>
               </Card>
-              <Card border="light">
+              <Card id="newStyle" border="light">
                 <div className="head-update">
                   <p>Posti letto: {casa.posti_letto}</p>
                   <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="5" />
@@ -466,14 +466,14 @@ class ModificaCasaVacanza extends React.Component {
                   </Card.Body>
                 </Accordion.Collapse>
               </Card>
-              <Card border="light">
+              <Card id="newStyle" border="light">
                 <div className="head-update">
                 <p>Tariffa attuale : {casa.tariffa_casa}</p>
                 <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="6" />
                 </div>
                 <Accordion.Collapse eventKey="6">
                   <Card.Body>
-                    <form>
+                    <form className="centered">
                     <label htmlFor = "tariffa_casa">Prezzo</label>
   <input
     type = "text"
@@ -492,19 +492,13 @@ class ModificaCasaVacanza extends React.Component {
                   </Card.Body>
                 </Accordion.Collapse>
               </Card>
-              <Card border="light">
+              <Card id="newStyle" border="light">
                 <div className="head-update">
                 <p>Modifica foto</p>
                 <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="7" />
                 </div>
                 <Accordion.Collapse eventKey="7">
                   <Card.Body>
-                    <p>Foto attuali : </p>
-                    <img src = {this.state.imgCV_path1SRC} alt = {"Foto 1 " + this.state.nome_proprieta} ></img>
-                    <img src = {this.state.imgCV_path2SRC} alt = {"Foto 2 " + this.state.nome_proprieta}></img>
-                    <img src = {this.state.imgCV_path3SRC} alt = {"Foto 3 " + this.state.nome_proprieta}></img>
-                    <img src = {this.state.imgCV_path4SRC} alt = {"Foto 4 " + this.state.nome_proprieta}></img>
-
                   <Form.Group>
     <label>Modifica le foto della tua struttura</label>
     <Form.Row className = "justify-content-center">

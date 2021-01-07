@@ -44,12 +44,12 @@ h4{
 }
 .formCG{
     position:relative;
-    left:20%;
+    left:40%;
 }
 /*STILE BOTTONI */
 #formCG1{
     position:relative;
-    right:25%;
+    right:40%;
     background-color:black;
     color:white;
     border:none;

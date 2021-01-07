@@ -26,7 +26,7 @@ class InserimentoProprietà extends React.Component {
   return (
     <div className="background">
     <div className="containerNewSelezione">  
-      <div className="contentNew">
+      <div className="contentNewScelta">
         <form >
           <h2>Seleziona il tipo di struttura che stai inserendo</h2>
           <Form.Group>

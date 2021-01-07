@@ -347,11 +347,11 @@ class InserimentoCasaVacanza extends React.Component {
                     </Form.Row>
                     <Form.Group controlId="exampleForm.ControlTextarea1">
                     <Form.Label>Inserisci servizio aggiuntivo</Form.Label>
-                     <Form.Control as="textarea" rows={1} id = 'nuovoServizio' name = 'nuovoServizio' onChange = {this.onChange} />
+                     <Form.Control as="textarea" rows={1} id = 'nuovoServizio' name = 'nuovoServizio' onChange = {this.onChange} className="i" />
                      </Form.Group>
-                    <Button onClick = {this.aggiungiServizio}>
+                    <button className="bottoniAggiungiServizio" onClick = {this.aggiungiServizio}>
                       Aggiungi servizio
-                    </Button>
+                    </button>
                     <br />
                     <br />
             
@@ -375,8 +375,8 @@ class InserimentoCasaVacanza extends React.Component {
                         placeholder = "Tariffa casa vacanza"
                         onChange = {this.onChange}
                         className = "i"
-                    />
-                    <Form.Group controlId = "posti_Letto" id = 'posti_letto' name = 'posti_letto' >
+                    />   
+                    <Form.Group controlId = "posti_Letto" id = 'posti_letto' name = 'posti_letto' className="flex-col22">
                       <Form.Label>Posti Letto</Form.Label>
                       <select 
                         id = 'posti_letto'
@@ -395,7 +395,7 @@ class InserimentoCasaVacanza extends React.Component {
                         <option>7</option>
                         <option>8</option>
                         </select>
-                    </Form.Group>
+                    </Form.Group>     
                     <Form.Group>
                         <label>Inserisci delle foto della tua struttura</label>
                         <Form.Row className = "justify-content-center">

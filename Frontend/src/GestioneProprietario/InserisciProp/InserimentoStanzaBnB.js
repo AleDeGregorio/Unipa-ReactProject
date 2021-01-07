@@ -242,7 +242,7 @@ class InserimentoStanzaBnB extends React.Component {
                         />
                         <img src = {this.state.foto4SRC} alt = "Foto 4" ></img>
                     </Form.Row>
-                    <button className="bottoniScelta1" type="submit">
+                    <button className="bottoniScelta2" type="submit">
                       Carica
                     </button>
                 </Form.Group>

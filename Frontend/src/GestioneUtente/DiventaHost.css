@@ -1,6 +1,6 @@
 .cdh{
-    height: 250px;
-    width: 250px;
+    height: 100%;
+    width: 20%;
 }
 #cdh1{
     display: flex;
@@ -9,6 +9,7 @@
   background: rgba(8, 1, 1, 0.7);
   border: 2px solid white;
   border-radius: 0;
+  height: 200px;
 }
 .top {
 
@@ -58,4 +59,10 @@
 .containerFormSV{
     margin-bottom:50px;
     margin-top:30px;
+}
+.cardgroup{
+    display:flex;
+    flex-direction:row;
+    justify-content: space-around;
+    align-items: center;
 }

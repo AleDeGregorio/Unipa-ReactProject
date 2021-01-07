@@ -1,5 +1,5 @@
 import React from 'react'
-import {Card, CardDeck, Form, Jumbotron, Button} from 'react-bootstrap'
+import {Card, CardDeck, Form, Jumbotron, Button, Accordion} from 'react-bootstrap'
 import './DiventaHost.css'
 
 function DiventaHost(){
@@ -37,7 +37,7 @@ function DiventaHost(){
                 </div>
                 <div className="containerFormSV">
                     <h4>Scopri i vantaggi di essere un Host</h4>
-                    <CardDeck>
+                        <div className="cardgroup">
                         <Card className="cdh" id="cdh1">
                             <Card.Title>Inserisci e modifica le tue strutture</Card.Title>
                             <Card.Body>
@@ -60,10 +60,12 @@ function DiventaHost(){
                             <Card.Title>Comunicazione automatizzata</Card.Title>
                             <Card.Body>Inviare dati agli uffici competenti? Adesso basta un click!</Card.Body>
                         </Card>
-                    </CardDeck>
+                        </div>
                 </div>
             </div>
 
     );
 }
 export default DiventaHost;
+
+

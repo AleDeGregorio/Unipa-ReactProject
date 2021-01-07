@@ -22,10 +22,19 @@
     height: 100%;
   }
 
-  
+  .flex-col22{
+    display:flex;
+    flex-direction: column;
+  }
   .contentNew{
     background: rgba(8, 1, 1, 0.5);
     border: 2px solid white;
+    width:100%;
+  }
+  .contentNewScelta{
+    background: rgba(8, 1, 1, 0.5);
+    border: 2px solid white;
+    padding:20px;
   }
   
   .contentNew > p {
@@ -107,15 +116,43 @@
     text-transform: uppercase;
     cursor: pointer;
     width: 80%;
+    left:10%;
+    margin-top:20px;
     position: relative;
   }
+  .bottoniScelta2{
+    border-radius: 2px;
+    background-color: black;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 12px 45px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    width: 80%;
 
+    margin-top:20px;
+    position: relative;
+  }
   .bottoniScelta:hover{
     text-decoration: none;
     color:white;
   }
 
-
+  .bottoniAggiungiServizio{
+    background-color: black;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 12px 45px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    width:40%;
+    position:relative;
+    right:-30%;
+  }
   
   .contentNew form label span{
     font-weight: normal;
@@ -195,3 +232,29 @@
     }
 
   }
+/*MODIFICA */ 
+#newStyle{
+  background: none;
+    color: white;
+    text-align: left;
+    border-radius: 0;  
+}
+.centered{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+}
+.bottoniSceltaModifica{
+  border-radius: 2px;
+  background-color: black;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 12px 45px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  width: 80%;
+  margin-top:20px;
+  position: relative;
+}

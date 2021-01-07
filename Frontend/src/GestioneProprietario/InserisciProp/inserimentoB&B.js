@@ -296,12 +296,12 @@ class InserimentoBnB extends React.Component {
                       </Form.Group>
                     </Form.Row>
                     <Form.Group controlId="exampleForm.ControlTextarea1">
-                    <Form.Label>Aggiungi servizio</Form.Label>
-                     <Form.Control as="textarea" rows={1} id = 'nuovoServizio' name = 'nuovoServizio' onChange = {this.onChange} />
+                    <Form.Label>Inserisci servizio aggiuntivo</Form.Label>
+                     <Form.Control as="textarea" rows={1} id = 'nuovoServizio' name = 'nuovoServizio' onChange = {this.onChange} className="i" />
                      </Form.Group>
-                    <Button onClick = {this.aggiungiServizio}>
+                    <button className="bottoniAggiungiServizio" onClick = {this.aggiungiServizio}>
                       Aggiungi servizio
-                    </Button>
+                    </button>
                     <br/>
                     <br />
                   <label htmlFor = "descrizione">Descrizione</label>

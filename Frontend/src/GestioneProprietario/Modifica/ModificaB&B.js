@@ -240,7 +240,7 @@ class ModificaBeB extends React.Component {
           <div className="contentNew">
           <h2>Modifica il tuo B&B con le informazioni che preferisci!</h2>
             <Accordion>
-              <Card border="light">
+              <Card id="newStyle" border="light">
                 <div className="head-update">
                   <p>Nome struttura: {bb.nome_proprieta}</p>
                   <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="1" />
@@ -264,7 +264,7 @@ class ModificaBeB extends React.Component {
                   </Card.Body>
                 </Accordion.Collapse>
               </Card>
-              <Card border="light">
+              <Card id="newStyle" border="light">
                 <div className="head-update">
                 <p>Località: {bb.localita} ({bb.provincia}), {bb.indirizzo}</p>
                 <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="2" />
@@ -308,7 +308,7 @@ class ModificaBeB extends React.Component {
                   </Card.Body>
                 </Accordion.Collapse>
               </Card>
-              <Card border="light">
+              <Card id="newStyle" border="light">
                 <div className="head-update">
                 <p> Servizi offerti: {bb.servizi}</p>
                 <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="3" />
@@ -349,7 +349,7 @@ class ModificaBeB extends React.Component {
                   </Card.Body>
                 </Accordion.Collapse>
               </Card>
-              <Card border="light">
+              <Card id="newStyle" border="light">
                 <div className="head-update">
                 <p> Descrizione: </p>
                 <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="4" />
