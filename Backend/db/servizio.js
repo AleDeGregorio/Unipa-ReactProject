@@ -42,8 +42,8 @@ const insertServizio = async(req) => {
     return new Promise((resolve, reject) => {
 
         Connection.query(
-            'INSERT INTO servizio VALUES ' +
-            '(' + req.servizio + ')',
+            'INSERT INTO servizi (servizio) VALUES ' +
+            '("' + req.servizio + '")',
             (err, results) => {
                 if(err) {
                     console.log(err);

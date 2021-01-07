@@ -226,7 +226,7 @@ app.use('/loginCliente', clienteRouter);
 app.use('/servizi', servizioRouter);
 // inserimento di un nuovo servizio
 // indirizzo: /insertServizio/new
-app.use('/insertServizo', servizioRouter);
+app.use('/insertServizio', servizioRouter);
 
 // TABELLA SOGGIORNANTE
 // lista di tutti i soggiornanti
