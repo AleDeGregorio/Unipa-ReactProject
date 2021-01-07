@@ -208,14 +208,14 @@ class ModificaStanza extends React.Component {
           <div className="contentNew">
           <h2>Modifica le informazioni della tua stanza come preferisci!</h2>
           <Accordion>
-              <Card border="light">
+              <Card id="newStyle"  border="light">
                 <div className="head-update">
                   <p>Tipologia stanza attuale: {tipo_stanza}</p>
                 <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="1" />
                 </div>
                 <Accordion.Collapse eventKey="1">
                   <Card.Body>
-                  <Form.Group id = 'tipologia' name = 'tipologia' >
+                  <Form.Group className="centered" id = 'tipologia' name = 'tipologia' >
     <Form.Label>Tipologia stanza - Numero ospiti</Form.Label>
     <Form.Control 
       id = 'tipologia'
@@ -229,21 +229,21 @@ class ModificaStanza extends React.Component {
       <option value="3">Tripla</option>
       <option value="4">Quadrupla</option>
       </Form.Control>
+      <button className="bottoniSceltaModifica" onClick = {this.onSubmit}>
+                Modifica tipologia
+              </button>
   </Form.Group>  
-  <Button variant="primary" onClick = {this.onSubmit}>
-    Cambia tipologia di stanza
-  </Button>
                   </Card.Body>
                 </Accordion.Collapse>
               </Card>
-              <Card border="light">
+              <Card id="newStyle"  border="light">
                 <div className="head-update">
                 <p>Tariffa attuale: {stanza.tariffa_stanza} euro</p>
                 <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="2" />
                 </div>
                 <Accordion.Collapse eventKey="2">
                   <Card.Body>
-               <form>    
+               <form className="centered">    
     <label htmlFor = "tariffa_stanza">Tariffa</label>
     <input
       type = "text"
@@ -255,28 +255,22 @@ class ModificaStanza extends React.Component {
       onChange = {this.onChange}
       className = "i"
     />
+    <button className="bottoniSceltaModifica" onClick = {this.onSubmit}>
+                Modifica tariffa
+              </button>
     </form> 
-    <Button variant="primary" onClick = {this.onSubmit}>
-    Cambia tariffa
-  </Button>
                   </Card.Body>
                 </Accordion.Collapse>
-              </Card>
-              
-              <Card border="light">
+              </Card>             
+              <Card id="newStyle"  border="light">
                 <div className="head-update">
                   <p>Foto: </p>
                 <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="4" />
                 </div>
                 <Accordion.Collapse eventKey="4">
                   <Card.Body>
-                    <p>Foto attuali: </p>
-                    <img src = {this.state.imgST_path1SRC} alt = {"Foto 1 stanza " + this.state.id_stanza} ></img>
-                    <img src = {this.state.imgST_path2SRC} alt = {"Foto 2 stanza " + this.state.id_stanza}></img>
-                    <img src = {this.state.imgST_path3SRC} alt = {"Foto 3 stanza " + this.state.id_stanza}></img>
-                    <img src = {this.state.imgST_path4SRC} alt = {"Foto 4 stanza " + this.state.id_stanza}></img>
-
-                  <Form.Group>
+                    <p>Foto attuali: </p>        
+                  <Form.Group className="centered">
     <label>Modifica le foto della tua stanza</label>
     <Form.Row className = "justify-content-center">
     <input
@@ -316,10 +310,10 @@ class ModificaStanza extends React.Component {
     />
     <img src = {this.state.imgST_path4SRC} alt = {"Foto 4 stanza " + this.state.id_stanza}></img>
     </Form.Row>
+    <button className="bottoniSceltaModifica" onClick = {this.onSubmit}>
+                carica foto
+              </button>
   </Form.Group> 
-  <Button variant="primary" onClick = {this.onSubmit}>
-    Carica foto
-  </Button>
                   </Card.Body>
                 </Accordion.Collapse>
               </Card>

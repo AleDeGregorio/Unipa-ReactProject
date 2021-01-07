@@ -247,7 +247,7 @@ class ModificaBeB extends React.Component {
                 </div>
                 <Accordion.Collapse eventKey="1">
                   <Card.Body>
-                    <form>
+                    <form className="centered">
                   <label htmlFor = "nome_proprieta">Nome</label>
                 <input
                   type = "text"
@@ -256,10 +256,10 @@ class ModificaBeB extends React.Component {
                   placeholder = "Inserisci nome proprietà"
                   onChange = {this.onChange}
                   className = "i"
-                />
-                <Button variant="primary" onClick = {this.onSubmit}>
-                Modifica nome
-              </Button>
+                /> 
+                <button className="bottoniSceltaModifica" onClick = {this.onSubmit}>
+                  Modifica nome
+                </button>
               </form>
                   </Card.Body>
                 </Accordion.Collapse>
@@ -271,7 +271,7 @@ class ModificaBeB extends React.Component {
                 </div>
                 <Accordion.Collapse eventKey="2">
                   <Card.Body>
-                  <form>
+                  <form className="centered">
                   <label htmlFor = "localita">Città</label>
                 <input
                   type = "text"
@@ -301,9 +301,9 @@ class ModificaBeB extends React.Component {
                   onChange = {this.onChange}
                   className = "i"
                 />
-                  <Button onClick = {this.onSubmit}>
+                  <button className="bottoniSceltaModifica" onClick = {this.onSubmit}>
                 Modifica località
-              </Button>
+              </button>
                   </form>
                   </Card.Body>
                 </Accordion.Collapse>
@@ -316,7 +316,7 @@ class ModificaBeB extends React.Component {
                 <Accordion.Collapse eventKey="3">
                   <Card.Body>
                   <Form.Row>
-                      <Form.Group as={Col} controlId="formGridState">
+                      <Form.Group className="centered" as={Col} controlId="formGridState">
                         <Form.Label>Servizi</Form.Label>
                           {this.state.listaServizi.map(item => {
                             return(
@@ -334,18 +334,19 @@ class ModificaBeB extends React.Component {
                           })}
                       </Form.Group>
                     </Form.Row>
-                    <Form.Group controlId="exampleForm.ControlTextarea1">
+                    <Form.Group className="centered" controlId="exampleForm.ControlTextarea1">
                     <Form.Label>Aggiungi servizio</Form.Label>
                      <Form.Control as="textarea" rows={1} id = 'nuovoServizio' name = 'nuovoServizio' onChange = {this.onChange} />
-                     </Form.Group>
-                    <Button onClick = {this.aggiungiServizio}>
+                     <button className="bottoniSceltaModifica" onClick = {this.aggiungiServizio}>
                       Aggiungi servizio
-                    </Button>
+                    </button>
                     <br/>
                     <br />
-                    <Button onClick = {this.onSubmit}>
-                     Modifica servizi
-                    </Button>
+                    <button className="bottoniSceltaModifica" onClick = {this.onSubmit}>
+                      Cambia servizi
+                    </button>
+                     </Form.Group>
+                    
                   </Card.Body>
                 </Accordion.Collapse>
               </Card>
@@ -356,7 +357,7 @@ class ModificaBeB extends React.Component {
                 </div>
                 <Accordion.Collapse eventKey="4">
                   <Card.Body>
-                    <form>
+                    <form className="centered">
                     <label htmlFor = "descrizione">Descrizione attuale: {bb.descrizione}</label>
                 <textarea 
                   id = 'descrizione'
@@ -366,9 +367,9 @@ class ModificaBeB extends React.Component {
                   className = 'iTA'
                 >
                 </textarea>
-                <Button onClick = {this.onSubmit}>
+                <button className="bottoniSceltaModifica" onClick = {this.onSubmit}>
                 Modifica Descrizione
-              </Button>
+              </button>
                     </form>
                   </Card.Body>
                 </Accordion.Collapse>

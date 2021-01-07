@@ -361,9 +361,9 @@ class ModificaCasaVacanza extends React.Component {
                   onChange = {this.onChange}
                   className = "i"
                 />
-                  <Button onClick = {this.onSubmit}>
+                  <button className="bottoniSceltaModifica" onClick = {this.onSubmit}>
                 Modifica località
-              </Button>
+              </button>
                   </form >
                 </ Card.Body>
                 </Accordion.Collapse>
@@ -376,7 +376,7 @@ class ModificaCasaVacanza extends React.Component {
                 <Accordion.Collapse eventKey="3">
                   <Card.Body>
                     <Form.Row>
-                      <Form.Group as={Col} controlId="formGridState">
+                      <Form.Group className="centered" as={Col} controlId="formGridState">
                         <Form.Label>Servizi</Form.Label>
                           {this.state.listaServizi.map(item => {
                             return(
@@ -394,18 +394,18 @@ class ModificaCasaVacanza extends React.Component {
                           })}
                       </Form.Group>
                     </Form.Row>
-                    <Form.Group controlId="exampleForm.ControlTextarea1">
+                    <Form.Group className="centered" controlId="exampleForm.ControlTextarea1">
                     <Form.Label>Aggiungi servizio</Form.Label>
                      <Form.Control as="textarea" rows={1} id = 'nuovoServizio' name = 'nuovoServizio' onChange = {this.onChange} />
-                     </Form.Group>
-                    <Button onClick = {this.aggiungiServizio}>
+                     <button className="bottoniSceltaModifica" onClick = {this.aggiungiServizio}>
                       Aggiungi servizio
-                    </Button>
+                    </button>
                     <br/>
                     <br />
-                    <Button onClick = {this.onSubmit}>
+                    <button className="bottoniSceltaModifica" onClick = {this.onSubmit}>
                       Cambia servizi
-                    </Button>
+                    </button>
+                     </Form.Group>
                   </Card.Body>
                 </Accordion.Collapse>
               </Card>
@@ -426,9 +426,9 @@ class ModificaCasaVacanza extends React.Component {
                   className = 'iTA'
                 >
                 </textarea>
-                <Button onClick = {this.onSubmit}>
+                <button className="bottoniSceltaModifica" onClick = {this.onSubmit}>
                 Modifica Descrizione
-              </Button>
+              </button>
                     </form>
                   </Card.Body>
                 </Accordion.Collapse>
@@ -441,7 +441,7 @@ class ModificaCasaVacanza extends React.Component {
                 </div>
                 <Accordion.Collapse eventKey="5">
                   <Card.Body>
-                  <Form.Group id = 'posti_letto' name = 'posti_letto' >
+                  <Form.Group className="centered" id = 'posti_letto' name = 'posti_letto' >
     <Form.Label>Posti Letto</Form.Label>
     <Form.Control 
       id = 'posti_letto'
@@ -459,10 +459,10 @@ class ModificaCasaVacanza extends React.Component {
       <option>7</option>
       <option>8</option>
       </Form.Control>
-  </Form.Group>  
-  <Button onClick = {this.onSubmit}>
+      <button className="bottoniSceltaModifica" onClick = {this.onSubmit}>
                 Modifica posti letto
-              </Button>
+              </button>
+  </Form.Group>  
                   </Card.Body>
                 </Accordion.Collapse>
               </Card>
@@ -485,9 +485,9 @@ class ModificaCasaVacanza extends React.Component {
     onChange = {this.onChange}
     className = "i"
   />
-              <Button onClick = {this.onSubmit}>
-                Cambia tariffa
-              </Button>
+              <button className="bottoniSceltaModifica" onClick = {this.onSubmit}>
+                cambia tariffa
+              </button>
                     </form>
                   </Card.Body>
                 </Accordion.Collapse>
@@ -499,7 +499,7 @@ class ModificaCasaVacanza extends React.Component {
                 </div>
                 <Accordion.Collapse eventKey="7">
                   <Card.Body>
-                  <Form.Group>
+                  <Form.Group className="centered">
     <label>Modifica le foto della tua struttura</label>
     <Form.Row className = "justify-content-center">
     <input
@@ -539,11 +539,12 @@ class ModificaCasaVacanza extends React.Component {
     />
     <img src = {this.state.imgCV_path4SRC} alt = {"Foto 4 " + this.state.nome_proprieta}></img>
     </Form.Row>
+    <button className="bottoniSceltaModifica" onClick = {this.onSubmit}>
+                carica foto
+              </button>
   </Form.Group>
 
-    <Button variant="primary" onClick = {this.onSubmit}>
-    Carica
-  </Button>
+  
                   </Card.Body>
                 </Accordion.Collapse>
               </Card>

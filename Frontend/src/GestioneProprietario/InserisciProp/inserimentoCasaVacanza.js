@@ -283,7 +283,7 @@ class InserimentoCasaVacanza extends React.Component {
                 <div className = "contentNew">
                     <form onSubmit = {this.onSubmitInsert}>
                     <h2>Compila questo form per inserire la tua casa vacanza!</h2>
-                    <label htmlFor = "nome_proprieta">Nome</label>
+               <label htmlFor = "nome_proprieta">Nome</label>
               <input
                 type = "text"
                 id = "nome_proprieta"
