@@ -369,10 +369,10 @@ const getProprietaProvinciaTipoServizi = async(req) => {
 // elaborazione del form di ricerca di un alloggio, nel caso più generale
 // ----------METODO PRINCIPALE DA USARE PER LA RICERCA----------
 const ricercaAlloggio = async(req) => {
-    var str1 = req.checkIn;
+    var str1 = req.checkIn === '' ? '1970-01-01' : req.checkIn;
     var dmy1 = str1.split("/");
 
-    var str2 = req.checkOut;
+    var str2 = req.checkOut === '' ? '1970-01-01' : req.checkOut
     var dmy2 = str2.split("/");
 
     var partenza = new Date(dmy1[2], dmy1[1] - 1, dmy1[0]);
@@ -381,8 +381,12 @@ const ricercaAlloggio = async(req) => {
     const utc1 = Date.UTC(partenza.getFullYear(), partenza.getMonth(), partenza.getDate());
     const utc2 = Date.UTC(ritorno.getFullYear(), ritorno.getMonth(), ritorno.getDate());
 
-    const ngiorni = Math.floor((utc2 - utc1) / (1000 * 60 * 60 * 24));
-
+    var ngiorni = Math.floor((utc2 - utc1) / (1000 * 60 * 60 * 24));
+    
+    if(!ngiorni || ngiorni < 1) {
+        ngiorni = 1;
+    }
+    
     var servizi = '%';
 
     for(var i = 0; i < req.servizi.length; i++) {

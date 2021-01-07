@@ -9,10 +9,16 @@ const handleErrors = (err, req, res, next) => {
     });
   }
 
+  try {
+    var c = err.getCode();
+  } catch (error) {
+    c = 500;
+  }
+  
   return res.status(500).json({
     status: 'error',
     message: err.message,
-    code: err.getCode()
+    code: c
   });
 }
 
