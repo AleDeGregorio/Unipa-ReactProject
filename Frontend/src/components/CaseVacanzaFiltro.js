@@ -31,7 +31,7 @@ class CaseVacanzaFilter extends React.Component {
   }
 
   componentDidMount() {
-    var ngiorni = this.state.endDate.diff(this.state.endDate, 'days');
+    var ngiorni = this.state.endDate.diff(this.state.startDate, 'days');
 
     if(ngiorni < 1) {
       ngiorni = 1;
