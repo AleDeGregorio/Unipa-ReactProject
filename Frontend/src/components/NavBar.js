@@ -28,14 +28,15 @@ class NavBar extends React.Component {
                         <Nav.Link href="/CasaVacanza">Casa Vacanza</Nav.Link>
                     </Nav>
                 <Dropdown>
-                    <DropdownButton className="ticambio" title={Menu} menuAlign="right"
-                    ><Menu />{nome} {cognome}
+                <Dropdown.Toggle >
+                    {nome} {cognome}<Menu />
+                </Dropdown.Toggle>
                     <Dropdown.Menu >
                         <Dropdown.Item href="/GestionePrenotazione" >Gestisci prenotazioni</Dropdown.Item>
                         <Dropdown.Item href="/DiventaHost">Diventa un host</Dropdown.Item>
                         <Dropdown.Item href="/DatiPersonali">Dati personali</Dropdown.Item>
                         <Dropdown.Item href="/autenticazioneAccedi" onClick = {this.onClick}>Logout</Dropdown.Item>
-                    </Dropdown.Menu></DropdownButton>
+                    </Dropdown.Menu>
                 </Dropdown>
              </Navbar.Collapse>
             </Navbar>
