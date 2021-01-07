@@ -9,6 +9,10 @@ class CasaVacanza extends React.Component {
     // console.log(name);
     var dati_casa = this.props.casaVacanza ? this.props.casaVacanza : '';
     var datiRicerca = this.props.datiRicerca ? this.props.datiRicerca : '';
+    var servizi = this.props.servizi ? this.props.servizi : [];
+    var checkIn = this.props.checkIn ? this.props.checkIn : '';
+    var checkOut = this.props.checkOut ? this.props.checkOut : '';
+
     return (
       <article className="casaVacanza">
           <img src={dati_casa.img1} alt="single casaVacanza" />
@@ -25,7 +29,10 @@ class CasaVacanza extends React.Component {
                   pathname: "/Casa",
                   state: {
                     dati_casa: {dati_casa},
-                    datiRicerca: {datiRicerca}
+                    datiRicerca: {datiRicerca},
+                    servizi: {servizi},
+                    checkIn: {checkIn},
+                    checkOut: {checkOut}
                   }
                 }}
                 className = "vai"

@@ -155,7 +155,12 @@ class CasaVacanzaContainer extends React.Component {
             tipo = {this.state.tipo}
           />
           <div className="ListaProp">
-            <CaseVacanzaList case={this.state.case}/>
+            <CaseVacanzaList 
+              case={this.state.case} 
+              servizi = {this.state.datiRicerca.searchServizi} 
+              checkIn = {this.state.checkIn} 
+              checkOut = {this.state.checkOut}
+              />
           </div>
         </>
       );

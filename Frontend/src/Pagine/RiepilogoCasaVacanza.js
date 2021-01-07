@@ -14,6 +14,9 @@ export default class SingleCasaVacanza extends Component {
 
     this.state = {
       dati_casa: this.props.history.location.state.dati_casa.dati_casa ? this.props.history.location.state.dati_casa.dati_casa : [],
+      dati_servizi: this.props.history.location.state.servizi.servizi ? this.props.history.location.state.servizi.servizi : [],
+      checkIn: this.props.history.location.state.checkIn.checkIn ? this.props.history.location.state.checkIn.checkIn : '',
+      checkOut: this.props.history.location.state.checkOut.checkOut ? this.props.history.location.state.checkOut.checkOut : '',
       datiRicerca: this.props.history.location.state.datiRicerca.datiRicerca ? this.props.history.location.state.datiRicerca.datiRicerca : [],
       servizi: []
     };
@@ -36,7 +39,9 @@ export default class SingleCasaVacanza extends Component {
               state: {
                 case: this.state.datiRicerca,
                 posti: this.state.dati_casa.posti,
-                localita: this.state.dati_casa.localita
+                localita: this.state.dati_casa.localita,
+                checkIn: this.state.dati_casa.checkIn,
+                checkOut: this.state.dati_casa.checkOut
               }
             }}
             className = "return"
@@ -63,7 +68,10 @@ export default class SingleCasaVacanza extends Component {
                   state: {
                     case: this.state.datiRicerca,
                     posti: this.state.dati_casa.posti,
-                    localita: this.state.dati_casa.localita
+                    localita: this.state.dati_casa.localita,
+                    tipo: this.state.dati_casa.tipo_proprieta,
+                    checkIn: this.state.checkIn,
+                    checkOut: this.state.checkOut
                   }
                 }}
                 className = "return"
