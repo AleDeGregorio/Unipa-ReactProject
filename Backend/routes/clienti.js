@@ -38,6 +38,18 @@ router.post('/fields', async(req, res, next) => {
     }
 });
 
+// update password of table cliente
+// indirizzo: /updateClientePassword/updPassword
+router.post('/updPassword', async(req, res, next) => {
+    try {
+        let update = await DB.Cliente.updateUserPassword(req.body);
+        res.json(update);
+    }
+    catch(e) {
+        next(e);
+    }
+});
+
 // insert new user in table cliente (with encrypted password)
 // indirizzo: /insertCliente/new
 router.post('/new', async(req, res, next) => {

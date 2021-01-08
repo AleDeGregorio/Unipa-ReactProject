@@ -74,6 +74,18 @@ router.post('/fields', async(req, res, next) => {
     }
 });
 
+// update password of table Proprietario
+// indirizzo: /updateProprietarioPassword/updPass
+router.post('/updPass', async(req, res, next) => {
+    try {
+        let update = await DB.Proprietario.updateUserPassword(req.body);
+        res.json(update);
+    }
+    catch(e) {
+        next(e);
+    }
+});
+
 // update ultima data di invio dati ufficio turismo of table Proprietario
 // indirizzo: /updateDataInvio/invioDati
 router.post('/invioDati', async(req, res, next) => {

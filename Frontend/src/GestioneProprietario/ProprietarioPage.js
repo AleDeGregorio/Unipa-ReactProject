@@ -69,6 +69,15 @@ class ProprietarioPage extends React.Component {
     }
 
     render() {
+        var data_invio = this.state.apiResponse[0] ? new Date(this.state.apiResponse[0].ultimo_invio_dati).toLocaleDateString() : "Mai inviati";
+
+        var datiTurismo = (
+            <div className="turismocont">
+                <p>Ultimo invio dei dati all'ufficio competente: {data_invio} </p>
+                <p>Desideri inviare i dati nuovamente?</p>
+            </div>
+        );
+    
         if(!localStorage.getItem('logged') || !localStorage.getItem('proprietario')) {
             return <Redirect
                 to={{
@@ -81,9 +90,15 @@ class ProprietarioPage extends React.Component {
             />
         }
         else if(this.state.errorMessage) {
-            var data_invio = this.state.apiResponse[0] ? new Date(this.state.apiResponse[0].ultimo_invio_dati).toLocaleDateString() : "Mai inviati";
-            return(
-                <div className="GestioneProprietario">
+            datiTurismo = (
+                <div className="turismocont">
+                    <p>Si è verificato un errore: {this.state.errorMessage}</p>
+                </div>
+            );
+        }
+
+        return(
+            <div className="GestioneProprietario">
                     <div className="carte_prop" >
                         <Link to = "/Testina" className="LinK">
                             <Card id="prop">
@@ -102,9 +117,7 @@ class ProprietarioPage extends React.Component {
                                         <Modal.Title>Invio dati all'ufficio del turismo</Modal.Title>
                                             </Modal.Header>
                                                 <Modal.Body>
-                                                    <div className="turismocont">
-                                                        <p>Si è verificato un errore: {this.state.errorMessage}</p>
-                                                    </div>
+                                                    {datiTurismo}
                                                 </Modal.Body>
                                     <Modal.Footer>
                                         <Button variant="secondary" /*funzione invia dationClick={}*/>Invia dati</Button>
@@ -147,78 +160,7 @@ class ProprietarioPage extends React.Component {
                             </Link>
                         </div>
                 </div>
-            );
-        }
-        else {
-            var data_invio = this.state.apiResponse[0] ? new Date(this.state.apiResponse[0].ultimo_invio_dati).toLocaleDateString() : "Mai inviati";
-            return(
-                    <div className="GestioneProprietario">
-                        <div className="carte_prop" >
-                            <Link to = "/Testina" className="LinK">
-                                <Card id="prop">
-                                    <FaClipboardList className="imageProp"/>
-                                    <Card.Title className="TitoloCard">Gestisci Prenotazioni</Card.Title>
-                                    <Card.Text className="TestoCard">Gestisci le prenotazioni in attesa e quelle già accettate.</Card.Text>
-                                </Card>
-                            </Link>
-                                <Card id="prop" onClick = {this.handleShow}>
-                                    <RiMailSendLine className="imageProp"/>
-                                    <Card.Title>Invio dati Turismo </Card.Title>
-                                    <Card.Text>Effettua l'invio dei dati relativi ai soggiornanti all'ufficio del turismo.</Card.Text>
-                                </Card>
-                                    <Modal show={this.state.show} onHide={this.handleClose}>
-                                        <Modal.Header closeButton>
-                                            <Modal.Title>Invio dati all'ufficio del turismo</Modal.Title>
-                                                </Modal.Header>
-                                                    <Modal.Body>
-                                                        <div className="turismocont">
-                                                            <p>Ultimo invio dei dati all'ufficio competente: {data_invio} </p>
-                                                            <p>Desideri inviare i dati nuovamente?</p>
-                                                        </div>
-                                                    </Modal.Body>
-                                        <Modal.Footer>
-                                            <Button variant="secondary" /*funzione invia dationClick={}*/>Invia dati</Button>
-                                            <Button variant="secondary" onClick={this.handleClose}>
-                                                Chiudi
-                                            </Button>                    
-                                        </Modal.Footer>
-                                    </Modal>
-                        </div>
-                        <div className="carte_prop">
-                            <Link to = "/InserimentoProprietà" className="LinK">
-                                <Card id="prop">
-                                    <FaHotel className="imageProp"/>
-                                    <Card.Title>Inserisci Proprietà</Card.Title>
-                                    <Card.Text>Scegli tra le tipologie di strutture presenti nel sistema e inserisci la tua! </Card.Text>
-                                </Card>
-                            </Link>
-                            <Link to = "/SceltaModifica" className="LinK">
-                                <Card  id="prop">
-                                    <BsTools className="imageProp"/>
-                                    <Card.Title>Modifica Proprietà</Card.Title>
-                                    <Card.Text>Scegli tra le strutture possedute ed effettua i cambiamenti che preferisci.</Card.Text>
-                                </Card>
-                            </Link>
-                        </div>
-                        <div className="carte_prop">
-                            <Link to = "/DatiPersonali" className="LinK">
-                                <Card id="prop">
-                                    <RiAccountBoxLine className="imageProp" />
-                                    <Card.Title>Gestione Account</Card.Title>
-                                    <Card.Text>Vedi le opzioni disponibili</Card.Text>
-                                </Card>
-                                </Link>
-                                <Link to = "/Earning" className="LinK">
-                                    <Card id="prop">
-                                    <SiCashapp className="imageProp" />
-                                        <Card.Title>Resoconto Guadagni</Card.Title>
-                                        <Card.Text>Visualizza </Card.Text>
-                                    </Card>
-                                </Link>
-                            </div>
-                    </div>
-            );
-        }
+        );
     }
 }
 

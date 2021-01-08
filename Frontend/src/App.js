@@ -106,7 +106,6 @@ class App extends React.Component {
     })
     .then((result) => result.text())
     .then((result) => {
-      console.log(JSON.parse(result));
       this.setState({ apiResponse: JSON.parse(result) });
 
       if(this.state.apiResponse.status === 'error') {

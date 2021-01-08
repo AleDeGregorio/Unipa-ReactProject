@@ -14,23 +14,17 @@ class NavBar extends React.Component {
     }
 
     render() {
+        var loggato = <Nav.Link href="/autenticazioneAccedi">ACCEDI</Nav.Link>;
+
         if(localStorage.getItem('logged') && localStorage.getItem('cliente')) {
             var nome = localStorage.getObj('user_data')[0].nome_cl;
             var cognome = localStorage.getObj('user_data')[0].cognome_cl;
-            return(
-                <Navbar bg="light" expand="lg">
-                <Navbar.Brand href="/">Sito Progetto</Navbar.Brand>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="mr-auto">
-                        <Nav.Link href="/">Home</Nav.Link>
-                        <Nav.Link href="/BnB">BnB</Nav.Link>
-                        <Nav.Link href="/CasaVacanza">Casa Vacanza</Nav.Link>
-                    </Nav>
+            
+            loggato = (
                 <Dropdown>
-                <Dropdown.Toggle >
-                    {nome} {cognome}<Menu />
-                </Dropdown.Toggle>
+                    <Dropdown.Toggle >
+                        {nome} {cognome}<Menu />
+                    </Dropdown.Toggle>
                     <Dropdown.Menu >
                         <Dropdown.Item href="/GestionePrenotazione" >Gestisci prenotazioni</Dropdown.Item>
                         <Dropdown.Item href="/DiventaHost">Diventa un host</Dropdown.Item>
@@ -38,30 +32,18 @@ class NavBar extends React.Component {
                         <Dropdown.Item href="/autenticazioneAccedi" onClick = {this.onClick}>Logout</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
-             </Navbar.Collapse>
-            </Navbar>
-            );
+            ); 
         }
-        //<Nav.Link href="/PaginaProprietario">Area personale</Nav.Link>
-       //<Nav.Link href="/autenticazioneAccedi" onClick = {this.onClick}>ESCI</Nav.Link>
+
         if(localStorage.getItem('logged') && localStorage.getItem('proprietario')) {
-            return(
-                <Navbar bg="light" expand="lg">
-                <Navbar.Brand href="/">Sito Progetto</Navbar.Brand>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="mr-auto">
-                        <Nav.Link href="/">Home</Nav.Link>
-                        <Nav.Link href="/BnB">BnB</Nav.Link>
-                        <Nav.Link href="/CasaVacanza">Casa Vacanza</Nav.Link>
-                    </Nav>
-                <Nav.Link href="/PaginaProprietario">Area personale</Nav.Link>
-                <Nav.Link href="/autenticazioneAccedi" onClick = {this.onClick}>ESCI</Nav.Link>
-                  
-                </Navbar.Collapse>
-            </Navbar>
+            loggato = (
+                <Nav>
+                    <Nav.Link href="/PaginaProprietario">Area personale</Nav.Link>
+                    <Nav.Link href="/autenticazioneAccedi" onClick = {this.onClick}>ESCI</Nav.Link>
+                </Nav>
             );
         }
+
         return(
             <Navbar bg="light" expand="lg">
                 <Navbar.Brand href="/">Sito Progetto</Navbar.Brand>
@@ -72,7 +54,7 @@ class NavBar extends React.Component {
                         <Nav.Link href="/BnB">BnB</Nav.Link>
                         <Nav.Link href="/CasaVacanza">Casa Vacanza</Nav.Link>
                     </Nav>
-                        <Nav.Link href="/autenticazioneAccedi">ACCEDI</Nav.Link>
+                        {loggato}
                 </Navbar.Collapse>
             </Navbar>
         );

@@ -80,6 +80,29 @@ const updateUser = async(req) => {
     });
 }
 
+// update password
+const updateUserPassword= async(req) => {
+    return new Promise((resolve, reject) => {
+
+        Connection.query(
+            'SELECT @pass := SHA2("' + req.password + '", 512); ' +
+            'UPDATE cliente ' +
+            'SET password_cl = @pass ' +
+            'WHERE email_cl = "' + req.email+ '"',
+            (err, results) => {
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessun cliente trovato'));
+                }
+                resolve(results);
+            }
+        );
+    });
+}
+
 // insert new cliente with encrypted password
 const insertUser = async(req) => {
     return new Promise((resolve, reject) => {
@@ -140,26 +163,10 @@ const login = async(req, res, next) => {
     });
 }
 
-/* insert new cliente
-const insertUser = async(req) => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query(
-            'INSERT INTO cliente VALUES ' +
-            '("' + req.email + '", ' + req.password + ', "'  + '", "' + req.nome + '", "' + req.cognome + '", "' + 
-            req.nascita + '", "' + req.telefono + '")',
-            (err, results) => {
-                if(err) {
-                    return reject(err);
-                }
-                resolve(results);
-        });
-    });
-}*/
-
 module.exports = all;
 module.exports = getUser;
 module.exports = updateUser;
+module.exports = updateUserPassword;
 module.exports = insertUser;
 module.exports = login;
 
@@ -167,6 +174,7 @@ module.exports = {
     all,
     getUser,
     updateUser,
+    updateUserPassword,
     insertUser,
     login
 }

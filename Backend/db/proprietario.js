@@ -150,9 +150,8 @@ const updateUser= async(req) => {
     return new Promise((resolve, reject) => {
 
         Connection.query(
-            'SELECT @pass := SHA2("' + req.password + '", 512); ' +
             'UPDATE proprietario ' +
-            'SET password_prop = @pass, nome_prop = "' + req.nome + '", cognome_prop = "' + req.cognome +
+            'SET nome_prop = "' + req.nome + '", cognome_prop = "' + req.cognome +
             '", data_nascita_prop = (STR_TO_DATE("' + req.nascita + '","%d/%m/%Y")), num_documento = "' + req.num_documento +
             '", telefono_prop = "' + req.telefono + '" ' +
             'WHERE email_prop = "' + req.email+ '"',
@@ -170,22 +169,28 @@ const updateUser= async(req) => {
     });
 }
 
-/* insert new proprietario
-const insertUser = async(req) => {
+// update password
+const updateUserPassword= async(req) => {
     return new Promise((resolve, reject) => {
 
         Connection.query(
-            'INSERT INTO proprietario VALUES ' +
-            '("' + req.cf + '", "' + req.nome + '", "' + req.cognome + '", "' + req.nascita + '", "' + req.num_documento +
-            '", "' + req.telefono + '", "' + req.email + '", "' + req.password + '")',
+            'SELECT @pass := SHA2("' + req.password + '", 512); ' +
+            'UPDATE proprietario ' +
+            'SET password_prop = @pass ' +
+            'WHERE email_prop = "' + req.email+ '"',
             (err, results) => {
                 if(err) {
-                    return reject(err);
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessun proprietario trovato'));
                 }
                 resolve(results);
-        });
+            }
+        );
     });
-}*/
+}
 
 // insert new proprietario with encrypted password
 const insertUser = async(req) => {
@@ -298,6 +303,7 @@ module.exports = getGuadagni;
 module.exports = getGuadagniTipo;
 module.exports = getGuadagniProprieta;
 module.exports = updateUser;
+module.exports = updateUserPassword;
 module.exports = invioDati;
 module.exports = getDataInvio;
 module.exports = insertUser;
@@ -310,6 +316,7 @@ module.exports = {
     getGuadagniTipo,
     getGuadagniProprieta,
     updateUser,
+    updateUserPassword,
     invioDati,
     getDataInvio,
     insertUser,

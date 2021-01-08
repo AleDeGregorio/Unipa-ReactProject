@@ -106,7 +106,6 @@ class ElencoCheck extends Component {
       }
     });
   }
-
        
   reorderItems = (startIndex, endIndex) => {
     const items = Array.from(this.state.items);
@@ -130,8 +129,8 @@ class ElencoCheck extends Component {
   };
 
   render() {
+
   if(this.state.error) {
-    console.log("check");
       return <Redirect
           to={{
               pathname: "/ErrorPage",

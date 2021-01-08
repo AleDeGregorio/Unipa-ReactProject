@@ -25,27 +25,10 @@ class autenticazioneAccedi extends React.Component {
     }
 
     render() {
-        if(this.props.error && this.props.errorMessage !== '') {
+        var messaggioErrore;
 
-            return(
-                <div className="accedi">
-                    <Form className="contenitoreAutenticazione" onSubmit = {this.props.onSubmitLogin}>
-                        <h2>Accedi</h2>
-                           <Form.Group as={Col} controlId="formGridEmail">
-                                <Form.Control type="email" name = "email" placeholder="E-mail" onChange = {this.handleChange} required />
-                            </Form.Group>
-                
-                            <Form.Group as={Col} controlId="formGridPassword">
-                                <Form.Control type="password" name = "password" placeholder="Password" onChange = {this.handleChange} required/>
-                            </Form.Group>
-                            <p style={{color: 'red'}}>Nome utente o password errati</p>
-                            <label>Non sei iscritto?<Link to="/autenticazioneRegistrati"> REGISTRATI</Link></label>
-                        <Button variant="primary" type="submit" className="pulsante">
-                            Accedi
-                        </Button>
-                    </Form>
-                </div>
-            );
+        if(this.props.error && this.props.errorMessage !== '') {
+            messaggioErrore = <p style={{color: 'red'}}>Nome utente o password errati</p>;
         }
 
         if(localStorage.getItem('logged') && localStorage.getItem('cliente')) {
@@ -67,6 +50,7 @@ class autenticazioneAccedi extends React.Component {
                         <Form.Group as={Col} controlId="formGridPassword">
                             <Form.Control type="password" name = "password" placeholder="Password" onChange = {this.handleChange} required/>
                         </Form.Group>
+                        {messaggioErrore}
                         <label>Non sei iscritto?<Link to="/autenticazioneRegistrati"> REGISTRATI</Link></label>
                     <Button variant="primary" type="submit" className="pulsante">
                         Accedi

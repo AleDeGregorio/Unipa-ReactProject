@@ -67,6 +67,9 @@ app.use('/getGuadagniProprieta', proprietarioRouter);
 // modifica dei campi di un proprietario (fornendo l'email)
 // indirizzo: /updateProprietario/fields
 app.use('/updateProprietario', proprietarioRouter);
+// modifica della password di un proprietario (fornendo l'email)
+// indirizzo: /updateProprietarioPassword/updPass
+app.use('/updateProprietarioPassword', proprietarioRouter);
 // update ultima data di invio dati ufficio turismo of table Proprietario
 // indirizzo: /updateDataInvio/invioDati
 app.use('/updateDataInvio', proprietarioRouter);
@@ -213,6 +216,9 @@ app.use('/searchCliente', clienteRouter);
 // modifica dei campi di un cliente (fornendo la sua email)
 // indirizzo: /updateCliente/fields
 app.use('/updateCliente', clienteRouter);
+// modifica della password di un cliente (fornendo la sua email)
+// indirizzo: /updateClientePassword/updPassword
+app.use('/updateClientePassword', clienteRouter);
 // inserimento di un nuovo cliente
 // indirizzo: /insertCliente/new
 app.use('/insertCliente', clienteRouter);
