@@ -326,6 +326,8 @@ class ListItemPrenotazioni extends Component {
         setTimeout(() => {
           this.setState({ isAlive: false })
         }, 150)
+
+        window.location.reload();
       }
     });
   }
