@@ -15,8 +15,10 @@ class RicercaFinale extends React.Component {
         super(props);
 
         this.state = {
-            checkInFocus: null,
-            checkOutFocus: null,
+            checkInFocus: false,
+            checkInFocusDROP: false,
+            checkOutFocus: false,
+            checkOutFocusDROP: false,
             startDate: moment(),
             endDate: null,
             tipo: '',
@@ -35,8 +37,16 @@ class RicercaFinale extends React.Component {
         this.setState({ checkInFocus: e });
     }
 
+    set_focused_checkInDROP = (e) => {
+        this.setState({ checkInFocusDROP: e });
+    }
+
     set_focused_checkOut = (e) => {
         this.setState({ checkOutFocus: e });
+    }
+
+    set_focused_checkOutDROP = (e) => {
+        this.setState({ checkOutFocusDROP: e });
     }
 
     setStartDate = (e) => {
@@ -96,33 +106,9 @@ class RicercaFinale extends React.Component {
         })
     }
     
-    /*const [focused, set_focused] = useState({
-        checkIn: null,
-        chceckOut: null
-      });
-
-    const [dates, set_dates] = useState({
-        startDate: moment(),
-        endDate: null
-      });
-
-    const setStartDate = startDate => {
-        set_dates({
-          ...dates,
-          startDate
-        });
-      };
-    
-      const setEndDate = endDate => {
-        set_dates({
-          ...dates,
-          endDate
-        });
-      }; */
-
     render() {
         if(this.state.success) {
-            //var a = moment(this.state.checkIn, "DD-MM-YYYY");
+
             return <Redirect 
             to = {{
               pathname: "/CaseVacanza",
@@ -243,8 +229,8 @@ class RicercaFinale extends React.Component {
                                 class="search-element"
                                 date={this.state.startDate}
                                 onDateChange={date => this.setStartDate(date)}
-                                focused={this.state.checkInFocus}
-                                onFocusChange={({ focused }) => this.set_focused_checkIn(focused)}
+                                focused={this.state.checkInFocusDROP}
+                                onFocusChange={({ focused }) => this.set_focused_checkInDROP(focused)}
                                 id="start_date"
                                 numberOfMonths={1}
                                 placeholder="gg/mm/aaaa"
@@ -253,7 +239,7 @@ class RicercaFinale extends React.Component {
                                 displayFormat="DD/MM/YYYY"
                                 block={true}
                                 verticalSpacing={8}
-                                showClearDate={this.state.checkInFocus}
+                                showClearDate={this.state.checkInFocusDROP}
                                 reopenPickerOnClearDate={true}
                                 noBorder={true}
                             />
@@ -264,8 +250,8 @@ class RicercaFinale extends React.Component {
                                 class="search-element"
                                 date={this.state.endDate}
                                 onDateChange={date => this.setEndDate(date)}
-                                focused={this.state.checkOutFocus}
-                                onFocusChange={({ focused }) => this.set_focused_checkOut(focused)}
+                                focused={this.state.checkOutFocusDROP}
+                                onFocusChange={({ focused }) => this.set_focused_checkOutDROP(focused)}
                                 id="end_date"
                                 numberOfMonths={1}
                                 placeholder="gg/mm/aaaa"
@@ -279,7 +265,7 @@ class RicercaFinale extends React.Component {
                                 verticalSpacing={8}
                                 anchorDirection="right"
                                 isDayBlocked={day => day.isBefore(this.state.startDate)}
-                                showClearDate={this.state.checkOutFocus}
+                                showClearDate={this.state.checkOutFocusDROP}
                                 reopenPickerOnClearDate={true}
                                 noBorder={true}
                             />

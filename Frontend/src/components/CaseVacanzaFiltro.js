@@ -16,8 +16,10 @@ class CaseVacanzaFilter extends React.Component {
       posti: this.props.posti ? this.props.posti : 1,
       checkIn: this.props.checkIn ? this.props.checkIn : '',
       checkOut: this.props.checkOut ? this.props.checkOut : '',
-      checkInFocus: null,
-      checkOutFocus: null,
+      checkInFocus: false,
+      checkInFocusDROP: false,
+      checkOutFocus: false,
+      checkOutFocusDROP: false,
       startDate: null,
       endDate: null,
       searchServizi: [],
@@ -54,9 +56,17 @@ class CaseVacanzaFilter extends React.Component {
     this.setState({ checkInFocus: e });
   }
 
+  set_focused_checkInDROP = (e) => {
+    this.setState({ checkInFocusDROP: e });
+  }
+
   set_focused_checkOut = (e) => {
       this.setState({ checkOutFocus: e });
   }
+
+  set_focused_checkOutDROP = (e) => {
+    this.setState({ checkOutFocusDROP: e });
+}
 
   setStartDate = (e) => {
     this.setState({ startDate: e }, () => {
@@ -272,8 +282,8 @@ class CaseVacanzaFilter extends React.Component {
                                       class="search-element"
                                       date={this.state.startDate}
                                       onDateChange={date => this.setStartDate(date)}
-                                      focused={this.state.checkInFocus}
-                                      onFocusChange={({ focused }) => this.set_focused_checkIn(focused)}
+                                      focused={this.state.checkInFocusDROP}
+                                      onFocusChange={({ focused }) => this.set_focused_checkInDROP(focused)}
                                       id="start_date"
                                       numberOfMonths={1}
                                       placeholder="gg/mm/aaaa"
@@ -282,7 +292,7 @@ class CaseVacanzaFilter extends React.Component {
                                       displayFormat="DD/MM/YYYY"
                                       block={true}
                                       verticalSpacing={8}
-                                      showClearDate={this.state.checkInFocus}
+                                      showClearDate={this.state.checkInFocusDROP}
                                       reopenPickerOnClearDate={true}
                                       noBorder={true}
                                   />
@@ -293,8 +303,8 @@ class CaseVacanzaFilter extends React.Component {
                                       class="search-element"
                                       date={this.state.endDate}
                                       onDateChange={date => this.setEndDate(date)}
-                                      focused={this.state.checkOutFocus}
-                                      onFocusChange={({ focused }) => this.set_focused_checkOut(focused)}
+                                      focused={this.state.checkOutFocusDROP}
+                                      onFocusChange={({ focused }) => this.set_focused_checkOutDROP(focused)}
                                       id="end_date"
                                       numberOfMonths={1}
                                       placeholder="gg/mm/aaaa"
@@ -308,7 +318,7 @@ class CaseVacanzaFilter extends React.Component {
                                       verticalSpacing={8}
                                       anchorDirection="right"
                                       isDayBlocked={day => day.isBefore(this.state.startDate)}
-                                      showClearDate={this.state.checkOutFocus}
+                                      showClearDate={this.state.checkOutFocusDROP}
                                       reopenPickerOnClearDate={true}
                                       noBorder={true}
                                   />
