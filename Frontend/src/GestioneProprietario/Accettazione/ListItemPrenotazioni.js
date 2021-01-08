@@ -3,6 +3,8 @@ import styled, { ThemeProvider } from 'styled-components'
 import { theme } from '../shared/theme'
 import {Link} from 'react-router-dom'
 import './Accettazione.css'
+import {Card, Modal, Button} from 'react-bootstrap'
+
 const ListItemWrapper = styled.div`
 
   padding: 10px 0;
@@ -110,8 +112,6 @@ const ListItemTextSecond = styled.div`
   
 `
 
-
-
 const ListItemSelect = styled.div`
   width: 90px;
   background-color: #fff;
@@ -195,6 +195,7 @@ const SelectArrowDown = styled.div`
 `
 
 class ListItemPrenotazioni extends Component {
+
   constructor(props) {
     super(props);
 
@@ -209,7 +210,9 @@ class ListItemPrenotazioni extends Component {
       error: false,
       errorMessage: '',
       empty: false,
-      success: false
+      success: false,
+      idoneo: null,
+      show: false
     }
   }
 
@@ -332,8 +335,62 @@ class ListItemPrenotazioni extends Component {
     });
   }
 
+  checkSoggiornante = (e) => {
+
+    const data = {
+      ref_soggiornante: e.ref_soggiornante,
+      anno: new Date(e.data_ritorno).getFullYear()
+    }
+
+    fetch('http://localhost:9000/checkSoggiornante/resultIdoneita', {
+      method: "POST",
+      headers: {
+          'Content-type' : 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then((result) => result.text())
+    .then((result)=>{
+      this.setState({ apiResponse:JSON.parse(result) });
+      var res = JSON.parse(result);
+
+      if(res.length < 1 || (res.code && res.code === 404)) {
+        this.setState({ empty: true, errorMessage: res.message });
+      }
+
+      else if(res.code && res.code === 400) {
+        this.setState({ idoneo: false }, () => {
+          this.handleShow();
+        });
+      }
+
+      else if(this.state.apiResponse.status === 'error') {
+        this.setState({ error: true });
+        this.setState({ errorMessage: this.state.apiResponse.message });
+      }
+
+      else {
+        this.setState({ idoneo: true }, () => {
+          this.handleShow();
+        });
+      }
+    });
+  }
+
+  handleClose = () => {
+    this.setState({
+      show: false
+    });
+  }
+
+  handleShow = () => {
+    this.setState({
+      show: true
+    });
+  }
+
   render() {
-    //const { dragging } = this.props
+
     const {
       showSelect,
       editName,
@@ -342,12 +399,14 @@ class ListItemPrenotazioni extends Component {
       isDeleted,
       isAlive
     } = this.state
+
     const {//definisci variabili
       hasActions,
       image,
       nome,
       stanza
     } = this.props.number
+
     const {
       id_prenotazione,
       ref_cliente,
@@ -360,8 +419,81 @@ class ListItemPrenotazioni extends Component {
       id_stanza,
       ref_soggiornante
     } = this.props.dati_casa
+
     let listItemContentClass = ``
+
+    var messaggioControllo;
+    var idoneita;
+
+    if(this.state.idoneo === true) {
+      idoneita = (
+        <Modal show={this.state.show} onHide={this.handleClose}>
+          <Modal.Header closeButton>
+              <Modal.Title>Controllo idoneità soggiornante</Modal.Title>
+                  </Modal.Header>
+                      <Modal.Body>
+                      <div className="turismocont">
+                        <p>Controllo del soggiornante: {ref_soggiornante} </p>
+                        <h6 style = {{color: 'green', fontWeight: 'bold'}}>IDONEO</h6>
+                      </div>
+                      </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick = {e => this.accetta({id_prenotazione, data_partenza, data_ritorno, tipo_proprieta, ref_proprieta, id_stanza})}>Accetta</Button>
+            <Button variant="secondary" onClick={e => this.rifiuta(id_prenotazione)}>Rifiuta</Button>
+            <Button variant="secondary" onClick={this.handleClose}>Chiudi</Button>                    
+          </Modal.Footer>
+      </Modal>
+      );
+    }
+
+    else if(this.state.idoneo === false) {
+      idoneita = (
+        <Modal show={this.state.show} onHide={this.handleClose}>
+          <Modal.Header closeButton>
+              <Modal.Title>Controllo idoneità soggiornante</Modal.Title>
+                  </Modal.Header>
+                      <Modal.Body>
+                      <div className="turismocont">
+                        <p>Controllo del soggiornante: {ref_soggiornante} </p>
+                        <h6 style = {{color: 'red', fontWeight: 'bold'}}>NON IDONEO</h6>
+                      </div>
+                      </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={e => this.rifiuta(id_prenotazione)}>Rifiuta</Button>
+            <Button variant="secondary" onClick={this.handleClose}>Chiudi</Button>                   
+          </Modal.Footer>
+      </Modal>
+      );
+    }
+
+    if ({tipo_proprieta}.tipo_proprieta === 'cv') {
+      messaggioControllo = (
+        <div className="listitem__select__list__item">
+          <span onClick = {e => this.checkSoggiornante({ref_soggiornante, data_ritorno})}>Controllo soggiornante</span>
+          {idoneita}
+        </div>
+      );
+    }
+    
+    else if({tipo_proprieta}.tipo_proprieta === 'bb') {
+      messaggioControllo = (
+        <div>
+          <div className="listitem__select__list__item">
+            <div className="LinkList">
+              <span onClick = {e => this.accetta({id_prenotazione, data_partenza, data_ritorno, tipo_proprieta, ref_proprieta, id_stanza})}>
+                Accetta
+              </span>
+            </div>
+          </div>
+          <div className="listitem__select__list__item">
+            <span onClick={e => this.rifiuta(id_prenotazione)}>Rifiuta</span>
+          </div>
+        </div>
+      );
+    }
+
     if (isDeleted) listItemContentClass += ` list-item-content--deleted`
+
     return (
       <ThemeProvider theme={theme}>
         <ListItemWrapper className={isAlive ? `` : `list-item-wrapper--hide`}>
@@ -380,12 +512,12 @@ class ListItemPrenotazioni extends Component {
                   />)
                   
                  : (
-                  <span onClick={this.toggleEditName}>ID : {id_prenotazione} Richiesta di "{ref_cliente}" su:  "{nome}"  {id_stanza}</span>
+                  <span onClick={this.toggleEditName}>ID: {id_prenotazione} Richiesta di "{ref_cliente}" su:  "{nome}"  {id_stanza}</span>
                 )} 
               </ListItemText>
               <ListItemTextSecond>
                 <div className="text-div-style">
-               Num persone: {num_soggiornanti} Costo: {costo}  
+               Num persone: {num_soggiornanti} Costo: €{costo}  
                <br/>       
               Partenza-Ritorno: {new Date(data_partenza).toLocaleDateString()},  {new Date(data_ritorno).toLocaleDateString()}<br/>  
                CF Soggiornante: {ref_soggiornante}
@@ -420,17 +552,7 @@ class ListItemPrenotazioni extends Component {
                       showSelect ? 'listitem__select__list--show' : ''
                     }`}
                   >
-                    <div className="listitem__select__list__item">
-                      <div className="LinkList"      >
-                      <span onClick = {e => this.accetta({id_prenotazione, data_partenza, data_ritorno, tipo_proprieta, ref_proprieta, id_stanza})}>
-                        Accetta
-                      </span>
-                      </div>
-                    </div>
-                    <div
-                      className="listitem__select__list__item">
-                    <span onClick={e => this.rifiuta(id_prenotazione)}>Rifiuta</span>
-                    </div>
+                    {messaggioControllo}
                   </div>
                 )}
               </ListItemSelect>

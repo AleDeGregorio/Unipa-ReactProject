@@ -336,8 +336,6 @@ class ListItemCheck extends Component {
                         </Link>
                     </div>
                     </div>
-                    <div className="listitem__select__list__item" onClick={this.deleteItem}>  Rifiuta
-                    </div>
                   </div>
                 )}
               </ListItemSelect>
