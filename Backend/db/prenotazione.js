@@ -112,6 +112,8 @@ const getPrenotazioneCliente = async(req) => {
 
                         for(var i = 0; i < res1.length; i++) {
                             res1[i].img = results[0].imgCV_path1;
+                            res1[i].non_disponibile_inizio = results[i] ? results[i].non_disponibile_inizio_cv.toLocaleDateString() : '';
+                            res1[i].non_disponibile_fine = results[i] ? results[i].non_disponibile_fine_cv.toLocaleDateString() : '';
                         }
 
                         resolve(res1);
@@ -135,6 +137,8 @@ const getPrenotazioneCliente = async(req) => {
                         for(var i = 0; i < res1.length; i++) {
                             res1[i].img = results[0].imgST_path1;
                             res1[i].id_stanza = results[i].id_stanza;
+                            res1[i].non_disponibile_inizio = results[i] ? results[i].non_disponibile_inizio_st.toLocaleDateString() : '';
+                            res1[i].non_disponibile_fine = results[i] ? results[i].non_disponibile_fine_st.toLocaleDateString() : '';
                         }
                         resolve(res1);
                     }
