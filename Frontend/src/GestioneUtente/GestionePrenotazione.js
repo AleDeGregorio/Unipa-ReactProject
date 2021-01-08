@@ -2,10 +2,12 @@ import React from 'react'
 import './GestionePrenotazione.css'
 import {Card, Accordion, Button, Form, Col} from 'react-bootstrap'
 //import { CardColumn, ListGroup, ListGroupItem } from 'react-bootstrap'
-
+import moment from "moment";
+import { SingleDatePicker } from "react-dates";
 import { Redirect } from 'react-router-dom'
 
 class GestionePrenotazione extends React.Component {
+
     constructor(props) {     //props : stati delle componenti parent
         super(props);
         this.state = {
@@ -17,11 +19,16 @@ class GestionePrenotazione extends React.Component {
             apiResponse: [] ,
             error: false,
             errorMessage: '',
-            empty: false
+            empty: false,
+            checkInFocus: [],
+            checkOutFocus: [],
+            startDate: moment(),
+            endDate: null
         }
     }
 
     componentDidMount() { //interrogazione che viene effettuata all'apertura della pagina
+    
         const data = {
             ref_cliente: this.state.email
         }; //body richiesta http (in questo caso chiave primaria cioè ref_cliente)
@@ -46,6 +53,15 @@ class GestionePrenotazione extends React.Component {
               this.setState({ error: true });
               this.setState({ errorMessage: this.state.apiResponse.message });
             }
+
+            else {
+                for(var i = 0; i < res.length; i++) {
+                    this.setState({
+                        checkInFocus: this.state.checkInFocus.concat(null),
+                        checkOutFocus: this.state.checkOutFocus.concat(null)
+                    })
+                }
+            }
         })
    }
 
@@ -59,6 +75,40 @@ class GestionePrenotazione extends React.Component {
 
     set_emailProprietario = (e) => {
         this.setState({ ref_proprietario: e })
+    }
+
+    set_focused_checkIn = (e1, e2) => {
+
+        const list = this.state.checkInFocus.map((item, j) => {
+            if (j === e2) {
+            return e1;
+            } else {
+            return !e1;
+            }
+        });
+
+        this.setState({ checkInFocus: list })
+    }
+
+    set_focused_checkOut = (e1, e2) => {
+
+        const list = this.state.checkOutFocus.map((item, j) => {
+            if (j === e2) {
+            return e1;
+            } else {
+            return !e1;
+            }
+        });
+
+        this.setState({ checkOutFocus: list })
+    }
+
+    setStartDate = (e) => {
+        this.setState({ startDate: e });
+    }
+
+    setEndDate = (e) => {
+        this.setState({ endDate: e });
     }
 
     onSubmitModifica = (e) => {
@@ -129,6 +179,10 @@ class GestionePrenotazione extends React.Component {
         });
     }
 
+    onClick = (e) => {
+        
+    }
+
     render() {
         if(!localStorage.getItem('logged') || !localStorage.getItem('cliente')) {
             return <Redirect
@@ -162,6 +216,7 @@ class GestionePrenotazione extends React.Component {
                 </div>
             );
         } 
+        
         else {
             return (
                 <div className="containerGP">
@@ -169,7 +224,7 @@ class GestionePrenotazione extends React.Component {
                         <h1>Gestisci le tue prenotazioni</h1>
                         <h5>Le tue prenotazioni: </h5>
                         {        
-                            this.state.apiResponse.map(((res)=> 
+                            this.state.apiResponse.map(((res, index)=> 
                                 <div className="containeracc">
                                     <Accordion>
                                         <Card border="light" id="cardGP">
@@ -204,7 +259,7 @@ class GestionePrenotazione extends React.Component {
                                                     <Accordion>
                                                         <div className="acc3">
                                                             <div className="just-cont">
-                                                            <Accordion.Toggle as={Button} onClick={this.nomeFunzione} id="accbutton" variant="link" eventKey="1">Modifica data prenotazione</Accordion.Toggle>
+                                                            <Accordion.Toggle as={Button} id="accbutton" variant="link" eventKey="1">Modifica data prenotazione</Accordion.Toggle>
                                                             <Accordion.Toggle as={Button} variant="link" eventKey="2" id="accbutton">Elimina prenotazione</Accordion.Toggle>
                                                             <Accordion.Toggle as={Button} variant="link" eventKey="3" id="accbutton">Contatta il gestore</Accordion.Toggle>
                                                             </div>
@@ -213,24 +268,54 @@ class GestionePrenotazione extends React.Component {
                                                                 <Form>
                                                                     <Form.Row>
                                                                         <Form.Group as={Col} controlId="formGridDate">
-                                                                            <Form.Label className="bianco">Data di inizio</Form.Label>
-                                                                            <Form.Control 
-                                                                                type="date" 
-                                                                                placeholder="Inserisci data di inizio" 
-                                                                                id = 'data_partenza'
-                                                                                name = 'data_partenza'
-                                                                                onChange = {this.onChange}
-                                                                            />
+                                                                        <div className="bianco">
+                                                                            <label class="search-label" htmlFor="start_date">Check-in</label>
+                                                                                <div onClick={() => this.set_focused_checkIn(!this.state.checkInFocus[index], index)}>
+                                                                                    <SingleDatePicker
+                                                                                        class="search-element"
+                                                                                        date={this.state.startDate}
+                                                                                        onDateChange={date => this.setStartDate(date)}
+                                                                                        focused={this.state.checkInFocus[index]}
+                                                                                        onFocusChange = {focused => this.onClick(focused)}
+                                                                                        id="start_date" 
+                                                                                        numberOfMonths={1}
+                                                                                        placeholder="gg/mm/aaaa"
+                                                                                        daySize={32}
+                                                                                        hideKeyboardShortcutsPanel={true}
+                                                                                        displayFormat="DD/MM/YYYY"
+                                                                                        block={true}
+                                                                                        verticalSpacing={8}
+                                                                                        showClearDate={this.state.checkInFocus[index]}
+                                                                                        reopenPickerOnClearDate={true}
+                                                                                        noBorder={true}
+                                                                                    />
+                                                                                </div>
+                                                                        </div>
                                                                         </Form.Group>
                                                                         <Form.Group as={Col} controlId="formGridDate1">
-                                                                            <Form.Label className="bianco">Data fine</Form.Label>
-                                                                            <Form.Control 
-                                                                                type="date" 
-                                                                                placeholder="Inserisci data di fine" 
-                                                                                id = 'data_ritorno'
-                                                                                name = 'data_ritorno'
-                                                                                onChange = {this.onChange}
-                                                                            />
+                                                                        <div className="bianco">
+                                                                            <label class="search-label" htmlFor="start_date">Check-out</label>
+                                                                                <div onClick={() => this.set_focused_checkOut(!this.state.checkOutFocus[index], index)}>
+                                                                                    <SingleDatePicker
+                                                                                        class="search-element"
+                                                                                        date={this.state.endDate}
+                                                                                        onDateChange={date => this.setEndDate(date)}
+                                                                                        focused={this.state.checkOutFocus[index]}
+                                                                                        onFocusChange = {focused => this.onClick(focused)}
+                                                                                        id="start_date" 
+                                                                                        numberOfMonths={1}
+                                                                                        placeholder="gg/mm/aaaa"
+                                                                                        daySize={32}
+                                                                                        hideKeyboardShortcutsPanel={true}
+                                                                                        displayFormat="DD/MM/YYYY"
+                                                                                        block={true}
+                                                                                        verticalSpacing={8}
+                                                                                        showClearDate={this.state.checkOutFocus[index]}
+                                                                                        reopenPickerOnClearDate={true}
+                                                                                        noBorder={true}
+                                                                                    />
+                                                                                </div>
+                                                                        </div>
                                                                         </Form.Group>
                                                                     </Form.Row>
                                                                 </Form>
