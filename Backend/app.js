@@ -162,6 +162,9 @@ app.use('/updateCasa', casaRouter);
 // inserimento di una nuova casa
 // indirizzo: /insertCasa/new
 app.use('/insertCasa', casaRouter);
+// cancellazione di una casa
+// indirizzo: /deleteCasa/deleted
+app.use('/deleteCasa', casaRouter);
 // caricamento foto
 // indirizzo: /uploadFotoCV/upload
 app.use('/uploadFotoCV', casaRouter);
@@ -179,6 +182,9 @@ app.use('/updateBB', bbRouter);
 // inserimento di un nuovo b&b
 // indirizzo: /insertBB/new
 app.use('/insertBB', bbRouter);
+// cancellazione di un b&b
+// indirizzo: /deleteBB/deleted
+app.use('/deleteBB', bbRouter);
 
 // TABELLA STANZA
 // lista di tutte le stanza
@@ -205,6 +211,9 @@ app.use('/insertStanza', stanzaRouter);
 // caricamento foto
 // indirizzo: /uploadFotoST/upload
 app.use('/uploadFotoST', stanzaRouter);
+// cancellazione di una stanza
+// indirizzo: /deleteStanza/deleted
+app.use('/deleteStanza', stanzaRouter);
 
 // TABELLA CLIENTE
 // lista di tutti i clienti

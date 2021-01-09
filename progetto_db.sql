@@ -120,7 +120,7 @@ CREATE TABLE b_and_b
 CREATE TABLE stanza
 (
 	id_stanza int NOT NULL AUTO_INCREMENT,
-	ref_bb int NOT NULL,
+	ref_bb int,
     tipologia int(10) NOT NULL, -- valore numerico per indicare se la stanza è singola (1), doppia (2), tripla (3) ecc
     tariffa_stanza int(10) NOT NULL,
     non_disponibile_inizio_st date NOT NULL, -- se già è stata prenotata, si rende non disponibile caricando la data di inizio e fine

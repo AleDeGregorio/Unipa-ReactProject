@@ -257,7 +257,7 @@ class ModificaBeB extends React.Component {
                   onChange = {this.onChange}
                   className = "i"
                 /> 
-                <button className="bottoniSceltaModifica" onClick = {this.onSubmit}>
+                <button type = 'button' className="bottoniSceltaModifica" onClick = {this.onSubmit}>
                   Modifica nome
                 </button>
               </form>
@@ -301,7 +301,7 @@ class ModificaBeB extends React.Component {
                   onChange = {this.onChange}
                   className = "i"
                 />
-                  <button className="bottoniSceltaModifica" onClick = {this.onSubmit}>
+                  <button type = 'button' className="bottoniSceltaModifica" onClick = {this.onSubmit}>
                 Modifica località
               </button>
                   </form>
@@ -310,7 +310,7 @@ class ModificaBeB extends React.Component {
               </Card>
               <Card id="newStyle" border="light">
                 <div className="head-update">
-                <p> Servizi offerti: {bb.servizi}</p>
+                <p>Servizi offerti: {bb.servizi}</p>
                 <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="3" />
                 </div>
                 <Accordion.Collapse eventKey="3">
@@ -337,12 +337,12 @@ class ModificaBeB extends React.Component {
                     <Form.Group className="centered" controlId="exampleForm.ControlTextarea1">
                     <Form.Label>Aggiungi servizio</Form.Label>
                      <Form.Control as="textarea" rows={1} id = 'nuovoServizio' name = 'nuovoServizio' onChange = {this.onChange} />
-                     <button className="bottoniSceltaModifica" onClick = {this.aggiungiServizio}>
+                     <button type = 'button' className="bottoniSceltaModifica" onClick = {this.aggiungiServizio}>
                       Aggiungi servizio
                     </button>
                     <br/>
                     <br />
-                    <button className="bottoniSceltaModifica" onClick = {this.onSubmit}>
+                    <button type = 'button' className="bottoniSceltaModifica" onClick = {this.onSubmit}>
                       Cambia servizi
                     </button>
                      </Form.Group>
@@ -352,7 +352,7 @@ class ModificaBeB extends React.Component {
               </Card>
               <Card id="newStyle" border="light">
                 <div className="head-update">
-                <p> Descrizione: </p>
+                <p>Descrizione: </p>
                 <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="4" />
                 </div>
                 <Accordion.Collapse eventKey="4">
@@ -367,7 +367,7 @@ class ModificaBeB extends React.Component {
                   className = 'iTA'
                 >
                 </textarea>
-                <button className="bottoniSceltaModifica" onClick = {this.onSubmit}>
+                <button type = 'button' className="bottoniSceltaModifica" onClick = {this.onSubmit}>
                 Modifica Descrizione
               </button>
                     </form>

@@ -124,4 +124,16 @@ router.post('/upload', async(req, res, next) => {
     }
 });
 
+// delete stanza from table stanza
+// indirizzo: /deletetStanza/deleted
+router.post('/deleted', async(req, res, next) => {
+    try {
+        let deleted = await DB.Stanza.deleteStanza(req.body);
+        res.json(deleted);
+    }
+    catch(e) {
+        next(e);
+    }
+});
+
 module.exports = router;

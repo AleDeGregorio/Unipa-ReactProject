@@ -62,6 +62,18 @@ router.post('/new', async(req, res, next) => {
     }
 });
 
+// delete casa vacanza from table casa_vacanza
+// indirizzo: /deletetCasa/deleted
+router.post('/deleted', async(req, res, next) => {
+    try {
+        let deleted = await DB.Casa.deleteCasa(req.body);
+        res.json(deleted);
+    }
+    catch(e) {
+        next(e);
+    }
+});
+
 // caricamento foto
 // indirizzo: /uploadFotoCV/upload
 router.post('/upload', async(req, res, next) => {

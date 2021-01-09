@@ -28,6 +28,7 @@ class ProprietarioPage extends React.Component {
             empty: false
         }
     }
+    
     componentDidMount() {
         const data = {
             email: this.state.email

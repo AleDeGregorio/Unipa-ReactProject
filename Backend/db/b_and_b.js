@@ -99,14 +99,37 @@ const insertBB = async(req) => {
     });
 }
 
+// delete b&b
+const deleteBB = async(req) => {
+    return new Promise((resolve, reject) => {
+
+        Connection.query(
+            'DELETE FROM b_and_b WHERE ref_proprieta_bb = ' + req.ref_proprieta_bb + '; ' +
+            'DELETE FROM stanza WHERE ref_bb = ' + req.ref_proprieta_bb + '; ',
+            (err, results) => {
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('B&B non trovato'));
+                }
+                resolve(results);
+            }
+        )
+    })
+}
+
 module.exports = all;
 module.exports = getBB;
 module.exports = updateBB;
 module.exports = insertBB;
+module.exports = deleteBB;
 
 module.exports = {
     all,
     getBB,
     updateBB,
-    insertBB
+    insertBB,
+    deleteBB
 }

@@ -177,6 +177,26 @@ const insertStanza = async(req) => {
     });
 }
 
+// delete stanza
+const deleteStanza = async(req) => {
+    return new Promise((resolve, reject) => {
+
+        Connection.query(
+            'DELETE FROM stanza WHERE id_stanza = ' + req.id_stanza + '; ',
+            (err, results) => {
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Stanza non trovata'));
+                }
+                resolve(results);
+            }
+        )
+    })
+}
+
 module.exports = all;
 module.exports = getStanza;
 module.exports = getStanzaBB;
@@ -184,6 +204,7 @@ module.exports = getStanzaTipologia;
 module.exports = getStanzaBBTipologia;
 module.exports = updateStanza;
 module.exports = insertStanza;
+module.exports = deleteStanza;
 
 module.exports = {
     all,
@@ -192,5 +213,6 @@ module.exports = {
     getStanzaTipologia,
     getStanzaBBTipologia,
     updateStanza,
-    insertStanza
+    insertStanza,
+    deleteStanza
 }
