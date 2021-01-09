@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Col, Form, Accordion, Card} from 'react-bootstrap'
+import { Button, Col, Form, Accordion, Card, Alert} from 'react-bootstrap'
 import {AiOutlineEdit} from 'react-icons/ai'
 import {RiAccountBoxLine} from 'react-icons/ri'
 //import { Row } from 'react-bootstrap'
@@ -35,7 +35,9 @@ class DatiPersonali extends React.Component {
             success: false
         }
     }
-
+    setShow = (e) => {
+        this.setState({ success: e })
+      }
     onChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
     }
@@ -165,7 +167,11 @@ class DatiPersonali extends React.Component {
                         }
                         else {
                             localStorage.setObj('user_data', this.state.apiResponse);
-                            this.setState({ success: true })
+                            this.setState({ success: true },()=>{
+                                window.setTimeout(()=>{
+                                  this.setState({success:false})
+                                }, 3000)
+                              })
                         }
                     });
                 }
@@ -264,7 +270,11 @@ class DatiPersonali extends React.Component {
                                 }
                                 else {
                                     localStorage.setObj('user_data', this.state.apiResponse);
-                                    this.setState({ success: true })
+                                    this.setState({ success: true },()=>{
+                                        window.setTimeout(()=>{
+                                          this.setState({success:false})
+                                        }, 3000)
+                                      })
                                 }
                             });
                         }
@@ -352,10 +362,19 @@ class DatiPersonali extends React.Component {
                                 else if(this.state.apiResponse.status === 'error') {
                                 this.setState({ error: true });
                                 this.setState({ errorMessage: this.state.apiResponse.message });
+                                this.setState({ error: true },()=>{
+                                    window.setTimeout(()=>{
+                                      this.setState({error:false})
+                                    }, 3000)
+                                  })
                                 }
                                 else {
                                     localStorage.setObj('user_data', this.state.apiResponse);
-                                    this.setState({ success: true })
+                                    this.setState({ success: true },()=>{
+                                        window.setTimeout(()=>{
+                                          this.setState({success:false})
+                                        }, 3000)
+                                      })
                                 }
                             });
                         }
@@ -384,12 +403,6 @@ class DatiPersonali extends React.Component {
                     }
                 }}
             />
-        }
-        else if(this.state.success) {
-            messaggio = <h4 style = {{color: 'green', fontWeight: 'bold'}}>Dati modificati con successo</h4>;
-        }
-        else if (this.state.error) {
-            messaggio = <h4 style = {{color: 'red', fontWeight: 'bold'}}>Alcuni dati inseriti non sono corretti</h4>;
         }
         else if(this.state.empty) {
             return(
@@ -453,6 +466,34 @@ class DatiPersonali extends React.Component {
             
         return(
             <Form className="contenitoreDatiPersonali" onSubmit = {this.onSubmit}>
+                         <>
+            <Alert show={this.state.success} variant="success">
+              <Alert.Heading style = {{fontWeight: 'bold'}}>Modifiche avvenute con successo!</Alert.Heading>
+              <p>
+                Le modifiche del tuo account sono state correttamente caricate e memorizzate all'interno del sistema.
+              </p>
+              <hr />
+              <div className="d-flex justify-content-end">
+                <Button onClick={() => this.setShow(false)} variant="outline-success">
+                  <span style = {{fontWeight: 'bold'}}>Ok</span>
+                </Button>
+              </div>
+            </Alert>
+          </>
+          <>
+            <Alert show={this.state.error} variant="danger">
+              <Alert.Heading style = {{fontWeight: 'bold'}}>Modifiche non avvenute!</Alert.Heading>
+              <p>
+                La password non è stata modificata correttamente a causa di un errore!
+              </p>
+              <hr />
+              <div className="d-flex justify-content-end">
+                <Button onClick={() => this.setShow(false)} variant="outline-success">
+                  <span style = {{fontWeight: 'bold'}}>Ok</span>
+                </Button>
+              </div>
+            </Alert>
+          </>
                         <div className="DatiPersonali">
                         <h2>Qui puoi modificare i tuoi dati personali!</h2>
                         <Accordion >
@@ -556,16 +597,8 @@ class DatiPersonali extends React.Component {
                     </Card>
                         </Accordion>
                         </div>
-                        {messaggio}
                         </Form>      
         );
     }
 }
 export default DatiPersonali
-
-
-function BottoneDati () {
-    return(
-        <button></button>
-    )
-}

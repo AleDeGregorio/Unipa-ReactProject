@@ -1,7 +1,7 @@
 /*CSS FATTO*/
 
 import React from "react";   
-import { Button, Accordion, Card, Form, Col } from "react-bootstrap"
+import { Button, Accordion, Card, Form, Col, Alert } from "react-bootstrap"
 import {AiOutlineEdit} from 'react-icons/ai'
 
 import "../InserisciProp/InserimentoProprietà.css";
@@ -60,7 +60,9 @@ class ModificaBeB extends React.Component {
       listaServiziBB: this.state.servizi.replace(/\s*,\s*/g, ",").split(',')
     })
   }
-
+  setShow = (e) => {
+    this.setState({ success: e })
+  }
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   }
@@ -145,7 +147,11 @@ class ModificaBeB extends React.Component {
         }
 
         else {
-          this.setState({ success: true });
+          this.setState({success:true},()=>{
+            window.setTimeout(()=>{
+              this.setState({success:false})
+            }, 3000)
+          });
         }
         });
       }
@@ -209,14 +215,6 @@ class ModificaBeB extends React.Component {
         }}
       />
     }
-    else if(this.state.success) {
-      return (
-        <div className = "Errore">
-          <h1>Modifiche avvenute con successo!</h1>
-          <p>Il tuo B&B è stato modificato correttamente all'interno del sistema</p>
-        </div>
-      );
-    }
     else if(this.state.empty) {
       var bb = this.state.dati_bb ? this.state.dati_bb : '';
 
@@ -236,6 +234,20 @@ class ModificaBeB extends React.Component {
 
       return (
           <div className="background">
+            <>
+            <Alert show={this.state.success} variant="success">
+              <Alert.Heading style = {{fontWeight: 'bold'}}>Modifiche avvenute con successo!</Alert.Heading>
+              <p>
+                Le modifiche della tua struttura sono state correttamente caricate e memorizzate all'interno del sistema.
+              </p>
+              <hr />
+              <div className="d-flex justify-content-end">
+                <Button onClick={() => this.setShow(false)} variant="outline-success">
+                  <span style = {{fontWeight: 'bold'}}>Ok</span>
+                </Button>
+              </div>
+            </Alert>
+          </>
         <div className="containerNew">  
           <div className="contentNew">
           <h2>Modifica il tuo B&B con le informazioni che preferisci!</h2>

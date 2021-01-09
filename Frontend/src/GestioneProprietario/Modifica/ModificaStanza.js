@@ -2,7 +2,7 @@
 
 import React from "react";
 //import camera from "../assets/camera.svg";   
-import {Form, Button, Card, Accordion} from "react-bootstrap"
+import {Form, Button, Card, Accordion, Alert} from "react-bootstrap"
 import {AiOutlineEdit} from 'react-icons/ai'
 
 
@@ -44,7 +44,9 @@ class ModificaStanza extends React.Component {
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   }
-
+  setShow = (e) => {
+    this.setState({ success: e })
+  }
   onChangeImg = (e) => {
     this.setState({ [e.target.name]: URL.createObjectURL(e.target.files[0]) });
     this.setState({ [e.target.id]: e.target.files[0] });
@@ -118,7 +120,11 @@ class ModificaStanza extends React.Component {
             this.setState({ errorMessage: this.state.apiResponse.message });
           }
         else {
-          this.setState({ success: true });
+          this.setState({ success: true},()=>{
+            window.setTimeout(()=>{
+              this.setState({success:false})
+            }, 3000)
+          });
         }
       });
     }
@@ -147,14 +153,6 @@ class ModificaStanza extends React.Component {
           }
         }}
       />
-    }
-    else if(this.state.success) {
-      return (
-        <div className = "Errore">
-          <h1>Modifiche avvenute con successo!</h1>
-          <p>La tua stanza è stata modificata correttamente all'interno del sistema</p>
-        </div>
-      );
     }
     else if(this.state.empty) {
       var stanza = this.state.dati_stanza;
@@ -204,7 +202,21 @@ class ModificaStanza extends React.Component {
 
       return (
           <div className="background">
-        <div className="containerNew">  
+        <div className="containerNew"> 
+        <>
+            <Alert show={this.state.success} variant="success">
+              <Alert.Heading style = {{fontWeight: 'bold'}}>Modifiche avvenute con successo!</Alert.Heading>
+              <p>
+                Le modifiche della tua struttura sono state correttamente caricate e memorizzate all'interno del sistema.
+              </p>
+              <hr />
+              <div className="d-flex justify-content-end">
+                <Button onClick={() => this.setShow(false)} variant="outline-success">
+                  <span style = {{fontWeight: 'bold'}}>Ok</span>
+                </Button>
+              </div>
+            </Alert>
+          </> 
           <div className="contentNew">
           <h2>Modifica le informazioni della tua stanza come preferisci!</h2>
           <Accordion>
