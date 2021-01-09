@@ -91,25 +91,23 @@ class DiventaHost extends React.Component {
                         
                 </div>
                 <div className="jumbo">
-                    <Jumbotron id="jumbo">
                     <h4>Pronto a diventare un Host?</h4>
                     <p>Noi ci prendiamo cura dei nostri  host, abbiamo tanti vantaggi per voi! </p>
                     <p>Vedi le strutture aggiunte da terzi</p>
                     <Button id="dhbutton">Vai alle strutture!</Button>
-                    </Jumbotron>
                 </div>
                 </div>
                 <div className="containerFormSV">
                     <h4>Scopri i vantaggi di essere un Host</h4>
                         <div className="cardgroup">
                         <Card className="cdh" id="cdh1">
-                            <Card.Title>Inserisci e modifica le tue strutture</Card.Title>
+                            <Card.Title id="titoloCarta">Inserisci e modifica le tue strutture</Card.Title>
                             <Card.Body>
                                 Bastano 5 minuti per inserire i dati relativi e le tue strutture saranno subito pubblicizzate, non dovrai preoccuparti di nulla!
                             </Card.Body>
                         </Card>
                         <Card className="cdh" id="cdh1">
-                        <Card.Title>Gestisci le prenotazioni</Card.Title>
+                        <Card.Title id="titoloCarta">Gestisci le prenotazioni</Card.Title>
                         <Card.Body>
                             Tramite un'interfaccia molto intuitiva potrai vedere subito le richieste da parte degli utenti, scegliere se accettare o rifiutarle, e gestire le prenotazioni già accettate con relativo Check-in.
                         </Card.Body>
@@ -121,7 +119,7 @@ class DiventaHost extends React.Component {
                             </Card.Body>
                         </Card>
                         <Card className="cdh"id="cdh1">
-                            <Card.Title>Comunicazione automatizzata</Card.Title>
+                            <Card.Title id="titoloCarta">Comunicazione automatizzata</Card.Title>
                             <Card.Body>Inviare dati agli uffici competenti? Adesso basta un click!</Card.Body>
                         </Card>
                         </div>
