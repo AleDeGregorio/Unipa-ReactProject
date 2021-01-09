@@ -1,11 +1,14 @@
-.prenota-cont{
-    display:flex;
-    flex-direction:row;
-}
 .prenota-sx-cont{
     display:flex;
     flex-direction: column;
-    width:60%;
+    background: rgba(8, 1, 1, 0.7);
+    border:2px solid white;
+    color: white;
+    padding: 5px;
+}
+
+.paga{
+    margin: 2%;
 }
 .infoviaggio{
     display: flex;
@@ -20,10 +23,68 @@
     height : 4rem;
     border-top:1px solid black;
 }
-.row-flex {
-    display:flex;
-    flex-direction:row;
-    justify-content:space-around;
-    align-items:center;
 
+.containerPaga{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
+
+.bottonePrenota{
+    color: white;
+    background-color: black;
+    height: 50px;
+}
+
+#modifica{
+    color: white;
+    background-color: black;
+    height: 30px;
+}
+
+#cartaInfo{
+    background: rgba(8, 1, 1, 0.7);
+    border:2px solid white;
+    color: white;
+    border-radius: 0;
+    margin: 10px;
+}
+
+@media only screen and (max-width: 599px) {
+    .prenota-cont{
+        display:flex;
+        flex-direction:column;
+        justify-content: center;
+    }
+
+    .prenota-sx-cont{
+        width:100%;
+    }
+}
+
+@media only screen and (min-width: 600px) {
+    .prenota-cont{
+        display:flex;
+        flex-direction:row;
+        justify-content: center;
+        margin: 10px;
+    }
+
+    .prenota-sx-cont{
+        width:60%;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .prenota-cont{
+        display:flex;
+        flex-direction:row;
+        justify-content: center;
+        margin: 10px;
+    }
+
+    .prenota-sx-cont{
+        width:60%;
+    }
+}
+
