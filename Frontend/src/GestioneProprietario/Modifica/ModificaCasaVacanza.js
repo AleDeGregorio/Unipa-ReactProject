@@ -5,6 +5,7 @@ import React from "react";
 import {Form, Button, Accordion, Card, Col} from "react-bootstrap"
 import '../InserisciProp/InserimentoProprietà.css'
 import {AiOutlineEdit} from 'react-icons/ai'
+import Alert from 'react-bootstrap/Alert'
 
 import { Redirect } from 'react-router-dom';
 
@@ -46,7 +47,7 @@ class ModificaCasaVacanza extends React.Component {
       error: false,
       errorMessage: '',
       success: false,
-      empty: false
+      empty: false,
     }
   }
 
@@ -71,6 +72,10 @@ class ModificaCasaVacanza extends React.Component {
     this.setState({
       listaServiziCasa: this.state.servizi.replace(/\s*,\s*/g, ",").split(',')
     })
+  }
+
+  setShow = (e) => {
+    this.setState({ success: e })
   }
 
   onChange = (e) => {
@@ -98,7 +103,6 @@ class ModificaCasaVacanza extends React.Component {
   }
 
   onSubmit = (e) => {
-    console.log('si');
     const data1 = {
       nome_proprieta: this.state.nome_proprieta,
       indirizzo: this.state.indirizzo,
@@ -204,7 +208,11 @@ class ModificaCasaVacanza extends React.Component {
             }
 
             else {
-              this.setState({ success: true });
+              this.setState({success:true},()=>{
+                window.setTimeout(()=>{
+                  this.setState({success:false})
+                }, 3000)
+              });
             }
           });
           }
@@ -270,14 +278,6 @@ class ModificaCasaVacanza extends React.Component {
         }}
       />
     }
-    else if(this.state.success) {
-      return (
-        <div className = "Errore">
-          <h1>Modifiche avvenute con successo!</h1>
-          <p>La tua casa vacanza è stata modificata correttamente all'interno del sistema</p>
-        </div>
-      );
-    }
     else if(this.state.empty) {
       var casa = this.state.dati_casa;
 
@@ -296,7 +296,21 @@ class ModificaCasaVacanza extends React.Component {
       var casa = this.state.dati_casa;
 
       return (
-          <div className="background">
+        <div className="background">
+          <>
+            <Alert show={this.state.success} variant="success">
+              <Alert.Heading style = {{fontWeight: 'bold'}}>Modifiche avvenute con successo!</Alert.Heading>
+              <p>
+                Le modifiche della tua struttura sono state correttamente caricate e memorizzate all'interno del sistema.
+              </p>
+              <hr />
+              <div className="d-flex justify-content-end">
+                <Button onClick={() => this.setShow(false)} variant="outline-success">
+                  <span style = {{fontWeight: 'bold'}}>Ok</span>
+                </Button>
+              </div>
+            </Alert>
+          </>
         <div className="containerNew"> 
           <div className="contentNew">
           <h2>Modifica la tua casa vacanza con le informazioni che preferisci!</h2>
