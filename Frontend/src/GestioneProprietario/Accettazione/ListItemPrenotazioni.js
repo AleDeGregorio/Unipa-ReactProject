@@ -260,7 +260,7 @@ class ListItemPrenotazioni extends Component {
       id_prenotazione: e
     }
 
-    fetch('http://localhost:9000/accettaPrenotazione/accettata', {
+    fetch('http://localhost:9000/rifiutaPrenotazione/rifiutata', {
       method: "POST",
       headers: {
           'Content-type' : 'application/json'

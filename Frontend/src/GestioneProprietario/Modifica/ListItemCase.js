@@ -3,6 +3,8 @@ import styled, { ThemeProvider } from 'styled-components'
 import { theme } from '../shared/theme'
 import {Link} from 'react-router-dom'
 import './ListItem.css'
+import {Card, Modal, Button} from 'react-bootstrap'
+
 const ListItemWrapper = styled.div`
 
   padding: 10px 0;
@@ -109,8 +111,6 @@ const ListItemTextSecond = styled.div`
   color: ${props => props.theme.mediumGray};
 `
 
-
-
 const ListItemSelect = styled.div`
   width: 90px;
   background-color: #fff;
@@ -204,7 +204,21 @@ class ListItemCase extends Component {
       textValue: '',
       isDeleted: false,
       isAlive: true,
+      show: false,
+      success: false
     }
+  }
+
+  handleClose = () => {
+    this.setState({
+      show: false
+    });
+  }
+
+  handleShow = () => {
+    this.setState({
+      show: true
+    });
   }
 
   componentDidMount() {
@@ -245,13 +259,41 @@ class ListItemCase extends Component {
     this.setState({ textValue: event.target.value })
   }
 
-  deleteItem = () => {
-    this.setState({ isDeleted: true })
-    this.toggleSelect()
-    setTimeout(() => {
-      this.setState({ isAlive: false })
-    }, 150)
-   
+  elimina = (e) => {
+
+    const data = {
+      ref_proprieta_cv: e
+    }
+
+    fetch('http://localhost:9000/deleteCasa/deleted', {
+      method: "POST",
+      headers: {
+          'Content-type' : 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then((result) => result.text())
+    .then((result)=>{
+      this.setState({ apiResponse:JSON.parse(result) });
+      var res = JSON.parse(result);
+
+      if(res.length < 1 || (res.code && res.code === 404)) {
+        this.setState({ empty: true, errorMessage: res.message });
+      }
+
+      else if(this.state.apiResponse.status === 'error') {
+        this.setState({ error: true });
+        this.setState({ errorMessage: this.state.apiResponse.message });
+      }
+      else {
+        this.setState({ success: true })
+        this.setState({ isDeleted: true })
+        this.toggleSelect()
+        setTimeout(() => {
+          this.setState({ isAlive: false })
+        }, 150)
+      }
+    });
   }
  
   render() {
@@ -264,14 +306,20 @@ class ListItemCase extends Component {
       isDeleted,
       isAlive
     } = this.state
+
     const {
       prezzo,
       hasActions,
       image,
      
     } = this.props.number
+
+    var datiCasa = this.props.datiCasa;
+
     let listItemContentClass = ``
+
     if (isDeleted) listItemContentClass += ` list-item-content--deleted`
+
     return (
       <ThemeProvider theme={theme}>
         <ListItemWrapper className={isAlive ? `` : `list-item-wrapper--hide`}>
@@ -340,11 +388,20 @@ class ListItemCase extends Component {
                       Modifica
                       </Link>
                     </div>
-                    <div
-                      className="listitem__select__list__item"
-                      onClick={this.deleteItem}
-                    >
-                      Elimina
+                    <div className="listitem__select__list__item">
+                      <span onClick = {this.handleShow}>Elimina</span>
+                      <Modal show={this.state.show} onHide={this.handleClose}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Sei sicuro di volere eliminare la struttura?</Modal.Title>
+                                </Modal.Header>
+                                    <Modal.Body>
+                                      Non sarà possibile recuperare i dati
+                                    </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick = {e => this.elimina({datiCasa}.ref_proprieta_cv)}>Elimina</Button>
+                            <Button variant="secondary" onClick={this.handleClose}>Annulla</Button>                   
+                        </Modal.Footer>
+                    </Modal>
                     </div>
                   </div>
                 )}

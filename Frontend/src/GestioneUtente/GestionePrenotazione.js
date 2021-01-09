@@ -23,15 +23,19 @@ class GestionePrenotazione extends React.Component {
             checkInFocus: [],
             checkOutFocus: [],
             startDate: moment(),
-            endDate: null
+            endDate: null,
+            dateNonDisponibili: {
+                inizio: moment("1/2/2021", "DD-MM-YYYY"),
+                fine: moment("5/2/2021", "DD-MM-YYYY")
+            }
         }
     }
 
-    componentDidMount() { //interrogazione che viene effettuata all'apertura della pagina
+    componentDidMount() {
     
         const data = {
             ref_cliente: this.state.email
-        }; //body richiesta http (in questo caso chiave primaria cioè ref_cliente)
+        }; 
 
         fetch('http://localhost:9000/searchPrenotazioneCliente/prenotazioneCliente', { //metodo http in fetch
             method:'POST',
@@ -40,7 +44,7 @@ class GestionePrenotazione extends React.Component {
             },
             body: JSON.stringify(data)
         })
-        .then((result)=> result.text())                  //risultato interrogazione 
+        .then((result)=> result.text())                  
         .then((result)=> {
             this.setState({ apiResponse:JSON.parse(result) }); //rende array il risultato
             var res = JSON.parse(result);
@@ -183,6 +187,87 @@ class GestionePrenotazione extends React.Component {
         
     }
 
+    caricaDate = (tipo_proprieta, ref_proprieta, id_stanza) => {
+        if(tipo_proprieta === 'cv') {
+            const data = {
+                ref_proprieta: ref_proprieta
+            }; 
+
+            fetch('http://localhost:9000/getDateCasa/dateCasa', { 
+                method:'POST',
+                headers:{
+                    'Content-type':'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then((result)=> result.text())                  
+            .then((result)=> {
+                var res = JSON.parse(result);
+
+                if(res.length < 1 || (res.code && res.code === 404)) {
+                this.setState({ empty: true, errorMessage: res.message });
+                }
+        
+                else if(res.status === 'error') {
+                this.setState({ error: true });
+                this.setState({ errorMessage: res.message });
+                }
+
+                else {
+                    this.setState(prevState => {
+                        let dateNonDisponibili = { ...prevState.dateNonDisponibili };
+                        dateNonDisponibili.inizio = moment(new Date(res[0].non_disponibile_inizio_cv).toLocaleDateString(), 'DD-MM-YYYY');   
+                        dateNonDisponibili.fine =  moment(new Date(res[0].non_disponibile_fine_cv).toLocaleDateString(), 'DD-MM-YYYY');
+                        return { dateNonDisponibili };
+                    })
+                }
+            })
+        }
+        else {
+            const data = {
+                id_stanza: id_stanza
+            }; 
+
+            fetch('http://localhost:9000/getDateStanza/dateStanza', { 
+                method:'POST',
+                headers:{
+                    'Content-type':'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then((result)=> result.text())                  
+            .then((result)=> {
+                var res = JSON.parse(result);
+
+                if(res.length < 1 || (res.code && res.code === 404)) {
+                this.setState({ empty: true, errorMessage: res.message });
+                }
+        
+                else if(res.status === 'error') {
+                this.setState({ error: true });
+                this.setState({ errorMessage: res.message });
+                }
+
+                else {
+                    this.setState(prevState => {
+                        let dateNonDisponibili = { ...prevState.dateNonDisponibili };
+                        dateNonDisponibili.inizio = moment(new Date(res[0].non_disponibile_inizio_cv).toLocaleDateString(), 'DD-MM-YYYY');   
+                        dateNonDisponibili.fine =  moment(new Date(res[0].non_disponibile_fine_cv).toLocaleDateString(), 'DD-MM-YYYY');
+                        return { dateNonDisponibili };
+                    })
+                }
+            })
+        }
+    }
+
+    isDayBlocked = (day) => {
+        if(day.isBefore(this.state.dateNonDisponibili.inizio) || day.isAfter(this.state.dateNonDisponibili.fine)) {
+            return false;
+        }
+
+        return true;
+    }
+
     render() {
         if(!localStorage.getItem('logged') || !localStorage.getItem('cliente')) {
             return <Redirect
@@ -259,7 +344,7 @@ class GestionePrenotazione extends React.Component {
                                                     <Accordion>
                                                         <div className="acc3">
                                                             <div className="just-cont">
-                                                            <Accordion.Toggle as={Button} id="accbutton" variant="link" eventKey="1">Modifica data prenotazione</Accordion.Toggle>
+                                                            <Accordion.Toggle as={Button} id="accbutton" variant="link" eventKey="1" onClick = {() => this.caricaDate(res.tipo_proprieta, res.ref_proprieta, res.id_stanza)}>Modifica data prenotazione</Accordion.Toggle>
                                                             <Accordion.Toggle as={Button} variant="link" eventKey="2" id="accbutton">Elimina prenotazione</Accordion.Toggle>
                                                             <Accordion.Toggle as={Button} variant="link" eventKey="3" id="accbutton">Contatta il gestore</Accordion.Toggle>
                                                             </div>
@@ -288,6 +373,7 @@ class GestionePrenotazione extends React.Component {
                                                                                         showClearDate={this.state.checkInFocus[index]}
                                                                                         reopenPickerOnClearDate={true}
                                                                                         noBorder={true}
+                                                                                        isDayBlocked={day => this.isDayBlocked(day)}
                                                                                     />
                                                                                 </div>
                                                                         </div>

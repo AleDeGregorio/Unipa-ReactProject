@@ -177,6 +177,48 @@ const insertStanza = async(req) => {
     });
 }
 
+// delete stanza
+const deleteStanza = async(req) => {
+    return new Promise((resolve, reject) => {
+
+        Connection.query(
+            'DELETE FROM stanza WHERE id_stanza = ' + req.id_stanza + '; ',
+            (err, results) => {
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Stanza non trovata'));
+                }
+                resolve(results);
+            }
+        )
+    })
+}
+
+// get non_disponibile_inizio_st and non_disponibile_fine_st from id_stanza
+const getDateStanza = async(req) => {
+    return new Promise((resolve, reject) => {
+
+        Connection.query(
+            'SELECT non_disponibile_inizio_st, non_disponibile_fine_st ' + 
+            'FROM stanza ' +
+            'WHERE id_stanza = ' + req.id_stanza + '; ',
+            (err, results) => {
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Stanza non trovata'));
+                }
+                resolve(results);
+            }
+        )
+    })
+}
+
 module.exports = all;
 module.exports = getStanza;
 module.exports = getStanzaBB;
@@ -184,6 +226,8 @@ module.exports = getStanzaTipologia;
 module.exports = getStanzaBBTipologia;
 module.exports = updateStanza;
 module.exports = insertStanza;
+module.exports = deleteStanza;
+module.exports = getDateStanza;
 
 module.exports = {
     all,
@@ -192,5 +236,7 @@ module.exports = {
     getStanzaTipologia,
     getStanzaBBTipologia,
     updateStanza,
-    insertStanza
+    insertStanza,
+    deleteStanza,
+    getDateStanza
 }

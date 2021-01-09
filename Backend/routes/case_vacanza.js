@@ -62,6 +62,30 @@ router.post('/new', async(req, res, next) => {
     }
 });
 
+// delete casa vacanza from table casa_vacanza
+// indirizzo: /deletetCasa/deleted
+router.post('/deleted', async(req, res, next) => {
+    try {
+        let deleted = await DB.Casa.deleteCasa(req.body);
+        res.json(deleted);
+    }
+    catch(e) {
+        next(e);
+    }
+});
+
+// get non_disponibile_inizio_cv and non_disponibile_fine_cv from ref_proprieta
+// indirizzo: /getDateCasa/dateCasa
+router.post('/dateCasa', async(req, res, next) => {
+    try {
+        let getDate = await DB.Casa.getDateCasa(req.body);
+        res.json(getDate);
+    }
+    catch(e) {
+        next(e);
+    }
+});
+
 // caricamento foto
 // indirizzo: /uploadFotoCV/upload
 router.post('/upload', async(req, res, next) => {

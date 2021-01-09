@@ -50,4 +50,16 @@ router.post('/new', async(req, res, next) => {
     }
 });
 
+// delete b&b from table b_and_b
+// indirizzo: /deletetBB/deleted
+router.post('/deleted', async(req, res, next) => {
+    try {
+        let deleted = await DB.B_and_b.deleteBB(req.body);
+        res.json(deleted);
+    }
+    catch(e) {
+        next(e);
+    }
+});
+
 module.exports = router;

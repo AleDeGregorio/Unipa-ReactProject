@@ -77,6 +77,9 @@ app.use('/updateDataInvio', proprietarioRouter);
 // indirizzo: /getDataInvio/dataInvio
 app.use('/getDataInvio', proprietarioRouter);
 // registrazione di un nuovo proprietario
+// indirizzo: /insertProprietarioCliente/newPropCl
+app.use('/insertProprietarioCliente', proprietarioRouter);
+// registrazione di un nuovo proprietario che era cliente
 // indirizzo: /insertProprietario/new
 app.use('/insertProprietario', proprietarioRouter);
 // login di un proprietario utilizzando password criptata
@@ -162,6 +165,12 @@ app.use('/updateCasa', casaRouter);
 // inserimento di una nuova casa
 // indirizzo: /insertCasa/new
 app.use('/insertCasa', casaRouter);
+// cancellazione di una casa
+// indirizzo: /deleteCasa/deleted
+app.use('/deleteCasa', casaRouter);
+// ricerca di date non disponibile inizio e fine della casa dal suo id
+// indirizzo: /getDateCasa/dateCasa
+app.use('/getDateCasa', casaRouter);
 // caricamento foto
 // indirizzo: /uploadFotoCV/upload
 app.use('/uploadFotoCV', casaRouter);
@@ -179,6 +188,9 @@ app.use('/updateBB', bbRouter);
 // inserimento di un nuovo b&b
 // indirizzo: /insertBB/new
 app.use('/insertBB', bbRouter);
+// cancellazione di un b&b
+// indirizzo: /deleteBB/deleted
+app.use('/deleteBB', bbRouter);
 
 // TABELLA STANZA
 // lista di tutte le stanza
@@ -205,6 +217,12 @@ app.use('/insertStanza', stanzaRouter);
 // caricamento foto
 // indirizzo: /uploadFotoST/upload
 app.use('/uploadFotoST', stanzaRouter);
+// cancellazione di una stanza
+// indirizzo: /deleteStanza/deleted
+app.use('/deleteStanza', stanzaRouter);
+// ricerca di date non disponibile inizio e fine della stanza dal suo id
+// indirizzo: /getDateStanza/dateStanza
+app.use('/getDateStanza', stanzaRouter);
 
 // TABELLA CLIENTE
 // lista di tutti i clienti
@@ -320,6 +338,9 @@ app.use('/updateTassa', tassaRouter);
 // inserimento di una nuova tassa
 // indirizzo: /insertTassa/new
 app.use('/insertTassa', tassaRouter);
+// ricerca tasse di soggiorno del proprietario, con join con tabella prenotazione. Da usare per invio dati ufficio turismo
+// indirizzo: /getTasseInvio/tasse
+app.use('/getTasseInvio', tassaRouter);
 
 /* catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -27,6 +27,8 @@ const login = async(req, res, next) => {
             'FROM cliente ' +
             'WHERE email_cl = "' + req.email + '"; ',
             (err, results) => {
+                var res1 = results;
+
                 if(err) {
                     return reject(new GeneralError('Si è verificato un errore'));
                 }
@@ -74,8 +76,25 @@ const login = async(req, res, next) => {
                         return reject(new BadRequest('Password errata'));
                     }
                     else {
-                        console.log('Utente autenticato');
-                        resolve(results);
+                        Connection.query(
+                            'SELECT * ' +
+                            'FROM proprietario ' +
+                            'WHERE email_prop = "' + req.email + '"; ',
+                            (err, results) => {
+                                if(err) {
+                                    return reject(new GeneralError('Si è verificato un errore'));
+                                }
+                                if(results.length < 1) {
+                                    console.log('Utente autenticato');
+                                    resolve(res1);
+                                }
+                                else {
+                                    var resTot = res1.concat(res);
+                                    console.log("Utente autenticato");
+                                    resolve(resTot);
+                                }
+                            }
+                        )
                     }
                 }
             }

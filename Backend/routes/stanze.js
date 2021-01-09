@@ -124,4 +124,28 @@ router.post('/upload', async(req, res, next) => {
     }
 });
 
+// delete stanza from table stanza
+// indirizzo: /deletetStanza/deleted
+router.post('/deleted', async(req, res, next) => {
+    try {
+        let deleted = await DB.Stanza.deleteStanza(req.body);
+        res.json(deleted);
+    }
+    catch(e) {
+        next(e);
+    }
+});
+
+// get non_disponibile_inizio_st and non_disponibile_fine_st from id_stanza
+// indirizzo: /getDateStanza/dateStanza
+router.post('/dateStanza', async(req, res, next) => {
+    try {
+        let getDate = await DB.Stanza.getDateStanza(req.body);
+        res.json(getDate);
+    }
+    catch(e) {
+        next(e);
+    }
+});
+
 module.exports = router;

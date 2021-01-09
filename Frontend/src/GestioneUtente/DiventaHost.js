@@ -2,7 +2,71 @@ import React from 'react'
 import {Card, CardDeck, Form, Jumbotron, Button, Accordion} from 'react-bootstrap'
 import './DiventaHost.css'
 
-function DiventaHost(){
+class DiventaHost extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            email: localStorage.getItem("email"),
+            password: localStorage.getObj("user_data")[0].password_cl,
+            nome: localStorage.getObj("user_data")[0].nome_cl,
+            cognome: localStorage.getObj("user_data")[0].cognome_cl,
+            nascita: localStorage.getObj("user_data")[0].data_nascita_cl,
+            num_documento: '',
+            telefono: localStorage.getObj("user_data")[0].telefono_cl,
+            apiResponse: [],
+            error: false,
+            errorMessage: '',
+            empty: false,
+            success: false
+        }
+    }
+
+    onChange = (e) => {
+        this.setState({ num_documento: e.target.value });
+    }
+
+    onSubimit = (e) => {
+        e.preventDefault();
+
+        const data = {
+            email: this.state.email,
+            password: this.state.password,
+            nome: this.state.nome,
+            cognome: this.state.cognome,
+            nascita: this.state.nascita,
+            num_documento: this.state.num_documento,
+            telefono: this.state.telefono
+        }
+
+        fetch('http://localhost:9000/insertProprietarioCliente/newPropCl', {
+            method: "POST",
+            headers: {
+                'Content-type' : 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then((result) => result.text())
+        .then((result)=>{
+            this.setState({ apiResponse:JSON.parse(result) });
+            var res = JSON.parse(result);
+
+            if(res.length < 1 || (res.code && res.code === 404)) {
+              this.setState({ empty: true, errorMessage: res.message });
+            }
+      
+            else if(this.state.apiResponse.status === 'error') {
+              this.setState({ error: true });
+              this.setState({ errorMessage: this.state.apiResponse.message });
+            }
+            else {
+                this.setState({ success: true })
+            }
+        });
+    }
+
+    render() {
         return(
             <div className="containerDH">
                 <div className="top">
@@ -19,10 +83,10 @@ function DiventaHost(){
                                     <option>Passaporto</option>
                                     <option>Patente</option>
                                 </Form.Control>
-                                <Form.Label className="colorLabel">Inserisci foto documento</Form.Label>
-                                <Form.File id="form-select1"/>
+                                <Form.Label className="colorLabel">Inserisci numero documento</Form.Label>
+                                <Form.Control as = "input" id="form-select1" onChange = {this.onChange} placeholder = "Numero documento" />
                             </Form.Group>
-                            <Button id="dhbutton">Diventa un Host</Button>
+                            <Button id="dhbutton" onClick = {this.onSubimit}>Diventa un Host</Button>
                         </Form>
                         
                 </div>
@@ -61,8 +125,8 @@ function DiventaHost(){
                         </div>
                 </div>
             </div>
-
-    );
+        );
+    }
 }
 export default DiventaHost;
 

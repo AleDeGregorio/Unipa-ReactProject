@@ -5,6 +5,7 @@ import React from "react";
 import {Form, Button, Accordion, Card, Col} from "react-bootstrap"
 import '../InserisciProp/InserimentoProprietà.css'
 import {AiOutlineEdit} from 'react-icons/ai'
+import Alert from 'react-bootstrap/Alert'
 
 import { Redirect } from 'react-router-dom';
 
@@ -22,7 +23,7 @@ class ModificaCasaVacanza extends React.Component {
       localita: this.props.history.location.state ? this.props.history.location.state.dati_casa.localita : '',
       provincia: this.props.history.location.state ? this.props.history.location.state.dati_casa.provincia : '',
       tipo_proprieta: this.props.history.location.state ? this.props.history.location.state.dati_casa.tipo_proprieta : '',
-      servizi: this.props.history.location.state ? this.props.history.location.state.dati_casa.servizi : [],
+      servizi: this.props.history.location.state ? this.props.history.location.state.dati_casa.servizi : '',
       listaServiziCasa: [],
       listaServizi: [],
       nuovoServizio: '',
@@ -46,7 +47,7 @@ class ModificaCasaVacanza extends React.Component {
       error: false,
       errorMessage: '',
       success: false,
-      empty: false
+      empty: false,
     }
   }
 
@@ -71,6 +72,10 @@ class ModificaCasaVacanza extends React.Component {
     this.setState({
       listaServiziCasa: this.state.servizi.replace(/\s*,\s*/g, ",").split(',')
     })
+  }
+
+  setShow = (e) => {
+    this.setState({ success: e })
   }
 
   onChange = (e) => {
@@ -203,7 +208,11 @@ class ModificaCasaVacanza extends React.Component {
             }
 
             else {
-              this.setState({ success: true });
+              this.setState({success:true},()=>{
+                window.setTimeout(()=>{
+                  this.setState({success:false})
+                }, 3000)
+              });
             }
           });
           }
@@ -269,14 +278,6 @@ class ModificaCasaVacanza extends React.Component {
         }}
       />
     }
-    else if(this.state.success) {
-      return (
-        <div className = "Errore">
-          <h1>Modifiche avvenute con successo!</h1>
-          <p>La tua casa vacanza è stata modificata correttamente all'interno del sistema</p>
-        </div>
-      );
-    }
     else if(this.state.empty) {
       var casa = this.state.dati_casa;
 
@@ -295,7 +296,21 @@ class ModificaCasaVacanza extends React.Component {
       var casa = this.state.dati_casa;
 
       return (
-          <div className="background">
+        <div className="background">
+          <>
+            <Alert show={this.state.success} variant="success">
+              <Alert.Heading style = {{fontWeight: 'bold'}}>Modifiche avvenute con successo!</Alert.Heading>
+              <p>
+                Le modifiche della tua struttura sono state correttamente caricate e memorizzate all'interno del sistema.
+              </p>
+              <hr />
+              <div className="d-flex justify-content-end">
+                <Button onClick={() => this.setShow(false)} variant="outline-success">
+                  <span style = {{fontWeight: 'bold'}}>Ok</span>
+                </Button>
+              </div>
+            </Alert>
+          </>
         <div className="containerNew"> 
           <div className="contentNew">
           <h2>Modifica la tua casa vacanza con le informazioni che preferisci!</h2>
@@ -317,7 +332,7 @@ class ModificaCasaVacanza extends React.Component {
                     onChange = {this.onChange}
                     className = "i"
                     />
-                    <button className="bottoniSceltaModifica" onClick = {this.onSubmit}>
+                    <button type = 'button' className="bottoniSceltaModifica" onClick = {this.onSubmit}>
                 Modifica nome
               </button>
                     </form>       
@@ -361,7 +376,7 @@ class ModificaCasaVacanza extends React.Component {
                   onChange = {this.onChange}
                   className = "i"
                 />
-                  <button className="bottoniSceltaModifica" onClick = {this.onSubmit}>
+                  <button type = 'button' className="bottoniSceltaModifica" onClick = {this.onSubmit}>
                 Modifica località
               </button>
                   </form >
@@ -397,12 +412,12 @@ class ModificaCasaVacanza extends React.Component {
                     <Form.Group className="centered" controlId="exampleForm.ControlTextarea1">
                     <Form.Label>Aggiungi servizio</Form.Label>
                      <Form.Control as="textarea" rows={1} id = 'nuovoServizio' name = 'nuovoServizio' onChange = {this.onChange} />
-                     <button className="bottoniSceltaModifica" onClick = {this.aggiungiServizio}>
+                     <button type = 'button' className="bottoniSceltaModifica" onClick = {this.aggiungiServizio}>
                       Aggiungi servizio
                     </button>
                     <br/>
                     <br />
-                    <button className="bottoniSceltaModifica" onClick = {this.onSubmit}>
+                    <button type = 'button' className="bottoniSceltaModifica" onClick = {this.onSubmit}>
                       Cambia servizi
                     </button>
                      </Form.Group>
@@ -426,7 +441,7 @@ class ModificaCasaVacanza extends React.Component {
                   className = 'iTA'
                 >
                 </textarea>
-                <button className="bottoniSceltaModifica" onClick = {this.onSubmit}>
+                <button type = 'button' className="bottoniSceltaModifica" onClick = {this.onSubmit}>
                 Modifica Descrizione
               </button>
                     </form>
@@ -459,7 +474,7 @@ class ModificaCasaVacanza extends React.Component {
       <option>7</option>
       <option>8</option>
       </Form.Control>
-      <button className="bottoniSceltaModifica" onClick = {this.onSubmit}>
+      <button type = 'button' className="bottoniSceltaModifica" onClick = {this.onSubmit}>
                 Modifica posti letto
               </button>
   </Form.Group>  
@@ -468,13 +483,13 @@ class ModificaCasaVacanza extends React.Component {
               </Card>
               <Card id="newStyle" border="light">
                 <div className="head-update">
-                <p>Tariffa attuale : {casa.tariffa_casa}</p>
+                <p>Tariffa attuale: €{casa.tariffa_casa}/giorno</p>
                 <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="6" />
                 </div>
                 <Accordion.Collapse eventKey="6">
                   <Card.Body>
                     <form className="centered">
-                    <label htmlFor = "tariffa_casa">Prezzo</label>
+                    <label htmlFor = "tariffa_casa">Tariffa</label>
   <input
     type = "text"
     pattern = "^\d+(.\d{1,2})?$"
@@ -485,8 +500,8 @@ class ModificaCasaVacanza extends React.Component {
     onChange = {this.onChange}
     className = "i"
   />
-              <button className="bottoniSceltaModifica" onClick = {this.onSubmit}>
-                cambia tariffa
+              <button type = 'button' className="bottoniSceltaModifica" onClick = {this.onSubmit}>
+                Cambia tariffa
               </button>
                     </form>
                   </Card.Body>
@@ -539,8 +554,8 @@ class ModificaCasaVacanza extends React.Component {
     />
     <img src = {this.state.imgCV_path4SRC} alt = {"Foto 4 " + this.state.nome_proprieta}></img>
     </Form.Row>
-    <button className="bottoniSceltaModifica" onClick = {this.onSubmit}>
-                carica foto
+    <button type = 'button' className="bottoniSceltaModifica" onClick = {this.onSubmit}>
+                Carica foto
               </button>
   </Form.Group>
 

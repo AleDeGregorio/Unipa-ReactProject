@@ -229,7 +229,7 @@ class ModificaStanza extends React.Component {
       <option value="3">Tripla</option>
       <option value="4">Quadrupla</option>
       </Form.Control>
-      <button className="bottoniSceltaModifica" onClick = {this.onSubmit}>
+      <button type = 'button' className="bottoniSceltaModifica" onClick = {this.onSubmit}>
                 Modifica tipologia
               </button>
   </Form.Group>  
@@ -238,7 +238,7 @@ class ModificaStanza extends React.Component {
               </Card>
               <Card id="newStyle"  border="light">
                 <div className="head-update">
-                <p>Tariffa attuale: {stanza.tariffa_stanza} euro</p>
+                <p>Tariffa attuale: €{stanza.tariffa_stanza}/giorno</p>
                 <Accordion.Toggle as={AiOutlineEdit} className="margin-right" variant="link" eventKey="2" />
                 </div>
                 <Accordion.Collapse eventKey="2">
@@ -255,7 +255,7 @@ class ModificaStanza extends React.Component {
       onChange = {this.onChange}
       className = "i"
     />
-    <button className="bottoniSceltaModifica" onClick = {this.onSubmit}>
+    <button type = 'button' className="bottoniSceltaModifica" onClick = {this.onSubmit}>
                 Modifica tariffa
               </button>
     </form> 
@@ -310,7 +310,7 @@ class ModificaStanza extends React.Component {
     />
     <img src = {this.state.imgST_path4SRC} alt = {"Foto 4 stanza " + this.state.id_stanza}></img>
     </Form.Row>
-    <button className="bottoniSceltaModifica" onClick = {this.onSubmit}>
+    <button type = 'button' className="bottoniSceltaModifica" onClick = {this.onSubmit}>
                 carica foto
               </button>
   </Form.Group> 
