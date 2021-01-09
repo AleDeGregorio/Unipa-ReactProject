@@ -22,6 +22,7 @@ class ProprietarioPage extends React.Component {
         this.state = {
             email: localStorage.getItem('email'),
             apiResponse: [],
+            tasseInvio: [],
             error: false,
             errorMessage: '',
             show: false,
@@ -55,6 +56,32 @@ class ProprietarioPage extends React.Component {
               this.setState({ errorMessage: this.state.apiResponse.message });
             }
         })
+
+        const data2 = {
+            ref_proprietario: this.state.email
+        };
+
+        fetch('http://localhost:9000/getTasseInvio/tasse',{
+            method: 'POST',
+            headers: {
+                'Content-type':'application/json'
+            },
+            body: JSON.stringify(data2)
+        })
+        .then((result)=>result.text())
+        .then((result)=>{
+            this.setState({ tasseInvio:JSON.parse(result) });
+            var res = JSON.parse(result);
+
+            if(res.length < 1 || (res.code && res.code === 404)) {
+              this.setState({ empty: true, errorMessage: res.message });
+            }
+      
+            else if(this.state.tasseInvio.status === 'error') {
+              this.setState({ error: true });
+              this.setState({ errorMessage: this.state.tasseInvio.message });
+            }
+        })
     }
 
     handleClose = () => {
@@ -71,11 +98,19 @@ class ProprietarioPage extends React.Component {
 
     render() {
         var data_invio = this.state.apiResponse[0] ? new Date(this.state.apiResponse[0].ultimo_invio_dati).toLocaleDateString() : "Mai inviati";
+        var tasseInvio = this.state.tasseInvio[0] ? this.state.tasseInvio : [];
 
         var datiTurismo = (
             <div className="turismocont">
-                <p>Ultimo invio dei dati all'ufficio competente: {data_invio} </p>
-                <p>Desideri inviare i dati nuovamente?</p>
+                <h6 style = {{fontWeight: 'bold'}}>Ultimo invio dei dati all'ufficio competente: <span style = {{color: 'red'}}>{data_invio}</span></h6>
+                {tasseInvio.map((tassa, key) => (
+                    <div>
+                        <p style = {{fontWeight: 'bold'}}>Soggiornante: {tassa.ref_soggiornante}</p>
+                        <p>Periodo: {new Date(tassa.data_partenza).toLocaleDateString()}-{new Date(tassa.data_ritorno).toLocaleDateString()}</p>
+                        <p>Ammontare: €{tassa.ammontare}</p>
+                    </div>
+                ))}
+                <h6 style = {{fontWeight: 'bold'}}>Desideri inviare i dati nuovamente?</h6>
             </div>
         );
     

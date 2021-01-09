@@ -86,4 +86,16 @@ router.post('/new', async(req, res, next) => {
     }
 })
 
+// get tasse in table tassa_soggiorno && prenotazione from ref_proprietario
+// indirizzo: /getTasseInvio/tasse
+router.post('/tasse', async(req, res, next) => {
+    try {
+        let get = await DB.Tassa_soggiorno.getTasseInvio(req.body);
+        res.json(get);
+    }
+    catch(e) {
+        next(e);
+    }
+})
+
 module.exports = router;

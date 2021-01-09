@@ -329,6 +329,9 @@ app.use('/updateTassa', tassaRouter);
 // inserimento di una nuova tassa
 // indirizzo: /insertTassa/new
 app.use('/insertTassa', tassaRouter);
+// ricerca tasse di soggiorno del proprietario, con join con tabella prenotazione. Da usare per invio dati ufficio turismo
+// indirizzo: /getTasseInvio/tasse
+app.use('/getTasseInvio', tassaRouter);
 
 /* catch 404 and forward to error handler
 app.use(function(req, res, next) {
