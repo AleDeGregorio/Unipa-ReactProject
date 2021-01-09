@@ -16,7 +16,7 @@ class Prenota extends React.Component {
                         <div className="headaccpren">
                             <p>Data :</p>
                             <p>Visualizza data</p>
-                            <Accordion.Toggle  eventKey="0">
+                            <Accordion.Toggle  eventKey="0" id="modifica">
                                 Modifica
                             </Accordion.Toggle>
                         </div>
@@ -53,7 +53,7 @@ class Prenota extends React.Component {
                             </Accordion.Collapse>
                         <div className="headaccpren">
                             <p>Ospiti : </p>
-                            <Accordion.Toggle eventKey="1">
+                            <Accordion.Toggle eventKey="1" id="modifica">
                                 Modifica
                             </Accordion.Toggle>
                         </div>
@@ -62,30 +62,27 @@ class Prenota extends React.Component {
                         </Accordion.Collapse>
                         <div className="headaccpren">
                             <p>Altre relative modifiche</p>
-                            <Accordion.Toggle eventKey="2">Modifica</Accordion.Toggle>
+                            <Accordion.Toggle eventKey="2" id="modifica">Modifica</Accordion.Toggle>
                         </div>
                         <Accordion.Collapse eventKey="2">
                             <p>Altre robe di modifica</p>
                         </Accordion.Collapse>
                     </Accordion>
-
                         <div>
                             <h4>Scegli come pagare</h4>
-                            <div className="row-flex">
-                            <Form>
-                                <div>
-                                    <h5>Paga per intero</h5>
-                                    <div className="row-flex">
-                                        <Form.Check inline label="Paga adesso" type="radio" id="now" checked />
+                            <div className="containerPaga">
+                                    <div className="paga">
+                                        <h5>Paga per intero</h5>
+                                        <div className="row-flex">
+                                            <Form.Check inline label="Paga adesso" type="radio" id="now" checked />
+                                        </div>
                                     </div>
-                                </div>
-                                <div>
-                                    <h5>Paga una parte</h5>
-                                    <div className="row-flex">
-                                    <Form.Check inline label="Paga dopo" type="radio" id="later" checked/>
+                                    <div className="paga">
+                                        <h5>Paga una parte</h5>
+                                        <div className="row-flex">
+                                        <Form.Check inline label="Paga dopo" type="radio" id="later" checked/>
+                                        </div>
                                     </div>
-                                </div>
-                                </Form>
                             </div>
                         </div>
                     </div>
@@ -95,10 +92,10 @@ class Prenota extends React.Component {
                     <div>
                         <h3>Hai dei bisogni particolari? Contatta il gestore!</h3>
                     </div> 
-                    <button>Prenota</button>    
+                    <button className="bottonePrenota">Prenota</button>    
                 </div>
                 <div className="prenota-dx-cont">
-                    <Card>
+                    <Card id="cartaInfo">
                         <Card.Body>
                             <p>INFO PRENOTAZIONE!</p>
                         </Card.Body>
