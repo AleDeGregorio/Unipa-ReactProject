@@ -24,7 +24,6 @@ import AutenticazioneRegistratiCliente from './Autenticazione/autenticazioneRegi
 import AutenticazioneRegistratiProprietario from './Autenticazione/autenticazioneRegistratiProprietario'
 
 // Area personale del cliente
-import Cliente from './components/ClientePage'
 import GestionePrenotazione from './GestioneUtente/GestionePrenotazione'
 import DiventaHost from './GestioneUtente/DiventaHost'
 
@@ -215,13 +214,6 @@ class App extends React.Component {
                 exact path="/autenticazioneRegistratiProprietario"
                 render = { (props) => (
                   <AutenticazioneRegistratiProprietario {...props}/>
-                )}
-              />
-
-              <Route 
-                exact path="/PaginaCliente"
-                render = { (props) => (
-                  <Cliente {...props}/>
                 )}
               />
               <Route 
