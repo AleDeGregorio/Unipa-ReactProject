@@ -32,7 +32,7 @@ class autenticazioneAccedi extends React.Component {
         }
 
         if(localStorage.getItem('logged') && localStorage.getItem('cliente')) {
-            return <Redirect to = "/PaginaCliente" />
+            return <Redirect to = "/" />
         }
         
         if(localStorage.getItem('logged') && localStorage.getItem('proprietario')) {
