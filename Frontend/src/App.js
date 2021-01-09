@@ -117,10 +117,16 @@ class App extends React.Component {
         localStorage.setObj('user_data', this.state.apiResponse);
 
         var cliente = this.state.apiResponse[0].email_cl ? true : false;
+        var proprietario = this.state.apiResponse[0].email_prop ? true : false;
         
         if(cliente) {
           localStorage.setItem('cliente', true);
           localStorage.setItem('email', this.state.apiResponse[0].email_cl);
+        }
+        else if (cliente && proprietario){
+          localStorage.setItem('proprietario', true);
+          localStorage.setItem('cliente', true)
+          localStorage.setItem('email', this.state.apiResponse[0].email_prop);
         }
         else {
           localStorage.setItem('proprietario', true);

@@ -215,6 +215,28 @@ const insertUser = async(req) => {
     });
 }
 
+// insert new proprietario from cliente
+const insertProprietarioCliente = async(req) => {
+    return new Promise((resolve, reject) => {
+
+        Connection.query(
+            'INSERT INTO proprietario VALUES ' +
+            '("' + req.email + '", "' + req.password + '", "' + req.nome + '", "' + req.cognome + '", (STR_TO_DATE("' + req.nascita + '","%d/%m/%Y")), "' + req.num_documento +
+            '", "' + req.telefono + '", NULL); ',
+            (err, results) => {
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new BadRequest("Si è verificato un errore nell'inserimento"));
+                }
+                resolve(results);
+            }
+        )
+    });
+}
+
 // update fields
 const invioDati = async(req) => {
     return new Promise((resolve, reject) => {
@@ -307,6 +329,7 @@ module.exports = updateUserPassword;
 module.exports = invioDati;
 module.exports = getDataInvio;
 module.exports = insertUser;
+module.exports = insertProprietarioCliente;
 module.exports = login;
 
 module.exports = {
@@ -320,5 +343,6 @@ module.exports = {
     invioDati,
     getDataInvio,
     insertUser,
+    insertProprietarioCliente,
     login
 }

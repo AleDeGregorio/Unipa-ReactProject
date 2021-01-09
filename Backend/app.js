@@ -77,6 +77,9 @@ app.use('/updateDataInvio', proprietarioRouter);
 // indirizzo: /getDataInvio/dataInvio
 app.use('/getDataInvio', proprietarioRouter);
 // registrazione di un nuovo proprietario
+// indirizzo: /insertProprietarioCliente/newPropCl
+app.use('/insertProprietarioCliente', proprietarioRouter);
+// registrazione di un nuovo proprietario che era cliente
 // indirizzo: /insertProprietario/new
 app.use('/insertProprietario', proprietarioRouter);
 // login di un proprietario utilizzando password criptata

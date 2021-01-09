@@ -122,6 +122,18 @@ router.post('/new', async(req, res, next) => {
     }
 });
 
+// insert new user in table proprietario from cliente
+// indirizzo: /insertProprietarioCliente/newPropCl
+router.post('/newPropCl', async(req, res, next) => {
+    try {
+        let insert = await DB.Proprietario.insertProprietarioCliente(req.body);
+        res.json(insert);
+    }
+    catch(e) {
+        next(e);
+    }
+});
+
 // login user of table proprietario (using encrypted password)
 // indirizzo: /loginProprietario/proprietarioLogged
 router.post('/proprietarioLogged', async(req, res, next) => {
