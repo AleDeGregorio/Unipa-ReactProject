@@ -149,12 +149,35 @@ const deleteCasa = async(req) => {
     })
 }
 
+// get non_disponibile_inizio_cv and non_disponibile_fine_cv from ref_proprieta
+const getDateCasa = async(req) => {
+    return new Promise((resolve, reject) => {
+
+        Connection.query(
+            'SELECT non_disponibile_inizio_cv, non_disponibile_fine_cv ' + 
+            'FROM casa_vacanza ' +
+            'WHERE ref_proprieta_cv = ' + req.ref_proprieta + '; ',
+            (err, results) => {
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Casa vacanza non trovata'));
+                }
+                resolve(results);
+            }
+        )
+    })
+}
+
 module.exports = all;
 module.exports = getCasa;
 module.exports = getCasePosti;
 module.exports = updateCasa;
 module.exports = insertCasa;
 module.exports = deleteCasa;
+module.exports = getDateCasa;
 
 module.exports = {
     all,
@@ -162,5 +185,6 @@ module.exports = {
     getCasePosti,
     updateCasa,
     insertCasa,
-    deleteCasa
+    deleteCasa,
+    getDateCasa
 }

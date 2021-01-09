@@ -74,6 +74,18 @@ router.post('/deleted', async(req, res, next) => {
     }
 });
 
+// get non_disponibile_inizio_cv and non_disponibile_fine_cv from ref_proprieta
+// indirizzo: /getDateCasa/dateCasa
+router.post('/dateCasa', async(req, res, next) => {
+    try {
+        let getDate = await DB.Casa.getDateCasa(req.body);
+        res.json(getDate);
+    }
+    catch(e) {
+        next(e);
+    }
+});
+
 // caricamento foto
 // indirizzo: /uploadFotoCV/upload
 router.post('/upload', async(req, res, next) => {

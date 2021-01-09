@@ -165,6 +165,9 @@ app.use('/insertCasa', casaRouter);
 // cancellazione di una casa
 // indirizzo: /deleteCasa/deleted
 app.use('/deleteCasa', casaRouter);
+// ricerca di date non disponibile inizio e fine della casa dal suo id
+// indirizzo: /getDateCasa/dateCasa
+app.use('/getDateCasa', casaRouter);
 // caricamento foto
 // indirizzo: /uploadFotoCV/upload
 app.use('/uploadFotoCV', casaRouter);
@@ -214,6 +217,9 @@ app.use('/uploadFotoST', stanzaRouter);
 // cancellazione di una stanza
 // indirizzo: /deleteStanza/deleted
 app.use('/deleteStanza', stanzaRouter);
+// ricerca di date non disponibile inizio e fine della stanza dal suo id
+// indirizzo: /getDateStanza/dateStanza
+app.use('/getDateStanza', stanzaRouter);
 
 // TABELLA CLIENTE
 // lista di tutti i clienti

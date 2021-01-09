@@ -136,4 +136,16 @@ router.post('/deleted', async(req, res, next) => {
     }
 });
 
+// get non_disponibile_inizio_st and non_disponibile_fine_st from id_stanza
+// indirizzo: /getDateStanza/dateStanza
+router.post('/dateStanza', async(req, res, next) => {
+    try {
+        let getDate = await DB.Stanza.getDateStanza(req.body);
+        res.json(getDate);
+    }
+    catch(e) {
+        next(e);
+    }
+});
+
 module.exports = router;
