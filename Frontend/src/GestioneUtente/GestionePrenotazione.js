@@ -304,6 +304,7 @@ class GestionePrenotazione extends React.Component {
         
         else {
             return (
+                <div className="containerGrande">
                 <div className="containerGP">
                     <div>
                         <h1>Gestisci le tue prenotazioni</h1>
@@ -314,37 +315,20 @@ class GestionePrenotazione extends React.Component {
                                     <Accordion>
                                         <Card border="light" id="cardGP">
                                                 <div className="headcac">
-                                                    <p className="bianco">ID: {res.id_prenotazione}</p>
-                                                    <p className="bianco">Partenza: {new Date(res.data_partenza).toLocaleDateString()}</p>
-                                                    <p className="bianco">Ritorno: {new Date(res.data_ritorno).toLocaleDateString()}</p>
-                                                    <p className="bianco">Stato: {res.accettata === null ? 'In attesa di accettazione' : (res.accettata === 1 ? 'Accettata' : 'Rifiutata')}</p>
+                                                    <p>ID: {res.id_prenotazione}</p>
+                                                    <p>Partenza: {new Date(res.data_partenza).toLocaleDateString()}</p>
+                                                    <p>Ritorno: {new Date(res.data_ritorno).toLocaleDateString()}</p>
+                                                    <p>Stato: {res.accettata === null ? 'In attesa di accettazione' : (res.accettata === 1 ? 'Accettata' : 'Rifiutata')}</p>
                                                     <Accordion.Toggle as={Button} variant="link" eventKey="0" id="accbutt1" onClick = {() => this.set_id(res.id_prenotazione)}>
                                                         Dettagli
                                                     </Accordion.Toggle>
                                                 </div>
                                             <Accordion.Collapse eventKey="0">
                                                 <Card.Body>
-                                                    <div className="infopren">
-                                                    <h4>Dettagli struttura </h4>
-                                                    <Card className="propcard" id="cardGP">
-                                                    <Card.Body>
-                                                    <Card.Title><h5>{res.nome_proprieta}</h5></Card.Title>
-                                                    <Card.Img src={res.img}/>
-                                                    <Card.Text>
-                                                    <p className="bianco">Codice struttura: {res.ref_proprieta}, Tipo struttura: {res.tipo_proprieta === 'bb' ? 'B&B' : 'Casa vacanza'}</p>
-                                                    <p className="bianco" style = {{display: res.tipo_proprieta === 'bb' ? 'inline' : 'none'}}>Codice stanza: {res.id_stanza}</p>
-                                                    <p className="bianco">Località: {res.localita} ({res.provincia}),Indirizzo: {res.indirizzo}</p>
-                                                    <p className="bianco">Costo: {res.costo} euro</p>
-                                                    <p className="bianco">Soggiornante: {res.nome_sogg} {res.cognome_sogg}</p>
-                                                    </Card.Text>
-                                                    </Card.Body>
-                                                    </Card>
-                                                    </div>
-                                                    
                                                     <Accordion>
                                                         <div className="acc3">
                                                             <div className="just-cont">
-                                                            <Accordion.Toggle as={Button} id="accbutton" variant="link" eventKey="1" onClick = {() => this.caricaDate(res.tipo_proprieta, res.ref_proprieta, res.id_stanza)}>Modifica data prenotazione</Accordion.Toggle>
+                                                            <Accordion.Toggle as={Button} id="accbutton" variant="link" eventKey="1" onClick = {() => this.caricaDate(res.tipo_proprieta, res.ref_proprieta, res.id_stanza)}>Modifica data</Accordion.Toggle>
                                                             <Accordion.Toggle as={Button} variant="link" eventKey="2" id="accbutton">Elimina prenotazione</Accordion.Toggle>
                                                             <Accordion.Toggle as={Button} variant="link" eventKey="3" id="accbutton">Contatta il gestore</Accordion.Toggle>
                                                             </div>
@@ -437,6 +421,22 @@ class GestionePrenotazione extends React.Component {
                                                             </Accordion.Collapse>
                                                         </div>
                                                     </Accordion>
+                                                    <div className="infopren">
+                                                    <h4>Dettagli struttura </h4>
+                                                    <Card className="propcard" id="cardGP">
+                                                    <Card.Body>
+                                                    <Card.Title><h5>{res.nome_proprieta}</h5></Card.Title>
+                                                    <Card.Img src={res.img}/>
+                                                    <Card.Text>
+                                                    <p className="bianco">Codice struttura: {res.ref_proprieta}, Tipo struttura: {res.tipo_proprieta === 'bb' ? 'B&B' : 'Casa vacanza'}</p>
+                                                    <p className="bianco" style = {{display: res.tipo_proprieta === 'bb' ? 'inline' : 'none'}}>Codice stanza: {res.id_stanza}</p>
+                                                    <p className="bianco">Località: {res.localita} ({res.provincia}),Indirizzo: {res.indirizzo}</p>
+                                                    <p className="bianco">Costo: {res.costo} euro</p>
+                                                    <p className="bianco">Soggiornante: {res.nome_sogg} {res.cognome_sogg}</p>
+                                                    </Card.Text>
+                                                    </Card.Body>
+                                                    </Card>
+                                                    </div>
                                                 </Card.Body>
                                             </Accordion.Collapse>
                                         </Card>
@@ -445,6 +445,7 @@ class GestionePrenotazione extends React.Component {
                             )) 
                         }   
                     </div>
+                </div>
                 </div>
             );
         }
