@@ -1,10 +1,10 @@
 import React from "react";
 import { SingleDatePicker } from "react-dates";
 import {Accordion} from 'react-bootstrap'
-import './CaseVacanzaFiltro.css'
+import './AlloggioFiltro.css'
 import moment from "moment";
 
-class CaseVacanzaFilter extends React.Component {
+class AlloggiFilter extends React.Component {
 
   constructor(props) {
     super(props);
@@ -390,4 +390,4 @@ class CaseVacanzaFilter extends React.Component {
   }
 };
 
-export default CaseVacanzaFilter;
+export default AlloggiFilter;

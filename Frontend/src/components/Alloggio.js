@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import './CasaVacanza.css';
+import './Alloggio.css';
 
-class CasaVacanza extends React.Component {
+class Alloggio extends React.Component {
 
   render() {
     //const { name, slug, images, price } = casaVacanza;
@@ -48,32 +48,4 @@ class CasaVacanza extends React.Component {
   }
 }
 
-/*const CasaVacanza = memo(({ casaVacanza }) => {
-  const { name, slug, images, price } = casaVacanza;
-  // console.log(name);
-  return (
-    <article className="casaVacanza">
-        <img src={images[0] || defaultImg} alt="single casaVacanza" />
-        <div className="info">
-        <div className="price-top">
-          <h6>${price} a notte</h6>
-        </div>
-          <p className="casaVacanza-info">{name}</p>
-          <Link to={`/caseVacanza/${slug}`} className="vai">
-          visita pagina
-          </Link>
-      </div>
-    </article>
-  );
-});
-
-CasaVacanza.propTypes = {
-  casaVacanza: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    slug: PropTypes.string.isRequired,
-    images: PropTypes.arrayOf(PropTypes.string).isRequired,
-    price: PropTypes.number.isRequired
-  })
-};*/
-
-export default CasaVacanza;
+export default Alloggio;

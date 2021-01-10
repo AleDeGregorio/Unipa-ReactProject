@@ -9,8 +9,8 @@ import Footer from './components/Footer'
 // Pagine generali
 import HomePage from './components/HomePage'
 import ErrorPage from './components/ErrorPage'
-import CaseVacanza from './Pagine/CaseVacanza'
-import RiepilogoCasaVacanza from './Pagine/RiepilogoCasaVacanza';
+import Alloggi from './Pagine/Alloggi'
+import RiepilogoAlloggio from './Pagine/RiepilogoAlloggio';
 import BandB from './Pagine/B&B'
 //import PaginaDettagli from './PaginaDettagli/PaginaDettagli'
 
@@ -165,13 +165,13 @@ class App extends React.Component {
               <Route 
                 exact path="/RisultatiRicerca"
                 render = { (props) => (
-                  <CaseVacanza {...props}/>
+                  <Alloggi {...props}/>
                 )}
               />
               <Route 
                 exact path="/Alloggio"
                 render = { (props) => (
-                  <RiepilogoCasaVacanza {...props}/>
+                  <RiepilogoAlloggio {...props}/>
                 )}
               />
               <Route 

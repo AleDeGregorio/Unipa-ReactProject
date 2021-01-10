@@ -1,14 +1,14 @@
 import React from "react";
-import CaseVacanzaFilter from './CaseVacanzaFiltro';
-import CaseVacanzaList from "./CaseVacanzaLista";
+import AlloggiFilter from './AlloggiFiltro';
+import AlloggiList from "./AlloggiLista";
 
-import './CaseVacanzaLista.css'
+import './AlloggioLista.css'
 
 import moment from "moment";
 
 import { Redirect } from "react-router-dom";
 
-class CasaVacanzaContainer extends React.Component {
+class AlloggiContainer extends React.Component {
 
   constructor(props) {
     super(props);
@@ -147,7 +147,7 @@ class CasaVacanzaContainer extends React.Component {
     else {
       return (
         <>
-          <CaseVacanzaFilter 
+          <AlloggiFilter 
             servizi={this.state.apiResponse} 
             posti = {this.props.posti} 
             checkIn = {this.state.checkIn}
@@ -159,7 +159,7 @@ class CasaVacanzaContainer extends React.Component {
             tipo = {this.state.tipo}
           />
           <div className="ListaProp">
-            <CaseVacanzaList 
+            <AlloggiList 
               case={this.state.case} 
               servizi = {this.state.datiRicerca.searchServizi} 
               checkIn = {this.state.checkIn} 
@@ -173,21 +173,4 @@ class CasaVacanzaContainer extends React.Component {
   }
 }
 
-/*function CasaVacanzaContainer({ context }) {
-  const { loading, sortedCaseVacanza, caseVacanza } = context;
-  if (loading) {
-    return <Loading />;
-  }
-  return (
-    <>
-      <CaseVacanzaFilter casaVacanza={caseVacanza} />
-      <div className="ListaProp">
-      <CaseVacanzaList caseVacanza={sortedCaseVacanza} />
-      </div>
-    </>
-  );
-}
-
-export default withCasaVacanzaConsumer(CasaVacanzaContainer);*/
-
-export default CasaVacanzaContainer;
+export default AlloggiContainer;

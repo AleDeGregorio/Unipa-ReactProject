@@ -1,9 +1,9 @@
 import React from "react";
-import CasaVacanza from "./CasaVacanza";
+import Alloggio from "./Alloggio";
 
-import './CaseVacanzaLista';
+import './AlloggiLista';
 
-class CaseVacanzaList extends React.Component {
+class AlloggiList extends React.Component {
 
   render() {
     var datiCase = this.props.case ? this.props.case : [];
@@ -24,7 +24,7 @@ class CaseVacanzaList extends React.Component {
       <section className="caseVacanzalist">
         <div className="caseVacanzalistDiv">
           {datiCase.map(item => {
-            return <CasaVacanza 
+            return <Alloggio 
               key={item.id} 
               casaVacanza={item} 
               datiRicerca = {datiCase} 
@@ -40,4 +40,4 @@ class CaseVacanzaList extends React.Component {
   }
 };
 
-export default CaseVacanzaList;
+export default AlloggiList;

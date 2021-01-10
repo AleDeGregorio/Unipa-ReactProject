@@ -1,9 +1,9 @@
 import React from "react";
 
 import { Link } from "react-router-dom";
-import CaseVacanzaContainer from "../components/CaseVacanzaContainer";
+import AlloggiContainer from "../components/AlloggiContainer";
 
-class CaseVacanza extends React.Component {
+class Alloggi extends React.Component {
 
   constructor(props){
     super(props);
@@ -21,7 +21,7 @@ class CaseVacanza extends React.Component {
   render() {
     return (
       <>
-        <CaseVacanzaContainer 
+        <AlloggiContainer 
           case = {this.state.case} 
           posti = {this.state.posti} 
           checkIn = {this.state.checkIn} 
@@ -34,4 +34,4 @@ class CaseVacanza extends React.Component {
   }
 };
 
-export default CaseVacanza;
+export default Alloggi;
