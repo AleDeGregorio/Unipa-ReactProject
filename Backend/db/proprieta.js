@@ -522,7 +522,7 @@ const ricercaAlloggio = async(req) => {
                         'SELECT @inizio := "'+ (req.checkIn === '' ? '1970-01-01' : req.checkIn) + '"; ' +
                         'SELECT @fine := "'+ (req.checkOut === '' ? '1970-01-01' : req.checkOut) + '"; ' +
                         'SELECT @servizi := "' + servizi + '"; ' +
-                        'SELECT DISTINCT p.nome_proprieta, p.indirizzo, p.localita, p.tipo_proprieta, p.provincia, ' +
+                        'SELECT DISTINCT p.nome_proprieta, p.indirizzo, p.localita, p.tipo_proprieta, p.provincia, p.servizi, ' +
                             's.tariffa_stanza* ' + ngiorni + ' AS costo, ' +
                             's.tariffa_stanza AS tariffa, ' +
                             ngiorni + ' AS ngiorni, ' +
