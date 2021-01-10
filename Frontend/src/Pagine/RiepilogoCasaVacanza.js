@@ -65,7 +65,7 @@ export default class SingleCasaVacanza extends Component {
              <Banner title={dati_casa.nome_proprieta}>
               <Link 
                 to = {{
-                  pathname: "/CaseVacanza",
+                  pathname: "/RisultatiRicerca",
                   state: {
                     case: this.state.datiRicerca,
                     posti: this.state.dati_casa.posti,

@@ -163,13 +163,13 @@ class App extends React.Component {
                 />)}
               />
               <Route 
-                exact path="/CaseVacanza"
+                exact path="/RisultatiRicerca"
                 render = { (props) => (
                   <CaseVacanza {...props}/>
                 )}
               />
               <Route 
-                exact path="/Casa/"
+                exact path="/Alloggio"
                 render = { (props) => (
                   <RiepilogoCasaVacanza {...props}/>
                 )}

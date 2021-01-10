@@ -27,7 +27,7 @@ class CasaVacanza extends React.Component {
             <div className="bottoneLink">
               <Link 
                 to = {{
-                  pathname: "/Casa",
+                  pathname: "/Alloggio",
                   state: {
                     dati_casa: {dati_casa},
                     datiRicerca: {datiRicerca},
