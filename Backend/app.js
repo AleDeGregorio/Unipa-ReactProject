@@ -341,6 +341,9 @@ app.use('/insertTassa', tassaRouter);
 // ricerca tasse di soggiorno del proprietario, con join con tabella prenotazione. Da usare per invio dati ufficio turismo
 // indirizzo: /getTasseInvio/tasse
 app.use('/getTasseInvio', tassaRouter);
+// elimina tasse di soggiorno del proprietario. Da usare dopo invio dati ufficio turismo
+// indirizzo: /deleteTasseInvio/deleteTasse
+app.use('/deleteTasseInvio', tassaRouter);
 
 /* catch 404 and forward to error handler
 app.use(function(req, res, next) {

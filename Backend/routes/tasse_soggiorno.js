@@ -98,4 +98,16 @@ router.post('/tasse', async(req, res, next) => {
     }
 })
 
+// delete tasse in table tassa_soggiorno from ref_proprietario
+// indirizzo: /deleteTasseInvio/deleteTasse
+router.post('/deleteTasse', async(req, res, next) => {
+    try {
+        let del = await DB.Tassa_soggiorno.deleteTasseInvio(req.body);
+        res.json(del);
+    }
+    catch(e) {
+        next(e);
+    }
+})
+
 module.exports = router;

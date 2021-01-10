@@ -181,6 +181,28 @@ const getTasseInvio = async(req) => {
     });
 }
 
+// delete tasse from ref_proprietario
+// DA USARE DOPO INVIO DATI ALL'UFFICIO DEL TURISMO 
+const deleteTasseInvio = async(req) => {
+    return new Promise((resolve, reject) => {
+
+        Connection.query(
+            'DELETE ' +
+            'FROM tassa_soggiorno ' +
+            'WHERE t.ref_proprietario = "' + req.ref_proprietario + '"; ', 
+            (err, results) => {
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessuna tassa di soggiorno relativa al proprietario'));
+                }
+            resolve(results);
+        });
+    });
+}
+
 module.exports = all;
 module.exports = getTassa;
 module.exports = getTassaSoggiornante;
@@ -189,6 +211,7 @@ module.exports = getTassaProprietario;
 module.exports = updateTassa;
 module.exports = insertTassa;
 module.exports = getTasseInvio;
+module.exports = deleteTasseInvio;
 
 module.exports = {
     all,
@@ -198,5 +221,6 @@ module.exports = {
     getTassaProprietario,
     updateTassa,
     insertTassa,
-    getTasseInvio
+    getTasseInvio,
+    deleteTasseInvio
 }
