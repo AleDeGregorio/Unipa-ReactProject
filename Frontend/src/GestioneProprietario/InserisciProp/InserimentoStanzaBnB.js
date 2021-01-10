@@ -1,7 +1,7 @@
 /*CSS FATTO*/ 
 
 import React from "react";
-import {Button, Form} from "react-bootstrap"
+import {Button, Form, Alert} from "react-bootstrap"
 import {Link} from "react-router-dom"
 
 import "./InserimentoProprietà.css";
@@ -36,6 +36,14 @@ class InserimentoStanzaBnB extends React.Component {
       success: false,
       empty: false
     };
+  }
+
+  setShowSucc = (e) => {
+    this.setState({ success: e })
+  }
+
+  setShowErr = (e) => {
+    this.setState({ error: e })
   }
 
   onChange = (e) => {
@@ -74,6 +82,7 @@ class InserimentoStanzaBnB extends React.Component {
       }
 
       else if(this.state.apiResponse.status === 'error') {
+        window.scrollTo(0, 0);
         this.setState({ error: true });
         this.setState({ errorMessage: this.state.apiResponse.message });
       }
@@ -109,11 +118,18 @@ class InserimentoStanzaBnB extends React.Component {
         }
   
         else if(this.state.apiResponse.status === 'error') {
+          window.scrollTo(0, 0);
           this.setState({ error: true });
           this.setState({ errorMessage: this.state.apiResponse.message });
         }
         else {
-          this.setState({ success: true });
+          localStorage.setObj('user_data', this.state.apiResponse);
+          window.scrollTo(0, 0);
+          this.setState({ success: true, error: false },()=>{
+              window.setTimeout(()=>{
+                this.setState({success:false})
+              }, 3000)
+          })
         }
     });
   });
@@ -131,25 +147,6 @@ class InserimentoStanzaBnB extends React.Component {
           }}
       />
     }
-    else if(this.state.error) {
-      return <Redirect 
-        to = {{
-          pathname: "/ErrorPage",
-          state: {
-            error: true,
-            errorMessage: this.state.errorMessage
-          }
-        }}
-      />
-    }
-    else if(this.state.success) {
-      return (
-        <div className = "Errore">
-          <h1>Inserimento avvenuto con successo!</h1>
-          <p>La tua casa vacanza è stata registrata correttamente all'interno del sistema</p>
-        </div>
-      );
-    }
     else if(this.state.empty) {
       return(
         <div className = "background">
@@ -165,6 +162,34 @@ class InserimentoStanzaBnB extends React.Component {
     else {
       return(
         <div className = "background">
+          <>
+            <Alert show={this.state.success} variant="success">
+            <Alert.Heading style = {{fontWeight: 'bold'}}>Inserimento avvenuto con successo!</Alert.Heading>
+            <p>
+              Le informazioni della tua nuova stanza sono state correttamente caricate e memorizzate all'interno del sistema.
+            </p>
+            <hr />
+            <div className="d-flex justify-content-end">
+                <Button onClick={() => this.setShowSucc(false)} variant="outline-success">
+                <span style = {{fontWeight: 'bold'}}>Ok</span>
+                </Button>
+            </div>
+            </Alert>
+          </>
+            <>
+                <Alert show={this.state.error} variant="danger">
+                <Alert.Heading style = {{fontWeight: 'bold'}}>Inserimento non avvenuto!</Alert.Heading>
+                <p>
+                  Si è verificato un errore nell'inserimento dei dati, riprovare.
+                </p>
+                <hr />
+                <div className="d-flex justify-content-end">
+                    <Button onClick={() => this.setShowErr(false)} variant="outline-success">
+                    <span style = {{fontWeight: 'bold'}}>Ok</span>
+                    </Button>
+                </div>
+                </Alert>
+            </>
         <div className = "containerNew">  
             <div className = "contentNew">
                 <form onSubmit = {this.onSubmitInsert}>

@@ -209,6 +209,7 @@ class ModificaCasaVacanza extends React.Component {
 
             else {
               this.setState({success:true},()=>{
+                window.scrollTo(0, 0);
                 window.setTimeout(()=>{
                   this.setState({success:false})
                 }, 3000)
