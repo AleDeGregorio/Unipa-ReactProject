@@ -1,6 +1,6 @@
 import React from 'react'
 import './GestionePrenotazione.css'
-import {Card, Accordion, Button, Form, Col} from 'react-bootstrap'
+import {Card, Accordion, Button, Form, Col, Alert} from 'react-bootstrap'
 //import { CardColumn, ListGroup, ListGroupItem } from 'react-bootstrap'
 import moment from "moment";
 import { SingleDatePicker } from "react-dates";
@@ -20,13 +20,15 @@ class GestionePrenotazione extends React.Component {
             error: false,
             errorMessage: '',
             empty: false,
+            success: false,
+            emailInviata: false,
             checkInFocus: [],
             checkOutFocus: [],
             startDate: moment(),
             endDate: null,
             dateNonDisponibili: {
-                inizio: moment("1/2/2021", "DD-MM-YYYY"),
-                fine: moment("5/2/2021", "DD-MM-YYYY")
+                inizio: moment(),
+                fine: moment()
             }
         }
     }
@@ -68,6 +70,18 @@ class GestionePrenotazione extends React.Component {
             }
         })
    }
+
+   setShow = (e) => {
+    this.setState({ success: e })
+    }
+
+    setShowEmail = (e) => {
+        if(e === true) {
+            window.scrollTo(0, 0);
+        }
+
+        this.setState({ emailInviata: e })
+    }
 
    onChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
@@ -118,35 +132,48 @@ class GestionePrenotazione extends React.Component {
     onSubmitModifica = (e) => {
         e.preventDefault();
 
-        const data = {
-            id_prenotazione: this.state.id_prenotazione,
-            data_partenza: this.state.data_partenza,
-            data_ritorno: this.state.data_ritorno
-        }
+        var inizio = new Date(this.state.startDate.format()).toLocaleDateString();
+        var fine = this.state.endDate ? new Date(this.state.endDate.format()).toLocaleDateString() : new Date(moment(this.state.startDate).add(1, 'days').format()).toLocaleDateString();
+        
+        this.setState({
+            data_partenza: inizio,
+            data_ritorno: fine
+        }, () => { 
+            const data = {
+                id_prenotazione: this.state.id_prenotazione,
+                data_partenza: this.state.data_partenza,
+                data_ritorno: this.state.data_ritorno
+            }
 
-        fetch('http://localhost:9000/updateDatePrenotazione/newDate', {
-            method: "POST",
-            headers: {
-                'Content-type' : 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-        .then((result) => result.text())
-        .then((result)=>{
-            this.setState({ apiResponse:JSON.parse(result) });
-            var res = JSON.parse(result);
+            fetch('http://localhost:9000/updateDatePrenotazione/newDate', {
+                method: "POST",
+                headers: {
+                    'Content-type' : 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then((result) => result.text())
+            .then((result)=>{
+                this.setState({ apiResponse:JSON.parse(result) });
+                var res = JSON.parse(result);
 
-            if(res.length < 1 || (res.code && res.code === 404)) {
-              this.setState({ empty: true, errorMessage: res.message });
-            }
-      
-            else if(this.state.apiResponse.status === 'error') {
-              this.setState({ error: true });
-              this.setState({ errorMessage: this.state.apiResponse.message });
-            }
-            else {
-                this.setState({ success: true })
-            }
+                if(res.length < 1 || (res.code && res.code === 404)) {
+                    this.setState({ empty: true, errorMessage: res.message });
+                }
+            
+                else if(this.state.apiResponse.status === 'error') {
+                    this.setState({ error: true });
+                    this.setState({ errorMessage: this.state.apiResponse.message });
+                }
+                else {
+                    window.scrollTo(0, 0);
+                    this.setState({ success: true, error: false },()=>{
+                        window.setTimeout(()=>{
+                            this.setState({success:false})
+                        }, 3000)
+                        })
+                }
+            });
         });
     }
 
@@ -178,7 +205,12 @@ class GestionePrenotazione extends React.Component {
               this.setState({ errorMessage: this.state.apiResponse.message });
             }
             else {
-                this.setState({ success: true })
+                window.scrollTo(0, 0);
+                this.setState({ success: true, error: false },()=>{
+                    window.setTimeout(()=>{
+                        this.setState({success:false})
+                    }, 3000)
+                })
             }
         });
     }
@@ -251,8 +283,8 @@ class GestionePrenotazione extends React.Component {
                 else {
                     this.setState(prevState => {
                         let dateNonDisponibili = { ...prevState.dateNonDisponibili };
-                        dateNonDisponibili.inizio = moment(new Date(res[0].non_disponibile_inizio_cv).toLocaleDateString(), 'DD-MM-YYYY');   
-                        dateNonDisponibili.fine =  moment(new Date(res[0].non_disponibile_fine_cv).toLocaleDateString(), 'DD-MM-YYYY');
+                        dateNonDisponibili.inizio = moment(new Date(res[0].non_disponibile_inizio_st).toLocaleDateString(), 'DD-MM-YYYY');   
+                        dateNonDisponibili.fine =  moment(new Date(res[0].non_disponibile_fine_st).toLocaleDateString(), 'DD-MM-YYYY');
                         return { dateNonDisponibili };
                     })
                 }
@@ -305,6 +337,34 @@ class GestionePrenotazione extends React.Component {
         else {
             return (
                 <div className="containerGrande">
+                    <>
+                        <Alert show={this.state.success} variant="success">
+                        <Alert.Heading style = {{fontWeight: 'bold'}}>Modifiche avvenute con successo!</Alert.Heading>
+                        <p>
+                            Le modifiche applicate sono state correttamente caricate e memorizzate all'interno del sistema.
+                        </p>
+                        <hr />
+                        <div className="d-flex justify-content-end">
+                            <Button onClick={() => this.setShow(false)} variant="outline-success">
+                            <span style = {{fontWeight: 'bold'}}>Ok</span>
+                            </Button>
+                        </div>
+                        </Alert>
+                    </>
+                    <>
+                        <Alert show={this.state.emailInviata} variant="success">
+                        <Alert.Heading style = {{fontWeight: 'bold'}}>Comunicazione inviata con successo!</Alert.Heading>
+                        <p>
+                            Il tuo messaggio è stato preso in carico dal sistema e verrà presto consegnato al gestore della struttura selezionata.
+                        </p>
+                        <hr />
+                        <div className="d-flex justify-content-end">
+                            <Button onClick={() => this.setShowEmail(false)} variant="outline-success">
+                            <span style = {{fontWeight: 'bold'}}>Ok</span>
+                            </Button>
+                        </div>
+                        </Alert>
+                    </>
                 <div className="containerGP">
                     <div>
                         <h1>Gestisci le tue prenotazioni</h1>
@@ -398,8 +458,7 @@ class GestionePrenotazione extends React.Component {
                                                             <Accordion.Collapse eventKey="2">
                                                                 <div>
                                                                     <p className="bianco">Sei sicuro di voler eliminare la tua prenotazione? Non riavrai indietro la caparra.</p>
-                                                                    <Button id="annulla1">Conferma</Button>
-                                                                    <Button id="annulla2">Annulla</Button>
+                                                                    <Button id="annulla1" onClick = {this.onSubmitElimina}>Conferma</Button>
                                                                 </div>
                                                             </Accordion.Collapse>
 
@@ -407,15 +466,15 @@ class GestionePrenotazione extends React.Component {
                                                                 <Form className="formCG">
                                                                     <Form.Row>
                                                                         <Form.Group controlId="formGridContact">
-                                                                            <Form.Label className="bianco">Inserisci email</Form.Label>
-                                                                            <Form.Control type="email" placeholder="Inserisci tua email" />
+                                                                            <Form.Label className="bianco">La tua email</Form.Label>
+                                                                            <Form.Control type="email" value={this.state.email} required />
                                                                             <Form.Label className="bianco">Inserisci messaggio da inviare al gestore</Form.Label>
-                                                                            <Form.Control as="textarea" placeholder="Inserisci testo" />
+                                                                            <Form.Control as="textarea" placeholder="Inserisci testo" required />
                                                                             
                                                                         </Form.Group>
                                                                         
                                                                     </Form.Row>
-                                                                    <Button id="formCG1">Invia comunicazione</Button>
+                                                                    <Button id="formCG1" onClick={() => this.setShowEmail(true)}>Invia comunicazione</Button>
 
                                                                 </Form>
                                                             </Accordion.Collapse>
