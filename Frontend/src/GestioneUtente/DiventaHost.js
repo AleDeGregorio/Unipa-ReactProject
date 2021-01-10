@@ -1,6 +1,7 @@
 import React from 'react'
-import {Card, CardDeck, Form, Jumbotron, Button, Accordion} from 'react-bootstrap'
+import {Card, CardDeck, Form, Jumbotron, Button, Accordion, Alert} from 'react-bootstrap'
 import './DiventaHost.css'
+import { Redirect } from 'react-router-dom';
 
 class DiventaHost extends React.Component {
 
@@ -19,7 +20,9 @@ class DiventaHost extends React.Component {
             error: false,
             errorMessage: '',
             empty: false,
-            success: false
+            success: false,
+            redirect: false,
+            paginaProprietario: false
         }
     }
 
@@ -35,7 +38,7 @@ class DiventaHost extends React.Component {
             password: this.state.password,
             nome: this.state.nome,
             cognome: this.state.cognome,
-            nascita: this.state.nascita,
+            nascita: new Date(this.state.nascita).toLocaleDateString(),
             num_documento: this.state.num_documento,
             telefono: this.state.telefono
         }
@@ -61,14 +64,125 @@ class DiventaHost extends React.Component {
               this.setState({ errorMessage: this.state.apiResponse.message });
             }
             else {
-                this.setState({ success: true })
+                window.scrollTo(0, 0);
+                this.setState({ success: true, error: false }, ()=>{
+                    window.setTimeout(()=>{
+
+                        const data = {
+                            email: this.state.email,
+                        }
+                
+                        fetch('http://localhost:9000/searchProprietarioEmail/proprietarioEmail', {
+                            method: "POST",
+                            headers: {
+                                'Content-type' : 'application/json'
+                            },
+                            body: JSON.stringify(data)
+                        })
+                        .then((result) => result.text())
+                        .then((result)=>{
+                            this.setState({ apiResponse:JSON.parse(result) });
+                            var res = JSON.parse(result);
+                
+                            if(res.length < 1 || (res.code && res.code === 404)) {
+                              this.setState({ empty: true, errorMessage: res.message });
+                            }
+                      
+                            else if(this.state.apiResponse.status === 'error') {
+                              this.setState({ error: true });
+                              this.setState({ errorMessage: this.state.apiResponse.message });
+                            }
+                            else {
+                                localStorage.setObj('user_data', this.state.apiResponse);
+                                localStorage.setItem('proprietario', true);
+                                this.setState({ success: false, paginaProprietario: true })
+                            }
+                        });
+                    }, 3000)
+                })
+            }
+        });
+    }
+
+    onClick = (e) => {
+
+        const data = {
+            tipo: '',
+            localita: '',
+            provincia: '',
+            servizi: '',
+            posti: '%%',
+            costo: '',
+            checkIn: '',
+            checkOut: ''
+        };
+
+        fetch('http://localhost:9000/ricercaAlloggio/risultati', {
+            method: "POST",
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then((result) => result.text())
+        .then((result) => {
+            //console.log(JSON.parse(result));
+            this.setState({ apiResponse: JSON.parse(result) });
+
+            if(this.state.apiResponse.status === 'error') {
+                this.setState({ error: true });
+                this.setState({ errorMessage: this.state.apiResponse.message });
+            }
+            else {
+                this.setState({ redirect: true })
             }
         });
     }
 
     render() {
+        if(this.state.redirect) {
+
+            return <Redirect 
+            to = {{
+              pathname: "/CaseVacanza",
+              state: {
+                case: this.state.apiResponse,
+                posti: this.state.posti,
+                checkIn: this.state.checkIn,
+                checkOut: this.state.checkOut,
+                localita: this.state.localita,
+                tipo: this.state.tipo
+              }
+            }}
+          />
+        }
+
+        if(this.state.paginaProprietario) {
+
+            return <Redirect 
+            to = {{
+              pathname: "/PaginaProprietario"
+            }}
+          />
+        }
+
         return(
             <div className="containerDH">
+                <>
+                    <Alert show={this.state.success} variant="success">
+                    <Alert.Heading style = {{fontWeight: 'bold'}}>Registrazione avvenuta con successo!</Alert.Heading>
+                    <p>
+                        Il tuo account da host è stato correttamente memorizzato all'interno del sistema. Tra poco verrai reindirizzato
+                        alla tua pagina personale.
+                    </p>
+                    <hr />
+                    <div className="d-flex justify-content-end">
+                        <Button onClick={() => this.setShowSucc(false)} variant="outline-success">
+                        <span style = {{fontWeight: 'bold'}}>Ok</span>
+                        </Button>
+                    </div>
+                    </Alert>
+                </>
                 <div className="top">
                 <div className="containerFormDH">
                     
@@ -76,7 +190,7 @@ class DiventaHost extends React.Component {
                         <Form className="formDH">
                             <Form.Group controlId="formBasicDocument">
                                 <Form.Label className="colorLabel">Scegli tipo di documento</Form.Label>
-                                <Form.Control as="select" id="form-select" placeholder="Scegli documento">
+                                <Form.Control as="select" id="form-select" placeholder="Scegli documento" required>
                                     <option></option>
                                     <option>Carta d'identità</option>
                                     <option>Tessera sanitaria</option>
@@ -84,7 +198,7 @@ class DiventaHost extends React.Component {
                                     <option>Patente</option>
                                 </Form.Control>
                                 <Form.Label className="colorLabel">Inserisci numero documento</Form.Label>
-                                <Form.Control as = "input" id="form-select1" onChange = {this.onChange} placeholder = "Numero documento" />
+                                <Form.Control as = "input" id="form-select1" onChange = {this.onChange} placeholder = "Numero documento" required/>
                             </Form.Group>
                             <Button id="dhbutton" onClick = {this.onSubimit}>Diventa un Host</Button>
                         </Form>
@@ -94,7 +208,7 @@ class DiventaHost extends React.Component {
                     <h4>Pronto a diventare un Host?</h4>
                     <p>Noi ci prendiamo cura dei nostri  host, abbiamo tanti vantaggi per voi! </p>
                     <p>Vedi le strutture aggiunte da terzi</p>
-                    <Button id="dhbutton">Vai alle strutture!</Button>
+                    <Button id="dhbutton" onClick = {this.onClick}>Vai alle strutture!</Button>
                 </div>
                 </div>
                 <div className="containerFormSV">
