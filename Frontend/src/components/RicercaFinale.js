@@ -99,7 +99,6 @@ class RicercaFinale extends React.Component {
                     this.setState({ errorMessage: this.state.apiResponse.message });
                 }
                 else {
-                    //momentaneamente solo case vacanza, poi anche b&b
                     this.setState({ success: true })
                 }
             });

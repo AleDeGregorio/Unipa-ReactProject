@@ -12,6 +12,7 @@ class CasaVacanza extends React.Component {
     var servizi = this.props.servizi ? this.props.servizi : [];
     var checkIn = this.props.checkIn ? this.props.checkIn : '';
     var checkOut = this.props.checkOut ? this.props.checkOut : '';
+    var tipo = this.props.tipo ? this.props.tipo : '';
 
     return (
       <article className="casaVacanza">
@@ -32,7 +33,8 @@ class CasaVacanza extends React.Component {
                     datiRicerca: {datiRicerca},
                     servizi: {servizi},
                     checkIn: {checkIn},
-                    checkOut: {checkOut}
+                    checkOut: {checkOut},
+                    tipo: {tipo}
                   }
                 }}
                 className = "vai"

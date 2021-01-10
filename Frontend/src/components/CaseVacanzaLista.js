@@ -10,6 +10,7 @@ class CaseVacanzaList extends React.Component {
     var servizi = this.props.servizi ? this.props.servizi : [];
     var checkIn = this.props.checkIn ? this.props.checkIn : '';
     var checkOut = this.props.checkOut ? this.props.checkOut : '';
+    var tipo = this.props.tipo ? this.props.tipo : '';
 
     if (datiCase.length === 0) {
       return (
@@ -30,6 +31,7 @@ class CaseVacanzaList extends React.Component {
               servizi = {servizi} 
               checkIn = {checkIn} 
               checkOut = {checkOut}
+              tipo = {tipo}
             />;
           })}
         </div>
