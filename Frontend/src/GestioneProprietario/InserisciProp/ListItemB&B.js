@@ -336,12 +336,6 @@ class ListItemBnB extends Component {
                       Inserisci stanza
                       </Link>
                     </div>
-                    <div
-                      className="listitem__select__list__item"
-                      onClick={this.deleteItem}
-                    >
-                      Elimina
-                    </div>
                   </div>
                 )}
               </ListItemSelect>
