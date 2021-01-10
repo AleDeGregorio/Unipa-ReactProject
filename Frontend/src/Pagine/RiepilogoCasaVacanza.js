@@ -17,6 +17,7 @@ export default class SingleCasaVacanza extends Component {
       dati_servizi: this.props.history.location.state.servizi.servizi ? this.props.history.location.state.servizi.servizi : [],
       checkIn: this.props.history.location.state.checkIn.checkIn ? this.props.history.location.state.checkIn.checkIn : '',
       checkOut: this.props.history.location.state.checkOut.checkOut ? this.props.history.location.state.checkOut.checkOut : '',
+      tipo: this.props.history.location.state.tipo.tipo ? this.props.history.location.state.tipo.tipo : '',
       datiRicerca: this.props.history.location.state.datiRicerca.datiRicerca ? this.props.history.location.state.datiRicerca.datiRicerca : [],
       servizi: []
     };
@@ -24,7 +25,7 @@ export default class SingleCasaVacanza extends Component {
 
   componentDidMount() {
     this.setState({
-      servizi: this.state.dati_casa.servizi.replace(/\s*,\s*/g, ",").split(',')
+      servizi: this.state.dati_casa.servizi ? this.state.dati_casa.servizi.replace(/\s*,\s*/g, ",").split(',') : []
     });
   }
 
@@ -71,7 +72,8 @@ export default class SingleCasaVacanza extends Component {
                     localita: this.state.dati_casa.localita,
                     tipo: this.state.dati_casa.tipo_proprieta,
                     checkIn: this.state.checkIn,
-                    checkOut: this.state.checkOut
+                    checkOut: this.state.checkOut,
+                    tipo: this.state.tipo
                   }
                 }}
                 className = "return"
@@ -95,7 +97,7 @@ export default class SingleCasaVacanza extends Component {
                <div className="sistemaPagina">
                <article className="info">
                  <h3>INFO</h3>
-                 <h6>Prezzo: €{dati_casa.costo} per {dati_casa.ngiorni} giorni</h6>
+                 <h6>Prezzo: €{dati_casa.costo} per {dati_casa.ngiorni} {dati_casa.ngiorni === 1 ? 'giorno' : 'giorni'}</h6>
                  <h6>
                    Capacità massima: {dati_casa.posti} {dati_casa.posti === 1 ? 'persona' : 'persone'}
                  </h6>
