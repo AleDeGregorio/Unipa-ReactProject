@@ -16,14 +16,18 @@ class Alloggio extends React.Component {
 
     return (
       <article className="casaVacanza">
-          <img src={dati_casa.img1} alt="single casaVacanza" />
-          <div className="info">
-          <div className="price-top">
-            <h6>€{dati_casa.costo} ({dati_casa.ngiorni} {dati_casa.ngiorni === 1 ? 'giorno' : 'giorni'})</h6>
+          <div className="containerFoto">
+            <img src={dati_casa.img1} alt="single casaVacanza" className="fotoAlloggi"/>
           </div>
-            <p className="casaVacanza-info">{dati_casa.nome_proprieta}</p>
-            <p className="casaVacanza-info">{dati_casa.localita}</p>
-            <p className="casaVacanza-info">Per {dati_casa.posti} {dati_casa.posti === 1 ? 'ospite' : 'ospiti'}</p>
+          <div className="info">
+            <h5 className="casaVacanza-info">{dati_casa.nome_proprieta}</h5>
+            <div className="descrizione">
+              <p className="casaVacanza-info">Località: {dati_casa.localita}</p>
+              <p className="casaVacanza-info">Capienza: {dati_casa.posti} {dati_casa.posti === 1 ? 'ospite' : 'ospiti'}</p>
+            </div>
+            <div className="price-top">
+              <h6>€{dati_casa.costo} ({dati_casa.ngiorni} {dati_casa.ngiorni === 1 ? 'giorno' : 'giorni'})</h6>
+            </div>
             <div className="bottoneLink">
               <Link 
                 to = {{

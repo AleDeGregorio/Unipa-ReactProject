@@ -3,7 +3,7 @@ import defaultBcg from "../images/room-1.jpeg";
 import Hero from "../components/Hero";
 import Banner from "../components/Banner";
 import { Link } from "react-router-dom";
-import {Col, Row} from "react-bootstrap"
+import {Col, Row, Accordion} from 'react-bootstrap'
 import './Riepilogo.css'
 import StyledHero from "../components/StyledHero";
 
@@ -115,17 +115,50 @@ export default class RiepilogoAlloggio extends Component {
                </div>
              </div>
            </section>
-           <Link 
-              to = {{
-                pathname: "/Prenota",
-                state: {
-                  dati: ''
-                }
-              }}
-              className = "return"
-            >
-              <button className="bottonePrenota">PRENOTA</button>
-            </Link>
+            <Accordion>
+              <Accordion.Toggle eventKey="0" id="prenotaDrop">Prenota</Accordion.Toggle >
+              <Accordion.Collapse eventKey="0">
+              <div>
+                <p>Quando vuoi prenotare?</p>
+                <div className="sceltaDate">
+                  <div>
+                    <p>Check-in</p>
+                    <input type="date"></input>
+                  </div>
+                  <div>
+                    <p>Check-out</p>
+                    <input type="date"></input>
+                  </div>
+                </div>
+                <div>
+                  <p>Numero ospiti</p>
+                  <select>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                  </select>
+                </div>
+                <Link 
+                  to = {{
+                    pathname: "/Prenota",
+                    state: {
+                      dati: ''
+                    }
+                  }}
+                  className = "return"
+                >
+                  <button className="bottonePrenota">PRENOTA</button>
+                </Link>
+              </div>
+              </Accordion.Collapse>
+            </Accordion> 
            </div>
            </div>
        </>
