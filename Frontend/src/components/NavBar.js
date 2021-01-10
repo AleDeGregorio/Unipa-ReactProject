@@ -51,8 +51,8 @@ class NavBar extends React.Component {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
                         <Nav.Link href="/">Home</Nav.Link>
-                        <Nav.Link href="/BnB">BnB</Nav.Link>
-                        <Nav.Link href="/CasaVacanza">Casa Vacanza</Nav.Link>
+                        <Nav.Link href="/">B&B</Nav.Link>
+                        <Nav.Link href="/">Casa Vacanza</Nav.Link>
                     </Nav>
                         {loggato}
                 </Navbar.Collapse>

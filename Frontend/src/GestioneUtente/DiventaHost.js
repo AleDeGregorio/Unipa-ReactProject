@@ -144,7 +144,7 @@ class DiventaHost extends React.Component {
 
             return <Redirect 
             to = {{
-              pathname: "/CaseVacanza",
+              pathname: "/RisultatiRicerca",
               state: {
                 case: this.state.apiResponse,
                 posti: this.state.posti,
