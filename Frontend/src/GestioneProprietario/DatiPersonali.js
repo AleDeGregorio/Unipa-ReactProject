@@ -35,9 +35,15 @@ class DatiPersonali extends React.Component {
             success: false
         }
     }
-    setShow = (e) => {
+
+    setShowSucc = (e) => {
         this.setState({ success: e })
-      }
+    }
+
+    setShowErr = (e) => {
+        this.setState({ error: e })
+    }
+
     onChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
     }
@@ -52,8 +58,8 @@ class DatiPersonali extends React.Component {
                 nome: this.state.nome,
                 cognome: this.state.cognome,
                 nascita: this.state.nascita,
-                telefono: this.state.telefono,
-                num_documento: this.state.num_documento
+                telefono: this.state.telefono === '' ? this.state.telefonoTXT : this.state.telefono,
+                num_documento: this.state.num_documento === '' ? this.state.num_documentoTXT : this.state.num_documento
             }
 
             fetch('http://localhost:9000/updateProprietario/fields', {
@@ -94,16 +100,22 @@ class DatiPersonali extends React.Component {
                         var res = JSON.parse(result);
 
                         if(res.length < 1 || (res.code && res.code === 404)) {
-                        this.setState({ empty: true, errorMessage: res.message });
+                            this.setState({ empty: true, errorMessage: res.message });
                         }
 
                         else if(this.state.apiResponse.status === 'error') {
-                        this.setState({ error: true });
-                        this.setState({ errorMessage: this.state.apiResponse.message });
+                            window.scrollTo(0, 0);
+                            this.setState({ error: true });
+                            this.setState({ errorMessage: this.state.apiResponse.message });
                         }
                         else {
                             localStorage.setObj('user_data', this.state.apiResponse);
-                            this.setState({ success: true })
+                            window.scrollTo(0, 0);
+                            this.setState({ success: true, error: false },()=>{
+                                window.setTimeout(()=>{
+                                  this.setState({success:false})
+                                }, 3000)
+                            })
                         }
                     });
                 }
@@ -116,7 +128,7 @@ class DatiPersonali extends React.Component {
                 nome: this.state.nome,
                 cognome: this.state.cognome,
                 nascita: this.state.nascita,
-                telefono: this.state.telefono
+                telefono: this.state.telefono === '' ? this.state.telefonoTXT : this.state.telefono
             }
 
             fetch('http://localhost:9000/updateCliente/fields', {
@@ -158,20 +170,22 @@ class DatiPersonali extends React.Component {
                         var res = JSON.parse(result);
 
                         if(res.length < 1 || (res.code && res.code === 404)) {
-                        this.setState({ empty: true, errorMessage: res.message });
+                            this.setState({ empty: true, errorMessage: res.message });
                         }
 
                         else if(this.state.apiResponse.status === 'error') {
-                        this.setState({ error: true });
-                        this.setState({ errorMessage: this.state.apiResponse.message });
+                            window.scrollTo(0, 0);
+                            this.setState({ error: true });
+                            this.setState({ errorMessage: this.state.apiResponse.message });
                         }
                         else {
                             localStorage.setObj('user_data', this.state.apiResponse);
-                            this.setState({ success: true },()=>{
+                            window.scrollTo(0, 0);
+                            this.setState({ success: true, error: false },()=>{
                                 window.setTimeout(()=>{
-                                  this.setState({success:false})
+                                  this.setState({success: false})
                                 }, 3000)
-                              })
+                            })
                         }
                     });
                 }
@@ -184,9 +198,9 @@ class DatiPersonali extends React.Component {
 
         if(this.state.oldPassword === '' || this.state.newPassword === '' || this.state.confirmPassword === '' || 
             this.state.newPassword !== this.state.confirmPassword) {
-
-            this.setState({ error: true });
-            return;
+                window.scrollTo(0, 0);
+                this.setState({ error: true });
+                return;
         }
 
         if(localStorage.getItem('proprietario')) {
@@ -213,8 +227,9 @@ class DatiPersonali extends React.Component {
                 }
 
                 else if(this.state.apiResponse.status === 'error') {
-                this.setState({ error: true });
-                this.setState({ errorMessage: this.state.apiResponse.message });
+                    window.scrollTo(0, 0);
+                    this.setState({ error: true });
+                    this.setState({ errorMessage: this.state.apiResponse.message });
                 }
                 else {
 
@@ -236,12 +251,13 @@ class DatiPersonali extends React.Component {
                         var res = JSON.parse(result);
 
                         if(res.length < 1 || (res.code && res.code === 404)) {
-                        this.setState({ empty: true, errorMessage: res.message });
+                            this.setState({ empty: true, errorMessage: res.message });
                         }
 
                         else if(this.state.apiResponse.status === 'error') {
-                        this.setState({ error: true });
-                        this.setState({ errorMessage: this.state.apiResponse.message });
+                            window.scrollTo(0, 0);
+                            this.setState({ error: true });
+                            this.setState({ errorMessage: this.state.apiResponse.message });
                         }
                         else {
                             const data3 = {
@@ -261,16 +277,18 @@ class DatiPersonali extends React.Component {
                                 var res = JSON.parse(result);
         
                                 if(res.length < 1 || (res.code && res.code === 404)) {
-                                this.setState({ empty: true, errorMessage: res.message });
+                                    this.setState({ empty: true, errorMessage: res.message });
                                 }
         
                                 else if(this.state.apiResponse.status === 'error') {
-                                this.setState({ error: true });
-                                this.setState({ errorMessage: this.state.apiResponse.message });
+                                    window.scrollTo(0, 0);
+                                    this.setState({ error: true });
+                                    this.setState({ errorMessage: this.state.apiResponse.message });
                                 }
                                 else {
                                     localStorage.setObj('user_data', this.state.apiResponse);
-                                    this.setState({ success: true },()=>{
+                                    window.scrollTo(0, 0);
+                                    this.setState({ success: true, error: false },()=>{
                                         window.setTimeout(()=>{
                                           this.setState({success:false})
                                         }, 3000)
@@ -303,12 +321,13 @@ class DatiPersonali extends React.Component {
                 var res = JSON.parse(result);
 
                 if(res.length < 1 || (res.code && res.code === 404)) {
-                this.setState({ empty: true, errorMessage: res.message });
+                    this.setState({ empty: true, errorMessage: res.message });
                 }
 
                 else if(this.state.apiResponse.status === 'error') {
-                this.setState({ error: true });
-                this.setState({ errorMessage: this.state.apiResponse.message });
+                    window.scrollTo(0, 0);
+                    this.setState({ error: true });
+                    this.setState({ errorMessage: this.state.apiResponse.message });
                 }
                 else {
                     
@@ -330,12 +349,13 @@ class DatiPersonali extends React.Component {
                         var res = JSON.parse(result);
 
                         if(res.length < 1 || (res.code && res.code === 404)) {
-                        this.setState({ empty: true, errorMessage: res.message });
+                            this.setState({ empty: true, errorMessage: res.message });
                         }
 
                         else if(this.state.apiResponse.status === 'error') {
-                        this.setState({ error: true });
-                        this.setState({ errorMessage: this.state.apiResponse.message });
+                            window.scrollTo(0, 0);
+                            this.setState({ error: true });
+                            this.setState({ errorMessage: this.state.apiResponse.message });
                         }
                         else {
 
@@ -356,25 +376,22 @@ class DatiPersonali extends React.Component {
                                 var res = JSON.parse(result);
         
                                 if(res.length < 1 || (res.code && res.code === 404)) {
-                                this.setState({ empty: true, errorMessage: res.message });
+                                    this.setState({ empty: true, errorMessage: res.message });
                                 }
         
                                 else if(this.state.apiResponse.status === 'error') {
-                                this.setState({ error: true });
-                                this.setState({ errorMessage: this.state.apiResponse.message });
-                                this.setState({ error: true },()=>{
-                                    window.setTimeout(()=>{
-                                      this.setState({error:false})
-                                    }, 3000)
-                                  })
+                                    window.scrollTo(0, 0);
+                                    this.setState({ error: true });
+                                    this.setState({ errorMessage: this.state.apiResponse.message });
                                 }
                                 else {
                                     localStorage.setObj('user_data', this.state.apiResponse);
-                                    this.setState({ success: true },()=>{
+                                    window.scrollTo(0, 0);
+                                    this.setState({ success: true, error: false },()=>{
                                         window.setTimeout(()=>{
                                           this.setState({success:false})
                                         }, 3000)
-                                      })
+                                    })
                                 }
                             });
                         }
@@ -404,7 +421,8 @@ class DatiPersonali extends React.Component {
                 }}
             />
         }
-        else if(this.state.empty) {
+
+        if(this.state.empty) {
             return(
                 <Form className="contenitoreDatiPersonali">
                     <div className="DatiPersonali">
@@ -418,7 +436,8 @@ class DatiPersonali extends React.Component {
                         
             );
         }
-        else if(localStorage.getItem('proprietario')) {
+
+        if(localStorage.getItem('proprietario')) {
 
             var num_documento = this.state.num_documentoTXT;
 
@@ -466,138 +485,138 @@ class DatiPersonali extends React.Component {
             
         return(
             <Form className="contenitoreDatiPersonali" onSubmit = {this.onSubmit}>
-                         <>
-            <Alert show={this.state.success} variant="success">
-              <Alert.Heading style = {{fontWeight: 'bold'}}>Modifiche avvenute con successo!</Alert.Heading>
-              <p>
-                Le modifiche del tuo account sono state correttamente caricate e memorizzate all'interno del sistema.
-              </p>
-              <hr />
-              <div className="d-flex justify-content-end">
-                <Button onClick={() => this.setShow(false)} variant="outline-success">
-                  <span style = {{fontWeight: 'bold'}}>Ok</span>
-                </Button>
-              </div>
-            </Alert>
-          </>
-          <>
-            <Alert show={this.state.error} variant="danger">
-              <Alert.Heading style = {{fontWeight: 'bold'}}>Modifiche non avvenute!</Alert.Heading>
-              <p>
-                La password non è stata modificata correttamente a causa di un errore!
-              </p>
-              <hr />
-              <div className="d-flex justify-content-end">
-                <Button onClick={() => this.setShow(false)} variant="outline-success">
-                  <span style = {{fontWeight: 'bold'}}>Ok</span>
-                </Button>
-              </div>
-            </Alert>
-          </>
-                        <div className="DatiPersonali">
-                        <h2>Qui puoi modificare i tuoi dati personali!</h2>
-                        <Accordion >
-                        <Card id="DatiPersonaliCarta1" border="no">
-                                <div className="first-cont">
-                                <div className="datiprofilo">
-                                    <p>Nome: {nome} </p>
-                                    <p>Cognome: {cognome}</p>
-                                    <p>Email: {email} </p>
-                                    <p>Data di nascita: {nascita}</p>
-                                </div>
-                                <RiAccountBoxLine className="imgprof" />
-                            </div>
-                        </Card>
-                        {documentoProp}
-                        <Card id="DatiPersonaliCarta" border="light">
-                                <div className="view-cont">
-                                <div className="sx-head">
-                                    <p>Cambia la tua password</p>
-                                </div>
-                                <Accordion.Toggle as={AiOutlineEdit} className="penna" variant="link" eventKey="3">
-                                </Accordion.Toggle>
-                                </div>
-                            <Accordion.Collapse eventKey="3"> 
-                                <Card.Body>
-                                <Form.Row>
-                                <Form.Group as={Col} controlId="formGridPassword">
-                    <Form.Label>Inserisci vecchia Password</Form.Label>
-                        <Form.Control 
-                            type="password" 
-                            title="Almeno 8 caratteri, una lettera maiuscola e un numero" 
-                            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$"
-                            placeholder="Password" 
-                            id = 'oldPassword'
-                            name = 'oldPassword'
-                            onChange={this.onChange} 
-                            required/>
-                    </Form.Group>
-                                </Form.Row>
-                                <Form.Row>
-                                <Form.Group as={Col} controlId="formGridPassword">
-                    <Form.Label>Nuova Password</Form.Label>
-                        <Form.Control 
-                            type="password" 
-                            title="Almeno 8 caratteri, una lettera maiuscola e un numero" 
-                            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$"
-                            placeholder="Password" 
-                            id = 'newPassword'
-                            name = 'newPassword'
-                            onChange={this.onChange} 
-                            required/>
-                            </Form.Group>
-                            <Form.Group as={Col} controlId="formGridPassword">
-                    <Form.Label>Ripeti Password</Form.Label>
-                        <Form.Control 
-                            type="password" 
-                            title="Almeno 8 caratteri, una lettera maiuscola e un numero" 
-                            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$"
-                            placeholder="Password" 
-                            id = 'confirmPassword'
-                            name = 'confirmPassword'
-                            onChange={this.onChange} 
-                            required/>
-                    </Form.Group>
-                                </Form.Row>
-                                <button type="submit" onClick = {this.onSubmitPassword}>
-                                    Modifica password
-                                </button>
-                                </Card.Body>
-                            </Accordion.Collapse>
-                        </Card>
-                        <Card id="DatiPersonaliCarta" border="light">
-                                <div className="view-cont">
-                                <div className="sx-head">
-                                    <p>Numero di telefono: {telefono}</p>
-                                    </div>
-                                    <Accordion.Toggle as={AiOutlineEdit} className="penna" variant="link" eventKey="4">
-                                </Accordion.Toggle>
-                                </div>
-                            <Accordion.Collapse eventKey="4">
-                                <Card.Body>
-                                    <Form.Row>
-                                    <Form.Group as={Col} controlId="formGridIndirizzo">
-                        <Form.Label>Telefono</Form.Label>
-                        <Form.Control 
-                            type = "tel" 
-                            placeholder = "Telefono" 
-                            id = 'telefono'
-                            name = 'telefono'
-                            onChange = {this.onChange} 
-                            required
-                        />
-                    </Form.Group>
-                                    </Form.Row>
-                                    <button type="submit" onClick = {this.onSubmit}>
-                                        Modifica numero
-                                    </button>
-                                </Card.Body>
-
-                            </Accordion.Collapse>
-                    </Card>
-                        </Accordion>
+                <>
+                <Alert show={this.state.success} variant="success">
+                <Alert.Heading style = {{fontWeight: 'bold'}}>Modifiche avvenute con successo!</Alert.Heading>
+                <p>
+                    Le modifiche del tuo account sono state correttamente caricate e memorizzate all'interno del sistema.
+                </p>
+                <hr />
+                <div className="d-flex justify-content-end">
+                    <Button onClick={() => this.setShowSucc(false)} variant="outline-success">
+                    <span style = {{fontWeight: 'bold'}}>Ok</span>
+                    </Button>
+                </div>
+                </Alert>
+            </>
+                <>
+                    <Alert show={this.state.error} variant="danger">
+                    <Alert.Heading style = {{fontWeight: 'bold'}}>Modifiche non avvenute!</Alert.Heading>
+                    <p>
+                        La password non è stata modificata correttamente a causa di un errore!
+                    </p>
+                    <hr />
+                    <div className="d-flex justify-content-end">
+                        <Button onClick={() => this.setShowErr(false)} variant="outline-success">
+                        <span style = {{fontWeight: 'bold'}}>Ok</span>
+                        </Button>
+                    </div>
+                    </Alert>
+                </>
+                <div className="DatiPersonali">
+                <h2>Qui puoi modificare i tuoi dati personali!</h2>
+                <Accordion >
+                <Card id="DatiPersonaliCarta1" border="no">
+                        <div className="first-cont">
+                        <div className="datiprofilo">
+                            <p>Nome: {nome} </p>
+                            <p>Cognome: {cognome}</p>
+                            <p>Email: {email} </p>
+                            <p>Data di nascita: {nascita}</p>
                         </div>
-                        </Form>      
+                        <RiAccountBoxLine className="imgprof" />
+                    </div>
+                </Card>
+                {documentoProp}
+                <Card id="DatiPersonaliCarta" border="light">
+                        <div className="view-cont">
+                        <div className="sx-head">
+                            <p>Cambia la tua password</p>
+                        </div>
+                        <Accordion.Toggle as={AiOutlineEdit} className="penna" variant="link" eventKey="3">
+                        </Accordion.Toggle>
+                        </div>
+                    <Accordion.Collapse eventKey="3"> 
+                        <Card.Body>
+                        <Form.Row>
+                        <Form.Group as={Col} controlId="formGridPassword">
+            <Form.Label>Inserisci vecchia Password</Form.Label>
+                <Form.Control 
+                    type="password" 
+                    title="Almeno 8 caratteri, una lettera maiuscola e un numero" 
+                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$"
+                    placeholder="Password" 
+                    id = 'oldPassword'
+                    name = 'oldPassword'
+                    onChange={this.onChange} 
+                    required/>
+            </Form.Group>
+                        </Form.Row>
+                        <Form.Row>
+                        <Form.Group as={Col} controlId="formGridPassword">
+            <Form.Label>Nuova Password</Form.Label>
+                <Form.Control 
+                    type="password" 
+                    title="Almeno 8 caratteri, una lettera maiuscola e un numero" 
+                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$"
+                    placeholder="Password" 
+                    id = 'newPassword'
+                    name = 'newPassword'
+                    onChange={this.onChange} 
+                    required/>
+                    </Form.Group>
+                    <Form.Group as={Col} controlId="formGridPassword">
+            <Form.Label>Ripeti Password</Form.Label>
+                <Form.Control 
+                    type="password" 
+                    title="Almeno 8 caratteri, una lettera maiuscola e un numero" 
+                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$"
+                    placeholder="Password" 
+                    id = 'confirmPassword'
+                    name = 'confirmPassword'
+                    onChange={this.onChange} 
+                    required/>
+            </Form.Group>
+                        </Form.Row>
+                        <button type="submit" onClick = {this.onSubmitPassword}>
+                            Modifica password
+                        </button>
+                        </Card.Body>
+                    </Accordion.Collapse>
+                </Card>
+                <Card id="DatiPersonaliCarta" border="light">
+                        <div className="view-cont">
+                        <div className="sx-head">
+                            <p>Numero di telefono: {telefono}</p>
+                            </div>
+                            <Accordion.Toggle as={AiOutlineEdit} className="penna" variant="link" eventKey="4">
+                        </Accordion.Toggle>
+                        </div>
+                    <Accordion.Collapse eventKey="4">
+                        <Card.Body>
+                            <Form.Row>
+                            <Form.Group as={Col} controlId="formGridIndirizzo">
+                <Form.Label>Telefono</Form.Label>
+                <Form.Control 
+                    type = "tel" 
+                    placeholder = "Telefono" 
+                    id = 'telefono'
+                    name = 'telefono'
+                    onChange = {this.onChange} 
+                    required
+                />
+            </Form.Group>
+                            </Form.Row>
+                            <button type="submit" onClick = {this.onSubmit}>
+                                Modifica numero
+                            </button>
+                        </Card.Body>
+
+                    </Accordion.Collapse>
+            </Card>
+                </Accordion>
+                </div>
+            </Form>      
         );
     }
 }
