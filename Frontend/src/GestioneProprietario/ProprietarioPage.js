@@ -10,6 +10,7 @@ import {RiMailSendLine} from "react-icons/ri"
 import {FaClipboardList} from "react-icons/fa"
 import {BsTools} from "react-icons/bs"
 import {Link} from 'react-router-dom'
+import moment from "moment";
 
 import { Redirect } from "react-router-dom";
 
@@ -26,7 +27,8 @@ class ProprietarioPage extends React.Component {
             error: false,
             errorMessage: '',
             show: false,
-            empty: false
+            empty: false,
+            inviaDati: false
         }
     }
     
@@ -96,23 +98,96 @@ class ProprietarioPage extends React.Component {
         });
     }
 
+    inviaDati = () => {
+
+        const data = {
+            email: this.state.email,
+            data: new Date(moment().format()).toLocaleDateString()
+        };
+
+        fetch('http://localhost:9000/updateDataInvio/invioDati',{
+            method: 'POST',
+            headers: {
+                'Content-type':'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then((result)=>result.text())
+        .then((result)=>{
+            this.setState({ apiResponse:JSON.parse(result) });
+            var res = JSON.parse(result);
+
+            if(res.length < 1 || (res.code && res.code === 404)) {
+              this.setState({ empty: true, errorMessage: res.message });
+            }
+      
+            else if(this.state.apiResponse.status === 'error') {
+                window.scrollTo(0, 0);
+                this.setState({ error: true });
+                this.setState({ errorMessage: this.state.apiResponse.message });
+            }
+        })
+
+        const data2 = {
+            ref_proprietario: this.state.email
+        };
+
+        fetch('http://localhost:9000/deleteTasseInvio/deleteTasse',{
+            method: 'POST',
+            headers: {
+                'Content-type':'application/json'
+            },
+            body: JSON.stringify(data2)
+        })
+        .then((result)=>result.text())
+        .then((result)=>{
+            this.setState({ tasseInvio:JSON.parse(result) });
+            var res = JSON.parse(result);
+
+            if(res.length < 1 || (res.code && res.code === 404)) {
+              this.setState({ empty: true, errorMessage: res.message });
+            }
+      
+            else if(this.state.tasseInvio.status === 'error') {
+                window.scrollTo(0, 0);
+                this.setState({ error: true });
+                this.setState({ errorMessage: this.state.tasseInvio.message });
+            }
+
+            else {
+                this.setState({ inviaDati: true })
+            }
+        })
+    }
+
     render() {
         var data_invio = this.state.apiResponse[0] ? new Date(this.state.apiResponse[0].ultimo_invio_dati).toLocaleDateString() : "Mai inviati";
         var tasseInvio = this.state.tasseInvio[0] ? this.state.tasseInvio : [];
+        var datiTurismo;
 
-        var datiTurismo = (
-            <div className="turismocont">
-                <h6 style = {{fontWeight: 'bold'}}>Ultimo invio dei dati all'ufficio competente: <span style = {{color: 'red'}}>{data_invio}</span></h6>
-                {tasseInvio.map((tassa, key) => (
-                    <div>
-                        <p style = {{fontWeight: 'bold'}}>Soggiornante: {tassa.ref_soggiornante}</p>
-                        <p>Periodo: {new Date(tassa.data_partenza).toLocaleDateString()}-{new Date(tassa.data_ritorno).toLocaleDateString()}</p>
-                        <p>Ammontare: €{tassa.ammontare}</p>
-                    </div>
-                ))}
-                <h6 style = {{fontWeight: 'bold'}}>Desideri inviare i dati nuovamente?</h6>
-            </div>
-        );
+        if(this.state.inviaDati) {
+            datiTurismo = (
+                <div className="turismocont">
+                    <h6 style = {{fontWeight: 'bold', color: 'green'}}>I dati dei soggiornanti sono stati correttamente inviati all'ufficio del turismo.</h6>
+                </div>
+            );
+        }
+
+        else {
+            datiTurismo = (
+                <div className="turismocont">
+                    <h6 style = {{fontWeight: 'bold'}}>Ultimo invio dei dati all'ufficio competente: <span style = {{color: 'red'}}>{data_invio}</span></h6>
+                    {tasseInvio.map((tassa, key) => (
+                        <div>
+                            <p style = {{fontWeight: 'bold'}}>Soggiornante: {tassa.ref_soggiornante}</p>
+                            <p>Periodo: {new Date(tassa.data_partenza).toLocaleDateString()}-{new Date(tassa.data_ritorno).toLocaleDateString()}</p>
+                            <p>Ammontare: €{tassa.ammontare}</p>
+                        </div>
+                    ))}
+                    <h6 style = {{fontWeight: 'bold'}} onClick = {this.inviaDati}>Desideri inviare i dati nuovamente?</h6>
+                </div>
+            );
+        }
     
         if(!localStorage.getItem('logged') || !localStorage.getItem('proprietario')) {
             return <Redirect
@@ -156,7 +231,7 @@ class ProprietarioPage extends React.Component {
                                                     {datiTurismo}
                                                 </Modal.Body>
                                     <Modal.Footer>
-                                        <Button variant="secondary" /*funzione invia dationClick={}*/>Invia dati</Button>
+                                        <Button variant="secondary" onClick = {this.inviaDati}>Invia dati</Button>
                                         <Button variant="secondary" onClick={this.handleClose}>
                                             Chiudi
                                         </Button>                    
