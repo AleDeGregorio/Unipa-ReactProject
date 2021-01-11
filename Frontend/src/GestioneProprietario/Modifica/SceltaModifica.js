@@ -26,11 +26,11 @@ class SceltaModifica extends React.Component{
         }
         else { 
             return(
-                <div>
-                    <div>
+                <div className="sceltaModificaContainer">
+                    <div className="liste">
                     <ElencoCasaVacanza />
                     </div>
-                    <div>
+                    <div className="liste">
                     <ElencoBeB />
                      </div>
                </div>

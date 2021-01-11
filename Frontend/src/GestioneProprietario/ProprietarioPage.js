@@ -218,7 +218,7 @@ class ProprietarioPage extends React.Component {
                                 <Card.Text className="TestoCard">Gestisci le prenotazioni in attesa e quelle già accettate.</Card.Text>
                             </Card>
                         </Link>
-                            <Card id="prop" onClick = {this.handleShow}>
+                            <Card id="propNoLink" onClick = {this.handleShow}>
                                 <RiMailSendLine className="imageProp"/>
                                 <Card.Title>Invio dati Turismo </Card.Title>
                                 <Card.Text>Effettua l'invio dei dati relativi ai soggiornanti all'ufficio del turismo.</Card.Text>
@@ -239,8 +239,6 @@ class ProprietarioPage extends React.Component {
                                         </Button>                    
                                     </Modal.Footer>
                                 </Modal>
-                    </div>
-                    <div className="carte_prop">
                         <Link to = "/InserimentoProprietà" className="LinK">
                             <Card id="prop">
                                 <FaHotel className="imageProp"/>
@@ -255,8 +253,6 @@ class ProprietarioPage extends React.Component {
                                 <Card.Text>Scegli tra le strutture possedute ed effettua i cambiamenti che preferisci.</Card.Text>
                             </Card>
                         </Link>
-                    </div>
-                    <div className="carte_prop">
                         <Link to = "/DatiPersonali" className="LinK">
                             <Card id="prop">
                                 <RiAccountBoxLine className="imageProp" />
