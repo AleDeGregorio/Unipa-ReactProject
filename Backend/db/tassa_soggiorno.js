@@ -189,7 +189,7 @@ const deleteTasseInvio = async(req) => {
         Connection.query(
             'DELETE ' +
             'FROM tassa_soggiorno ' +
-            'WHERE t.ref_proprietario = "' + req.ref_proprietario + '"; ', 
+            'WHERE ref_proprietario = "' + req.ref_proprietario + '"; ', 
             (err, results) => {
                 if(err) {
                     console.log(err);

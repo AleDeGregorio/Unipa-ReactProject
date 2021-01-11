@@ -9,12 +9,12 @@ class Alloggi extends React.Component {
     super(props);
 
     this.state = {
-      case: this.props.history.location.state.case ? this.props.history.location.state.case : [],
-      posti: this.props.history.location.state.posti ? this.props.history.location.state.posti : 1,
-      checkIn: this.props.history.location.state.checkIn ? this.props.history.location.state.checkIn : '',
-      checkOut: this.props.history.location.state.checkOut ? this.props.history.location.state.checkOut : '',
-      localita: this.props.history.location.state.localita ? this.props.history.location.state.localita : '',
-      tipo: this.props.history.location.state.tipo ? this.props.history.location.state.tipo : '',
+      case: this.props.history.location.state ? this.props.history.location.state.case : [],
+      posti: this.props.history.location.state ? this.props.history.location.state.posti : 1,
+      checkIn: this.props.history.location.state ? this.props.history.location.state.checkIn : '',
+      checkOut: this.props.history.location.state ? this.props.history.location.state.checkOut : '',
+      localita: this.props.history.location.state ? this.props.history.location.state.localita : '',
+      tipo: this.props.history.location.state ? this.props.history.location.state.tipo : '',
     }
   }
 

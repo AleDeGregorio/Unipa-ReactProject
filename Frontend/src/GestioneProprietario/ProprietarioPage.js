@@ -231,7 +231,9 @@ class ProprietarioPage extends React.Component {
                                                     {datiTurismo}
                                                 </Modal.Body>
                                     <Modal.Footer>
-                                        <Button variant="secondary" onClick = {this.inviaDati}>Invia dati</Button>
+                                        {!this.state.inviaDati &&
+                                            <Button variant="secondary" onClick = {this.inviaDati}>Invia dati</Button>
+                                        }
                                         <Button variant="secondary" onClick={this.handleClose}>
                                             Chiudi
                                         </Button>                    

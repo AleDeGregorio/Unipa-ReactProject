@@ -13,13 +13,15 @@ export default class RiepilogoAlloggio extends Component {
     super(props);
 
     this.state = {
-      dati_casa: this.props.history.location.state.dati_casa.dati_casa ? this.props.history.location.state.dati_casa.dati_casa : [],
-      dati_servizi: this.props.history.location.state.servizi.servizi ? this.props.history.location.state.servizi.servizi : [],
-      checkIn: this.props.history.location.state.checkIn.checkIn ? this.props.history.location.state.checkIn.checkIn : '',
-      checkOut: this.props.history.location.state.checkOut.checkOut ? this.props.history.location.state.checkOut.checkOut : '',
-      tipo: this.props.history.location.state.tipo.tipo ? this.props.history.location.state.tipo.tipo : '',
-      datiRicerca: this.props.history.location.state.datiRicerca.datiRicerca ? this.props.history.location.state.datiRicerca.datiRicerca : [],
-      servizi: []
+      dati_casa: this.props.history.location.state ? this.props.history.location.state.dati_casa.dati_casa : [],
+      dati_servizi: this.props.history.location.state ? this.props.history.location.state.servizi.servizi : [],
+      checkIn: this.props.history.location.state ? this.props.history.location.state.checkIn.checkIn : '',
+      checkOut: this.props.history.location.state ? this.props.history.location.state.checkOut.checkOut : '',
+      tipo: this.props.history.location.state ? this.props.history.location.state.tipo.tipo : '',
+      datiRicerca: this.props.history.location.state ? this.props.history.location.state.datiRicerca.datiRicerca : [],
+      servizi: [],
+      numPosti: [],
+      posti: this.props.history.location.state ? this.props.history.location.state.dati_casa.dati_casa.posti : 1
     };
   }
 
@@ -27,6 +29,19 @@ export default class RiepilogoAlloggio extends Component {
     this.setState({
       servizi: this.state.dati_casa.servizi ? this.state.dati_casa.servizi.replace(/\s*,\s*/g, ",").split(',') : []
     });
+
+    var array = [];
+
+    for(var i = 0; i < this.state.dati_casa.posti; i++) {
+      array[i] = i;
+      array[i]++;
+    }
+
+    this.setState({ numPosti: array })
+  }
+
+  onChange = (e) => {
+    this.setState({ [e.target.id]: e.target.value })
   }
 
   render() {
@@ -119,37 +134,33 @@ export default class RiepilogoAlloggio extends Component {
               <Accordion.Toggle eventKey="0" id="prenotaDrop">Prenota</Accordion.Toggle >
               <Accordion.Collapse eventKey="0">
               <div>
-                <p>Quando vuoi prenotare?</p>
+                <p>I dati della tua prenotazione</p>
                 <div className="sceltaDate">
                   <div>
                     <p>Check-in</p>
-                    <input type="date"></input>
+                    <input type = "text" value = {this.state.checkIn}></input>
                   </div>
                   <div>
                     <p>Check-out</p>
-                    <input type="date"></input>
+                    <input type="text" value = {this.state.checkOut}></input>
                   </div>
                 </div>
                 <div>
                   <p>Numero ospiti</p>
-                  <select>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
+                 <select onChange = {this.onChange} id="posti" value = {this.state.posti}>
+                    {this.state.numPosti.map(item => (
+                      <option value = {item} id = "posti">{item}</option>
+                    ))}
                   </select>
                 </div>
                 <Link 
                   to = {{
                     pathname: "/Prenota",
                     state: {
-                      dati: ''
+                      dati_casa: this.state.dati_casa,
+                      posti: this.state.posti,
+                      checkIn: this.state.checkIn,
+                      checkOut: this.state.checkOut
                     }
                   }}
                   className = "return"
