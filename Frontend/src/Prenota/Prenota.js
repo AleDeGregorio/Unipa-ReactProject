@@ -67,7 +67,7 @@ class Prenota extends React.Component {
                         </div>
                             <Accordion.Collapse eventKey="0">
                                 <div>
-                            <Form>
+                            <Form id="prenotaForm">
                                 <Form.Row>
                                     <Form.Group as={Col} controlId="formGridDate">
                                         <Form.Label>Check-In</Form.Label>
@@ -102,18 +102,16 @@ class Prenota extends React.Component {
                             </Accordion.Toggle>
                         </div>
                         <Accordion.Collapse eventKey="1">
+                        <Form id="prenotaFormOspiti">
+                        <Form.Group as={Col} controlId="formGridDate">
+                        <Form.Label>Ospiti</Form.Label>
                         <Form.Control 
                             type="input" 
                             value = {this.state.posti}
                             disabled = "true"
                         />
-                        </Accordion.Collapse>
-                        <div className="headaccpren">
-                            <p>Altre relative modifiche</p>
-                            <Accordion.Toggle eventKey="2" id="modifica">Modifica</Accordion.Toggle>
-                        </div>
-                        <Accordion.Collapse eventKey="2">
-                            <p>Altre robe di modifica</p>
+                        </Form.Group>
+                        </Form>
                         </Accordion.Collapse>
                     </Accordion>
                         <div>
