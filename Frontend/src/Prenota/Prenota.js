@@ -143,7 +143,17 @@ class Prenota extends React.Component {
                 <div className="prenota-dx-cont">
                     <Card id="cartaInfo">
                         <Card.Body>
-                            <p>INFO PRENOTAZIONE!</p>
+                            <h3>INFO PRENOTAZIONE!</h3>
+                            <Card.Title>Riepilogo alloggio</Card.Title>
+                            <Card.Text>
+                                {this.state.dati_casa.tipo_proprieta === 'cv' ? "Casa vacanza" : "B&B"} &nbsp;
+                                {this.state.dati_casa.nome_proprieta},&nbsp;
+                                {this.state.dati_casa.localita} ({this.state.dati_casa.provincia})
+                            </Card.Text>
+                            <Card.Title>Periodo</Card.Title>
+                            <Card.Text>{this.state.checkIn} - {this.state.checkOut}</Card.Text>
+                            <Card.Title>Costo totale</Card.Title>
+                            <Card.Text>€{this.state.dati_casa.costo}</Card.Text>
                         </Card.Body>
                     </Card>
                 </div>

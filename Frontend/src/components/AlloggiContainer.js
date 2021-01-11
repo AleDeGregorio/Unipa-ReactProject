@@ -52,7 +52,9 @@ class AlloggiContainer extends React.Component {
     this.setState({ 
       posti: e.posti ? e.posti : this.state.posti, 
       datiRicerca: e,
-      tipo: e.tipo ? e.tipo : this.state.tipo
+      tipo: e.tipo ? e.tipo : this.state.tipo,
+      checkIn: e.checkIn,
+      checkOut: e.checkOut
     }, () => {
       var inizio = this.state.datiRicerca.endDate ? new Date(this.state.datiRicerca.startDate.format()).toLocaleDateString() : new Date(moment().format()).toLocaleDateString();
       var fine = this.state.datiRicerca.endDate ? new Date(this.state.datiRicerca.endDate.format()).toLocaleDateString() : new Date(moment().add(1, 'days').format()).toLocaleDateString();

@@ -90,7 +90,8 @@ class AlloggiFilter extends React.Component {
 
           this.setState({
             maxCosto: ngiorni * 150,
-            costo: ngiorni*150
+            costo: ngiorni*150,
+            checkIn: new Date(this.state.startDate.format()).toLocaleDateString()
           }, () => {
             this.props.onChange(this.state);
           })
@@ -109,7 +110,8 @@ class AlloggiFilter extends React.Component {
 
         this.setState({
           maxCosto: ngiorni * 150,
-          costo: ngiorni*150
+          costo: ngiorni*150,
+          checkOut: new Date(this.state.endDate.format()).toLocaleDateString()
         }, () => {
           this.props.onChange(this.state);
         })
