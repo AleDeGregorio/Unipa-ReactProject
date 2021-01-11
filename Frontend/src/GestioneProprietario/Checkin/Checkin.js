@@ -38,28 +38,7 @@ class Checkin extends React.Component {
         else {
             return(
                 <div>
-                <Accordion defaultActiveKey="0" className="cont_acc_ch">
-                 <Card>
-                 <Card.Header>
-                <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                   Compila il primo cliente
-                 </Accordion.Toggle>
-                </Card.Header>
-                <Accordion.Collapse eventKey="0">
-                  <Card.Body><FormCompila /></Card.Body>
-                </Accordion.Collapse>
-                </Card>
-               <Card>
-              <Card.Header>
-                <Accordion.Toggle as={Button} variant="link" eventKey="1">
-                 Compila il secondo cliente
-                </Accordion.Toggle>
-                 </Card.Header>
-                <Accordion.Collapse eventKey="1">
-                <Card.Body><FormCompila /></Card.Body>
-             </Accordion.Collapse>
-            </Card>
-            </Accordion>
+               <FormCompila />
             </div>
             );
         }
@@ -76,7 +55,7 @@ class FormCompila extends React.Component
     
     return(  <Form className="contenitore" onSubmit = {this.onSubmit}>
     <div className="contentNewCheck">
-    <h2>Compila questo form per effettuare il check-in degli ospiti della tua struttura!</h2>
+    <h5>Compila questo form per effettuare il check-in degli ospiti della tua struttura!</h5>
     <Form.Row>
         <Form.Group as={Col} controlId="formGridEmail">
         <Form.Label>Nome</Form.Label>
@@ -492,9 +471,10 @@ class FormCompila extends React.Component
             <Form.File id="caricaFotoDocumento" label="Carica foto documento" accept="image/*" required/>
     </Form.Group>
     </div>
-    <Button variant="primary" type="submit">
+    <Button variant="primary" type="submit" id="checkinButton">
         Invia dati
     </Button>
+    <p>(numero) ospiti rimanenti</p>
 </Form>
 );}
 }
