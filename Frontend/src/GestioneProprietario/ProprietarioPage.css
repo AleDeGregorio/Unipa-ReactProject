@@ -3,7 +3,6 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  margin-bottom: 10px;
 }
 
 .carte_prop{
@@ -11,6 +10,7 @@
   flex-wrap: wrap;
   justify-content: space-around;
 }
+
 
 #prop {
   display: flex;
