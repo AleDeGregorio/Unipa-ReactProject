@@ -1,7 +1,7 @@
 import React from 'react';
 import {Form,Col,Button,Accordion,Card} from 'react-bootstrap'
 import './Prenota.css'
-import {Reirect} from "react-router-dom";
+import {Redirect} from "react-router-dom";
 
 class Prenota extends React.Component {
 
@@ -40,6 +40,18 @@ class Prenota extends React.Component {
     }
     
     render(){
+        if(!localStorage.getItem('logged')) {
+            return <Redirect
+                to={{
+                    pathname: "/ErrorPage",
+                    state: { 
+                        error: true,
+                        errorMessage: "Utente non autorizzato" 
+                    }
+                }}
+            />
+        }
+
         return(
             <div className="prenota-cont">
                 <div className="prenota-sx-cont">

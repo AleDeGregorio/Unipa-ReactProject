@@ -67,6 +67,35 @@ export default class RiepilogoAlloggio extends Component {
         </div>
       );
     }
+
+    var login;
+
+    if(!localStorage.getItem('logged')) {
+      login = (
+        <>
+          <p><span style = {{color: "red", fontWeight: 'bold'}}>Attenzione! </span>Devi essere registrato per potere prenotare</p>
+          <span>
+            Clicca&nbsp;
+          </span>
+          <Link 
+            to = {{
+              pathname: "/autenticazioneAccedi",
+              state: {
+                dati_casa: this.state.dati_casa,
+                posti: this.state.posti,
+                checkIn: this.state.checkIn,
+                checkOut: this.state.checkOut
+              }
+            }}
+            className = "return"
+            style = {{fontWeight: 'bold', fontStyle: 'italic'}}
+          >
+            qui&nbsp;
+          </Link>
+          <span>per effettuare l'accesso oppure registrarti</span>
+        </>
+      ); 
+    }
     
     var dati_casa = this.state.dati_casa;
     var images = [dati_casa.img1, dati_casa.img2, dati_casa.img3, dati_casa.img4];
@@ -153,6 +182,7 @@ export default class RiepilogoAlloggio extends Component {
                     ))}
                   </select>
                 </div>
+                {login}
                 <Link 
                   to = {{
                     pathname: "/Prenota",
@@ -165,7 +195,12 @@ export default class RiepilogoAlloggio extends Component {
                   }}
                   className = "return"
                 >
-                  <button className="bottonePrenota">PRENOTA</button>
+                  <button 
+                    className="bottonePrenota" 
+                    disabled = {!localStorage.getItem('logged')} 
+                    style = {{backgroundColor: localStorage.getItem('logged') ? 'black' : 'grey'}}>
+                    PRENOTA
+                  </button>
                 </Link>
               </div>
               </Accordion.Collapse>
