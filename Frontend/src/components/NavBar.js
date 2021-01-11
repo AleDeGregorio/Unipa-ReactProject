@@ -22,7 +22,7 @@ class NavBar extends React.Component {
             
             loggato = (
                 <Dropdown>
-                    <Dropdown.Toggle >
+                    <Dropdown.Toggle id="dropNavLog">
                         {nome} {cognome}<Menu />
                     </Dropdown.Toggle>
                     <Dropdown.Menu >
