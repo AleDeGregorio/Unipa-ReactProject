@@ -4,6 +4,40 @@ import './Prenota.css'
 import {Reirect} from "react-router-dom";
 
 class Prenota extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            dati_casa: this.props.history.location.state ? this.props.history.location.state.dati_casa : [],
+            checkIn: this.props.history.location.state? this.props.history.location.state.checkIn : '',
+            checkOut: this.props.history.location.state ? this.props.history.location.state.checkOut : '',
+            posti: this.props.history.location.state ? this.props.history.location.state.posti : 1,
+            partenza: '',
+            ritorno: ''
+        }
+    }
+
+    componentDidMount() {
+        if(this.state.checkIn !== '' && this.state.checkOut !== '') {
+            var str1 = this.state.checkIn;
+            var dmy1 = str1.split("/");
+            var date1 = new Date(dmy1[2], dmy1[1] - 1, dmy1[0]);
+            var offset1 = date1.getTimezoneOffset();
+            date1 = new Date(date1.getTime() - (offset1*60*1000));
+
+            var str2 = this.state.checkOut;
+            var dmy2 = str2.split("/");
+            var date2 = new Date(dmy2[2], dmy2[1] - 1, dmy2[0]);
+            var offset2 = date2.getTimezoneOffset();
+            date2 = new Date(date2.getTime() - (offset2*60*1000));
+
+            this.setState({ 
+                partenza: date1.toISOString().slice(0,10),
+                ritorno: date2.toISOString().slice(0,10)
+            });
+        }
+    }
     
     render(){
         return(
@@ -14,10 +48,9 @@ class Prenota extends React.Component {
                     <h5>Info viaggio</h5>
                     <Accordion>
                         <div className="headaccpren">
-                            <p>Data :</p>
-                            <p>Visualizza data</p>
+                            <p>Date:</p>
                             <Accordion.Toggle  eventKey="0" id="modifica">
-                                Modifica
+                                Visualizza
                             </Accordion.Toggle>
                         </div>
                             <Accordion.Collapse eventKey="0">
@@ -25,40 +58,43 @@ class Prenota extends React.Component {
                             <Form>
                                 <Form.Row>
                                     <Form.Group as={Col} controlId="formGridDate">
-                                        <Form.Label>Data di inizio</Form.Label>
+                                        <Form.Label>Check-In</Form.Label>
                                         <Form.Control 
                                             type="date" 
                                             placeholder="Inserisci data di inizio" 
                                             id = 'data_partenza'
                                             name = 'data_partenza'
-                                            onChange = {this.onChange}
+                                            value = {this.state.partenza}
+                                            disabled = "true"
                                         />
                                     </Form.Group>
                                     <Form.Group as={Col} controlId="formGridDate1">
-                                        <Form.Label>Data fine</Form.Label>
+                                        <Form.Label>Check-Out</Form.Label>
                                         <Form.Control 
                                             type="date" 
                                             placeholder="Inserisci data di fine" 
                                             id = 'data_ritorno'
                                             name = 'data_ritorno'
-                                            onChange = {this.onChange}
+                                            value = {this.state.ritorno}
+                                            disabled = "true"
                                         />
                                     </Form.Group>
                                 </Form.Row>
                             </Form>
-                            <Button variant="primary" type="submit">
-                            Modifica data
-                                </Button>
                                 </div>
                             </Accordion.Collapse>
                         <div className="headaccpren">
-                            <p>Ospiti : </p>
+                            <p>Numero ospiti: </p>
                             <Accordion.Toggle eventKey="1" id="modifica">
-                                Modifica
+                                Visualizza
                             </Accordion.Toggle>
                         </div>
                         <Accordion.Collapse eventKey="1">
-                            <p>Cambiare ospiti</p>
+                        <Form.Control 
+                            type="input" 
+                            value = {this.state.posti}
+                            disabled = "true"
+                        />
                         </Accordion.Collapse>
                         <div className="headaccpren">
                             <p>Altre relative modifiche</p>
@@ -74,13 +110,13 @@ class Prenota extends React.Component {
                                     <div className="paga">
                                         <h5>Paga per intero</h5>
                                         <div className="row-flex">
-                                            <Form.Check inline label="Paga adesso" type="radio" id="now" checked />
+                                            <Form.Check inline label="Paga adesso" type="radio" id="now" />
                                         </div>
                                     </div>
                                     <div className="paga">
                                         <h5>Paga una parte</h5>
                                         <div className="row-flex">
-                                        <Form.Check inline label="Paga dopo" type="radio" id="later" checked/>
+                                        <Form.Check inline label="Paga dopo" type="radio" id="later"/>
                                         </div>
                                     </div>
                             </div>
