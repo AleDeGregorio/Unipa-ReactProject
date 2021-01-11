@@ -162,7 +162,7 @@ export default class RiepilogoAlloggio extends Component {
             <Accordion>
               <Accordion.Toggle eventKey="0" id="prenotaDrop">Prenota</Accordion.Toggle >
               <Accordion.Collapse eventKey="0">
-              <div>
+              <div className="prenotazioni">
                 <p>I dati della tua prenotazione</p>
                 <div className="sceltaDate">
                   <div>
@@ -174,7 +174,7 @@ export default class RiepilogoAlloggio extends Component {
                     <input type="text" value = {this.state.checkOut}></input>
                   </div>
                 </div>
-                <div>
+                <div className="containerSelect">
                   <p>Numero ospiti</p>
                  <select onChange = {this.onChange} id="posti" value = {this.state.posti}>
                     {this.state.numPosti.map(item => (
