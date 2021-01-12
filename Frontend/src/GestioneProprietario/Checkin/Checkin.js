@@ -22,7 +22,8 @@ class Checkin extends React.Component {
             error: false,
             errorMessage: '',
             success: false,
-            tassa: 3
+            tassa: 3,
+            complete: true
         }
     }
 
@@ -117,7 +118,7 @@ class Checkin extends React.Component {
                         this.setState({success:true, error: false},()=>{
                             window.scrollTo(0, 0);
                             window.setTimeout(()=>{
-                                this.setState({success:false})
+                                this.setState({success:false, complete: true})
                             }, 3000)
                         })
                     }
@@ -135,6 +136,14 @@ class Checkin extends React.Component {
                         error: true,
                         errorMessage: "Utente non autorizzato" 
                     }
+                }}
+            />
+        }
+
+        if(this.state.complete) {
+            return <Redirect
+                to={{
+                    pathname: "/PaginaProprietario"
                 }}
             />
         }
@@ -170,7 +179,7 @@ class Checkin extends React.Component {
                     <Alert.Heading style = {{fontWeight: 'bold'}}>Check-in effettuato con successo!</Alert.Heading>
                     <p>
                         Il check-in dell'ospite è stato registrato con successo. Inoltre, i suoi dati sono stati trasmessi con successo
-                        alla Questura.
+                        alla Questura. Stai per essere reinderizzato alla tua pagina personale
                     </p>
                     <hr />
                     <div className="d-flex justify-content-end">
