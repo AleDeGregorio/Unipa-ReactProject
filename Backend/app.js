@@ -326,9 +326,6 @@ app.use('/searchTassa', tassaRouter);
 // ricerca di una tassa dal suo ref_soggiornante
 // indirizzo: /searchTassaSoggiornante/tassaSoggiornante
 app.use('/searchTassaSoggiornante', tassaRouter);
-// ricerca di una tassa dal suo ref_prenotazione
-// indirizzo: /searchTassaPrenotazione/tassaPrenotazione
-app.use('/searchTassaPrenotazione', tassaRouter);
 // ricerca di una tassa dal suo ref_proprietario
 // indirizzo: /searchTassaProprietario/tassaProprietario
 app.use('/searchTassaProprietario', tassaRouter);

@@ -38,18 +38,6 @@ router.post('/tassaSoggiornante', async(req, res, next) => {
     }
 });
 
-// show searched tassa_soggiorno (by ref_prenotazione)
-// indirizzo: /searchTassaPrenotazione/tassaPrenotazione
-router.post('/tassaPrenotazione', async(req, res, next) => {
-    try {
-        let search = await DB.Tassa_soggiorno.getTassaPrenotazione(req.body);
-        res.json(search);
-    }
-    catch(e) {
-        next(e);
-    }
-});
-
 // update fields of table tassa_soggiorno
 // indirizzo: /updateTassa/fields
 router.post('/fields', async(req, res, next) => {

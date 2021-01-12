@@ -265,8 +265,9 @@ const getPrenotazioneAccettata = async(req) => {
 
         Connection.query(
             'SELECT * ' +
-            'FROM prenotazione, proprieta ' +
-            'WHERE prenotazione.ref_proprietario = "' + req.ref_proprietario + '" AND accettata = true AND ref_proprieta = id_proprieta;',
+            'FROM prenotazione, proprieta, soggiornante ' +
+            'WHERE prenotazione.ref_proprietario = "' + req.ref_proprietario + '" AND accettata = true AND ref_proprieta = id_proprieta AND ' +
+            'cf_sogg = ref_soggiornante; ',
             (err, results) => {
                 if(err) {
                     console.log(err);

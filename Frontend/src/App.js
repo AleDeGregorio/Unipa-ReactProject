@@ -33,7 +33,6 @@ import ProprietarioPage from './GestioneProprietario/ProprietarioPage'
 // Gestione prenotazione
 import Testina from './GestioneProprietario/Accettazione/Testina'
 import Checkin from './GestioneProprietario/Checkin/Checkin'
-import CheckinEffettuato from './GestioneProprietario/Checkin/CheckinEffettuato'
 
 // Inserimento proprietà
 import InserimentoProprietà from './GestioneProprietario/InserisciProp/InserimentoProprietà';
@@ -245,12 +244,6 @@ class App extends React.Component {
                 exact path="/Checkin"
                 render = { (props) => (
                   <Checkin {...props}/>
-                )}
-              />
-              <Route 
-                exact path="/CheckinEffettuato"
-                render = { (props) => (
-                  <CheckinEffettuato {...props}/>
                 )}
               />
               <Route 

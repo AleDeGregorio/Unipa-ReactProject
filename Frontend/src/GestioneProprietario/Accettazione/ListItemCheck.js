@@ -328,7 +328,7 @@ class ListItemCheck extends Component {
                         <Link className="LinkList" to = {{
                           pathname: "/Checkin",
                           state: {
-                            dati_bb: this.props.dati_bb
+                            dati: this.props.dati_casa2
                           }
                         }}
                         >

@@ -80,18 +80,16 @@ const updateSoggiornante= async(req) => {
 
 // insert new soggiornante
 const insertSoggiornante = async(req) => {
+    
     return new Promise((resolve, reject) => {
 
         Connection.query(
             'INSERT INTO soggiornante VALUES ' +
             '("' + req.cf + '", "' + req.nome + '", "' + req.cognome + '", (STR_TO_DATE("' + req.nascita + '","%d/%m/%Y")))',
             (err, results) => {
-                if(err) {
+                if(err && err.code !== 'ER_DUP_ENTRY') {
                     console.log(err);
                     return reject(new GeneralError('Si è verificato un errore'));
-                }
-                if(results.length < 1) {
-                    return reject(new BadRequest("Si è verificato un errore nell'inserimento"));
                 }
                 resolve(results);
         });

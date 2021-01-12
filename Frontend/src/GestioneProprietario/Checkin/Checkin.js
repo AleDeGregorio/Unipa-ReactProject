@@ -1,8 +1,9 @@
 /*CSS FATTO*/ 
 
 import React from 'react';    
-import {Form, Col, Button, Accordion, Card} from 'react-bootstrap'
+import {Form, Col, Button, Accordion, Card, Alert} from 'react-bootstrap'
 import './Checkin.css'
+import moment from "moment";
 
 import { Redirect } from "react-router-dom";
 
@@ -12,14 +13,119 @@ class Checkin extends React.Component {
         super(props);
 
         this.state = {
-            submit: false
+            dati: this.props.history.location.state ? this.props.history.location.state.dati : [],
+            foto1SRC: '',
+            foto1: null,
+            foto2SRC: '',
+            foto2: null,
+            apiResponse: [],
+            error: false,
+            errorMessage: '',
+            success: false,
+            tassa: 3
         }
     }
 
-    onSubmit = (e) => {
-        this.setState({ submit: true });
+    componentDidMount() {
+
+        var nascita =  this.state.dati.data_nascita_sogg ? moment(new Date(this.state.dati.data_nascita_sogg).toLocaleDateString(), "DD-MM-YYYY") : null;
+        var oggi = moment(new Date().toLocaleDateString(), "DD-MM-YYYY");
+        
+        var eta = nascita ? oggi.diff(nascita, 'years') : 1;
+
+        if(eta < 18 || eta >= 75) {
+            this.setState({ tassa: 0 });
+        }
+    }
+
+    setShowSucc = (e) => {
+        this.setState({ success: e })
     }
     
+    setShowErr = (e) => {
+        this.setState({ error: e })
+    }
+
+    onChangeFoto = (e) => {
+        this.setState({ [e.target.name]: URL.createObjectURL(e.target.files[0]) })
+        this.setState({ [e.target.id]: e.target.files[0] });
+    }
+
+    onSubmit = (e) => {
+        e.preventDefault();
+
+        const data = {
+            ref_soggiornante: this.state.dati.ref_soggiornante,
+            ref_proprietario: this.state.dati.ref_proprietario,
+            data_partenza: new Date(this.state.dati.data_partenza).toLocaleDateString(),
+            data_ritorno: new Date(this.state.dati.data_ritorno).toLocaleDateString(),
+            ammontare: this.state.tassa
+        }
+
+        fetch('http://localhost:9000/insertTassa/new', {
+            method: "POST",
+            headers: {
+                'Content-type' : 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then((result) => result.text())
+        .then((result)=>{
+            this.setState({ apiResponse:JSON.parse(result) });
+            var res = JSON.parse(result);
+
+            if(res.length < 1 || (res.code && res.code === 404)) {
+              this.setState({ empty: true, errorMessage: res.message });
+            }
+      
+            else if(this.state.apiResponse.status === 'error') {
+                window.scrollTo(0, 0);
+                this.setState({ error: true });
+                this.setState({ errorMessage: this.state.apiResponse.message });
+            }
+
+            else {
+
+                const data = {
+                    id_prenotazione: this.state.dati.id_prenotazione,
+                }
+        
+                fetch('http://localhost:9000/deletePrenotazione/delete', {
+                    method: "POST",
+                    headers: {
+                        'Content-type' : 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then((result) => result.text())
+                .then((result)=>{
+                    this.setState({ apiResponse: JSON.parse(result) });
+                    var res = JSON.parse(result);
+        
+                    if(res.length < 1 || (res.code && res.code === 404)) {
+                        this.setState({ empty: true, errorMessage: res.message });
+                    }
+                
+                    else if(this.state.apiResponse.status === 'error') {
+                        window.scrollTo(0, 0);
+                        this.setState({ error: true });
+                        this.setState({ errorMessage: this.state.apiResponse.message });
+                    }
+                    else {
+                        
+                        window.scrollTo(0, 0);
+                        this.setState({success:true, error: false},()=>{
+                            window.scrollTo(0, 0);
+                            window.setTimeout(()=>{
+                                this.setState({success:false})
+                            }, 3000)
+                        })
+                    }
+                });
+            }
+        });
+    }
+
     render() {
         if(!localStorage.getItem('logged') || !localStorage.getItem('proprietario')) {
             return <Redirect
@@ -32,450 +138,268 @@ class Checkin extends React.Component {
                 }}
             />
         }
-        else if(this.state.submit) {
-            return <Redirect to = "/CheckinEffettuato" />
-        }
-        else {
-            return(
-                <div>
-               <FormCompila />
-            </div>
+
+        var pagata;
+        var esente;
+
+        if(this.state.dati.caparra > 0) {
+            pagata = (
+                <h4 style = {{color: 'red', fontWeight: 'bold'}}>La tassa risulta ancora da pagare</h4>
             );
         }
+
+        else {
+            pagata = (
+                <h4 style = {{color: 'green', fontWeight: 'bold'}}>La tassa risulta già pagata</h4>
+            );
+        }
+
+        if(this.state.tassa === 0 || this.state.foto2 !== null) {
+            esente = (
+                <h4 style = {{color: 'green', fontWeight: 'bold'}}>Il soggiornante è esente al pagamento della tassa</h4>
+            );
+
+            pagata = null;
+        }
+
+        return (  
+            <Form className="contenitore" onSubmit = {this.onSubmit}>
+
+                <>
+                    <Alert show={this.state.success} variant="success">
+                    <Alert.Heading style = {{fontWeight: 'bold'}}>Check-in effettuato con successo!</Alert.Heading>
+                    <p>
+                        Il check-in dell'ospite è stato registrato con successo. Inoltre, i suoi dati sono stati trasmessi con successo
+                        alla Questura.
+                    </p>
+                    <hr />
+                    <div className="d-flex justify-content-end">
+                        <Button onClick={() => this.setShowSucc(false)} variant="outline-success">
+                        <span style = {{fontWeight: 'bold'}}>Ok</span>
+                        </Button>
+                    </div>
+                    </Alert>
+                </>
+                <>
+                    <Alert show={this.state.error} variant="danger">
+                    <Alert.Heading style = {{fontWeight: 'bold'}}>Check-in fallito!</Alert.Heading>
+                    <p>
+                        Si è verificato un errore nell'inserimento dei dati, e questi non sono ancora stati spediti alla Questura.
+                        Riprovare.
+                    </p>
+                    <hr />
+                    <div className="d-flex justify-content-end">
+                        <Button onClick={() => this.setShowErr(false)} variant="outline-success">
+                        <span style = {{fontWeight: 'bold'}}>Ok</span>
+                        </Button>
+                    </div>
+                    </Alert>
+                </>
+            
+            <div className="contentNewCheck">
+                <h5>Compila questo form per effettuare il check-in degli ospiti della tua struttura!</h5>
+                <Form.Row>
+                    <Form.Group as={Col} controlId="formGridEmail">
+                    <Form.Label>Nome</Form.Label>
+                    <Form.Control type="name" value={this.state.dati.nome_sogg} required />
+                    </Form.Group>
+    
+                    <Form.Group as={Col} controlId="formGridPassword">
+                    <Form.Label>Cognome</Form.Label>
+                    <Form.Control type="surname" value={this.state.dati.cognome_sogg} required/>
+                    </Form.Group>
+                </Form.Row>
+    
+                <Form.Row>
+                    <Form.Group as={Col} controlId="formGridCity">
+                    <Form.Label>Città</Form.Label>
+                    <Form.Control type="city" value={this.state.dati.localita} required/>
+                    </Form.Group>
+    
+                    <Form.Group as={Col} controlId="formGridState">
+                    <Form.Label>Provincia</Form.Label>
+                    <Form.Control as="select" value = {this.state.dati.provincia} required>
+                            <option></option>
+                            <option value="AG">Agrigento</option>
+                            <option value="AL">Alessandria</option>
+                            <option value="AN">Ancona</option>
+                            <option value="AO">Aosta</option>
+                            <option value="AR">Arezzo</option>
+                            <option value="AP">Ascoli Piceno</option>
+                            <option value="AT">Asti</option>
+                            <option value="AV">Avellino</option>
+                            <option value="BA">Bari</option>
+                            <option value="BT">Barletta-Andria-Trani</option>
+                            <option value="BL">Belluno</option>
+                            <option value="BN">Benevento</option>
+                            <option value="BG">Bergamo</option>
+                            <option value="BI">Biella</option>
+                            <option value="BO">Bologna</option>
+                            <option value="BZ">Bolzano</option>
+                            <option value="BS">Brescia</option>
+                            <option value="BR">Brindisi</option>
+                            <option value="CA">Cagliari</option>
+                            <option value="CL">Caltanissetta</option>
+                            <option value="CB">Campobasso</option>
+                            <option value="CI">Carbonia-iglesias</option>
+                            <option value="CE">Caserta</option>
+                            <option value="CT">Catania</option>
+                            <option value="CZ">Catanzaro</option>
+                            <option value="CH">Chieti</option>
+                            <option value="CO">Como</option>
+                            <option value="CS">Cosenza</option>
+                            <option value="CR">Cremona</option>
+                            <option value="KR">Crotone</option>
+                            <option value="CN">Cuneo</option>
+                            <option value="EN">Enna</option>
+                            <option value="FM">Fermo</option>
+                            <option value="FE">Ferrara</option>
+                            <option value="FI">Firenze</option>
+                            <option value="FG">Foggia</option>
+                            <option value="FC">Forl&igrave;-Cesena</option>
+                            <option value="FR">Frosinone</option>
+                            <option value="GE">Genova</option>
+                            <option value="GO">Gorizia</option>
+                            <option value="GR">Grosseto</option>
+                            <option value="IM">Imperia</option>
+                            <option value="IS">Isernia</option>
+                            <option value="SP">La spezia</option>
+                            <option value="AQ">L'aquila</option>
+                            <option value="LT">Latina</option>
+                            <option value="LE">Lecce</option>
+                            <option value="LC">Lecco</option>
+                            <option value="LI">Livorno</option>
+                            <option value="LO">Lodi</option>
+                            <option value="LU">Lucca</option>
+                            <option value="MC">Macerata</option>
+                            <option value="MN">Mantova</option>
+                            <option value="MS">Massa-Carrara</option>
+                            <option value="MT">Matera</option>
+                            <option value="VS">Medio Campidano</option>
+                            <option value="ME">Messina</option>
+                            <option value="MI">Milano</option>
+                            <option value="MO">Modena</option>
+                            <option value="MB">Monza e della Brianza</option>
+                            <option value="NA">Napoli</option>
+                            <option value="NO">Novara</option>
+                            <option value="NU">Nuoro</option>
+                            <option value="OG">Ogliastra</option>
+                            <option value="OT">Olbia-Tempio</option>
+                            <option value="OR">Oristano</option>
+                            <option value="PD">Padova</option>
+                            <option value="PA">Palermo</option>
+                            <option value="PR">Parma</option>
+                            <option value="PV">Pavia</option>
+                            <option value="PG">Perugia</option>
+                            <option value="PU">Pesaro e Urbino</option>
+                            <option value="PE">Pescara</option>
+                            <option value="PC">Piacenza</option>
+                            <option value="PI">Pisa</option>
+                            <option value="PT">Pistoia</option>
+                            <option value="PN">Pordenone</option>
+                            <option value="PZ">Potenza</option>
+                            <option value="PO">Prato</option>
+                            <option value="RG">Ragusa</option>
+                            <option value="RA">Ravenna</option>
+                            <option value="RC">Reggio di Calabria</option>
+                            <option value="RE">Reggio nell'Emilia</option>
+                            <option value="RI">Rieti</option>
+                            <option value="RN">Rimini</option>
+                            <option value="RM">Roma</option>
+                            <option value="RO">Rovigo</option>
+                            <option value="SA">Salerno</option>
+                            <option value="SS">Sassari</option>
+                            <option value="SV">Savona</option>
+                            <option value="SI">Siena</option>
+                            <option value="SR">Siracusa</option>
+                            <option value="SO">Sondrio</option>
+                            <option value="TA">Taranto</option>
+                            <option value="TE">Teramo</option>
+                            <option value="TR">Terni</option>
+                            <option value="TO">Torino</option>
+                            <option value="TP">Trapani</option>
+                            <option value="TN">Trento</option>
+                            <option value="TV">Treviso</option>
+                            <option value="TS">Trieste</option>
+                            <option value="UD">Udine</option>
+                            <option value="VA">Varese</option>
+                            <option value="VE">Venezia</option>
+                            <option value="VB">Verbano-Cusio-Ossola</option>
+                            <option value="VC">Vercelli</option>
+                            <option value="VR">Verona</option>
+                            <option value="VV">Vibo valentia</option>
+                            <option value="VI">Vicenza</option>
+                            <option value="VT">Viterbo</option>
+                    </Form.Control>
+                    </Form.Group> 
+    
+                </Form.Row>
+    
+                <Form.Row>
+                    <Form.Group as={Col} controlId="formGridDocument">
+                        <Form.Label>Numero documento</Form.Label>
+                        <Form.Control type="document_num" placeholder="Documento" required/>
+                    </Form.Group>
+                    <Form.Group as={Col} controlId="formGridState" >
+                    <Form.Label>Tipo documento</Form.Label>
+                    <Form.Control as="select" className="prova" required>
+                        <option></option>
+                        <option>Carta di identità</option>
+                        <option>Patente</option>
+                        <option>Passaporto</option>
+                    </Form.Control>
+                    </Form.Group>
+                </Form.Row>
+                <Form.Group>
+                
+                    <Form.Row className = "justify-content-center">
+                        <input
+                        id = "foto1"
+                        type = "file"
+                        name = "foto1SRC"
+                        onChange = {this.onChangeFoto}
+                        className = "inputImg"
+                        accept = "image/*"
+                        required
+                        />
+                        <img src = {this.state.foto1SRC} alt = "Documento" ></img>
+                    </Form.Row>
+                </Form.Group>
+
+                <Form.Row>
+                    <Form.Group as={Col} controlId="formGridDocument">
+                        <Form.Label>Documento di esenzione</Form.Label>
+                        <Form.Control type="document_num" placeholder="Documento di esenzione"/>
+                    </Form.Group>
+                    
+                </Form.Row>
+                <Form.Group>
+                <Form.Row className = "justify-content-center">
+                    <input
+                    type = "file"
+                    id = "foto2"
+                    name = "foto2SRC"
+                    onChange = {this.onChangeFoto}
+                    className = "inputImg"
+                    accept = "image/*"
+                    />
+                    <img src = {this.state.foto2SRC} alt = "Esenzione" ></img>
+                </Form.Row>
+                </Form.Group>
+            </div>
+            
+            <h3 style = {{fontWeight: 'bold'}}>Ammontare tassa da soggiorno: <span>€{this.state.tassa}</span></h3>
+            {pagata}
+            {esente}
+            <br/>
+            <br/>
+
+            <Button variant="primary" type="submit" id="checkinButton">
+                Invia dati
+            </Button>
+
+            </Form>
+        );
     }
 }
 export default Checkin
-
-class FormCompila extends React.Component
-{
-    onSubmit = (e) => {
-        this.setState({ submit: true });
-    }
-    render(){
-    
-    return(  <Form className="contenitore" onSubmit = {this.onSubmit}>
-    <div className="contentNewCheck">
-    <h5>Compila questo form per effettuare il check-in degli ospiti della tua struttura!</h5>
-    <Form.Row>
-        <Form.Group as={Col} controlId="formGridEmail">
-        <Form.Label>Nome</Form.Label>
-        <Form.Control type="name" placeholder="Nome" required />
-        </Form.Group>
-
-        <Form.Group as={Col} controlId="formGridPassword">
-        <Form.Label>Cognome</Form.Label>
-        <Form.Control type="surname" placeholder="Cognome" required/>
-        </Form.Group>
-    </Form.Row>
-
-    <Form.Row>
-        <Form.Group as={Col} controlId="formGridAddress1">
-            <Form.Label>Indirizzo</Form.Label>
-            <Form.Control type="surname" placeholder="Indirizzo" required/>
-        </Form.Group>
-
-        <Form.Group as={Col} controlId="formGridZip">
-            <Form.Label>Codice Postale</Form.Label>
-            <Form.Control type="zip" placeholder="Codice postale" required/>
-        </Form.Group>
-    </Form.Row>
-
-    <Form.Row>
-        <Form.Group as={Col} controlId="formGridCity">
-        <Form.Label>Città</Form.Label>
-        <Form.Control type="city" placeholder="Città" required/>
-        </Form.Group>
-
-        <Form.Group as={Col} controlId="formGridState">
-        <Form.Label>Provincia</Form.Label>
-        <Form.Control as="select" required>
-                <option></option>
-                <option value="ag">Agrigento</option>
-                <option value="al">Alessandria</option>
-                <option value="an">Ancona</option>
-                <option value="ao">Aosta</option>
-                <option value="ar">Arezzo</option>
-                <option value="ap">Ascoli Piceno</option>
-                <option value="at">Asti</option>
-                <option value="av">Avellino</option>
-                <option value="ba">Bari</option>
-                <option value="bt">Barletta-Andria-Trani</option>
-                <option value="bl">Belluno</option>
-                <option value="bn">Benevento</option>
-                <option value="bg">Bergamo</option>
-                <option value="bi">Biella</option>
-                <option value="bo">Bologna</option>
-                <option value="bz">Bolzano</option>
-                <option value="bs">Brescia</option>
-                <option value="br">Brindisi</option>
-                <option value="ca">Cagliari</option>
-                <option value="cl">Caltanissetta</option>
-                <option value="cb">Campobasso</option>
-                <option value="ci">Carbonia-iglesias</option>
-                <option value="ce">Caserta</option>
-                <option value="ct">Catania</option>
-                <option value="cz">Catanzaro</option>
-                <option value="ch">Chieti</option>
-                <option value="co">Como</option>
-                <option value="cs">Cosenza</option>
-                <option value="cr">Cremona</option>
-                <option value="kr">Crotone</option>
-                <option value="cn">Cuneo</option>
-                <option value="en">Enna</option>
-                <option value="fm">Fermo</option>
-                <option value="fe">Ferrara</option>
-                <option value="fi">Firenze</option>
-                <option value="fg">Foggia</option>
-                <option value="fc">Forl&igrave;-Cesena</option>
-                <option value="fr">Frosinone</option>
-                <option value="ge">Genova</option>
-                <option value="go">Gorizia</option>
-                <option value="gr">Grosseto</option>
-                <option value="im">Imperia</option>
-                <option value="is">Isernia</option>
-                <option value="sp">La spezia</option>
-                <option value="aq">L'aquila</option>
-                <option value="lt">Latina</option>
-                <option value="le">Lecce</option>
-                <option value="lc">Lecco</option>
-                <option value="li">Livorno</option>
-                <option value="lo">Lodi</option>
-                <option value="lu">Lucca</option>
-                <option value="mc">Macerata</option>
-                <option value="mn">Mantova</option>
-                <option value="ms">Massa-Carrara</option>
-                <option value="mt">Matera</option>
-                <option value="vs">Medio Campidano</option>
-                <option value="me">Messina</option>
-                <option value="mi">Milano</option>
-                <option value="mo">Modena</option>
-                <option value="mb">Monza e della Brianza</option>
-                <option value="na">Napoli</option>
-                <option value="no">Novara</option>
-                <option value="nu">Nuoro</option>
-                <option value="og">Ogliastra</option>
-                <option value="ot">Olbia-Tempio</option>
-                <option value="or">Oristano</option>
-                <option value="pd">Padova</option>
-                <option value="pa">Palermo</option>
-                <option value="pr">Parma</option>
-                <option value="pv">Pavia</option>
-                <option value="pg">Perugia</option>
-                <option value="pu">Pesaro e Urbino</option>
-                <option value="pe">Pescara</option>
-                <option value="pc">Piacenza</option>
-                <option value="pi">Pisa</option>
-                <option value="pt">Pistoia</option>
-                <option value="pn">Pordenone</option>
-                <option value="pz">Potenza</option>
-                <option value="po">Prato</option>
-                <option value="rg">Ragusa</option>
-                <option value="ra">Ravenna</option>
-                <option value="rc">Reggio di Calabria</option>
-                <option value="re">Reggio nell'Emilia</option>
-                <option value="ri">Rieti</option>
-                <option value="rn">Rimini</option>
-                <option value="rm">Roma</option>
-                <option value="ro">Rovigo</option>
-                <option value="sa">Salerno</option>
-                <option value="ss">Sassari</option>
-                <option value="sv">Savona</option>
-                <option value="si">Siena</option>
-                <option value="sr">Siracusa</option>
-                <option value="so">Sondrio</option>
-                <option value="ta">Taranto</option>
-                <option value="te">Teramo</option>
-                <option value="tr">Terni</option>
-                <option value="to">Torino</option>
-                <option value="tp">Trapani</option>
-                <option value="tn">Trento</option>
-                <option value="tv">Treviso</option>
-                <option value="ts">Trieste</option>
-                <option value="ud">Udine</option>
-                <option value="va">Varese</option>
-                <option value="ve">Venezia</option>
-                <option value="vb">Verbano-Cusio-Ossola</option>
-                <option value="vc">Vercelli</option>
-                <option value="vr">Verona</option>
-                <option value="vv">Vibo valentia</option>
-                <option value="vi">Vicenza</option>
-                <option value="vt">Viterbo</option>
-        </Form.Control>
-        </Form.Group> 
-
-        <Form.Group as={Col} controlId="formGridState">
-        <Form.Label>Nazione</Form.Label>
-        <Form.Control as="select" required>
-            <option></option>
-            <option value="US">United States</option>
-            <option value="CA">Canada</option>
-            <option value="AF">Afghanistan</option>
-            <option value="AL">Albania</option>
-            <option value="DZ">Algeria</option>
-            <option value="AS">American Samoa</option>
-            <option value="AD">Andorra</option>
-            <option value="AO">Angola</option>
-            <option value="AI">Anguilla</option>
-            <option value="AQ">Antarctica</option>
-            <option value="AG">Antigua and Barbuda</option>
-            <option value="AR">Argentina</option>
-            <option value="AM">Armenia</option>
-            <option value="AW">Aruba</option>
-            <option value="AU">Australia</option>
-            <option value="AT">Austria</option>
-            <option value="AZ">Azerbaijan</option>
-            <option value="BS">Bahamas</option>
-            <option value="BH">Bahrain</option>
-            <option value="BD">Bangladesh</option>
-            <option value="BB">Barbados</option>
-            <option value="BY">Belarus</option>
-            <option value="BE">Belgium</option>
-            <option value="BZ">Belize</option>
-            <option value="BJ">Benin</option>
-            <option value="BM">Bermuda</option>
-            <option value="BT">Bhutan</option>
-            <option value="BO">Bolivia</option>
-            <option value="BA">Bosnia and Herzegovina</option>
-            <option value="BW">Botswana</option>
-            <option value="BV">Bouvet Island</option>
-            <option value="BR">Brazil</option>
-            <option value="IO">British Indian Ocean Territory</option>
-            <option value="BN">Brunei Darussalam</option>
-            <option value="BG">Bulgaria</option>
-            <option value="BF">Burkina Faso</option>
-            <option value="BI">Burundi</option>
-            <option value="KH">Cambodia</option>
-            <option value="CM">Cameroon</option>
-            <option value="CV">Cape Verde</option>
-            <option value="KY">Cayman Islands</option>
-            <option value="CF">Central African Republic</option>
-            <option value="TD">Chad</option>
-            <option value="CL">Chile</option>
-            <option value="CN">China</option>
-            <option value="CX">Christmas Island</option>
-            <option value="CC">Cocos (Keeling) Islands</option>
-            <option value="CO">Colombia</option>
-            <option value="KM">Comoros</option>
-            <option value="CG">Congo</option>
-            <option value="CD">Congo (Democratic Republic)</option>
-            <option value="CK">Cook Islands</option>
-            <option value="CR">Costa Rica</option>
-            <option value="HR">Croatia</option>
-            <option value="CU">Cuba</option>
-            <option value="CY">Cyprus</option>
-            <option value="CZ">Czech Republic</option>
-            <option value="DK">Denmark</option>
-            <option value="DJ">Djibouti</option>
-            <option value="DM">Dominica</option>
-            <option value="DO">Dominican Republic</option>
-            <option value="TP">East Timor</option>
-            <option value="EC">Ecuador</option>
-            <option value="EG">Egypt</option>
-            <option value="SV">El Salvador</option>
-            <option value="GQ">Equatorial Guinea</option>
-            <option value="ER">Eritrea</option>
-            <option value="EE">Estonia</option>
-            <option value="ET">Ethiopia</option>
-            <option value="FK">Falkland Islands</option>
-            <option value="FO">Faroe Islands</option>
-            <option value="FJ">Fiji</option>
-            <option value="FI">Finland</option>
-            <option value="FR">France</option>
-            <option value="FX">France (European Territory)</option>
-            <option value="GF">French Guiana</option>
-            <option value="TF">French Southern Territories</option>
-            <option value="GA">Gabon</option>
-            <option value="GM">Gambia</option>
-            <option value="GE">Georgia</option>
-            <option value="DE">Germany</option>
-            <option value="GH">Ghana</option>
-            <option value="GI">Gibraltar</option>
-            <option value="GR">Greece</option>
-            <option value="GL">Greenland</option>
-            <option value="GD">Grenada</option>
-            <option value="GP">Guadeloupe</option>
-            <option value="GU">Guam</option>
-            <option value="GT">Guatemala</option>
-            <option value="GN">Guinea</option>
-            <option value="GW">Guinea Bissau</option>
-            <option value="GY">Guyana</option>
-            <option value="HT">Haiti</option>
-            <option value="HM">Heard and McDonald Islands</option>
-            <option value="VA">Holy See (Vatican)</option>
-            <option value="HN">Honduras</option>
-            <option value="HK">Hong Kong</option>
-            <option value="HU">Hungary</option>
-            <option value="IS">Iceland</option>
-            <option value="IN">India</option>
-            <option value="ID">Indonesia</option>
-            <option value="IR">Iran</option>
-            <option value="IQ">Iraq</option>
-            <option value="IE">Ireland</option>
-            <option value="IL">Israel</option>
-            <option value="IT"selected="selected">Italy</option>
-            <option value="CI">Cote D&rsquo;Ivoire</option>
-            <option value="JM">Jamaica</option>
-            <option value="JP">Japan</option>
-            <option value="JO">Jordan</option>
-            <option value="KZ">Kazakhstan</option>
-            <option value="KE">Kenya</option>
-            <option value="KI">Kiribati</option>
-            <option value="KW">Kuwait</option>
-            <option value="KG">Kyrgyzstan</option>
-            <option value="LA">Laos</option>
-            <option value="LV">Latvia</option>
-            <option value="LB">Lebanon</option>
-            <option value="LS">Lesotho</option>
-            <option value="LR">Liberia</option>
-            <option value="LY">Libya</option>
-            <option value="LI">Liechtenstein</option>
-            <option value="LT">Lithuania</option>
-            <option value="LU">Luxembourg</option>
-            <option value="MO">Macau</option>
-            <option value="MK">Macedonia</option>
-            <option value="MG">Madagascar</option>
-            <option value="MW">Malawi</option>
-            <option value="MY">Malaysia</option>
-            <option value="MV">Maldives</option>
-            <option value="ML">Mali</option>
-            <option value="MT">Malta</option>
-            <option value="MH">Marshall Islands</option>
-            <option value="MQ">Martinique</option>
-            <option value="MR">Mauritania</option>
-            <option value="MU">Mauritius</option>
-            <option value="YT">Mayotte</option>
-            <option value="MX">Mexico</option>
-            <option value="FM">Micronesia</option>
-            <option value="MD">Moldova</option>
-            <option value="MC">Monaco</option>
-            <option value="MN">Mongolia</option>
-            <option value="ME">Montenegro</option>
-            <option value="MS">Montserrat</option>
-            <option value="MA">Morocco</option>
-            <option value="MZ">Mozambique</option>
-            <option value="MM">Myanmar</option>
-            <option value="NA">Namibia</option>
-            <option value="NR">Nauru</option>
-            <option value="NP">Nepal</option>
-            <option value="NL">Netherlands</option>
-            <option value="AN">Netherlands Antilles</option>
-            <option value="NC">New Caledonia</option>
-            <option value="NZ">New Zealand</option>
-            <option value="NI">Nicaragua</option>
-            <option value="NE">Niger</option>
-            <option value="NG">Nigeria</option>
-            <option value="NU">Niue</option>
-            <option value="NF">Norfolk Island</option>
-            <option value="KP">North Korea</option>
-            <option value="MP">Northern Mariana Islands</option>
-            <option value="NO">Norway</option>
-            <option value="OM">Oman</option>
-            <option value="PK">Pakistan</option>
-            <option value="PW">Palau</option>
-            <option value="PS">Palestinian Territory</option>
-            <option value="PA">Panama</option>
-            <option value="PG">Papua New Guinea</option>
-            <option value="PY">Paraguay</option>
-            <option value="PE">Peru</option>
-            <option value="PH">Philippines</option>
-            <option value="PN">Pitcairn</option>
-            <option value="PL">Poland</option>
-            <option value="PF">Polynesia</option>
-            <option value="PT">Portugal</option>
-            <option value="PR">Puerto Rico</option>
-            <option value="QA">Qatar</option>
-            <option value="RE">Reunion</option>
-            <option value="RO">Romania</option>
-            <option value="RU">Russian Federation</option>
-            <option value="RW">Rwanda</option>
-            <option value="GS">S. Georgia &amp; S. Sandwich Isls.</option>
-            <option value="SH">Saint Helena</option>
-            <option value="KN">Saint Kitts &amp; Nevis Anguilla</option>
-            <option value="LC">Saint Lucia</option>
-            <option value="PM">Saint Pierre and Miquelon</option>
-            <option value="VC">Saint Vincent &amp; Grenadines</option>
-            <option value="WS">Samoa</option>
-            <option value="SM">San Marino</option>
-            <option value="ST">Sao Tome and Principe</option>
-            <option value="SA">Saudi Arabia</option>
-            <option value="SN">Senegal</option>
-            <option value="RS">Serbia</option>
-            <option value="SC">Seychelles</option>
-            <option value="SL">Sierra Leone</option>
-            <option value="SG">Singapore</option>
-            <option value="SK">Slovakia</option>
-            <option value="SI">Slovenia</option>
-            <option value="SB">Solomon Islands</option>
-            <option value="SO">Somalia</option>
-            <option value="ZA">South Africa</option>
-            <option value="KR">South Korea</option>
-            <option value="ES">Spain</option>
-            <option value="LK">Sri Lanka</option>
-            <option value="SD">Sudan</option>
-            <option value="SR">Suriname</option>
-            <option value="SZ">Swaziland</option>
-            <option value="SE">Sweden</option>
-            <option value="CH">Switzerland</option>
-            <option value="SY">Syrian Arab Republic</option>
-            <option value="TW">Taiwan</option>
-            <option value="TJ">Tajikistan</option>
-            <option value="TZ">Tanzania</option>
-            <option value="TH">Thailand</option>
-            <option value="TG">Togo</option>
-            <option value="TK">Tokelau</option>
-            <option value="TO">Tonga</option>
-            <option value="TT">Trinidad and Tobago</option>
-            <option value="TN">Tunisia</option>
-            <option value="TR">Turkey</option>
-            <option value="TM">Turkmenistan</option>
-            <option value="TC">Turks and Caicos Islands</option>
-            <option value="TV">Tuvalu</option>
-            <option value="UG">Uganda</option>
-            <option value="UA">Ukraine</option>
-            <option value="AE">United Arab Emirates</option>
-            <option value="GB">United Kingdom</option>
-            <option value="UY">Uruguay</option>
-            <option value="UM">USA Minor Outlying Islands</option>
-            <option value="UZ">Uzbekistan</option>
-            <option value="VU">Vanuatu</option>
-            <option value="VE">Venezuela</option>
-            <option value="VN">Vietnam</option>
-            <option value="VG">Virgin Islands (British)</option>
-            <option value="VI">Virgin Islands (USA)</option>
-            <option value="WF">Wallis and Futuna Islands</option>
-            <option value="EH">Western Sahara</option>
-            <option value="YE">Yemen</option>
-            <option value="ZR">Zaire</option>
-            <option value="ZM">Zambia</option>
-            <option value="ZW">Zimbabwe</option>
-        </Form.Control>
-        </Form.Group> 
-    </Form.Row>
-
-    <Form.Row>
-        <Form.Group as={Col} controlId="formGridDocument">
-            <Form.Label>Numero documento</Form.Label>
-            <Form.Control type="document_num" placeholder="Documento" required/>
-        </Form.Group>
-        <Form.Group as={Col} controlId="formGridState" >
-        <Form.Label>Tipo documento</Form.Label>
-        <Form.Control as="select" className="prova" required>
-            <option></option>
-            <option>Carta di identità</option>
-            <option>Patente</option>
-            <option>Passaporto</option>
-        </Form.Control>
-        </Form.Group>
-    </Form.Row>
-    <Form.Group>
-            <Form.File id="caricaFotoDocumento" label="Carica foto documento" accept="image/*" required/>
-    </Form.Group>
-    </div>
-    <Button variant="primary" type="submit" id="checkinButton">
-        Invia dati
-    </Button>
-    <p>(numero) ospiti rimanenti</p>
-</Form>
-);}
-}
-

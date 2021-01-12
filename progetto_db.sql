@@ -203,12 +203,12 @@ CREATE TABLE tassa_soggiorno
 (
 	id_tassa int NOT NULL AUTO_INCREMENT,
     ref_soggiornante char(16) NOT NULL,
-    ref_prenotazione int NOT NULL,
     ref_proprietario char(45) NOT NULL,
+    data_partenza date NOT NULL,
+    data_ritorno date NOT NULL,
     ammontare float(10) NOT NULL,
     PRIMARY KEY (id_tassa),
     FOREIGN KEY (ref_soggiornante) REFERENCES soggiornante (cf_sogg),
-    FOREIGN KEY (ref_prenotazione) REFERENCES prenotazione (id_prenotazione),
     FOREIGN KEY (ref_proprietario) REFERENCES proprietario (email_prop)
 );
 
@@ -374,13 +374,13 @@ INSERT INTO prenotazione (ref_soggiornante, ref_cliente, ref_proprietario, ref_p
 ('SWIMSL18F28N480L', 'mastroianni@gmail.it', 'luigi@gmail.it', 102, 3, 500, 100, '2020-04-05', '2020-04-08', null), -- ID 505
 ('SWIMSL18F28N480L', 'mastroianni@gmail.it', 'luigi@gmail.it', 102, 3, 500, 100, '2021-03-03', '2021-03-09', null); -- ID 506
 
-INSERT INTO tassa_soggiorno (ref_soggiornante, ref_prenotazione, ref_proprietario, ammontare) VALUES
+INSERT INTO tassa_soggiorno (ref_soggiornante, ref_proprietario, data_partenza, data_ritorno, ammontare) VALUES
 -- (ID_TASSA, ref_soggiornante, ref_prenotazione, ref_proprietario, ammontare)
-('LKJHGF49C73U649P', 500, 'matteo@gmail.it', 35), -- ID 700
-('PQLCME93N18X183J', 501, 'matteo@gmail.it', 35), -- ID 701
-('SWIMSL18F28N480L', 502, 'luigi@gmail.it', 12), -- ID 702
-('QPRHSL20E83H580P', 503, 'luigi@gmail.it', 12), -- ID 703
-('EJGLWW19H40N285N', 504, 'luigi@gmail.it', 12); -- ID 704
+('LKJHGF49C73U649P', 'matteo@gmail.it', '2021-03-03', '2021-03-05', 35), -- ID 700
+('PQLCME93N18X183J', 'matteo@gmail.it', '2021-03-03', '2021-03-05', 35), -- ID 701
+('SWIMSL18F28N480L', 'luigi@gmail.it', '2021-02-02', '2021-02-07', 12), -- ID 702
+('QPRHSL20E83H580P', 'luigi@gmail.it', '2021-02-02', '2021-02-07', 12), -- ID 703
+('EJGLWW19H40N285N', 'luigi@gmail.it', '2021-02-02', '2021-02-07', 12); -- ID 704
 
 -- ottenere guadagni di un proprietario da tabella prenotazione + proprietario, fornendo anche un anno per la ricerca, oltre al proprio id
 -- SELECT @prop := 'luigi@gmail.it';

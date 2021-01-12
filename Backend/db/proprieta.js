@@ -407,6 +407,7 @@ const ricercaAlloggio = async(req) => {
                 'SELECT DISTINCT p.nome_proprieta, p.indirizzo, p.localita, p.tipo_proprieta, p.servizi, p.provincia, ' +
                     'c.tariffa_casa* ' + ngiorni + ' AS costo, ' +
                     'c.tariffa_casa AS tariffa, ' +
+                    'p.id_proprieta, p.ref_proprietario, ' +
                     ngiorni + ' AS ngiorni, ' +
                     'c.posti_letto AS posti, p.descrizione, ' +
                     'c.imgCV_path1 AS img1, ' +
@@ -447,6 +448,7 @@ const ricercaAlloggio = async(req) => {
                 'SELECT DISTINCT p.nome_proprieta, p.indirizzo, p.localita, p.tipo_proprieta, p.servizi, p.provincia, ' +
                     's.tariffa_stanza* ' + ngiorni + ' AS costo, ' +
                     's.tariffa_stanza AS tariffa, ' +
+                    'p.id_proprieta, p.ref_proprietario, ' +
                     ngiorni + ' AS ngiorni, ' +
                     's.tipologia AS posti, p.descrizione, ' +
                     's.imgST_path1 AS img1, ' +
@@ -488,6 +490,7 @@ const ricercaAlloggio = async(req) => {
                 'SELECT DISTINCT p.nome_proprieta, p.indirizzo, p.localita, p.tipo_proprieta, p.servizi, p.provincia, ' +
                     'c.tariffa_casa* ' + ngiorni + ' AS costo, ' +
                     'c.tariffa_casa AS tariffa, ' +
+                    'p.id_proprieta, p.ref_proprietario, ' +
                     ngiorni + ' AS ngiorni, ' +
                     'c.posti_letto AS posti, p.descrizione, ' +
                     'c.imgCV_path1 AS img1, ' +
@@ -526,6 +529,7 @@ const ricercaAlloggio = async(req) => {
                             's.tariffa_stanza* ' + ngiorni + ' AS costo, ' +
                             's.tariffa_stanza AS tariffa, ' +
                             ngiorni + ' AS ngiorni, ' +
+                            'p.id_proprieta, p.ref_proprietario, ' +
                             's.tipologia AS posti, p.descrizione, ' +
                             's.imgST_path1 AS img1, ' +
                             's.imgST_path2 AS img2, ' +

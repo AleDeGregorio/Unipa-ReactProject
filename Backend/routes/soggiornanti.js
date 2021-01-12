@@ -42,7 +42,7 @@ router.post('/fields', async(req, res, next) => {
 // indirizzo: /insertSoggiornante/new
 router.post('/new', async(req, res, next) => {
     try {
-        let insert = await DB.Soggiornante.insertUser(req.body);
+        let insert = await DB.Soggiornante.insertSoggiornante(req.body);
         res.json(insert);
     }
     catch(e) {

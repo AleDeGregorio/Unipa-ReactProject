@@ -16,7 +16,7 @@ function HomePage(){
                 <RicercaFinale/>
             </div>
             <div className="scritta">
-                <h1>Enjoy A Luxury Experience</h1>
+                <h1>Cerca l'esperienza giusta per te</h1>
             </div>
         </div>
     );

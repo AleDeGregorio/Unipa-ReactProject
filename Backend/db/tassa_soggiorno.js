@@ -75,26 +75,6 @@ const getTassaSoggiornante = async(req) => {
     });
 }
 
-// get tassa from ref_prenotazione
-const getTassaPrenotazione = async(req) => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query(
-            'SELECT * ' +
-            'FROM tassa_soggiorno ' +
-            'WHERE ref_prenotazione = ' + req.ref_prenotazione + '; ', (err, results) => {
-                if(err) {
-                    console.log(err);
-                    return reject(new GeneralError('Si è verificato un errore'));
-                }
-                if(results.length < 1) {
-                    return reject(new NotFound('Nessuna tassa di soggiorno relativa alla prenotazione'));
-                }
-            resolve(results);
-        });
-    });
-}
-
 // get tassa from ref_proprietario
 const getTassaProprietario = async(req) => {
     return new Promise((resolve, reject) => {
@@ -121,7 +101,7 @@ const updateTassa= async(req) => {
 
         Connection.query(
             'UPDATE tassa_soggiorno ' +
-            'SET ref_soggiornante = "' + req.ref_soggiornante + '", ref_prenotazione = ' + req.ref_prenotazione + 
+            'SET ref_soggiornante = "' + req.ref_soggiornante + '"' +
             ', ref_proprietario = "' + req.ref_proprietario + '", ammontare = ' + req.ammontare + ' ' +
             'WHERE id_tassa = ' + req.id_tassa + '; ',
             (err, results) => {
@@ -143,9 +123,10 @@ const insertTassa = async(req) => {
     return new Promise((resolve, reject) => {
 
         Connection.query(
-            'INSERT INTO tassa_soggiorno (ref_soggiornante, ref_prenotazione, ref_proprietario, ammontare) VALUES ' +
-            '("' + req.ref_soggiornante + '", ' + req.ref_prenotazione + ', "' + 
-            req.ref_proprietario + '", ' + req.ammontare + ')',
+            'INSERT INTO tassa_soggiorno (ref_soggiornante, ref_proprietario, data_partenza, data_ritorno, ammontare) VALUES ' +
+            '("' + req.ref_soggiornante + '", "' + 
+            req.ref_proprietario + '", (STR_TO_DATE("' + req.data_partenza + '","%d/%m/%Y")), ' + 
+            '(STR_TO_DATE("' + req.data_ritorno + '","%d/%m/%Y")), ' + req.ammontare + ')',
             (err, results) => {
                 if(err) {
                     console.log(err);
@@ -166,8 +147,8 @@ const getTasseInvio = async(req) => {
 
         Connection.query(
             'SELECT * ' +
-            'FROM tassa_soggiorno t, prenotazione p ' +
-            'WHERE t.ref_prenotazione = p.id_prenotazione AND t.ref_proprietario = "' + req.ref_proprietario + '"; ', 
+            'FROM tassa_soggiorno ' +
+            'WHERE ref_proprietario = "' + req.ref_proprietario + '"; ', 
             (err, results) => {
                 if(err) {
                     console.log(err);
@@ -206,7 +187,6 @@ const deleteTasseInvio = async(req) => {
 module.exports = all;
 module.exports = getTassa;
 module.exports = getTassaSoggiornante;
-module.exports = getTassaPrenotazione;
 module.exports = getTassaProprietario;
 module.exports = updateTassa;
 module.exports = insertTassa;
@@ -217,7 +197,6 @@ module.exports = {
     all,
     getTassa,
     getTassaSoggiornante,
-    getTassaPrenotazione,
     getTassaProprietario,
     updateTassa,
     insertTassa,
