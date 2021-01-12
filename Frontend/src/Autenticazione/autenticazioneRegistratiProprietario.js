@@ -23,8 +23,18 @@ class autenticazioneRegistratiProprietario extends React.Component {
             error:false,
             errorMessage:'',
             success: false, 
-            empty: false
+            empty: false,
+            maxDate: ''
         };
+    }
+
+    componentDidMount() {
+
+        var today = new Date();
+        const offset = today.getTimezoneOffset()
+        today = new Date(today.getTime() - (offset*60*1000))
+        
+        this.setState({ maxDate: today.toISOString().slice(0,10) })
     }
 
     onChange = (e) => {
@@ -39,7 +49,7 @@ class autenticazioneRegistratiProprietario extends React.Component {
             password: this.state.password,
             nome: this.state.nome,
             cognome: this.state.cognome,
-            nascita: this.state.nascita,
+            nascita: new Date(this.state.nascita).toLocaleDateString(),
             num_documento: this.state.num_documento,
             telefono: this.state.telefono
         }
@@ -189,6 +199,7 @@ class autenticazioneRegistratiProprietario extends React.Component {
                                 onChange={this.onChange} 
                                 id = 'nascita'
                                 name = 'nascita'
+                                max = {this.state.maxDate}
                             />
                         </Form.Group>
 

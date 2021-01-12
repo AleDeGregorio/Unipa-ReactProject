@@ -22,8 +22,18 @@ class autenticazioneRegistratiCliente extends React.Component {
             error:false,
             errorMessage:'',
             success: false,
-            empty: false
+            empty: false,
+            maxDate: ''
         };
+    }
+
+    componentDidMount() {
+
+        var today = new Date();
+        const offset = today.getTimezoneOffset()
+        today = new Date(today.getTime() - (offset*60*1000))
+        
+        this.setState({ maxDate: today.toISOString().slice(0,10) })
     }
 
   onChange = (e) => {
@@ -38,7 +48,7 @@ class autenticazioneRegistratiCliente extends React.Component {
             password: this.state.password,
             nome: this.state.nome,
             cognome: this.state.cognome,
-            nascita: this.state.nascita,
+            nascita: new Date(this.state.nascita).toLocaleDateString(),
             telefono: this.state.telefono
         }
 
@@ -143,7 +153,7 @@ class autenticazioneRegistratiCliente extends React.Component {
     
                     <Form.Group as={Col} controlId="formGridCap">
                     <Form.Label>Data di nascita</Form.Label>
-                    <Form.Control type="date" required className="inputSignUp" id = 'nascita' name = 'nascita' onChange={this.onChange} />
+                    <Form.Control type="date" required className="inputSignUp" id = 'nascita' max = {this.state.maxDate} name = 'nascita' onChange={this.onChange} />
                     </Form.Group>
                     <Link to="/autenticazioneRegistrati">Torna indietro</Link>
                 </div>
