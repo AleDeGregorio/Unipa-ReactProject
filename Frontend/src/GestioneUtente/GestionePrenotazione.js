@@ -16,7 +16,8 @@ class GestionePrenotazione extends React.Component {
             data_ritorno: '',
             ref_proprietario: '',
             email: localStorage.getItem('email'),  //variabili di cui abbiamo bisogno
-            apiResponse: [] ,
+            apiResponse: [],
+            responseElimina: [],
             error: false,
             errorMessage: '',
             empty: false,
@@ -193,22 +194,25 @@ class GestionePrenotazione extends React.Component {
         })
         .then((result) => result.text())
         .then((result)=>{
-            this.setState({ apiResponse:JSON.parse(result) });
+            this.setState({ responseElimina:JSON.parse(result) });
             var res = JSON.parse(result);
 
             if(res.length < 1 || (res.code && res.code === 404)) {
               this.setState({ empty: true, errorMessage: res.message });
             }
       
-            else if(this.state.apiResponse.status === 'error') {
-              this.setState({ error: true });
-              this.setState({ errorMessage: this.state.apiResponse.message });
+            else if(this.state.responseElimina.status === 'error') {
+                window.scrollTo(0, 0);
+                this.setState({ error: true });
+                this.setState({ errorMessage: this.state.responseElimina.message });
             }
             else {
                 window.scrollTo(0, 0);
                 this.setState({ success: true, error: false },()=>{
                     window.setTimeout(()=>{
-                        this.setState({success:false})
+                        this.setState({success:false}, () => {
+                            window.location.reload()
+                        })
                     }, 3000)
                 })
             }
@@ -370,7 +374,7 @@ class GestionePrenotazione extends React.Component {
                         <h1>Gestisci le tue prenotazioni</h1>
                         <h5>Le tue prenotazioni: </h5>
                         {        
-                            this.state.apiResponse.map(((res, index)=> 
+                            this.state.apiResponse.length > 0 ? this.state.apiResponse.map(((res, index)=> 
                                 <div className="containeracc">
                                     <Accordion>
                                         <Card border="light" id="cardGP">
@@ -502,7 +506,7 @@ class GestionePrenotazione extends React.Component {
                                     </Accordion>
                                 </div>
                             )) 
-                        }   
+                        : <></>}   
                     </div>
                 </div>
                 </div>
