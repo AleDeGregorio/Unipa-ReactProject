@@ -8,19 +8,22 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "expo": "~39.0.2",
+    "expo": "^40.0.0",
     "expo-cli": "^3.28.5",
     "expo-status-bar": "~1.0.2",
     "express-fileupload": "^1.2.0",
     "mysql": "^2.18.1",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
+    "preact": "^10.0.5",
+    "preact-responder-event-plugin": "^1.0.16",
+    "react": "17.0.1",
+    "react-dom": "^17.0.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.4.tar.gz",
-    "react-native-web": "~0.13.12",
-    "react-native-webview": "10.7.0"
+    "react-native-web": "^0.14.10",
+    "react-native-webview": "11.0.0"
   },
   "devDependencies": {
-    "@babel/core": "~7.9.0"
+    "@babel/core": "~7.9.0",
+    "@expo/webpack-config": "^0.12.44"
   },
   "private": true
 }

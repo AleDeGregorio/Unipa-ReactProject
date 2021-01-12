@@ -40,7 +40,7 @@ export default class App extends React.Component {
   render() {
     return (
       <WebView 
-        source = {{ uri: 'http://192.168.1.106:9000' }}
+        source = {{ uri: 'http://localhost:9000' }}
         style = {{ marginTop: '10%' }}
         ref={this.WEBVIEW_REF}
         onNavigationStateChange={this.onNavigationStateChange}

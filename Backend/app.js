@@ -26,6 +26,11 @@ app.use(bodyParser.json());
 
 app.use(fileUpload());
 
+/* NECESSARIO PER L'APP MOBILE. BISOGNA UTILIZZARE IL PROPRIO INDIRIZZO IP */
+/*app.get("/", (req, res) => {
+  res.redirect('http://192.168.1.106:3000');
+});*/
+
 // import di tutti i router necessari
 var proprietarioRouter = require('./routes/proprietari');
 var proprietaRouter = require('./routes/proprieta');
