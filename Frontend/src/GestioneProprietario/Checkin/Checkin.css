@@ -10,6 +10,16 @@
     margin: 8px;
 }
 
+.allerta{
+    position: absolute;
+    height: 200px;
+}
+
+#allerta{
+    position: absolute;
+    height: 200px;
+}
+
 #checkinButton{
     background-color: black;
     border-radius: 0;

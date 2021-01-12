@@ -175,7 +175,7 @@ class Checkin extends React.Component {
             <Form className="contenitore" onSubmit = {this.onSubmit}>
 
                 <>
-                    <Alert show={this.state.success} variant="success">
+                    <Alert show={this.state.success} variant="success" id="allerta">
                     <Alert.Heading style = {{fontWeight: 'bold'}}>Check-in effettuato con successo!</Alert.Heading>
                     <p>
                         Il check-in dell'ospite è stato registrato con successo. Inoltre, i suoi dati sono stati trasmessi con successo
@@ -190,7 +190,7 @@ class Checkin extends React.Component {
                     </Alert>
                 </>
                 <>
-                    <Alert show={this.state.error} variant="danger">
+                    <Alert show={this.state.error} variant="danger" id="allerta">
                     <Alert.Heading style = {{fontWeight: 'bold'}}>Check-in fallito!</Alert.Heading>
                     <p>
                         Si è verificato un errore nell'inserimento dei dati, e questi non sono ancora stati spediti alla Questura.
