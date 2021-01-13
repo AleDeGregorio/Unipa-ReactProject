@@ -89,7 +89,7 @@ const login = async(req, res, next) => {
                                     resolve(res1);
                                 }
                                 else {
-                                    var resTot = res1.concat(res);
+                                    var resTot = res1.concat(results);
                                     console.log("Utente autenticato");
                                     resolve(resTot);
                                 }

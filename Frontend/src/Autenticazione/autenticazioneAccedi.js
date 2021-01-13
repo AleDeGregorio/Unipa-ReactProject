@@ -31,11 +31,11 @@ class autenticazioneAccedi extends React.Component {
             messaggioErrore = <p style={{color: 'red'}}>Nome utente o password errati</p>;
         }
 
-        if(localStorage.getItem('logged') && localStorage.getItem('cliente')) {
+        if(this.props.successCliente) {
             return <Redirect to = "/" />
         }
         
-        if(localStorage.getItem('logged') && localStorage.getItem('proprietario')) {
+        if(this.props.successProprietario) {
             return <Redirect to = "/PaginaProprietario" />
         }
 

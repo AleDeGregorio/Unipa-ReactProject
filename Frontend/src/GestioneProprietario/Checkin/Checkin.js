@@ -23,7 +23,7 @@ class Checkin extends React.Component {
             errorMessage: '',
             success: false,
             tassa: 3,
-            complete: true
+            complete: false
         }
     }
 
@@ -50,6 +50,10 @@ class Checkin extends React.Component {
     onChangeFoto = (e) => {
         this.setState({ [e.target.name]: URL.createObjectURL(e.target.files[0]) })
         this.setState({ [e.target.id]: e.target.files[0] });
+
+        if(e.target.id === 'foto2') {
+            this.setState({ tassa: 0 })
+        }
     }
 
     onSubmit = (e) => {
@@ -143,7 +147,7 @@ class Checkin extends React.Component {
         if(this.state.complete) {
             return <Redirect
                 to={{
-                    pathname: "/PaginaProprietario"
+                    pathname: "/Testina"
                 }}
             />
         }
@@ -175,11 +179,11 @@ class Checkin extends React.Component {
             <Form className="contenitore" onSubmit = {this.onSubmit}>
 
                 <>
-                    <Alert show={this.state.success} variant="success" id="allerta">
+                    <Alert show={this.state.success} variant="success" id="allerta" style = {{zIndex: 2}}>
                     <Alert.Heading style = {{fontWeight: 'bold'}}>Check-in effettuato con successo!</Alert.Heading>
                     <p>
                         Il check-in dell'ospite è stato registrato con successo. Inoltre, i suoi dati sono stati trasmessi con successo
-                        alla Questura. Stai per essere reinderizzato alla tua pagina personale
+                        alla Questura. Stai per essere reinderizzato alla pagina delle prenotazioni
                     </p>
                     <hr />
                     <div className="d-flex justify-content-end">
@@ -190,7 +194,7 @@ class Checkin extends React.Component {
                     </Alert>
                 </>
                 <>
-                    <Alert show={this.state.error} variant="danger" id="allerta">
+                    <Alert show={this.state.error} variant="danger" id="allerta" style = {{zIndex: 2}}>
                     <Alert.Heading style = {{fontWeight: 'bold'}}>Check-in fallito!</Alert.Heading>
                     <p>
                         Si è verificato un errore nell'inserimento dei dati, e questi non sono ancora stati spediti alla Questura.
@@ -397,7 +401,7 @@ class Checkin extends React.Component {
                 </Form.Group>
             </div>
             
-            <h3 style = {{fontWeight: 'bold'}}>Ammontare tassa da soggiorno: <span>€{this.state.tassa}</span></h3>
+            <h3 style = {{fontWeight: 'bold'}}>Ammontare tassa di soggiorno: <span>€{this.state.tassa}</span></h3>
             {pagata}
             {esente}
             <br/>

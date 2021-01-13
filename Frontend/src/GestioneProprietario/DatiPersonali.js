@@ -19,20 +19,44 @@ class DatiPersonali extends React.Component {
             oldPassword: '',
             newPassword: '',
             confirmPassword: '',
-            nome: localStorage.getItem('logged') ? (localStorage.getObj('user_data')[0].nome_prop ? localStorage.getObj('user_data')[0].nome_prop : localStorage.getObj('user_data')[0].nome_cl) : '',
-            cognome: localStorage.getItem('logged') ? (localStorage.getObj('user_data')[0].cognome_prop ? localStorage.getObj('user_data')[0].cognome_prop : localStorage.getObj('user_data')[0].cognome_cl) : '',
-            nascita: localStorage.getItem('logged') ? (localStorage.getObj('user_data')[0].data_nascita_prop ? new Date(localStorage.getObj('user_data')[0].data_nascita_prop).toLocaleDateString() : new Date(localStorage.getObj('user_data')[0].data_nascita_cl).toLocaleDateString()) : new Date().toLocaleDateString(),
-            num_documentoTXT: localStorage.getItem('logged') ? (localStorage.getObj('user_data')[0].num_documento ? localStorage.getObj('user_data')[0].num_documento : '') : '',
+            nome: '',
+            cognome: '',
+            nascita: new Date().toLocaleDateString(),
+            num_documentoTXT: '',
             num_documento: '',
-            telefonoTXT: localStorage.getItem('logged') ? (localStorage.getObj('user_data')[0].telefono_prop ? localStorage.getObj('user_data')[0].telefono_prop : localStorage.getObj('user_data')[0].telefono_cl) : '',
+            telefonoTXT: '',
             telefono: '',
-            email: localStorage.getItem('logged') ? localStorage.getItem('email') : '',
+            email: '',
             apiResponse: [],
             error: false,
             errorMessage: '',
             show: false, 
             empty: false,
             success: false
+        }
+    }
+
+    componentDidMount() {
+        if(localStorage.getItem('logged') && localStorage.getItem('cliente')) {
+            this.setState({
+                nome: localStorage.getObj('user_data')[0].nome_cl,
+                cognome: localStorage.getObj('user_data')[0].cognome_cl,
+                nascita: new Date(localStorage.getObj('user_data')[0].data_nascita_cl).toLocaleDateString(),
+                num_documentoTXT: localStorage.getObj('user_data')[1] ? localStorage.getObj('user_data')[1].num_documento : '',
+                telefonoTXT: localStorage.getObj('user_data')[1].telefono_prop ? localStorage.getObj('user_data')[1].telefono_prop : localStorage.getObj('user_data')[0].telefono_cl,
+                email: localStorage.getItem('email')
+            })
+        }
+
+        else if(localStorage.getItem('logged') && localStorage.getItem('proprietario')) {
+            this.setState({
+                nome: localStorage.getObj('user_data')[0].nome_prop,
+                cognome: localStorage.getObj('user_data')[0].cognome_prop,
+                nascita: new Date(localStorage.getObj('user_data')[0].data_nascita_prop).toLocaleDateString(),
+                num_documentoTXT: localStorage.getObj('user_data')[0].num_documento,
+                telefonoTXT: localStorage.getObj('user_data')[0].telefono_prop,
+                email: localStorage.getItem('email')
+            })
         }
     }
 

@@ -105,6 +105,7 @@ class App extends React.Component {
     .then((result) => result.text())
     .then((result) => {
       this.setState({ apiResponse: JSON.parse(result) });
+      console.log(this.state.apiResponse);
 
       if(this.state.apiResponse.status === 'error') {
         this.setState({ error: true });
@@ -115,20 +116,26 @@ class App extends React.Component {
         localStorage.setObj('user_data', this.state.apiResponse);
 
         var cliente = this.state.apiResponse[0].email_cl ? true : false;
-        var proprietario = this.state.apiResponse[0].email_prop ? true : false;
+        var proprietario = this.state.apiResponse[0].email_prop ? true : (this.state.apiResponse[1] ? true : false);
         
-        if(cliente) {
-          localStorage.setItem('cliente', true);
-          localStorage.setItem('email', this.state.apiResponse[0].email_cl);
-        }
-        else if (cliente && proprietario){
+        if (cliente && proprietario){
+
           localStorage.setItem('proprietario', true);
           localStorage.setItem('cliente', true)
-          localStorage.setItem('email', this.state.apiResponse[0].email_prop);
+          localStorage.setItem('email', this.state.apiResponse[1].email_prop);
+          this.setState({ successProprietario: true, successCliente: true})
+        }
+        else if(cliente) {
+
+          localStorage.setItem('cliente', true);
+          localStorage.setItem('email', this.state.apiResponse[0].email_cl);
+          this.setState({ successCliente: true })
         }
         else {
+          
           localStorage.setItem('proprietario', true);
           localStorage.setItem('email', this.state.apiResponse[0].email_prop);
+          this.setState({ successProprietario: true });
         }
       }
     });
@@ -194,6 +201,8 @@ class App extends React.Component {
                     onSubmitLogin = {this.onSubmitLogin}
                     error = {this.state.error}
                     errorMessage = {this.state.errorMessage}
+                    successCliente = {this.state.successCliente}
+                    successProprietario = {this.state.successProprietario}
                   />
                 )}
               />

@@ -6,11 +6,120 @@ import Nav from 'react-bootstrap/Nav'
 import { FcMenu } from 'react-icons/fc'
 import {CgProfile} from 'react-icons/cg'
 import './NavCss.css'
+import { Redirect } from 'react-router-dom';
 
 class NavBar extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            tipo: '',
+            apiResponse: [],
+            error: false,
+            errorMessage: '',
+            redirect: false
+        }
+    }
     
     onClick = (e) => {
         localStorage.clear();
+    }
+
+    cercaBB = (e) => {
+
+        if(this.state.apiResponse !== []) {
+            this.setState({
+                tipo: '',
+                apiResponse: [],
+                error: false,
+                errorMessage: '',
+                redirect: false
+            })
+        }
+
+        this.setState({ tipo: 'bb' });
+
+        const data = {
+            tipo: 'bb',
+            localita: '',
+            provincia: '',
+            servizi: '',
+            posti: '%%',
+            costo: '',
+            checkIn: '',
+            checkOut: ''
+        };
+
+        fetch('http://localhost:9000/ricercaAlloggio/risultati', {
+            method: "POST",
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then((result) => result.text())
+        .then((result) => {
+            //console.log(JSON.parse(result));
+            this.setState({ apiResponse: JSON.parse(result) });
+
+            if(this.state.apiResponse.status === 'error') {
+                this.setState({ error: true });
+                this.setState({ errorMessage: this.state.apiResponse.message });
+            }
+            else {
+                this.setState({ redirect: true })
+                window.location.reload();
+            }
+        });
+    }
+
+    cercaCV = (e) => {
+
+        if(this.state.apiResponse !== []) {
+            this.setState({
+                tipo: '',
+                apiResponse: [],
+                error: false,
+                errorMessage: '',
+                redirect: false
+            })
+        }
+
+        this.setState({ tipo: 'cv' });
+
+        const data = {
+            tipo: 'cv',
+            localita: '',
+            provincia: '',
+            servizi: '',
+            posti: '%%',
+            costo: '',
+            checkIn: '',
+            checkOut: ''
+        };
+
+        fetch('http://localhost:9000/ricercaAlloggio/risultati', {
+            method: "POST",
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then((result) => result.text())
+        .then((result) => {
+            //console.log(JSON.parse(result));
+            this.setState({ apiResponse: JSON.parse(result) });
+
+            if(this.state.apiResponse.status === 'error') {
+                this.setState({ error: true });
+                this.setState({ errorMessage: this.state.apiResponse.message });
+            }
+            else {
+                this.setState({ redirect: true })
+                window.location.reload();
+            }
+        });
     }
 
     render() {
@@ -44,6 +153,54 @@ class NavBar extends React.Component {
             );
         }
 
+        if(localStorage.getItem('logged') && localStorage.getItem('proprietario') && localStorage.getItem('cliente')) {
+            var nome = localStorage.getObj('user_data')[0].nome_cl;
+            var cognome = localStorage.getObj('user_data')[0].cognome_cl;
+            
+            loggato = (
+                <Dropdown>
+                    <Dropdown.Toggle id="dropNavLog">
+                        {nome} {cognome}<Menu />
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu >
+                        <Dropdown.Item href="/GestionePrenotazione">Le tue prenotazioni</Dropdown.Item>
+                        <Dropdown.Item href="/PaginaProprietario">Area personale host</Dropdown.Item>
+                        <Dropdown.Item href="/DatiPersonali">Dati personali</Dropdown.Item>
+                        <Dropdown.Item href="/autenticazioneAccedi" onClick = {this.onClick}>Logout</Dropdown.Item>
+                    </Dropdown.Menu>
+                </Dropdown>
+            ); 
+        }
+
+        if(this.state.redirect) {
+
+            return (
+                <> 
+                    <Navbar bg="light" expand="lg">
+                        <Navbar.Brand href="/">Sito Progetto</Navbar.Brand>
+                        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                        <Navbar.Collapse id="basic-navbar-nav">
+                            <Nav className="mr-auto">
+                                <Nav.Link href="/">Home</Nav.Link>
+                                <Nav.Link onClick = {this.cercaBB}>B&B</Nav.Link>
+                                <Nav.Link onClick = {this.cercaCV}>Casa Vacanza</Nav.Link>
+                            </Nav>
+                                {loggato}
+                        </Navbar.Collapse>
+                    </Navbar>
+                    <Redirect 
+                        to = {{
+                            pathname: "/RisultatiRicerca",
+                            state: {
+                                case: this.state.apiResponse,
+                                tipo: this.state.tipo
+                            }
+                        }}
+                    />
+                </>
+            )
+        }
+
         return(
             <Navbar bg="light" expand="lg">
                 <Navbar.Brand href="/">Sito Progetto</Navbar.Brand>
@@ -51,8 +208,8 @@ class NavBar extends React.Component {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
                         <Nav.Link href="/">Home</Nav.Link>
-                        <Nav.Link href="/">B&B</Nav.Link>
-                        <Nav.Link href="/">Casa Vacanza</Nav.Link>
+                        <Nav.Link onClick = {this.cercaBB}>B&B</Nav.Link>
+                        <Nav.Link onClick = {this.cercaCV}>Casa Vacanza</Nav.Link>
                     </Nav>
                         {loggato}
                 </Navbar.Collapse>
