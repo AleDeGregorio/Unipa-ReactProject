@@ -142,7 +142,7 @@ class ElencoCheck extends Component {
       />
   }
   else if(this.state.empty) {
-    const { listTitle, listBreadcrumb, items } = this.state;
+    const { listTitle, listBreadcrumb } = this.state;
     return (
       <ThemeProvider theme={theme}>
         <ListWrapper>
@@ -150,7 +150,7 @@ class ElencoCheck extends Component {
           <ListBreadcrumb>{listBreadcrumb}</ListBreadcrumb>
           <DragDropContext onDragEnd={this.onDragEnd}>
             <Droppable droppableId="droppabe-list">
-              {(provided, snapshot) => (
+              {(provided) => (
                 <div ref={provided.innerRef}>
                   <p>Attualmente non è presente nessuna prenotazione accettata</p>
                 </div>
@@ -170,7 +170,7 @@ class ElencoCheck extends Component {
           <ListBreadcrumb>{listBreadcrumb}</ListBreadcrumb>
           <DragDropContext onDragEnd={this.onDragEnd}>
             <Droppable droppableId="droppabe-list">
-              {(provided, snapshot) => (
+              {(provided) => (
                 <div ref={provided.innerRef}>
                   {items.map((number, key) => (
                     <Draggable

@@ -133,6 +133,10 @@ class ModificaStanza extends React.Component {
   }
 
   render() {
+    var stanza = this.state.dati_stanza;
+
+    var tipo_stanza = '';
+
     if(!localStorage.getItem('logged') || !localStorage.getItem('proprietario')) {
       return <Redirect
           to={{
@@ -156,9 +160,6 @@ class ModificaStanza extends React.Component {
       />
     }
     else if(this.state.empty) {
-      var stanza = this.state.dati_stanza;
-
-      var tipo_stanza = '';
 
       return (
           <div className="background">
@@ -175,9 +176,6 @@ class ModificaStanza extends React.Component {
       );
     }
     else {
-      var stanza = this.state.dati_stanza;
-
-      var tipo_stanza = '';
 
       switch(stanza.tipologia) {
         case 1:

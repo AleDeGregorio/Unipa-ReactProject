@@ -1,6 +1,6 @@
 import React from 'react'
 import './Earning.css'
-import {Accordion, Form, Col, Button, Card} from 'react-bootstrap'
+import {Accordion, Form, Col, Card} from 'react-bootstrap'
 //import {Card, CardDeck, Row} from 'react-bootstrap'
 import {MdExpandMore} from 'react-icons/md'
 
@@ -46,7 +46,7 @@ class Earning extends React.Component {
 
   }
 
-  onSubmit_date = (e) => {
+  onSubmit_date = () => {
 
     const data = {
       email: this.state.email_prop,
@@ -72,7 +72,7 @@ class Earning extends React.Component {
         });
   }
 
-  onSubmit_tipo_struttura = (e) => {
+  onSubmit_tipo_struttura = () => {
 
     const data = {
       email: this.state.email_prop,
@@ -99,7 +99,7 @@ class Earning extends React.Component {
         });
   }
 
-  onSubmit_nome_struttura = (e) => {
+  onSubmit_nome_struttura = () => {
 
     const data = {
       email: this.state.email_prop,

@@ -426,7 +426,7 @@ class DatiPersonali extends React.Component {
     }
 
     render() {
-        var messaggio;
+
         var documentoProp;
         var nome = this.state.nome;
         var cognome = this.state.cognome;

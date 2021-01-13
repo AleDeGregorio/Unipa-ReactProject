@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import {Col, Row, Accordion} from 'react-bootstrap'
+import React from 'react';
+import { Accordion} from 'react-bootstrap'
+// eslint-disable-next-line
 import DatePicker from './InputDate';
-import Dropdown from 'react-bootstrap/Dropdown'
-import DropdownButton from 'react-bootstrap/DropdownButton'
+//import Dropdown from 'react-bootstrap/Dropdown'
+//import DropdownButton from 'react-bootstrap/DropdownButton'
 import moment from "moment";
 import { SingleDatePicker } from "react-dates";
 import './Ricerca.css'

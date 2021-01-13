@@ -1,9 +1,7 @@
 import React from 'react';
 import Navbar from 'react-bootstrap/Navbar'
 import Dropdown from 'react-bootstrap/Dropdown'
-import DropdownButton from 'react-bootstrap/DropdownButton'
 import Nav from 'react-bootstrap/Nav'
-import { FcMenu } from 'react-icons/fc'
 import {CgProfile} from 'react-icons/cg'
 import './NavCss.css'
 import { Redirect } from 'react-router-dom';
@@ -22,11 +20,11 @@ class NavBar extends React.Component {
         }
     }
     
-    onClick = (e) => {
+    onClick = () => {
         localStorage.clear();
     }
 
-    cercaBB = (e) => {
+    cercaBB = () => {
 
         if(this.state.apiResponse !== []) {
             this.setState({
@@ -74,7 +72,7 @@ class NavBar extends React.Component {
         });
     }
 
-    cercaCV = (e) => {
+    cercaCV = () => {
 
         if(this.state.apiResponse !== []) {
             this.setState({
@@ -124,10 +122,12 @@ class NavBar extends React.Component {
 
     render() {
         var loggato = <Nav.Link href="/autenticazioneAccedi">ACCEDI</Nav.Link>;
-
+        var nome = '';
+        var cognome = '';
+        
         if(localStorage.getItem('logged') && localStorage.getItem('cliente')) {
-            var nome = localStorage.getObj('user_data')[0].nome_cl;
-            var cognome = localStorage.getObj('user_data')[0].cognome_cl;
+            nome = localStorage.getObj('user_data')[0].nome_cl;
+            cognome = localStorage.getObj('user_data')[0].cognome_cl;
             
             loggato = (
                 <Dropdown>
@@ -154,8 +154,8 @@ class NavBar extends React.Component {
         }
 
         if(localStorage.getItem('logged') && localStorage.getItem('proprietario') && localStorage.getItem('cliente')) {
-            var nome = localStorage.getObj('user_data')[0].nome_cl;
-            var cognome = localStorage.getObj('user_data')[0].cognome_cl;
+            nome = localStorage.getObj('user_data')[0].nome_cl;
+            cognome = localStorage.getObj('user_data')[0].cognome_cl;
             
             loggato = (
                 <Dropdown>

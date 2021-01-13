@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Banner from "../components/Banner";
 import { Link } from "react-router-dom";
-import {Col, Row, Accordion} from 'react-bootstrap'
+import {Accordion} from 'react-bootstrap'
 import './Riepilogo.css'
 import StyledHero from "../components/StyledHero";
 
@@ -43,7 +43,7 @@ export default class RiepilogoAlloggio extends Component {
   }
 
   render() {
-    if (dati_casa === []) {
+    if (this.state.dati_casa === []) {
       return (
         <div className="error">
           <h3> Casa vacanza non trovata...</h3>
@@ -112,7 +112,6 @@ export default class RiepilogoAlloggio extends Component {
                     case: this.state.datiRicerca,
                     posti: this.state.dati_casa.posti,
                     localita: this.state.dati_casa.localita,
-                    tipo: this.state.dati_casa.tipo_proprieta,
                     checkIn: this.state.checkIn,
                     checkOut: this.state.checkOut,
                     tipo: this.state.tipo

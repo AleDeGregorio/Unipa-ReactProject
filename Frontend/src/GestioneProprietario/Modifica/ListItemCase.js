@@ -3,7 +3,7 @@ import styled, { ThemeProvider } from 'styled-components'
 import { theme } from '../shared/theme'
 import {Link} from 'react-router-dom'
 import './ListItem.css'
-import {Card, Modal, Button} from 'react-bootstrap'
+import { Modal, Button} from 'react-bootstrap'
 
 const ListItemWrapper = styled.div`
 

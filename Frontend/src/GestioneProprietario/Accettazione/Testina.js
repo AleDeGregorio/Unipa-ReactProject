@@ -1,11 +1,14 @@
 import React from 'react';
-import {Tabs, Tab, Button, Accordion,Table} from 'react-bootstrap'
+import {Tabs, Tab} from 'react-bootstrap'
 import { Redirect } from 'react-router-dom';
 import ListPrAccettare from './ListPrAccettare';
 import ElencoCheck from './ElencoCheck';
 import './Accettazione.css'
+
 class Testina extends React.Component {
+
     constructor(props) {
+        
         super(props);
 
         this.state = {

@@ -4,7 +4,6 @@ import {Card, Modal, Button} from 'react-bootstrap'
 import './ProprietarioPage.css'
 import {SiCashapp} from "react-icons/si"
 import {RiAccountBoxLine} from "react-icons/ri"
-import {AiFillCheckSquare} from "react-icons/ai"
 import {FaHotel} from "react-icons/fa"
 import {RiMailSendLine} from "react-icons/ri"
 import {FaClipboardList} from "react-icons/fa"
@@ -177,7 +176,7 @@ class ProprietarioPage extends React.Component {
             datiTurismo = (
                 <div className="turismocont">
                     <h6 style = {{fontWeight: 'bold'}}>Ultimo invio dei dati all'ufficio competente: <span style = {{color: 'red'}}>{data_invio}</span></h6>
-                    {tasseInvio.map((tassa, key) => (
+                    {tasseInvio.map((tassa) => (
                         <div>
                             <p style = {{fontWeight: 'bold'}}>Soggiornante: {tassa.ref_soggiornante}</p>
                             <p>Periodo: {new Date(tassa.data_partenza).toLocaleDateString()}-{new Date(tassa.data_ritorno).toLocaleDateString()}</p>

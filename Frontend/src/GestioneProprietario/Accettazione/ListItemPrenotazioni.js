@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import styled, { ThemeProvider } from 'styled-components'
 import { theme } from '../shared/theme'
-import {Link} from 'react-router-dom'
 import './Accettazione.css'
-import {Card, Modal, Button} from 'react-bootstrap'
+import {Modal, Button} from 'react-bootstrap'
 
 const ListItemWrapper = styled.div`
 
@@ -394,7 +393,6 @@ class ListItemPrenotazioni extends Component {
     const {
       showSelect,
       editName,
-      textSecond,
       textValue,
       isDeleted,
       isAlive
@@ -403,9 +401,7 @@ class ListItemPrenotazioni extends Component {
     const {//definisci variabili
       hasActions,
       image,
-      nome,
-      stanza
-    } = this.props.number
+      nome    } = this.props.number
 
     const {
       id_prenotazione,
@@ -438,8 +434,8 @@ class ListItemPrenotazioni extends Component {
                       </div>
                       </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick = {e => this.accetta({id_prenotazione, data_partenza, data_ritorno, tipo_proprieta, ref_proprieta, id_stanza})}>Accetta</Button>
-            <Button variant="secondary" onClick={e => this.rifiuta(id_prenotazione)}>Rifiuta</Button>
+            <Button variant="secondary" onClick = {() => this.accetta({id_prenotazione, data_partenza, data_ritorno, tipo_proprieta, ref_proprieta, id_stanza})}>Accetta</Button>
+            <Button variant="secondary" onClick={() => this.rifiuta(id_prenotazione)}>Rifiuta</Button>
             <Button variant="secondary" onClick={this.handleClose}>Chiudi</Button>                    
           </Modal.Footer>
       </Modal>
@@ -459,7 +455,7 @@ class ListItemPrenotazioni extends Component {
                       </div>
                       </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={e => this.rifiuta(id_prenotazione)}>Rifiuta</Button>
+            <Button variant="secondary" onClick={() => this.rifiuta(id_prenotazione)}>Rifiuta</Button>
             <Button variant="secondary" onClick={this.handleClose}>Chiudi</Button>                   
           </Modal.Footer>
       </Modal>
@@ -469,7 +465,7 @@ class ListItemPrenotazioni extends Component {
     if ({tipo_proprieta}.tipo_proprieta === 'cv') {
       messaggioControllo = (
         <div className="listitem__select__list__item">
-          <span onClick = {e => this.checkSoggiornante({ref_soggiornante, data_ritorno})}>Controllo soggiornante</span>
+          <span onClick = {() => this.checkSoggiornante({ref_soggiornante, data_ritorno})}>Controllo soggiornante</span>
           {idoneita}
         </div>
       );
@@ -480,13 +476,13 @@ class ListItemPrenotazioni extends Component {
         <div>
           <div className="listitem__select__list__item">
             <div className="LinkList">
-              <span onClick = {e => this.accetta({id_prenotazione, data_partenza, data_ritorno, tipo_proprieta, ref_proprieta, id_stanza})}>
+              <span onClick = {() => this.accetta({id_prenotazione, data_partenza, data_ritorno, tipo_proprieta, ref_proprieta, id_stanza})}>
                 Accetta
               </span>
             </div>
           </div>
           <div className="listitem__select__list__item">
-            <span onClick={e => this.rifiuta(id_prenotazione)}>Rifiuta</span>
+            <span onClick={() => this.rifiuta(id_prenotazione)}>Rifiuta</span>
           </div>
         </div>
       );

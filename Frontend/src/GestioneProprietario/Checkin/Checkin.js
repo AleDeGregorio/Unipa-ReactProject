@@ -1,7 +1,7 @@
 /*CSS FATTO*/ 
 
 import React from 'react';    
-import {Form, Col, Button, Accordion, Card, Alert} from 'react-bootstrap'
+import {Form, Col, Button, Alert} from 'react-bootstrap'
 import './Checkin.css'
 import moment from "moment";
 

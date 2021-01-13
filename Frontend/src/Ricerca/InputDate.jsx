@@ -1,11 +1,8 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
 import { SingleDatePicker } from "react-dates";
 
-import { InputLabel, InputGroup } from "../comune/input";
-import { Dropdown } from "react-bootstrap";
 
 
 

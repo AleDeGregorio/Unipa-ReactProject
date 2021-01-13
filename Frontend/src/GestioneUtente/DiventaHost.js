@@ -1,5 +1,5 @@
 import React from 'react'
-import {Card, CardDeck, Form, Jumbotron, Button, Accordion, Alert} from 'react-bootstrap'
+import {Card, Form, Button, Alert} from 'react-bootstrap'
 import './DiventaHost.css'
 import { Redirect } from 'react-router-dom';
 
@@ -104,7 +104,7 @@ class DiventaHost extends React.Component {
         });
     }
 
-    onClick = (e) => {
+    onClick = () => {
 
         const data = {
             tipo: '',

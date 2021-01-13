@@ -1,6 +1,6 @@
 import React from 'react';
 import './HomePage.css';
-import {Card} from 'react-bootstrap'
+//import {Card} from 'react-bootstrap'
 //import { CardDeck } from 'react-bootstrap'
 //import ProvaRicerca from '../ProvaRicerca/ProvaRicerca';
 //import Carta from './Carta'

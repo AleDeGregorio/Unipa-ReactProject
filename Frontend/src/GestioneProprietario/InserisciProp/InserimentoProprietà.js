@@ -2,7 +2,7 @@
 
 import React from "react";
 //import camera from "../assets/camera.svg";   
-import {Form, Button} from "react-bootstrap"
+import { Form } from "react-bootstrap"
 
 import "./InserimentoProprietà.css";
 

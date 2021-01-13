@@ -258,7 +258,6 @@ class ListItemCheck extends Component {
     const {
       showSelect,
       editName,
-      textSecond,
       textValue,
       isDeleted,
       isAlive

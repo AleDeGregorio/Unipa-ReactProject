@@ -194,6 +194,8 @@ class ModificaBeB extends React.Component {
   }
 
   render() {
+    var bb = this.state.dati_bb ? this.state.dati_bb : '';
+
     if(!localStorage.getItem('logged') || !localStorage.getItem('proprietario')) {
       return <Redirect
           to={{
@@ -217,7 +219,6 @@ class ModificaBeB extends React.Component {
       />
     }
     else if(this.state.empty) {
-      var bb = this.state.dati_bb ? this.state.dati_bb : '';
 
       return (
           <div className="background">
@@ -231,7 +232,6 @@ class ModificaBeB extends React.Component {
       );
     }
     else {
-      var bb = this.state.dati_bb ? this.state.dati_bb : '';
 
       return (
           <div className="background">

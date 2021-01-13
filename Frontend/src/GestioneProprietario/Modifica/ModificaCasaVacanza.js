@@ -257,6 +257,8 @@ class ModificaCasaVacanza extends React.Component {
   }
 
   render() {
+    var casa = this.state.dati_casa;
+    
     if(!localStorage.getItem('logged') || !localStorage.getItem('proprietario')) {
       return <Redirect
           to={{
@@ -280,7 +282,6 @@ class ModificaCasaVacanza extends React.Component {
       />
     }
     else if(this.state.empty) {
-      var casa = this.state.dati_casa;
 
       return (
           <div className="background">
@@ -294,7 +295,6 @@ class ModificaCasaVacanza extends React.Component {
       );
     }
     else {
-      var casa = this.state.dati_casa;
 
       return (
         <div className="background">

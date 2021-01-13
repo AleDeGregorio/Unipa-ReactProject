@@ -134,7 +134,7 @@ class List extends Component {
     }
     
     else if(this.state.empty) {
-      const { listTitle, listBreadcrumb, items } = this.state;
+      const { listTitle, listBreadcrumb } = this.state;
       return (
         <ThemeProvider theme={theme}>
           <ListWrapper>
