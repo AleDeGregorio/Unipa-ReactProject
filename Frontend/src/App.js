@@ -9,9 +9,9 @@ import Footer from './components/Footer'
 // Pagine generali
 import HomePage from './components/HomePage'
 import ErrorPage from './components/ErrorPage'
-import Alloggi from './Pagine/Alloggi'
-import RiepilogoAlloggio from './Pagine/RiepilogoAlloggio';
-import BandB from './Pagine/B&B'
+import Alloggi from './Ricerca/Alloggi'
+import RiepilogoAlloggio from './Ricerca/RiepilogoAlloggio';
+
 //import PaginaDettagli from './PaginaDettagli/PaginaDettagli'
 
 //Prenotazione
@@ -51,10 +51,10 @@ import ElencoListaStanze from './GestioneProprietario/Modifica/ElencoListaStanze
 import ModificaStanza from './GestioneProprietario/Modifica/ModificaStanza'
 
 // Gestione account
-import DatiPersonali from './GestioneProprietario/DatiPersonali'
+import DatiPersonali from './DatiPersonali/DatiPersonali'
 
 // Resoconto guadagni
-import Earning2 from './GestioneProprietario/Earning/Earning2'
+import Earning from './GestioneProprietario/Earning/Earning'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 
@@ -178,12 +178,6 @@ class App extends React.Component {
                 exact path="/Alloggio"
                 render = { (props) => (
                   <RiepilogoAlloggio {...props}/>
-                )}
-              />
-              <Route 
-                exact path="/B&B"
-                render = { (props) => (
-                  <BandB {...props}/>
                 )}
               />
 
@@ -336,7 +330,7 @@ class App extends React.Component {
               <Route 
                 exact path="/Earning"
                 render = { (props) => (
-                  <Earning2 {...props}/>
+                  <Earning {...props}/>
                 )}
               />
 

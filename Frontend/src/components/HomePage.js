@@ -1,5 +1,4 @@
 import React from 'react';
-import Carousello from './Carousel';
 import './HomePage.css';
 import {Card} from 'react-bootstrap'
 //import { CardDeck } from 'react-bootstrap'
@@ -7,13 +6,13 @@ import {Card} from 'react-bootstrap'
 //import Carta from './Carta'
 //import SecondaRicerca from '../secondaRicerca/secondaRicerca'
 //import SearchPage from '../RicercaVecchia/SearchPage'
-import RicercaFinale from './RicercaFinale'
+import Ricerca from '../Ricerca/Ricerca'
 
 function HomePage(){
     return(
         <div className="HomePage">
             <div className="ricerca">
-                <RicercaFinale/>
+                <Ricerca/>
             </div>
             <div className="scritta">
                 <h1>Cerca l'esperienza giusta per te</h1>

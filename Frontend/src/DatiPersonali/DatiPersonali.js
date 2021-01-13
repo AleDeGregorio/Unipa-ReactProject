@@ -43,7 +43,7 @@ class DatiPersonali extends React.Component {
                 cognome: localStorage.getObj('user_data')[0].cognome_cl,
                 nascita: new Date(localStorage.getObj('user_data')[0].data_nascita_cl).toLocaleDateString(),
                 num_documentoTXT: localStorage.getObj('user_data')[1] ? localStorage.getObj('user_data')[1].num_documento : '',
-                telefonoTXT: localStorage.getObj('user_data')[1].telefono_prop ? localStorage.getObj('user_data')[1].telefono_prop : localStorage.getObj('user_data')[0].telefono_cl,
+                telefonoTXT: localStorage.getObj('user_data')[1] ? localStorage.getObj('user_data')[1].telefono_prop : localStorage.getObj('user_data')[0].telefono_cl,
                 email: localStorage.getItem('email')
             })
         }

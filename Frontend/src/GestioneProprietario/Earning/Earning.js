@@ -6,7 +6,7 @@ import {MdExpandMore} from 'react-icons/md'
 
 import { Redirect } from 'react-router-dom';
 
-class Earning2 extends React.Component {
+class Earning extends React.Component {
 
   constructor(props) {
     super(props);
@@ -50,8 +50,8 @@ class Earning2 extends React.Component {
 
     const data = {
       email: this.state.email_prop,
-      data_1: this.state.data_1,
-      data_2: this.state.data_2
+      data_1: new Date(this.state.data_1).toLocaleDateString(),
+      data_2: new Date(this.state.data_2).toLocaleDateString()
     };
 
     fetch('http://localhost:9000/getGuadagni/guadagniProprietario', {
@@ -76,8 +76,8 @@ class Earning2 extends React.Component {
 
     const data = {
       email: this.state.email_prop,
-      data_1: this.state.data_1,
-      data_2: this.state.data_2,
+      data_1: new Date(this.state.data_1).toLocaleDateString(),
+      data_2: new Date(this.state.data_2).toLocaleDateString(),
       tipo: this.state.tipo_struttura
     };
 
@@ -103,8 +103,8 @@ class Earning2 extends React.Component {
 
     const data = {
       email: this.state.email_prop,
-      data_1: this.state.data_1,
-      data_2: this.state.data_2,
+      data_1: new Date(this.state.data_1).toLocaleDateString(),
+      data_2: new Date(this.state.data_2).toLocaleDateString(),
       id: this.state.id_struttura
     };
 
@@ -303,8 +303,8 @@ class Earning2 extends React.Component {
               {this.state.data_2 ? new Date(this.state.data_2).toLocaleDateString() : 'Selezionare una data'} 
             </p>
             <p>Guadagni: &nbsp;
-              {typeof this.state.apiResponse[3] !== 'undefined' ? this.state.apiResponse[3][0].tot_guadagni : ".0"}
-              {(typeof this.state.apiResponse[4] !== 'undefined' && typeof this.state.apiResponse[4][0] !== 'undefined') ? this.state.apiResponse[4][0].tot_guadagni : ".0"} euro
+              {this.state.apiResponse[3] && this.state.apiResponse[3][0] ? this.state.apiResponse[3][0].tot_guadagni : ".0"}
+              {(this.state.apiResponse[4] && this.state.apiResponse[4][0]) ? this.state.apiResponse[4][0].tot_guadagni : ".0"} euro
             </p>
           </div>
         </div>
@@ -313,4 +313,4 @@ class Earning2 extends React.Component {
   }
   } 
 }
-export default Earning2;
+export default Earning;

@@ -5,11 +5,11 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import moment from "moment";
 import { SingleDatePicker } from "react-dates";
-import './RicercaFinale.css'
+import './Ricerca.css'
 
 import { Redirect } from "react-router-dom"
 
-class RicercaFinale extends React.Component {
+class Ricerca extends React.Component {
 
     constructor(props) {
         super(props);
@@ -305,4 +305,4 @@ class RicercaFinale extends React.Component {
     }
 }
 
-export default RicercaFinale;
+export default Ricerca;
