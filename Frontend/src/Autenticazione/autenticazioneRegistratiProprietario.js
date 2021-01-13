@@ -14,6 +14,7 @@ class autenticazioneRegistratiProprietario extends React.Component {
         this.state = {
             email: '',
             password: '',
+            confirmPassword: '',
             nome: '',
             cognome: '',
             nascita: '',
@@ -21,6 +22,7 @@ class autenticazioneRegistratiProprietario extends React.Component {
             telefono: '',
             apiResponse: [],
             error:false,
+            errorPswd: false,
             errorMessage:'',
             success: false, 
             empty: false,
@@ -43,6 +45,14 @@ class autenticazioneRegistratiProprietario extends React.Component {
 
     onSubmitInsert = (e) => {
         e.preventDefault();
+
+        if(this.state.password !== this.state.confirmPassword) {
+            this.setState({ 
+                errorPswd: true
+            });
+
+            return;
+        }
 
         const data = {
             email: this.state.email,
@@ -81,6 +91,8 @@ class autenticazioneRegistratiProprietario extends React.Component {
     }
 
     render() {
+        var pswdError;
+
         if(this.state.success) {
             return (
                 <div className = 'Errore'>
@@ -89,7 +101,7 @@ class autenticazioneRegistratiProprietario extends React.Component {
                 </div>
             );
         }
-        else if (this.state.error) {
+        if (this.state.error) {
             return <Redirect 
             to = {{
               pathname: "/ErrorPage",
@@ -100,7 +112,7 @@ class autenticazioneRegistratiProprietario extends React.Component {
             }}
           />
         }
-        else if(this.state.errorMessage) {
+        if(this.state.errorMessage) {
             return (
                 <Form className="contenitoreAutenticazione" onSubmit={this.props.onSubmitInsert}>
                     <div className="contentNewCheckAutenticazione">
@@ -112,106 +124,121 @@ class autenticazioneRegistratiProprietario extends React.Component {
                 </Form>
             );
         }
-        else {
-            return (
-                <Form className="contenitoreAutenticazione" onSubmit={this.props.onSubmitInsert}>
-                    <div className="contentNewCheckAutenticazione">
-                        <h2>Iscriviti</h2>
-
-                        <Form.Group as={Col} controlId="formGridName">
-                            <Form.Label>Nome</Form.Label>
-                            <Form.Control 
-                                type = "name" 
-                                placeholder = "Nome" 
-                                id = 'nome'
-                                name = 'nome'
-                                onChange = {this.onChange} 
-                                required 
-                            />
-                        </Form.Group>
-
-                        <Form.Group as={Col} controlId="formGridSurname">
-                            <Form.Label>Cognome</Form.Label>
-                            <Form.Control 
-                                type = "surname" 
-                                placeholder = "Cognome" 
-                                id = 'cognome'
-                                name = 'cognome'
-                                onChange = {this.onChange} 
-                                required
-                            />
-                        </Form.Group>
-
-                        <Form.Group as={Col} controlId="formGridEmail">
-                            <Form.Label>E-mail</Form.Label>
-                            <Form.Control 
-                                type = "email" 
-                                placeholder = "E-mail" 
-                                id = 'email'
-                                name = 'email'
-                                onChange = {this.onChange} 
-                                required 
-                            />
-                        </Form.Group>
-
-                        <Form.Group as={Col} controlId="formGridPassword">
-                            <Form.Label>Password</Form.Label>
-                            <Form.Control 
-                                type = "password" 
-                                placeholder = "Password" 
-                                id = 'password'
-                                name = 'password'
-                                onChange = {this.onChange} 
-                                required
-                            />
-                        </Form.Group>
-
-                        <Form.Group as={Col} controlId="formGridIndirizzo">
-                            <Form.Label>Telefono</Form.Label>
-                            <Form.Control 
-                                type = "tel" 
-                                placeholder = "Telefono" 
-                                id = 'telefono'
-                                name = 'telefono'
-                                onChange = {this.onChange} 
-                                required
-                            />
-                        </Form.Group>
-
-                        <Form.Group as={Col} controlId="formGridIndirizzo">
-                            <Form.Label>Numero documento</Form.Label>
-                            <Form.Control 
-                                type = "tel" 
-                                placeholder = "Numero documento" 
-                                id = 'num_documento'
-                                name = 'num_documento'
-                                onChange = {this.onChange} 
-                                required
-                            />
-                        </Form.Group>
-
-                        <Form.Group as={Col} controlId="formGridCap">
-                            <Form.Label>Data di nascita</Form.Label>
-                            <Form.Control 
-                                type="date" 
-                                required 
-                                className="inputSignUp" 
-                                onChange={this.onChange} 
-                                id = 'nascita'
-                                name = 'nascita'
-                                max = {this.state.maxDate}
-                            />
-                        </Form.Group>
-
-                        <Link to="/autenticazioneRegistrati">Torna indietro</Link>
-                    </div>
-                
-                    <Button variant="primary" className="pulsante" onClick = {this.onSubmitInsert}>
-                        Registrati
-                    </Button>
-                </Form>
+        if(this.state.errorPswd) {
+            pswdError = (
+                <p style = {{color: 'red'}}>Password non coincidenti</p>
             );
         }
+
+        return (
+            <Form className="contenitoreAutenticazione" onSubmit={this.props.onSubmitInsert}>
+                <div className="contentNewCheckAutenticazione">
+                    <h2>Iscriviti</h2>
+
+                    <Form.Group as={Col} controlId="formGridName">
+                        <Form.Label>Nome</Form.Label>
+                        <Form.Control 
+                            type = "name" 
+                            placeholder = "Nome" 
+                            id = 'nome'
+                            name = 'nome'
+                            onChange = {this.onChange} 
+                            required 
+                        />
+                    </Form.Group>
+
+                    <Form.Group as={Col} controlId="formGridSurname">
+                        <Form.Label>Cognome</Form.Label>
+                        <Form.Control 
+                            type = "surname" 
+                            placeholder = "Cognome" 
+                            id = 'cognome'
+                            name = 'cognome'
+                            onChange = {this.onChange} 
+                            required
+                        />
+                    </Form.Group>
+
+                    <Form.Group as={Col} controlId="formGridEmail">
+                        <Form.Label>E-mail</Form.Label>
+                        <Form.Control 
+                            type = "email" 
+                            placeholder = "E-mail" 
+                            id = 'email'
+                            name = 'email'
+                            onChange = {this.onChange} 
+                            required 
+                        />
+                    </Form.Group>
+
+                    <Form.Group as={Col} controlId="formGridPassword">
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control 
+                            type = "password" 
+                            placeholder = "Password" 
+                            id = 'password'
+                            name = 'password'
+                            onChange = {this.onChange} 
+                            required
+                        />
+                        <Form.Label>Conferma password</Form.Label>
+                            <Form.Control 
+                                type="password" 
+                                title="Almeno 8 caratteri, una lettera maiuscola e un numero" 
+                                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$"
+                                placeholder="Conferma password" 
+                                id = 'confirmPassword'
+                                name = 'confirmPassword'
+                                onChange={this.onChange} 
+                                required/>
+                        {pswdError}
+                    </Form.Group>
+
+                    <Form.Group as={Col} controlId="formGridIndirizzo">
+                        <Form.Label>Telefono</Form.Label>
+                        <Form.Control 
+                            type = "tel" 
+                            placeholder = "Telefono" 
+                            id = 'telefono'
+                            name = 'telefono'
+                            onChange = {this.onChange} 
+                            required
+                        />
+                    </Form.Group>
+
+                    <Form.Group as={Col} controlId="formGridIndirizzo">
+                        <Form.Label>Numero documento</Form.Label>
+                        <Form.Control 
+                            type = "tel" 
+                            placeholder = "Numero documento" 
+                            id = 'num_documento'
+                            name = 'num_documento'
+                            onChange = {this.onChange} 
+                            required
+                        />
+                    </Form.Group>
+
+                    <Form.Group as={Col} controlId="formGridCap">
+                        <Form.Label>Data di nascita</Form.Label>
+                        <Form.Control 
+                            type="date" 
+                            required 
+                            className="inputSignUp" 
+                            onChange={this.onChange} 
+                            id = 'nascita'
+                            name = 'nascita'
+                            max = {this.state.maxDate}
+                        />
+                    </Form.Group>
+
+                    <Link to="/autenticazioneRegistrati">Torna indietro</Link>
+                </div>
+            
+                <Button variant="primary" className="pulsante" onClick = {this.onSubmitInsert}>
+                    Registrati
+                </Button>
+            </Form>
+        );
     }
 }
 export default autenticazioneRegistratiProprietario

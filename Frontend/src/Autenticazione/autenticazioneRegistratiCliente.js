@@ -14,12 +14,14 @@ class autenticazioneRegistratiCliente extends React.Component {
         this.state = {
             email: '',
             password: '',
+            confirmPassword: '',
             nome: '',
             cognome: '',
             nascita: '',
             telefono: '',
             apiResponse: [],
             error:false,
+            errorPswd: false,
             errorMessage:'',
             success: false,
             empty: false,
@@ -36,12 +38,20 @@ class autenticazioneRegistratiCliente extends React.Component {
         this.setState({ maxDate: today.toISOString().slice(0,10) })
     }
 
-  onChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
-  }
+    onChange = (e) => {
+        this.setState({ [e.target.name]: e.target.value });
+    }
 
     onSubmitInsert = (e) => {
         e.preventDefault();
+
+        if(this.state.password !== this.state.confirmPassword) {
+            this.setState({ 
+                errorPswd: true
+            });
+
+            return;
+        }
 
         const data = {
             email: this.state.email,
@@ -79,6 +89,8 @@ class autenticazioneRegistratiCliente extends React.Component {
     }
 
     render() {
+        var pswdError;
+
         if(this.state.success) {
             return (
                 <div className = 'Errore'>
@@ -87,7 +99,7 @@ class autenticazioneRegistratiCliente extends React.Component {
                 </div>
             );
         }
-        else if (this.state.error) {
+        if (this.state.error) {
             return <Redirect 
             to = {{
               pathname: "/ErrorPage",
@@ -98,7 +110,7 @@ class autenticazioneRegistratiCliente extends React.Component {
             }}
           />
         }
-        else if(this.state.empty) {
+        if(this.state.empty) {
             return(
                 <Form className="contenitoreAutenticazione" onSubmit={this.onSubmitInsert}>
                     <div className="contentNewCheckAutenticazione">
@@ -109,61 +121,76 @@ class autenticazioneRegistratiCliente extends React.Component {
                 </Form>
             );
         }
-        else {
-            return(
-                <Form className="contenitoreAutenticazione" onSubmit={this.onSubmitInsert}>
-                    <div className="contentNewCheckAutenticazione">
-                        <h2>Iscriviti</h2>
-                <Form.Group as={Col} controlId="formGridName">
-                            <Form.Label>Nome</Form.Label>
-                            <Form.Control type="name" placeholder="Nome" id = 'nome' name = 'nome' onChange={this.onChange} required />
-                        </Form.Group>
-    
-                        <Form.Group as={Col} controlId="formGridSurname">
-                        <Form.Label>Cognome</Form.Label>
-                            <Form.Control type="surname" placeholder="Cognome" id = 'cognome' name = 'cognome' onChange={this.onChange} required/>
-                        </Form.Group>
-                    <Form.Group as={Col} controlId="formGridEmail">
-                    <Form.Label>E-mail</Form.Label>
-                            <Form.Control type="email" placeholder="E-mail" id = 'email' name = 'email' onChange={this.onChange} required />
-                        </Form.Group>
-    
-                        <Form.Group as={Col} controlId="formGridPassword">
-                        <Form.Label>Password</Form.Label>
-                            <Form.Control 
-                                type="password" 
-                                title="Almeno 8 caratteri, una lettera maiuscola e un numero" 
-                                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$"
-                                placeholder="Password" 
-                                id = 'password'
-                                name = 'password'
-                                onChange={this.onChange} 
-                                required/>
-                        </Form.Group>
-                    <Form.Group as={Col} controlId="formGridIndirizzo">
-                    <Form.Label>Telefono</Form.Label>
-                    <Form.Control 
-                        type="tel" 
-                        placeholder="Telefono" 
-                        id = 'telefono'
-                        name = 'telefono'
-                        onChange={this.onChange} 
-                        required/>
-                    </Form.Group>
-    
-                    <Form.Group as={Col} controlId="formGridCap">
-                    <Form.Label>Data di nascita</Form.Label>
-                    <Form.Control type="date" required className="inputSignUp" id = 'nascita' max = {this.state.maxDate} name = 'nascita' onChange={this.onChange} />
-                    </Form.Group>
-                    <Link to="/autenticazioneRegistrati">Torna indietro</Link>
-                </div>
-                
-                <Button variant="primary" type="submit" className="pulsante">
-                        Registrati
-                    </Button>
-                </Form>
+        if(this.state.errorPswd) {
+            pswdError = (
+                <p style = {{color: 'red'}}>Password non coincidenti</p>
             );
         }
+
+        return(
+            <Form className="contenitoreAutenticazione" onSubmit={this.onSubmitInsert}>
+                <div className="contentNewCheckAutenticazione">
+                    <h2>Iscriviti</h2>
+            <Form.Group as={Col} controlId="formGridName">
+                        <Form.Label>Nome</Form.Label>
+                        <Form.Control type="name" placeholder="Nome" id = 'nome' name = 'nome' onChange={this.onChange} required />
+                    </Form.Group>
+
+                    <Form.Group as={Col} controlId="formGridSurname">
+                    <Form.Label>Cognome</Form.Label>
+                        <Form.Control type="surname" placeholder="Cognome" id = 'cognome' name = 'cognome' onChange={this.onChange} required/>
+                    </Form.Group>
+                <Form.Group as={Col} controlId="formGridEmail">
+                <Form.Label>E-mail</Form.Label>
+                        <Form.Control type="email" placeholder="E-mail" id = 'email' name = 'email' onChange={this.onChange} required />
+                    </Form.Group>
+
+                    <Form.Group as={Col} controlId="formGridPassword">
+                    <Form.Label>Password</Form.Label>
+                        <Form.Control 
+                            type="password" 
+                            title="Almeno 8 caratteri, una lettera maiuscola e un numero" 
+                            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$"
+                            placeholder="Password" 
+                            id = 'password'
+                            name = 'password'
+                            onChange={this.onChange} 
+                            required/>
+                    <Form.Label>Conferma password</Form.Label>
+                        <Form.Control 
+                            type="password" 
+                            title="Almeno 8 caratteri, una lettera maiuscola e un numero" 
+                            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$"
+                            placeholder="Conferma password" 
+                            id = 'confirmPassword'
+                            name = 'confirmPassword'
+                            onChange={this.onChange} 
+                            required/>
+                        {pswdError}
+                    </Form.Group>
+                <Form.Group as={Col} controlId="formGridIndirizzo">
+                <Form.Label>Telefono</Form.Label>
+                <Form.Control 
+                    type="tel" 
+                    placeholder="Telefono" 
+                    id = 'telefono'
+                    name = 'telefono'
+                    onChange={this.onChange} 
+                    required/>
+                </Form.Group>
+
+                <Form.Group as={Col} controlId="formGridCap">
+                <Form.Label>Data di nascita</Form.Label>
+                <Form.Control type="date" required className="inputSignUp" id = 'nascita' max = {this.state.maxDate} name = 'nascita' onChange={this.onChange} />
+                </Form.Group>
+                <Link to="/autenticazioneRegistrati">Torna indietro</Link>
+            </div>
+            
+            <Button variant="primary" type="submit" className="pulsante">
+                    Registrati
+                </Button>
+            </Form>
+        );
     }
 }
 export default autenticazioneRegistratiCliente
