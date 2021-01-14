@@ -23,20 +23,85 @@ var { GeneralError, BadRequest, NotFound } = require('../utils/errors');
 
 // utility function for table "proprietario"
 
-// return all table
-const all = async () => {
+// insert new proprietario with encrypted password
+const insertUser = async(req) => {
     return new Promise((resolve, reject) => {
 
-        Connection.query('SELECT * FROM proprietario', (err, results) => {
-            if(err) {
-                console.log(err);
-                return reject(new GeneralError('Si è verificato un errore'));
+        Connection.query(
+            'SELECT @pass := SHA2("' + req.password + '", 512); ' +
+            'INSERT INTO proprietario VALUES ' +
+            '("' + req.email + '", @pass, "' + req.nome + '", "' + req.cognome + '", (STR_TO_DATE("' + req.nascita + '","%d/%m/%Y")), "' + req.num_documento +
+            '", "' + req.telefono + '", NULL); ',
+            (err, results) => {
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new BadRequest("Si è verificato un errore nell'inserimento"));
+                }
+                resolve(results);
             }
-            if(results.length < 1) {
-                return reject(new NotFound('Nessun proprietario registrato'));
+        )
+    });
+}
+
+// insert new proprietario from cliente
+const insertProprietarioCliente = async(req) => {
+    return new Promise((resolve, reject) => {
+
+        Connection.query(
+            'INSERT INTO proprietario VALUES ' +
+            '("' + req.email + '", "' + req.password + '", "' + req.nome + '", "' + req.cognome + '", (STR_TO_DATE("' + req.nascita + '","%d/%m/%Y")), "' + req.num_documento +
+            '", "' + req.telefono + '", NULL); ',
+            (err, results) => {
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new BadRequest("Si è verificato un errore nell'inserimento"));
+                }
+                resolve(results);
             }
-            resolve(results);
-        });
+        )
+    });
+}
+
+// login using encrypted password
+const login = async(req) => {
+    return new Promise((resolve, reject) => {
+
+        Connection.query(
+            'SELECT * ' + 
+            'FROM proprietario ' +
+            'WHERE email_prop = "' + req.email + '"; ',
+            (err, results) => {
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Proprietario non trovato'));
+                }
+                else{
+                    // istanziamo l'algoritmo di hashing
+                    let pwdhash = crypto.createHash('sha512');
+                    // cifriamo la password
+                    pwdhash.update(req.password);
+                    // otteniamo la stringa esadecimale
+                    let encpwd = pwdhash.digest('hex');
+
+                    if(encpwd != results[0].password_prop) {
+                        return reject(new BadRequest('Password errata'));
+                    }
+                    else {
+                        console.log('Utente autenticato');
+                        resolve(results);
+                    }
+                }
+            }
+        );
     });
 }
 
@@ -57,6 +122,28 @@ const getUser = async(req) => {
                 }
             resolve(results);
         });
+    });
+}
+
+// get ultima data invio dati ufficio turismo
+const getDataInvio = async(req) => {
+    return new Promise((resolve, reject) => {
+
+        Connection.query(
+            'SELECT ultimo_invio_dati ' +
+            'FROM proprietario ' +
+            'WHERE email_prop = "' + req.email + '"; ',
+            (err, results) => {
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessun proprietario trovato'));
+                }
+                resolve(results);
+            }
+        );
     });
 }
 
@@ -192,51 +279,6 @@ const updateUserPassword= async(req) => {
     });
 }
 
-// insert new proprietario with encrypted password
-const insertUser = async(req) => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query(
-            'SELECT @pass := SHA2("' + req.password + '", 512); ' +
-            'INSERT INTO proprietario VALUES ' +
-            '("' + req.email + '", @pass, "' + req.nome + '", "' + req.cognome + '", (STR_TO_DATE("' + req.nascita + '","%d/%m/%Y")), "' + req.num_documento +
-            '", "' + req.telefono + '", NULL); ',
-            (err, results) => {
-                if(err) {
-                    console.log(err);
-                    return reject(new GeneralError('Si è verificato un errore'));
-                }
-                if(results.length < 1) {
-                    return reject(new BadRequest("Si è verificato un errore nell'inserimento"));
-                }
-                resolve(results);
-            }
-        )
-    });
-}
-
-// insert new proprietario from cliente
-const insertProprietarioCliente = async(req) => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query(
-            'INSERT INTO proprietario VALUES ' +
-            '("' + req.email + '", "' + req.password + '", "' + req.nome + '", "' + req.cognome + '", (STR_TO_DATE("' + req.nascita + '","%d/%m/%Y")), "' + req.num_documento +
-            '", "' + req.telefono + '", NULL); ',
-            (err, results) => {
-                if(err) {
-                    console.log(err);
-                    return reject(new GeneralError('Si è verificato un errore'));
-                }
-                if(results.length < 1) {
-                    return reject(new BadRequest("Si è verificato un errore nell'inserimento"));
-                }
-                resolve(results);
-            }
-        )
-    });
-}
-
 // update fields
 const invioDati = async(req) => {
     return new Promise((resolve, reject) => {
@@ -259,62 +301,29 @@ const invioDati = async(req) => {
     });
 }
 
-// get ultima data invio dati ufficio turismo
-const getDataInvio = async(req) => {
+/* 
+    _______________
+
+    NON UTILIZZATI
+
+    _______________
+
+*/
+
+// return all table
+const all = async () => {
     return new Promise((resolve, reject) => {
 
-        Connection.query(
-            'SELECT ultimo_invio_dati ' +
-            'FROM proprietario ' +
-            'WHERE email_prop = "' + req.email + '"; ',
-            (err, results) => {
-                if(err) {
-                    console.log(err);
-                    return reject(new GeneralError('Si è verificato un errore'));
-                }
-                if(results.length < 1) {
-                    return reject(new NotFound('Nessun proprietario trovato'));
-                }
-                resolve(results);
+        Connection.query('SELECT * FROM proprietario', (err, results) => {
+            if(err) {
+                console.log(err);
+                return reject(new GeneralError('Si è verificato un errore'));
             }
-        );
-    });
-}
-
-// login using encrypted password
-const login = async(req) => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query(
-            'SELECT * ' + 
-            'FROM proprietario ' +
-            'WHERE email_prop = "' + req.email + '"; ',
-            (err, results) => {
-                if(err) {
-                    console.log(err);
-                    return reject(new GeneralError('Si è verificato un errore'));
-                }
-                if(results.length < 1) {
-                    return reject(new NotFound('Proprietario non trovato'));
-                }
-                else{
-                    // istanziamo l'algoritmo di hashing
-                    let pwdhash = crypto.createHash('sha512');
-                    // cifriamo la password
-                    pwdhash.update(req.password);
-                    // otteniamo la stringa esadecimale
-                    let encpwd = pwdhash.digest('hex');
-
-                    if(encpwd != results[0].password_prop) {
-                        return reject(new BadRequest('Password errata'));
-                    }
-                    else {
-                        console.log('Utente autenticato');
-                        resolve(results);
-                    }
-                }
+            if(results.length < 1) {
+                return reject(new NotFound('Nessun proprietario registrato'));
             }
-        );
+            resolve(results);
+        });
     });
 }
 

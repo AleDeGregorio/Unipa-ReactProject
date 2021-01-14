@@ -178,7 +178,7 @@ CREATE TABLE prenotazione
 	id_prenotazione int NOT NULL AUTO_INCREMENT,
     ref_soggiornante char(16) NOT NULL,
     ref_cliente char(45) NOT NULL,
-    ref_proprietario char(45) NOT NULL,
+    ref_proprietario char(45),
     ref_proprieta int NOT NULL,
     num_soggiornanti int(10) NOT NULL,
     costo float(10) NOT NULL,
@@ -402,15 +402,16 @@ INSERT INTO tassa_soggiorno (ref_soggiornante, ref_proprietario, data_partenza, 
 -- GROUP BY pro.email_prop, p.id_proprieta;
 
 -- Esempio query vincolo 28 giorni
--- SELECT @sogg := 'SWIMSL18F28N480L';
--- SELECT @anno := 2020;
--- SELECT pre.id_prenotazione, pre.ref_soggiornante, pre.data_partenza, pre.data_ritorno, SUM(pre.data_ritorno - pre.data_partenza) AS tot_giorni
+-- SELECT @sogg := 'DGRLSS98M04G273N';
+-- SELECT @anno := 2021;
+-- SELECT @prenotazione := 507
+-- SELECT pre.ref_soggiornante, SUM(datediff(pre.data_ritorno, pre.data_partenza)) AS tot_giorni
 -- FROM prenotazione pre, proprieta pro
 -- WHERE pre.ref_proprieta = pro.id_proprieta AND
-	-- pro.tipo_proprieta = 'cv' AND pre.ref_soggiornante = @sogg AND
-    -- YEAR(pre.data_ritorno) = @anno
--- GROUP BY pre.ref_soggiornante, YEAR(pre.data_ritorno);
-
+	-- pro.tipo_proprieta = 'cv' AND pre.ref_soggiornante = 'DGRLSS98M04G273N' AND
+    -- YEAR(pre.data_ritorno) = 2021 AND pre.id_prenotazione != 507 AND pre.accettata IS NOT NULL;
+    
+    
 -- Query per ricercare alloggi in base a vari filtri
 -- il valore di default di ciascun campo deve essere '%%'
 -- se l'utente decide di usare quel filtro, allora il valore del campo sarà sostituito, altrimenti rimarrà '%%'

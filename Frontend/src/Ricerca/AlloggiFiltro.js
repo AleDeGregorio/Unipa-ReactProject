@@ -71,18 +71,18 @@ class AlloggiFilter extends React.Component {
   setStartDate = (e) => {
     this.setState({ startDate: e }, () => {
 
-      var ngiorni = this.state.endDate.diff(this.state.startDate, 'days');
+      var ngiorni = this.state.endDate ? this.state.endDate.diff(this.state.startDate, 'days') : 1;
 
-      if(ngiorni > 1) {
+      if(ngiorni < 1) {
         ngiorni = 1;
-
-        this.setState({
-          maxCosto: ngiorni * 150,
-          costo: ngiorni*150
-        }, () => {
-          this.props.onChange(this.state);
-        });
       }
+
+      this.setState({
+        maxCosto: ngiorni * 150,
+        costo: ngiorni*150
+      }, () => {
+        this.props.onChange(this.state);
+      });
       
       if(this.state.startDate.isAfter(this.state.endDate)) {
         this.setState({ endDate: this.state.startDate.add(1, 'days'), startDate: this.state.startDate.subtract(1, 'days') }, () => {

@@ -56,9 +56,17 @@ class AlloggiContainer extends React.Component {
       checkIn: e.checkIn,
       checkOut: e.checkOut
     }, () => {
-      var inizio = this.state.datiRicerca.endDate ? new Date(this.state.datiRicerca.startDate.format()).toLocaleDateString() : new Date(moment().format()).toLocaleDateString();
-      var fine = this.state.datiRicerca.endDate ? new Date(this.state.datiRicerca.endDate.format()).toLocaleDateString() : new Date(moment().add(1, 'days').format()).toLocaleDateString();
+      var inizio = this.state.datiRicerca.endDate ? new Date(this.state.datiRicerca.startDate.format()) : new Date(moment().format());
+      var fine = this.state.datiRicerca.endDate ? new Date(this.state.datiRicerca.endDate.format()) : new Date(moment().add(1, 'days').format());
       
+      const offsetInizio = inizio.getTimezoneOffset();
+      inizio = new Date(inizio.getTime() - (offsetInizio*60*1000));
+      inizio = inizio.toISOString().slice(0,10);
+
+      const offsetFine = fine.getTimezoneOffset();
+      fine = new Date(fine.getTime() - (offsetFine*60*1000));
+      fine = fine.toISOString().slice(0,10);
+
       const data = {
         tipo: this.state.datiRicerca.tipo ? this.state.datiRicerca.tipo : '',
         localita: this.state.datiRicerca.localita ? this.state.datiRicerca.localita : '',
@@ -96,9 +104,17 @@ class AlloggiContainer extends React.Component {
   onChangeServizi = (e) => {
 
     this.setState({ posti: e.posti ? e.posti : this.state.posti, datiRicerca: e }, () => {
-      var inizio = this.state.datiRicerca.endDate ? new Date(this.state.datiRicerca.startDate.format()).toLocaleDateString() : new Date(moment().format()).toLocaleDateString();
-      var fine = this.state.datiRicerca.endDate ? new Date(this.state.datiRicerca.endDate.format()).toLocaleDateString() : new Date(moment().add(1, 'days').format()).toLocaleDateString();
+      var inizio = this.state.datiRicerca.endDate ? new Date(this.state.datiRicerca.startDate.format()) : new Date(moment().format());
+      var fine = this.state.datiRicerca.endDate ? new Date(this.state.datiRicerca.endDate.format()) : new Date(moment().add(1, 'days').format());
       
+      const offsetInizio = inizio.getTimezoneOffset();
+      inizio = new Date(inizio.getTime() - (offsetInizio*60*1000));
+      inizio = inizio.toISOString().slice(0,10);
+
+      const offsetFine = fine.getTimezoneOffset();
+      fine = new Date(fine.getTime() - (offsetFine*60*1000));
+      fine = fine.toISOString().slice(0,10);
+
       const data = {
         tipo: this.state.datiRicerca.tipo ? this.state.datiRicerca.tipo : '',
         localita: this.state.datiRicerca.localita ? this.state.datiRicerca.localita : '',

@@ -3,24 +3,12 @@ var DB = require('../db');
 
 var router = express.Router();
 
-// show all table stanza
-// indirizzo: /stanze/all
-router.get('/all', async (req, res) => {
+// insert new stanza in table stanza
+// indirizzo: /insertStanza/new
+router.post('/new', async(req, res) => {
     try {
-        let stanza = await DB.Stanza.all();
-        res.json(stanza);
-    } catch(e) {
-        console.log(e);
-        res.sendStatus(500);
-    }
-});
-
-// show searched stanza (by id_stanza)
-// indirizzo: /searchStanza/results
-router.post('/results', async(req, res) => {
-    try {
-        let search = await DB.Stanza.getStanza(req.body);
-        res.json(search);
+        let insert = await DB.stanza.insertStanza(req.body);
+        res.json(insert);
     }
     catch(e) {
         console.log(e);
@@ -41,29 +29,15 @@ router.post('/stanzaBB', async(req, res) => {
     }
 });
 
-// show searched stanza (by tipologia)
-// indirizzo: /searchStanzaTipologia/stanzaTipologia
-router.post('/stanzaTipologia', async(req, res) => {
+// get non_disponibile_inizio_st and non_disponibile_fine_st from id_stanza
+// indirizzo: /getDateStanza/dateStanza
+router.post('/dateStanza', async(req, res, next) => {
     try {
-        let search = await DB.Stanza.getStanzaTipologia(req.body);
-        res.json(search);
+        let getDate = await DB.Stanza.getDateStanza(req.body);
+        res.json(getDate);
     }
     catch(e) {
-        console.log(e);
-        res.sendStatus(500);
-    }
-});
-
-// show searched stanza (by ref_bb && tipologia)
-// indirizzo: /searchStanzaBBTipologia/stanzaBBTipologia
-router.post('/stanzaBBTipologia', async(req, res) => {
-    try {
-        let search = await DB.Stanza.getStanzaBBTipologia(req.body);
-        res.json(search);
-    }
-    catch(e) {
-        console.log(e);
-        res.sendStatus(500);
+        next(e);
     }
 });
 
@@ -73,19 +47,6 @@ router.post('/fields', async(req, res) => {
     try {
         let update = await DB.Stanza.updateStanza(req.body);
         res.json(update);
-    }
-    catch(e) {
-        console.log(e);
-        res.sendStatus(500);
-    }
-});
-
-// insert new stanza in table stanza
-// indirizzo: /insertStanza/new
-router.post('/new', async(req, res) => {
-    try {
-        let insert = await DB.stanza.insertStanza(req.body);
-        res.json(insert);
     }
     catch(e) {
         console.log(e);
@@ -136,15 +97,63 @@ router.post('/deleted', async(req, res, next) => {
     }
 });
 
-// get non_disponibile_inizio_st and non_disponibile_fine_st from id_stanza
-// indirizzo: /getDateStanza/dateStanza
-router.post('/dateStanza', async(req, res, next) => {
+/* 
+    _______________
+
+    NON UTILIZZATI
+
+    _______________
+
+*/
+
+// show all table stanza
+// indirizzo: /stanze/all
+router.get('/all', async (req, res) => {
     try {
-        let getDate = await DB.Stanza.getDateStanza(req.body);
-        res.json(getDate);
+        let stanza = await DB.Stanza.all();
+        res.json(stanza);
+    } catch(e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
+
+// show searched stanza (by id_stanza)
+// indirizzo: /searchStanza/results
+router.post('/results', async(req, res) => {
+    try {
+        let search = await DB.Stanza.getStanza(req.body);
+        res.json(search);
     }
     catch(e) {
-        next(e);
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
+
+// show searched stanza (by tipologia)
+// indirizzo: /searchStanzaTipologia/stanzaTipologia
+router.post('/stanzaTipologia', async(req, res) => {
+    try {
+        let search = await DB.Stanza.getStanzaTipologia(req.body);
+        res.json(search);
+    }
+    catch(e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
+
+// show searched stanza (by ref_bb && tipologia)
+// indirizzo: /searchStanzaBBTipologia/stanzaBBTipologia
+router.post('/stanzaBBTipologia', async(req, res) => {
+    try {
+        let search = await DB.Stanza.getStanzaBBTipologia(req.body);
+        res.json(search);
+    }
+    catch(e) {
+        console.log(e);
+        res.sendStatus(500);
     }
 });
 

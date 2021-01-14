@@ -18,350 +18,35 @@ var { GeneralError, BadRequest, NotFound } = require('../utils/errors');
 
 // utility function for table "proprieta"
 
-// return all table
-const all = async () => {
-    return new Promise((resolve, reject) => {
+// insert new proprieta
+const insertProprieta = async(req) => {
 
-        Connection.query('SELECT * FROM proprieta', (err, results) => {
-            if(err) {
-                console.log(err);
-                return reject(new GeneralError('Si è verificato un errore'));
-            }
-            if(results.length < 1) {
-                return reject(new NotFound('Nessuna proprietà registrata'));
-            }
-            resolve(results);
-        });
-    });
-}
+    var servizi = '';
+    for(var i = 0; i < req.servizi.length; i++) {
+        if(i < req.servizi.length-1) {
+            servizi = servizi + req.servizi[i] + ', ';
+        }
+        else {
+            servizi = servizi + req.servizi[i];
+        }
+    }
 
-// get proprieta from id_proprieta
-const getProprieta = async(req) => {
     return new Promise((resolve, reject) => {
 
         Connection.query(
-            'SELECT * ' +
-            'FROM proprieta ' +
-            'WHERE id_proprieta = ' +  req.id_proprieta + '; ', (err, results) => {
-                if(err) {
-                    console.log(err);
-                    return reject(new GeneralError('Si è verificato un errore'));
-                }
-                if(results.length < 1) {
-                    return reject(new NotFound('Nessuna proprietà trovata'));
-                }
-            resolve(results);
-        });
-    });
-}
-
-// get proprieta from nome_proprieta
-const getProprietaNome = async(req) => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query(
-            'SELECT * ' +
-            'FROM proprieta ' +
-            'WHERE nome_proprieta = "' +  req.nome_proprieta + '"', (err, results) => {
-                if(err) {
-                    console.log(err);
-                    return reject(new GeneralError('Si è verificato un errore'));
-                }
-                if(results.length < 1) {
-                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
-                }
-            resolve(results);
-        });
-    });
-}
-
-// get proprieta from localita
-const getProprietaLocalita = async(req) => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query(
-            'SELECT * ' +
-            'FROM proprieta ' +
-            'WHERE localita = "' +  req.localita + '"', (err, results) => {
-                if(err) {
-                    console.log(err);
-                    return reject(new GeneralError('Si è verificato un errore'));
-                }
-                if(results.length < 1) {
-                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
-                }
-            resolve(results);
-        });
-    });
-}
-
-// get proprieta from provincia
-const getProprietaProvincia = async(req) => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query(
-            'SELECT * ' +
-            'FROM proprieta ' +
-            'WHERE provincia = "' +  req.provincia + '"', (err, results) => {
-                if(err) {
-                    console.log(err);
-                    return reject(new GeneralError('Si è verificato un errore'));
-                }
-                if(results.length < 1) {
-                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
-                }
-            resolve(results);
-        });
-    });
-}
-
-// get proprieta from tipo_proprieta
-const getProprietaTipo = async(req) => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query(
-            'SELECT * ' +
-            'FROM proprieta ' +
-            'WHERE tipo_proprieta = "' +  req.tipo_proprieta + '"', (err, results) => {
-                if(err) {
-                    console.log(err);
-                    return reject(new GeneralError('Si è verificato un errore'));
-                }
-                if(results.length < 1) {
-                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
-                }
-            resolve(results);
-        });
-    });
-}
-
-// get proprieta from tipo_proprieta = cv && ref_proprietario
-const getProprietaCVProprietario = async(req) => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query(
-            'SELECT * ' +
-            'FROM proprieta, casa_vacanza ' +
-            'WHERE id_proprieta = ref_proprieta_cv AND ' +
-            'tipo_proprieta = "' +  req.tipo_proprieta + '" AND ref_proprietario = "' + req.ref_proprietario + '"; ', 
+            'INSERT INTO proprieta (nome_proprieta, indirizzo, localita, provincia, tipo_proprieta, servizi, ref_proprietario, descrizione) VALUES ' +
+            '("' + req.nome_proprieta + '", "' + req.indirizzo + '", "' + req.localita + '", "' + req.provincia +
+            '", "' + req.tipo_proprieta + '", "' + servizi + '", "' +
+            req.ref_proprietario + '", "' + req.descrizione + '"); ',
             (err, results) => {
                 if(err) {
                     console.log(err);
                     return reject(new GeneralError('Si è verificato un errore'));
                 }
                 if(results.length < 1) {
-                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
+                    return reject(new BadRequest("Si è verificato un errore nell'inserimento"));
                 }
-            resolve(results);
-        });
-    });
-}
-
-// get proprieta from tipo_proprieta = bb && ref_proprietario
-const getProprietaBBProprietario = async(req) => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query(
-            'SELECT * ' +
-            'FROM proprieta, b_and_b ' +
-            'WHERE id_proprieta = ref_proprieta_bb AND ' +
-            'tipo_proprieta = "' +  req.tipo_proprieta + '" AND ref_proprietario = "' + req.ref_proprietario + '"; ', 
-            (err, results) => {
-                if(err) {
-                    console.log(err);
-                    return reject(new GeneralError('Si è verificato un errore'));
-                }
-                if(results.length < 1) {
-                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
-                }
-            resolve(results);
-        });
-    });
-}
-
-// get proprieta from servizi
-const getProprietaServizi = async(req) => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query(
-            'SELECT * ' +
-            'FROM proprieta ' +
-            'WHERE servizi = "' +  req.servizi + '"', (err, results) => {
-                if(err) {
-                    console.log(err);
-                    return reject(new GeneralError('Si è verificato un errore'));
-                }
-                if(results.length < 1) {
-                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
-                }
-            resolve(results);
-        });
-    });
-}
-
-// get proprieta from ref_proprietario
-const getProprietaProprietario = async(req) => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query(
-            'SELECT * ' +
-            'FROM proprieta ' +
-            'WHERE ref_proprietario = "' +  req.ref_proprietario + '"', (err, results) => {
-                if(err) {
-                    console.log(err);
-                    return reject(new GeneralError('Si è verificato un errore'));
-                }
-                if(results.length < 1) {
-                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
-                }
-            resolve(results);
-        });
-    });
-}
-
-// get proprieta from localita && tipo_proprieta
-const getProprietaLocalitaTipo = async(req) => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query(
-            'SELECT * ' +
-            'FROM proprieta ' +
-            'WHERE localita = "' +  req.localita + '" AND tipo_proprieta = "' + req.tipo_proprieta + '"', 
-            (err, results) => {
-                if(err) {
-                    console.log(err);
-                    return reject(new GeneralError('Si è verificato un errore'));
-                }
-                if(results.length < 1) {
-                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
-                }
-            resolve(results);
-        });
-    });
-}
-
-// get proprieta from provincia && tipo_proprieta
-const getProprietaProvinciaTipo = async(req) => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query(
-            'SELECT * ' +
-            'FROM proprieta ' +
-            'WHERE provincia = "' +  req.provincia + '" AND tipo_proprieta = "' + req.tipo_proprieta + '"', 
-            (err, results) => {
-                if(err) {
-                    console.log(err);
-                    return reject(new GeneralError('Si è verificato un errore'));
-                }
-                if(results.length < 1) {
-                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
-                }
-            resolve(results);
-        });
-    });
-}
-
-// get proprieta from localita && servizi
-const getProprietaLocalitaServizi = async(req) => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query(
-            'SELECT * ' +
-            'FROM proprieta ' +
-            'WHERE localita = "' +  req.localita + '" AND servizi = "' + req.servizi + '"', 
-            (err, results) => {
-                if(err) {
-                    console.log(err);
-                    return reject(new GeneralError('Si è verificato un errore'));
-                }
-                if(results.length < 1) {
-                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
-                }
-            resolve(results);
-        });
-    });
-}
-
-// get proprieta from provincia && servizi
-const getProprietaProvinciaServizi = async(req) => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query(
-            'SELECT * ' +
-            'FROM proprieta ' +
-            'WHERE provincia = "' +  req.provincia + '" AND servizi = "' + req.servizi + '"', 
-            (err, results) => {
-                if(err) {
-                    console.log(err);
-                    return reject(new GeneralError('Si è verificato un errore'));
-                }
-                if(results.length < 1) {
-                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
-                }
-            resolve(results);
-        });
-    });
-}
-
-// get proprieta from tipo_proprieta && servizi
-const getProprietaTipoServizi = async(req) => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query(
-            'SELECT * ' +
-            'FROM proprieta ' +
-            'WHERE tipo_proprieta = "' +  req.tipo_proprieta + '" AND servizi = "' + req.servizi + '"', 
-            (err, results) => {
-                if(err) {
-                    console.log(err);
-                    return reject(new GeneralError('Si è verificato un errore'));
-                }
-                if(results.length < 1) {
-                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
-                }
-            resolve(results);
-        });
-    });
-}
-
-// get proprieta from localita && tipo_proprieta && servizi
-const getProprietaLocalitaTipoServizi = async(req) => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query(
-            'SELECT * ' +
-            'FROM proprieta ' +
-            'WHERE localita = "' +  req.localita + '" AND tipo_proprieta = "' + req.tipo_proprieta + '" AND servizi = "' + req.servizi + '"',
-            (err, results) => {
-                if(err) {
-                    console.log(err);
-                    return reject(new GeneralError('Si è verificato un errore'));
-                }
-                if(results.length < 1) {
-                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
-                }
-            resolve(results);
-        });
-    });
-}
-
-// get proprieta from provincia && tipo_proprieta && servizi
-const getProprietaProvinciaTipoServizi = async(req) => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query(
-            'SELECT * ' +
-            'FROM proprieta ' +
-            'WHERE provincia = "' +  req.provincia + '" AND tipo_proprieta = "' + req.tipo_proprieta + '" AND servizi = "' + req.servizi + '"',
-            (err, results) => {
-                if(err) {
-                    console.log(err);
-                    return reject(new GeneralError('Si è verificato un errore'));
-                }
-                if(results.length < 1) {
-                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
-                }
-            resolve(results);
+                resolve(results);
         });
     });
 }
@@ -563,31 +248,38 @@ const ricercaAlloggio = async(req) => {
                 }
             );
         }
-        
-        /*Connection.query(
-            'SELECT @tipo := "' + (req.tipo == '' ? '%%' : req.tipo) + '"; ' +
-            'SELECT @localita := "' + (req.localita == '' ? '%%' : req.localita) + '"; ' +
-            'SELECT @provincia := "' + (req.provincia == '' ? '%%' : req.provincia) + '"; ' +
-            'SELECT @posti := ' + req.posti + '; ' +
-            'SELECT @tariffa := ' + (req.tariffa == '' ? 99999 : req.tariffa) + '; ' +
-            'SELECT @inizio := "'+ (req.checkIn == '' ? '1970-01-01' : req.checkIn) + '"; ' +
-            'SELECT @fine := "'+ (req.checkOut == '' ? '1970-01-01' : req.checkOut) + '"; ' +
-            'SELECT DISTINCT p.nome_proprieta, p.indirizzo, p.localita, p.tipo_proprieta, ' +
-                'IF(@tipo = "cv", c.tariffa_casa, s.tariffa_stanza) AS tariffa, ' +
-                'IF(@tipo = "cv", c.posti_letto, s.tipologia) AS posti, p.descrizione, ' +
-                'IF(@tipo = "cv", c.imgCV_path1, s.imgST_path1) AS img1, ' +
-                'IF(@tipo = "cv", c.imgCV_path2, s.imgST_path2) AS img2, ' +
-                'IF(@tipo = "cv", c.imgCV_path3, s.imgST_path3) AS img3, ' +
-                'IF(@tipo = "cv", c.imgCV_path4, s.imgST_path4) AS img4, ' +
-                'IF(@tipo = "bb", b.check_in, null) AS check_in, ' +
-                'IF(@tipo = "bb", b.check_out, null) AS check_out ' +
-            'FROM proprieta p, casa_vacanza c, b_and_b b, stanza s ' +
-            'WHERE p.id_proprieta = IF(@tipo = "cv", c.ref_proprieta_cv, b.ref_proprieta_bb) AND b.ref_proprieta_bb = s.ref_bb AND ' +
-                'p.localita LIKE @localita AND p.provincia LIKE @provincia AND ' +
-                'p.tipo_proprieta LIKE @tipo AND ' +
-                '(c.posti_letto >= @posti OR s.tipologia >= @posti) AND (c.tariffa_casa <= @tariffa OR s.tariffa_stanza <= @tariffa) AND ' +
-                '(((@inizio <= c.non_disponibile_inizio_cv AND @fine <= c.non_disponibile_fine_cv) OR (@inizio >= c.non_disponibile_inizio_cv AND @fine >= c.non_disponibile_fine_cv)) ' +
-                'AND ((@inizio <= s.non_disponibile_inizio_st AND @fine <= s.non_disponibile_inizio_st) OR (@inizio >= s.non_disponibile_inizio_st AND @fine >= s.non_disponibile_fine_st)));',
+    });
+}
+
+// get proprieta from ref_proprietario
+const getProprietaProprietario = async(req) => {
+    return new Promise((resolve, reject) => {
+
+        Connection.query(
+            'SELECT * ' +
+            'FROM proprieta ' +
+            'WHERE ref_proprietario = "' +  req.ref_proprietario + '"', (err, results) => {
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
+                }
+            resolve(results);
+        });
+    });
+}
+
+// get proprieta from tipo_proprieta = cv && ref_proprietario
+const getProprietaCVProprietario = async(req) => {
+    return new Promise((resolve, reject) => {
+
+        Connection.query(
+            'SELECT * ' +
+            'FROM proprieta, casa_vacanza ' +
+            'WHERE id_proprieta = ref_proprieta_cv AND ' +
+            'tipo_proprieta = "' +  req.tipo_proprieta + '" AND ref_proprietario = "' + req.ref_proprietario + '"; ', 
             (err, results) => {
                 if(err) {
                     console.log(err);
@@ -596,10 +288,30 @@ const ricercaAlloggio = async(req) => {
                 if(results.length < 1) {
                     return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
                 }
-                
-                resolve(results[7]);
-            }
-        )*/
+            resolve(results);
+        });
+    });
+}
+
+// get proprieta from tipo_proprieta = bb && ref_proprietario
+const getProprietaBBProprietario = async(req) => {
+    return new Promise((resolve, reject) => {
+
+        Connection.query(
+            'SELECT * ' +
+            'FROM proprieta, b_and_b ' +
+            'WHERE id_proprieta = ref_proprieta_bb AND ' +
+            'tipo_proprieta = "' +  req.tipo_proprieta + '" AND ref_proprietario = "' + req.ref_proprietario + '"; ', 
+            (err, results) => {
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
+                }
+            resolve(results);
+        });
     });
 }
 
@@ -639,35 +351,295 @@ const updateProprieta= async(req) => {
     });
 }
 
-// insert new proprieta
-const insertProprieta = async(req) => {
+/* 
+    _______________
 
-    var servizi = '';
-    for(var i = 0; i < req.servizi.length; i++) {
-        if(i < req.servizi.length-1) {
-            servizi = servizi + req.servizi[i] + ', ';
-        }
-        else {
-            servizi = servizi + req.servizi[i];
-        }
-    }
+    NON UTILIZZATI
 
+    _______________
+
+*/
+
+// return all table
+const all = async (req) => {
+    return new Promise((resolve, reject) => {
+
+        Connection.query('SELECT * FROM proprieta', (err, results) => {
+            if(err) {
+                console.log(err);
+                return reject(new GeneralError('Si è verificato un errore'));
+            }
+            if(results.length < 1) {
+                return reject(new NotFound('Nessuna proprietà registrata'));
+            }
+            resolve(results);
+        });
+    });
+}
+
+// get proprieta from id_proprieta
+const getProprieta = async(req) => {
     return new Promise((resolve, reject) => {
 
         Connection.query(
-            'INSERT INTO proprieta (nome_proprieta, indirizzo, localita, provincia, tipo_proprieta, servizi, ref_proprietario, descrizione) VALUES ' +
-            '("' + req.nome_proprieta + '", "' + req.indirizzo + '", "' + req.localita + '", "' + req.provincia +
-            '", "' + req.tipo_proprieta + '", "' + servizi + '", "' +
-            req.ref_proprietario + '", "' + req.descrizione + '"); ',
+            'SELECT * ' +
+            'FROM proprieta ' +
+            'WHERE id_proprieta = ' +  req.id_proprieta + '; ', (err, results) => {
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessuna proprietà trovata'));
+                }
+            resolve(results);
+        });
+    });
+}
+
+// get proprieta from nome_proprieta
+const getProprietaNome = async(req) => {
+    return new Promise((resolve, reject) => {
+
+        Connection.query(
+            'SELECT * ' +
+            'FROM proprieta ' +
+            'WHERE nome_proprieta = "' +  req.nome_proprieta + '"', (err, results) => {
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
+                }
+            resolve(results);
+        });
+    });
+}
+
+// get proprieta from localita
+const getProprietaLocalita = async(req) => {
+    return new Promise((resolve, reject) => {
+
+        Connection.query(
+            'SELECT * ' +
+            'FROM proprieta ' +
+            'WHERE localita = "' +  req.localita + '"', (err, results) => {
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
+                }
+            resolve(results);
+        });
+    });
+}
+
+// get proprieta from provincia
+const getProprietaProvincia = async(req) => {
+    return new Promise((resolve, reject) => {
+
+        Connection.query(
+            'SELECT * ' +
+            'FROM proprieta ' +
+            'WHERE provincia = "' +  req.provincia + '"', (err, results) => {
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
+                }
+            resolve(results);
+        });
+    });
+}
+
+// get proprieta from tipo_proprieta
+const getProprietaTipo = async(req) => {
+    return new Promise((resolve, reject) => {
+
+        Connection.query(
+            'SELECT * ' +
+            'FROM proprieta ' +
+            'WHERE tipo_proprieta = "' +  req.tipo_proprieta + '"', (err, results) => {
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
+                }
+            resolve(results);
+        });
+    });
+}
+
+// get proprieta from servizi
+const getProprietaServizi = async(req) => {
+    return new Promise((resolve, reject) => {
+
+        Connection.query(
+            'SELECT * ' +
+            'FROM proprieta ' +
+            'WHERE servizi = "' +  req.servizi + '"', (err, results) => {
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
+                }
+            resolve(results);
+        });
+    });
+}
+
+// get proprieta from localita && tipo_proprieta
+const getProprietaLocalitaTipo = async(req) => {
+    return new Promise((resolve, reject) => {
+
+        Connection.query(
+            'SELECT * ' +
+            'FROM proprieta ' +
+            'WHERE localita = "' +  req.localita + '" AND tipo_proprieta = "' + req.tipo_proprieta + '"', 
             (err, results) => {
                 if(err) {
                     console.log(err);
                     return reject(new GeneralError('Si è verificato un errore'));
                 }
                 if(results.length < 1) {
-                    return reject(new BadRequest("Si è verificato un errore nell'inserimento"));
+                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
                 }
-                resolve(results);
+            resolve(results);
+        });
+    });
+}
+
+// get proprieta from provincia && tipo_proprieta
+const getProprietaProvinciaTipo = async(req) => {
+    return new Promise((resolve, reject) => {
+
+        Connection.query(
+            'SELECT * ' +
+            'FROM proprieta ' +
+            'WHERE provincia = "' +  req.provincia + '" AND tipo_proprieta = "' + req.tipo_proprieta + '"', 
+            (err, results) => {
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
+                }
+            resolve(results);
+        });
+    });
+}
+
+// get proprieta from localita && servizi
+const getProprietaLocalitaServizi = async(req) => {
+    return new Promise((resolve, reject) => {
+
+        Connection.query(
+            'SELECT * ' +
+            'FROM proprieta ' +
+            'WHERE localita = "' +  req.localita + '" AND servizi = "' + req.servizi + '"', 
+            (err, results) => {
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
+                }
+            resolve(results);
+        });
+    });
+}
+
+// get proprieta from provincia && servizi
+const getProprietaProvinciaServizi = async(req) => {
+    return new Promise((resolve, reject) => {
+
+        Connection.query(
+            'SELECT * ' +
+            'FROM proprieta ' +
+            'WHERE provincia = "' +  req.provincia + '" AND servizi = "' + req.servizi + '"', 
+            (err, results) => {
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
+                }
+            resolve(results);
+        });
+    });
+}
+
+// get proprieta from tipo_proprieta && servizi
+const getProprietaTipoServizi = async(req) => {
+    return new Promise((resolve, reject) => {
+
+        Connection.query(
+            'SELECT * ' +
+            'FROM proprieta ' +
+            'WHERE tipo_proprieta = "' +  req.tipo_proprieta + '" AND servizi = "' + req.servizi + '"', 
+            (err, results) => {
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
+                }
+            resolve(results);
+        });
+    });
+}
+
+// get proprieta from localita && tipo_proprieta && servizi
+const getProprietaLocalitaTipoServizi = async(req) => {
+    return new Promise((resolve, reject) => {
+
+        Connection.query(
+            'SELECT * ' +
+            'FROM proprieta ' +
+            'WHERE localita = "' +  req.localita + '" AND tipo_proprieta = "' + req.tipo_proprieta + '" AND servizi = "' + req.servizi + '"',
+            (err, results) => {
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
+                }
+            resolve(results);
+        });
+    });
+}
+
+// get proprieta from provincia && tipo_proprieta && servizi
+const getProprietaProvinciaTipoServizi = async(req) => {
+    return new Promise((resolve, reject) => {
+
+        Connection.query(
+            'SELECT * ' +
+            'FROM proprieta ' +
+            'WHERE provincia = "' +  req.provincia + '" AND tipo_proprieta = "' + req.tipo_proprieta + '" AND servizi = "' + req.servizi + '"',
+            (err, results) => {
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessun alloggio corrisponde alla ricerca'));
+                }
+            resolve(results);
         });
     });
 }

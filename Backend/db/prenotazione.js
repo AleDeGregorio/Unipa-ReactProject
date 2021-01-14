@@ -18,61 +18,25 @@ var { GeneralError, BadRequest, NotFound } = require('../utils/errors');
 
 // utility function for table "prenotazione"
 
-// return all table
-const all = async () => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query('SELECT * FROM prenotazione', (err, results) => {
-            if(err) {
-                console.log(err);
-                return reject(new GeneralError('Si è verificato un errore'));
-            }
-            if(results.length < 1) {
-                return reject(new NotFound('Nessuna prenotazione registrata'));
-            }
-            resolve(results);
-        });
-    });
-}
-
-// get prenotazione from id_prenotazione
-const getPrenotazione = async(req) => {
+// insert new prenotazione
+const insertPrenotazione = async(req) => {
     return new Promise((resolve, reject) => {
 
         Connection.query(
-            'SELECT * ' +
-            'FROM prenotazione ' +
-            'WHERE id_prenotazione = ' +  req.id_prenotazione + '; ',
+            'INSERT INTO prenotazione (ref_soggiornante, ref_cliente, ref_proprietario, ref_proprieta, num_soggiornanti, ' +
+                'costo, caparra, data_partenza, data_ritorno, accettata) VALUES ' +
+            '("' + req.ref_soggiornante + '", "' + req.ref_cliente + '", "' + req.ref_proprietario + '", ' + req.ref_proprieta + 
+            ', ' + req.num_soggiornanti + ', ' + req.costo + ', ' + req.caparra + ', (STR_TO_DATE("' + req.data_partenza + '","%d/%m/%Y")), ' + 
+            '(STR_TO_DATE("' + req.data_ritorno + '","%d/%m/%Y")), null)',
             (err, results) => {
                 if(err) {
                     console.log(err);
                     return reject(new GeneralError('Si è verificato un errore'));
                 }
                 if(results.length < 1) {
-                    return reject(new NotFound('Prenotazione non trovata'));
+                    return reject(new BadRequest("Si è verificato un errore nell'inserimento"));
                 }
-            resolve(results);
-        });
-    });
-}
-
-// get prenotazione from ref_soggiornante
-const getPrenotazioneSoggiornante = async(req) => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query(
-            'SELECT * ' +
-            'FROM prenotazione ' +
-            'WHERE ref_soggiornante = "' +  req.ref_soggiornante + '"',
-            (err, results) => {
-                if(err) {
-                    console.log(err);
-                    return reject(new GeneralError('Si è verificato un errore'));
-                }
-                if(results.length < 1) {
-                    return reject(new NotFound('Nessuna prenotazione relativa al soggiornante'));
-                }
-            resolve(results);
+                resolve(results);
         });
     });
 }
@@ -84,7 +48,8 @@ const getPrenotazioneCliente = async(req) => {
         Connection.query(
             'SELECT * ' +
             'FROM prenotazione, proprieta, soggiornante ' +
-            'WHERE ref_cliente = "' +  req.ref_cliente + '" AND ref_proprieta = id_proprieta AND ref_soggiornante = cf_sogg',
+            'WHERE ref_cliente = "' +  req.ref_cliente + '" AND ref_proprieta = id_proprieta AND ref_soggiornante = cf_sogg AND ' +
+            'prenotazione.ref_proprietario IS NOT NULL; ',
             (err, results) => {
                 if(err) {
                     console.log(err);
@@ -136,7 +101,7 @@ const getPrenotazioneCliente = async(req) => {
 
                         for(var i = 0; i < res1.length; i++) {
                             res1[i].img = results[0].imgST_path1;
-                            res1[i].id_stanza = results[i].id_stanza;
+                            res1[i].id_stanza = results[i] ? results[i].id_stanza : '';
                             res1[i].non_disponibile_inizio = results[i] ? results[i].non_disponibile_inizio_st.toLocaleDateString() : '';
                             res1[i].non_disponibile_fine = results[i] ? results[i].non_disponibile_fine_st.toLocaleDateString() : '';
                         }
@@ -144,48 +109,6 @@ const getPrenotazioneCliente = async(req) => {
                     }
                 )
             }
-        });
-    });
-}
-
-// get prenotazione from ref_proprietario
-const getPrenotazioneProprietario = async(req) => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query(
-            'SELECT * ' +
-            'FROM prenotazione ' +
-            'WHERE ref_proprietario = "' +  req.ref_proprietario + '"',
-            (err, results) => {
-                if(err) {
-                    console.log(err);
-                    return reject(new GeneralError('Si è verificato un errore'));
-                }
-                if(results.length < 1) {
-                    return reject(new NotFound('Nessuna prenotazione relativa al proprietario'));
-                }
-            resolve(results);
-        });
-    });
-}
-
-// get prenotazione from ref_proprieta
-const getPrenotazioneProprieta = async(req) => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query(
-            'SELECT * ' +
-            'FROM prenotazione ' +
-            'WHERE ref_proprieta = ' +  req.ref_proprieta + '; ',
-            (err, results) => {
-                if(err) {
-                    console.log(err);
-                    return reject(new GeneralError('Si è verificato un errore'));
-                }
-                if(results.length < 1) {
-                    return reject(new NotFound("Nessuna prenotazione relativa all'alloggio"));
-                }
-            resolve(results);
         });
     });
 }
@@ -335,6 +258,35 @@ const getPrenotazioneAccettata = async(req) => {
     });
 }
 
+// controllo vincolo 28 giorni
+const checkSoggiornante = async(req) => {
+    return new Promise((resolve, reject) => {
+
+        Connection.query(
+            'SELECT @sogg := "' + req.ref_soggiornante + '"; ' +
+            'SELECT @anno := ' + req.anno + '; ' +
+            'SELECT @prenotazione := ' + req.id_prenotazione + '; ' +
+            'SELECT pre.ref_soggiornante, SUM(datediff(pre.data_ritorno, pre.data_partenza)) AS tot_giorni ' +
+            'FROM prenotazione pre, proprieta pro ' + 
+            'WHERE pre.ref_proprieta = pro.id_proprieta AND ' +
+            'pro.tipo_proprieta = "cv" AND pre.ref_soggiornante = @sogg AND ' +
+            'YEAR(pre.data_ritorno) = @anno AND pre.id_prenotazione != @prenotazione AND pre.accettata IS NOT NULL; ',
+            (err, results) => {
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessuna corrispondenza trovata'));
+                }
+                else {
+                    resolve(results);
+                }
+            }
+        )
+    })
+}
+
 // accetta prenotazione in pendenza
 const accettaPrenotazione = async(req) => {
     return new Promise((resolve, reject) => {
@@ -413,6 +365,160 @@ const rifiutaPrenotazione = async(req) => {
                 resolve(results);
             }
         );
+    });
+}
+
+// update date prenotazione
+const updateDatePrenotazione = async(req) => {
+    return new Promise((resolve, reject) => {
+
+        Connection.query(
+            'UDATE prenotazione ' +
+            'SET data_partenza = (STR_TO_DATE("' + req.data_partenza + '","%d/%m/%Y")), data_ritorno = (STR_TO_DATE("' + req.data_ritorno + '","%d/%m/%Y")), accettata = null ' +
+            'WHERE id_prenotazione = ' + req.id_prenotazione + '; ',
+            (err, results) => {
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Prenotazione non trovata'));
+                }
+                resolve(results);
+            }
+        );
+    })
+}
+
+// delete prenotazione
+const deletePrenotazione = async(req) => {
+    return new Promise((resolve, reject) => {
+
+        Connection.query(
+            'UPDATE prenotazione ' +
+            'SET ref_proprietario = null ' +
+            'WHERE id_prenotazione = ' + req.id_prenotazione + '; ',
+            (err, results) => {
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Prenotazione non trovata'));
+                }
+                resolve(results);
+            }
+        )
+    })
+}
+
+/* 
+    _______________
+
+    NON UTILIZZATI
+
+    _______________
+
+*/
+
+// return all table
+const all = async (req) => {
+    return new Promise((resolve, reject) => {
+
+        Connection.query('SELECT * FROM prenotazione', (err, results) => {
+            if(err) {
+                console.log(err);
+                return reject(new GeneralError('Si è verificato un errore'));
+            }
+            if(results.length < 1) {
+                return reject(new NotFound('Nessuna prenotazione registrata'));
+            }
+            resolve(results);
+        });
+    });
+}
+
+// get prenotazione from id_prenotazione
+const getPrenotazione = async(req) => {
+    return new Promise((resolve, reject) => {
+
+        Connection.query(
+            'SELECT * ' +
+            'FROM prenotazione ' +
+            'WHERE id_prenotazione = ' +  req.id_prenotazione + '; ',
+            (err, results) => {
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Prenotazione non trovata'));
+                }
+            resolve(results);
+        });
+    });
+}
+
+// get prenotazione from ref_soggiornante
+const getPrenotazioneSoggiornante = async(req) => {
+    return new Promise((resolve, reject) => {
+
+        Connection.query(
+            'SELECT * ' +
+            'FROM prenotazione ' +
+            'WHERE ref_soggiornante = "' +  req.ref_soggiornante + '"',
+            (err, results) => {
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessuna prenotazione relativa al soggiornante'));
+                }
+            resolve(results);
+        });
+    });
+}
+
+// get prenotazione from ref_proprietario
+const getPrenotazioneProprietario = async(req) => {
+    return new Promise((resolve, reject) => {
+
+        Connection.query(
+            'SELECT * ' +
+            'FROM prenotazione ' +
+            'WHERE ref_proprietario = "' +  req.ref_proprietario + '"',
+            (err, results) => {
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Nessuna prenotazione relativa al proprietario'));
+                }
+            resolve(results);
+        });
+    });
+}
+
+// get prenotazione from ref_proprieta
+const getPrenotazioneProprieta = async(req) => {
+    return new Promise((resolve, reject) => {
+
+        Connection.query(
+            'SELECT * ' +
+            'FROM prenotazione ' +
+            'WHERE ref_proprieta = ' +  req.ref_proprieta + '; ',
+            (err, results) => {
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound("Nessuna prenotazione relativa all'alloggio"));
+                }
+            resolve(results);
+        });
     });
 }
 
@@ -513,107 +619,6 @@ const updatePrenotazione = async(req) => {
                 resolve(results);
             }
         );
-    })
-}
-
-// update date prenotazione
-const updateDatePrenotazione = async(req) => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query(
-            'UDATE prenotazione ' +
-            'SET data_partenza = (STR_TO_DATE("' + req.data_partenza + '","%d/%m/%Y")), data_ritorno = (STR_TO_DATE("' + req.data_ritorno + '","%d/%m/%Y")), accettata = null ' +
-            'WHERE id_prenotazione = ' + req.id_prenotazione + '; ',
-            (err, results) => {
-                if(err) {
-                    console.log(err);
-                    return reject(new GeneralError('Si è verificato un errore'));
-                }
-                if(results.length < 1) {
-                    return reject(new NotFound('Prenotazione non trovata'));
-                }
-                resolve(results);
-            }
-        );
-    })
-}
-
-// insert new prenotazione
-const insertPrenotazione = async(req) => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query(
-            'INSERT INTO prenotazione (ref_soggiornante, ref_cliente, ref_proprietario, ref_proprieta, num_soggiornanti, ' +
-                'costo, caparra, data_partenza, data_ritorno, accettata) VALUES ' +
-            '("' + req.ref_soggiornante + '", "' + req.ref_cliente + '", "' + req.ref_proprietario + '", ' + req.ref_proprieta + 
-            ', ' + req.num_soggiornanti + ', ' + req.costo + ', ' + req.caparra + ', (STR_TO_DATE("' + req.data_partenza + '","%d/%m/%Y")), ' + 
-            '(STR_TO_DATE("' + req.data_ritorno + '","%d/%m/%Y")), null)',
-            (err, results) => {
-                if(err) {
-                    console.log(err);
-                    return reject(new GeneralError('Si è verificato un errore'));
-                }
-                if(results.length < 1) {
-                    return reject(new BadRequest("Si è verificato un errore nell'inserimento"));
-                }
-                resolve(results);
-        });
-    });
-}
-
-// delete prenotazione
-const deletePrenotazione = async(req) => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query(
-            'DELETE FROM prenotazione WHERE id_prenotazione = ' + req.id_prenotazione + ';',
-            (err, results) => {
-                if(err) {
-                    console.log(err);
-                    return reject(new GeneralError('Si è verificato un errore'));
-                }
-                if(results.length < 1) {
-                    return reject(new NotFound('Prenotazione non trovata'));
-                }
-                resolve(results);
-            }
-        )
-    })
-}
-
-// controllo vincolo 28 giorni
-const checkSoggiornante = async(req) => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query(
-            'SELECT @sogg := "' + req.ref_soggiornante + '"; ' +
-            'SELECT @anno := ' + req.anno + '; ' +
-            'SELECT pre.id_prenotazione, pre.ref_soggiornante, pre.data_partenza, pre.data_ritorno, SUM(pre.data_ritorno - pre.data_partenza) AS tot_giorni ' +
-            'FROM prenotazione pre, proprieta pro ' + 
-            'WHERE pre.ref_proprieta = pro.id_proprieta AND ' +
-            'pro.tipo_proprieta = "cv" AND pre.ref_soggiornante = @sogg AND ' +
-            'YEAR(pre.data_ritorno) = @anno ' +
-            'GROUP BY pre.ref_soggiornante, YEAR(pre.data_ritorno);',
-            (err, results) => {
-                if(err) {
-                    console.log(err);
-                    return reject(new GeneralError('Si è verificato un errore'));
-                }
-                if(results.length < 1) {
-                    return reject(new NotFound('Nessuna corrispondenza trovata'));
-                }
-                else {
-                    if(results[0].tot_giorni > 27) {
-                        return reject(new BadRequest('Il soggiornante ha superato il vincolo dei 28 giorni'));
-                    }
-                    else {
-                        console.log('Il soggiornante è idoneo alla prenotazione');
-                        resolve(results);
-                    }
-
-                }
-            }
-        )
     })
 }
 

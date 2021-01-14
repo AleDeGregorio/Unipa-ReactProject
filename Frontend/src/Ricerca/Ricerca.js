@@ -65,13 +65,21 @@ class Ricerca extends React.Component {
     onSubmit = (e) => {
         e.preventDefault();
 
-        var inizio = new Date(this.state.startDate.format()).toLocaleDateString();
-        var fine = this.state.endDate ? new Date(this.state.endDate.format()).toLocaleDateString() : new Date(moment(this.state.startDate).add(1, 'days').format()).toLocaleDateString();
-        
+        var inizio = new Date(this.state.startDate.format());
+        var fine = this.state.endDate ? new Date(this.state.endDate.format()) : new Date(moment(this.state.startDate).add(1, 'days').format());
+
         this.setState({
-            checkIn: inizio,
-            checkOut: fine
+            checkIn: inizio.toLocaleDateString(),
+            checkOut: fine.toLocaleDateString()
         }, () => {
+            const offsetInizio = inizio.getTimezoneOffset();
+            inizio = new Date(inizio.getTime() - (offsetInizio*60*1000));
+            inizio = inizio.toISOString().slice(0,10);
+
+            const offsetFine = fine.getTimezoneOffset();
+            fine = new Date(fine.getTime() - (offsetFine*60*1000));
+            fine = fine.toISOString().slice(0,10);
+
             const data = {
                 tipo: this.state.tipo,
                 localita: this.state.localita,
@@ -79,8 +87,8 @@ class Ricerca extends React.Component {
                 servizi: '',
                 posti: this.state.posti ? this.state.posti : '%%',
                 costo: '',
-                checkIn: this.state.checkIn,
-                checkOut: this.state.checkOut
+                checkIn: inizio,
+                checkOut: fine
             };
     
             fetch('http://localhost:9000/ricercaAlloggio/risultati', {

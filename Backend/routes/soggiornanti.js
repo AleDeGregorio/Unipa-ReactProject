@@ -3,6 +3,27 @@ var DB = require('../db');
 
 var router = express.Router();
 
+// insert new user in table soggiornante
+// indirizzo: /insertSoggiornante/new
+router.post('/new', async(req, res, next) => {
+    try {
+        let insert = await DB.Soggiornante.insertSoggiornante(req.body);
+        res.json(insert);
+    }
+    catch(e) {
+        next(e);
+    }
+});
+
+/* 
+    _______________
+
+    NON UTILIZZATI
+
+    _______________
+
+*/
+
 // show all table soggiornante
 // indirizzo: /soggiornanti/all
 router.get('/all', async (req, res, next) => {
@@ -37,17 +58,5 @@ router.post('/fields', async(req, res, next) => {
         next(e);
     }
 });
-
-// insert new user in table soggiornante
-// indirizzo: /insertSoggiornante/new
-router.post('/new', async(req, res, next) => {
-    try {
-        let insert = await DB.Soggiornante.insertSoggiornante(req.body);
-        res.json(insert);
-    }
-    catch(e) {
-        next(e);
-    }
-})
 
 module.exports = router;

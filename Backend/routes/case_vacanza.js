@@ -3,53 +3,6 @@ var DB = require('../db');
 
 var router = express.Router();
 
-// show all table casa_vacanza
-// indirizzo: /case/all
-router.get('/all', async (req, res, next) => {
-    try {
-        let casa = await DB.Casa.all();
-        res.json(casa);
-    } catch(e) {
-        next(e);
-    }
-});
-
-// show searched casa vacanza (by ref_proprieta_cv)
-// indirizzo: /searchCasa/results
-router.post('/results', async(req, res, next) => {
-    try {
-        let search = await DB.Casa.getCasa(req.body);
-        res.json(search);
-    }
-    catch(e) {
-        next(e);
-    }
-});
-
-// show searched case vacanza by posti letto
-// indirizzo: /serchPosti/postiCase
-router.post('/postiCase', async(req, res, next) => {
-    try {
-        let search = await DB.Casa.getCasePosti(req.body);
-        res.json(search);
-    }
-    catch(e) {
-        next(e);
-    }
-});
-
-// update fields of table casa_vacanza
-// indirizzo: /updateCasa/fields
-router.post('/fields', async(req, res, next) => {
-    try {
-        let update = await DB.Casa.updateCasa(req.body);
-        res.json(update);
-    }
-    catch(e) {
-        next(e);
-    }
-});
-
 // insert new casa vacanza in table casa_vacanza
 // indirizzo: /insertCasa/new
 router.post('/new', async(req, res, next) => {
@@ -62,24 +15,24 @@ router.post('/new', async(req, res, next) => {
     }
 });
 
-// delete casa vacanza from table casa_vacanza
-// indirizzo: /deletetCasa/deleted
-router.post('/deleted', async(req, res, next) => {
-    try {
-        let deleted = await DB.Casa.deleteCasa(req.body);
-        res.json(deleted);
-    }
-    catch(e) {
-        next(e);
-    }
-});
-
 // get non_disponibile_inizio_cv and non_disponibile_fine_cv from ref_proprieta
 // indirizzo: /getDateCasa/dateCasa
 router.post('/dateCasa', async(req, res, next) => {
     try {
         let getDate = await DB.Casa.getDateCasa(req.body);
         res.json(getDate);
+    }
+    catch(e) {
+        next(e);
+    }
+});
+
+// update fields of table casa_vacanza
+// indirizzo: /updateCasa/fields
+router.post('/fields', async(req, res, next) => {
+    try {
+        let update = await DB.Casa.updateCasa(req.body);
+        res.json(update);
     }
     catch(e) {
         next(e);
@@ -111,6 +64,62 @@ router.post('/upload', async(req, res, next) => {
             foto4.mv('../../public/Images/' + filename4);
         }
         res.send("file uploaded");
+    }
+    catch(e) {
+        next(e);
+    }
+});
+
+// delete casa vacanza from table casa_vacanza
+// indirizzo: /deletetCasa/deleted
+router.post('/deleted', async(req, res, next) => {
+    try {
+        let deleted = await DB.Casa.deleteCasa(req.body);
+        res.json(deleted);
+    }
+    catch(e) {
+        next(e);
+    }
+});
+
+/* 
+    _______________
+
+    NON UTILIZZATI
+
+    _______________
+
+*/
+
+// show all table casa_vacanza
+// indirizzo: /case/all
+router.get('/all', async (req, res, next) => {
+    try {
+        let casa = await DB.Casa.all();
+        res.json(casa);
+    } catch(e) {
+        next(e);
+    }
+});
+
+// show searched casa vacanza (by ref_proprieta_cv)
+// indirizzo: /searchCasa/results
+router.post('/results', async(req, res, next) => {
+    try {
+        let search = await DB.Casa.getCasa(req.body);
+        res.json(search);
+    }
+    catch(e) {
+        next(e);
+    }
+});
+
+// show searched case vacanza by posti letto
+// indirizzo: /serchPosti/postiCase
+router.post('/postiCase', async(req, res, next) => {
+    try {
+        let search = await DB.Casa.getCasePosti(req.body);
+        res.json(search);
     }
     catch(e) {
         next(e);

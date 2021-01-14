@@ -20,20 +20,63 @@ var { GeneralError, BadRequest, NotFound } = require('../utils/errors');
 
 // utility function for table "cliente"
 
-// return all table
-const all = async () => {
+// insert new cliente with encrypted password
+const insertUser = async(req) => {
     return new Promise((resolve, reject) => {
 
-        Connection.query('SELECT * FROM cliente', (err, results) => {
-            if(err) {
-                console.log(err);
-                return reject(new GeneralError('Si è verificato un errore'));
+        Connection.query(
+            'SELECT @pass := SHA2("' + req.password + '", 512); ' +
+            'INSERT INTO cliente VALUES ' +
+            '("' + req.email + '", @pass, "' + req.nome + '", "' + req.cognome + '", ' + 
+            '(STR_TO_DATE("' + req.nascita + '","%d/%m/%Y")), "' + req.telefono + '"); ',
+            (err, results) => {
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new BadRequest("Si è verificato un errore nell'inserimento"));
+                }
+                resolve(results);
             }
-            if(results.length < 1) {
-                return reject(new NotFound('Nessun cliente registrato'));
+        );
+    });
+}
+
+// login using encrypted password
+const login = async(req, res, next) => {
+    return new Promise((resolve, reject) => {
+
+        Connection.query(
+            'SELECT * ' + 
+            'FROM cliente ' +
+            'WHERE email_cl = "' + req.email + '"; ',
+            (err, results) => {
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Cliente non trovato'));
+                }
+                else{
+                    // istanziamo l'algoritmo di hashing
+                    let pwdhash = crypto.createHash('sha512');
+                    // cifriamo la password
+                    pwdhash.update(req.password);
+                    // otteniamo la stringa esadecimale
+                    let encpwd = pwdhash.digest('hex');
+
+                    if(encpwd != results[0].password_cl) {
+                        return reject(new BadRequest('Password errata'));
+                    }
+                    else {
+                        console.log('Utente autenticato');
+                        resolve(results);
+                    }
+                }
             }
-            resolve(results);
-        });
+        );
     });
 }
 
@@ -103,63 +146,29 @@ const updateUserPassword= async(req) => {
     });
 }
 
-// insert new cliente with encrypted password
-const insertUser = async(req) => {
+/* 
+    _______________
+
+    NON UTILIZZATI
+
+    _______________
+
+*/
+
+// return all table
+const all = async () => {
     return new Promise((resolve, reject) => {
 
-        Connection.query(
-            'SELECT @pass := SHA2("' + req.password + '", 512); ' +
-            'INSERT INTO cliente VALUES ' +
-            '("' + req.email + '", @pass, "' + req.nome + '", "' + req.cognome + '", ' + 
-            '(STR_TO_DATE("' + req.nascita + '","%d/%m/%Y")), "' + req.telefono + '"); ',
-            (err, results) => {
-                if(err) {
-                    console.log(err);
-                    return reject(new GeneralError('Si è verificato un errore'));
-                }
-                if(results.length < 1) {
-                    return reject(new BadRequest("Si è verificato un errore nell'inserimento"));
-                }
-                resolve(results);
+        Connection.query('SELECT * FROM cliente', (err, results) => {
+            if(err) {
+                console.log(err);
+                return reject(new GeneralError('Si è verificato un errore'));
             }
-        );
-    });
-}
-
-// login using encrypted password
-const login = async(req, res, next) => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query(
-            'SELECT * ' + 
-            'FROM cliente ' +
-            'WHERE email_cl = "' + req.email + '"; ',
-            (err, results) => {
-                if(err) {
-                    console.log(err);
-                    return reject(new GeneralError('Si è verificato un errore'));
-                }
-                if(results.length < 1) {
-                    return reject(new NotFound('Cliente non trovato'));
-                }
-                else{
-                    // istanziamo l'algoritmo di hashing
-                    let pwdhash = crypto.createHash('sha512');
-                    // cifriamo la password
-                    pwdhash.update(req.password);
-                    // otteniamo la stringa esadecimale
-                    let encpwd = pwdhash.digest('hex');
-
-                    if(encpwd != results[0].password_cl) {
-                        return reject(new BadRequest('Password errata'));
-                    }
-                    else {
-                        console.log('Utente autenticato');
-                        resolve(results);
-                    }
-                }
+            if(results.length < 1) {
+                return reject(new NotFound('Nessun cliente registrato'));
             }
-        );
+            resolve(results);
+        });
     });
 }
 

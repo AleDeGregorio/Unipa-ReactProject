@@ -96,7 +96,7 @@ class Prenota extends React.Component {
     onSubmit = (e) => {
         e.preventDefault();
 
-        if(this.state.pagamento === '' || this.state.length < this.state.posti) {
+        if(this.state.pagamento === '' || this.state.soggiornanti.length < this.state.posti) {
             window.scrollTo(0, 0);
             this.setState({ incomplete: true });
             return;
@@ -163,9 +163,16 @@ class Prenota extends React.Component {
         })
         .then((result) => result.text())
         .then((result) => {
-          var res = JSON.parse(result);
+            var res;
+
+            try {
+                res = JSON.parse(result);
+            }
+            catch(e) {
+                res = result;
+            }
     
-            if(res.status === 'error') {
+            if(res.status && res.status === 'error') {
                 window.scrollTo(0, 0);
                 this.setState({ errorSoggiornante: true });
                 this.setState({ errorMessage: res.message });
@@ -202,7 +209,7 @@ class Prenota extends React.Component {
         return(
             <div className="prenota-cont">
                 <>
-                    <Alert show={this.state.incomplete} variant="danger">
+                    <Alert show={this.state.incomplete} variant="danger" id = "allerta">
                     <Alert.Heading style = {{fontWeight: 'bold'}}>Dati non completi!</Alert.Heading>
                     <p>
                         Non tutti i campi risultano essere compilati correttamente &nbsp;
@@ -217,7 +224,7 @@ class Prenota extends React.Component {
                     </Alert>
                 </>
                 <>
-                    <Alert show={this.state.success} variant="success">
+                    <Alert show={this.state.success} variant="success" id = "allerta">
                     <Alert.Heading style = {{fontWeight: 'bold'}}>Prenotazione avvenuta con successo!</Alert.Heading>
                     <p>
                         Il pagamento è avvenuto correttamente <br/>
@@ -233,7 +240,7 @@ class Prenota extends React.Component {
                     </Alert>
                 </>
                 <>
-                    <Alert show={this.state.error} variant="danger">
+                    <Alert show={this.state.error} variant="danger" id = "allerta">
                     <Alert.Heading style = {{fontWeight: 'bold'}}>Prenotazione non avvenuta!</Alert.Heading>
                     <p>
                         Si è verificato un errore nell'inserimento dei dati, provare a ricompilare i campi
@@ -247,7 +254,7 @@ class Prenota extends React.Component {
                     </Alert>
                 </>
                 <>
-                    <Alert show={this.state.successSoggiornante} variant="success">
+                    <Alert show={this.state.successSoggiornante} variant="success" id = "allerta">
                     <Alert.Heading style = {{fontWeight: 'bold'}}>Soggiornante registrato con successo!</Alert.Heading>
                     <p>
                         Le informazioni del soggiornante sono state correttamente caricate all'interno del sistema. &nbsp;
@@ -262,7 +269,7 @@ class Prenota extends React.Component {
                     </Alert>
                 </>
                 <>
-                    <Alert show={this.state.errorSoggiornante} variant="danger">
+                    <Alert show={this.state.errorSoggiornante} variant="danger" id = "allerta">
                     <Alert.Heading style = {{fontWeight: 'bold'}}>Soggiornante non registrato!</Alert.Heading>
                     <p>
                         Si è verificato un errore nell'inserimento dei dati, provare a ricompilare i campi

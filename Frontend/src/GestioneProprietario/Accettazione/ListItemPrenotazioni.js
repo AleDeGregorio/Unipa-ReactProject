@@ -3,6 +3,7 @@ import styled, { ThemeProvider } from 'styled-components'
 import { theme } from '../shared/theme'
 import './Accettazione.css'
 import {Modal, Button} from 'react-bootstrap'
+import moment from "moment";
 
 const ListItemWrapper = styled.div`
 
@@ -336,9 +337,23 @@ class ListItemPrenotazioni extends Component {
 
   checkSoggiornante = (e) => {
 
+    var inizio = moment(new Date(e.data_partenza));
+    var fine = moment(new Date(e.data_ritorno));
+
+    var ngiorni = fine.diff(inizio, 'days');
+    
+    if(ngiorni > 27) {
+      this.setState({ idoneo: false }, () => {
+      this.handleShow();
+      });
+
+      return;
+    }
+
     const data = {
       ref_soggiornante: e.ref_soggiornante,
-      anno: new Date(e.data_ritorno).getFullYear()
+      anno: new Date(e.data_ritorno).getFullYear(),
+      id_prenotazione: e.id_prenotazione
     }
 
     fetch('http://localhost:9000/checkSoggiornante/resultIdoneita', {
@@ -357,8 +372,8 @@ class ListItemPrenotazioni extends Component {
         this.setState({ empty: true, errorMessage: res.message });
       }
 
-      else if(res.code && res.code === 400) {
-        this.setState({ idoneo: false }, () => {
+      else if(res[3][0].tot_giorni > 27 || (res[3][0].tot_giorni + ngiorni > 27)) {
+          this.setState({ idoneo: false }, () => {
           this.handleShow();
         });
       }
@@ -369,7 +384,7 @@ class ListItemPrenotazioni extends Component {
       }
 
       else {
-        this.setState({ idoneo: true }, () => {
+          this.setState({ idoneo: true }, () => {
           this.handleShow();
         });
       }
@@ -465,7 +480,7 @@ class ListItemPrenotazioni extends Component {
     if ({tipo_proprieta}.tipo_proprieta === 'cv') {
       messaggioControllo = (
         <div className="listitem__select__list__item">
-          <span onClick = {() => this.checkSoggiornante({ref_soggiornante, data_ritorno})}>Controllo soggiornante</span>
+          <span onClick = {() => this.checkSoggiornante({id_prenotazione, ref_soggiornante, data_partenza, data_ritorno})}>Controllo soggiornante</span>
           {idoneita}
         </div>
       );
