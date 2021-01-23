@@ -95,7 +95,7 @@ class Checkin extends React.Component {
                     id_prenotazione: this.state.dati.id_prenotazione,
                 }
         
-                fetch('http://localhost:9000/deletePrenotazione/delete', {
+                fetch('http://localhost:9000/checkinPrenotazione/checkin', {
                     method: "POST",
                     headers: {
                         'Content-type' : 'application/json'

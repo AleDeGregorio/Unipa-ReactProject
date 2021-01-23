@@ -24,10 +24,10 @@ const insertPrenotazione = async(req) => {
 
         Connection.query(
             'INSERT INTO prenotazione (ref_soggiornante, ref_cliente, ref_proprietario, ref_proprieta, num_soggiornanti, ' +
-                'costo, caparra, data_partenza, data_ritorno, accettata) VALUES ' +
+                'costo, caparra, data_partenza, data_ritorno, accettata, checkin) VALUES ' +
             '("' + req.ref_soggiornante + '", "' + req.ref_cliente + '", "' + req.ref_proprietario + '", ' + req.ref_proprieta + 
             ', ' + req.num_soggiornanti + ', ' + req.costo + ', ' + req.caparra + ', (STR_TO_DATE("' + req.data_partenza + '","%d/%m/%Y")), ' + 
-            '(STR_TO_DATE("' + req.data_ritorno + '","%d/%m/%Y")), null)',
+            '(STR_TO_DATE("' + req.data_ritorno + '","%d/%m/%Y")), null, false)',
             (err, results) => {
                 if(err) {
                     console.log(err);
@@ -120,7 +120,8 @@ const getPrenotazioneAccettazione = async(req) => {
         Connection.query(
             'SELECT * ' +
             'FROM prenotazione, proprieta ' +
-            'WHERE prenotazione.ref_proprietario = "' + req.ref_proprietario + '" AND accettata IS NULL AND ref_proprieta = id_proprieta;',
+            'WHERE prenotazione.ref_proprietario = "' + req.ref_proprietario + '" AND accettata IS NULL AND ref_proprieta = id_proprieta AND' +
+            ' checkin = false;',
             (err, results) => {
                 if(err) {
                     console.log(err);
@@ -190,7 +191,7 @@ const getPrenotazioneAccettata = async(req) => {
             'SELECT * ' +
             'FROM prenotazione, proprieta, soggiornante ' +
             'WHERE prenotazione.ref_proprietario = "' + req.ref_proprietario + '" AND accettata = true AND ref_proprieta = id_proprieta AND ' +
-            'cf_sogg = ref_soggiornante; ',
+            'checkin = false AND cf_sogg = ref_soggiornante; ',
             (err, results) => {
                 if(err) {
                     console.log(err);
@@ -387,6 +388,28 @@ const updateDatePrenotazione = async(req) => {
                 resolve(results);
             }
         );
+    })
+}
+
+// check in prenotazione
+const checkinPrenotazione = async(req) => {
+    return new Promise((resolve, reject) => {
+
+        Connection.query(
+            'UPDATE prenotazione ' +
+            'SET checkin = true ' +
+            'WHERE id_prenotazione = ' + req.id_prenotazione + '; ',
+            (err, results) => {
+                if(err) {
+                    console.log(err);
+                    return reject(new GeneralError('Si è verificato un errore'));
+                }
+                if(results.length < 1) {
+                    return reject(new NotFound('Prenotazione non trovata'));
+                }
+                resolve(results);
+            }
+        )
     })
 }
 
@@ -638,6 +661,7 @@ module.exports = updateDatePrenotazione;
 module.exports = deletePrenotazione;
 module.exports = insertPrenotazione;
 module.exports = checkSoggiornante;
+module.exports = checkinPrenotazione;
 
 module.exports = {
     all,
@@ -655,5 +679,6 @@ module.exports = {
     updateDatePrenotazione,
     deletePrenotazione,
     insertPrenotazione,
-    checkSoggiornante
+    checkSoggiornante,
+    checkinPrenotazione
 }

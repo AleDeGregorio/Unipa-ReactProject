@@ -99,6 +99,18 @@ router.post('/newDate', async(req, res, next) => {
     }
 });
 
+// effettuato check in prenotazione from id_prenotazione
+// indirizzo: /checkinPrenotazione/checkin
+router.post('/checkin', async(req, res, next) => {
+    try {
+        let checkin = await DB.Prenotazione.checkinPrenotazione(req.body);
+        res.json(checkin)
+    }
+    catch(e) {
+        next(e);
+    }
+});
+
 // delete prenotazione from id_prenotazione
 // indirizzo: /deletePrenotazione/delete
 router.post('/delete', async(req, res, next) => {

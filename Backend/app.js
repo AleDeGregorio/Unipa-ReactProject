@@ -299,6 +299,9 @@ app.use('/rifiutaPrenotazione', prenotazioneRouter);
 // update date of table Prenotazione (from id_prenotazione)
 // indirizzo: /updateDatePrenotazione/newDate
 app.use('/updateDatePrenotazione', prenotazioneRouter);
+// effettuato check in prenotazione from id_prenotazione
+// indirizzo: /checkinPrenotazione/checkin
+app.use('/checkinPrenotazione', prenotazioneRouter);
 // delete prenotazione from id_prenotazione
 // indirizzo: /deletePrenotazione/delete
 app.use('/deletePrenotazione', prenotazioneRouter);

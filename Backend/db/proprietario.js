@@ -158,7 +158,7 @@ const getGuadagni = async(req) => {
             'SELECT pro.email_prop, (SUM(pre.costo) + SUM(pre.caparra)) AS tot_guadagni ' +
             'FROM prenotazione pre, proprietario pro ' +
             'WHERE pre.ref_proprietario = pro.email_prop AND pro.email_prop = @prop AND ' +
-            'pre.data_partenza >= @data_1 AND pre.data_partenza <= @data_2 ' +
+            'pre.data_partenza >= @data_1 AND pre.data_partenza <= @data_2 AND pre.checkin = true ' +
             'GROUP BY pro.email_prop;',
             (err, results) => {
                 if(err) {
@@ -187,7 +187,7 @@ const getGuadagniTipo = async(req) => {
             'FROM prenotazione pre, proprietario pro, proprieta p ' +
             'WHERE pre.ref_proprietario = pro.email_prop AND pro.email_prop = p.ref_proprietario AND ' +
             ' pre.ref_proprieta = p.id_proprieta AND pro.email_prop = @prop AND p.tipo_proprieta = @tipo AND ' +
-            'pre.data_partenza >= @data_1 AND pre.data_partenza <= @data_2 ' +
+            'pre.data_partenza >= @data_1 AND pre.data_partenza <= @data_2 AND pre.checkin = true ' +
             'GROUP BY pro.email_prop;',
             (err, results) => {
                 if(err) {
@@ -216,7 +216,7 @@ const getGuadagniProprieta = async(req) => {
             'FROM prenotazione pre, proprietario pro, proprieta p ' +
             'WHERE pre.ref_proprietario = pro.email_prop AND pro.email_prop = p.ref_proprietario AND ' +
             ' pre.ref_proprieta = p.id_proprieta AND pro.email_prop = @prop AND p.id_proprieta = @id AND ' +
-            'pre.data_partenza >= @data_1 AND pre.data_partenza <= @data_2 ' +
+            'pre.data_partenza >= @data_1 AND pre.data_partenza <= @data_2 AND pre.checkin = true ' +
             'GROUP BY pro.email_prop;',
             (err, results) => {
                 if(err) {
