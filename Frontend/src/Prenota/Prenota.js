@@ -14,6 +14,7 @@ class Prenota extends React.Component {
             checkOut: this.props.history.location.state ? this.props.history.location.state.checkOut : '',
             posti: this.props.history.location.state ? this.props.history.location.state.posti : 1,
             numPosti: [],
+            numPostiProps: [],
             maxDate: '',
             partenza: '',
             ritorno: '',
@@ -60,7 +61,10 @@ class Prenota extends React.Component {
         array[i]++;
         }
 
-        this.setState({ numPosti: array });
+        this.setState({ 
+            numPosti: array,
+            numPostiProps: array 
+        });
 
         var today = new Date();
         const offset = today.getTimezoneOffset()
@@ -71,6 +75,18 @@ class Prenota extends React.Component {
 
     onChange = (e) => {
         this.setState({ [e.target.id]: e.target.value })
+
+        if(e.target.id === 'posti') {
+
+            var array = [];
+
+            for(var i = 0; i < e.target.value; i++) {
+                array[i] = i;
+                array[i]++;
+            }
+
+            this.setState({ numPosti: array });
+        }
     }
 
     setShowSucc = (e) => {
@@ -334,7 +350,7 @@ class Prenota extends React.Component {
                         <Form.Group as={Col} controlId="formGridDate">
                         <Form.Label>Ospiti</Form.Label>
                             <Form.Control as="select" onChange = {this.onChange} id="posti" value = {this.state.posti}>
-                                {this.state.numPosti.map(item => (
+                                {this.state.numPostiProps.map(item => (
                                 <option value = {item} id = "posti">{item}</option>
                                 ))}
                             </Form.Control>
