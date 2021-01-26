@@ -7,6 +7,9 @@ const StyledHero = styled.header`
   align-items: center;
   justify-content: center;
   width: 100%;
+  background-position-x: center;
+  background-repeat: no-repeat;
+  background-origin: content-box;
 `;
 
 export default StyledHero;

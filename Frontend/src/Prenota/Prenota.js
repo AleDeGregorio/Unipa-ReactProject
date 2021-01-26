@@ -33,7 +33,7 @@ class Prenota extends React.Component {
         }
     }
 
-    componentDidMount() {
+     componentDidMount(){
         if(this.state.checkIn !== '' && this.state.checkOut !== '') {
             var str1 = this.state.checkIn;
             var dmy1 = str1.split("/");
