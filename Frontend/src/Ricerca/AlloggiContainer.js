@@ -38,12 +38,20 @@ class AlloggiContainer extends React.Component {
     })
     .then((result) => result.text())
     .then((result) => {
+
+      try {
         this.setState({ apiResponse: JSON.parse(result) });
+  
+      } catch (error) {
+        this.setState({ apiResponse: result });
+        
+        this.setState({ empty: true });
+      }
     
-        if(this.state.apiResponse.status === 'error') {
-            this.setState({ error: true });
-            this.setState({ errorMessage: this.state.apiResponse_strutture.message });
-        }
+      if(this.state.apiResponse.status === 'error') {
+        this.setState({ error: true });
+        this.setState({ errorMessage: this.state.apiResponse_strutture.message });
+      }
     });
   }
 
@@ -87,9 +95,15 @@ class AlloggiContainer extends React.Component {
       })
       .then((result) => result.text())
       .then((result) => {
+        try {
+
           this.setState({ case: JSON.parse(result) });
+        } catch(error) {
+
+          this.setState({ case: result })
+        }
   
-          if(this.state.case.status === 'error') {
+          if(this.state.case.status && this.state.case.status === 'error') {
             this.setState({ error: true });
             this.setState({ errorMessage: this.state.case.message });
           }
@@ -135,10 +149,15 @@ class AlloggiContainer extends React.Component {
       })
       .then((result) => result.text())
       .then((result) => {
-          //console.log(JSON.parse(result));
+        try{
+
           this.setState({ case: JSON.parse(result) });
+        } catch(error) {
+
+          this.setState({ case: result });
+        }
   
-          if(this.state.case.status === 'error') {
+          if(this.state.case.status && this.state.case.status === 'error') {
             this.setState({ error: true });
             this.setState({ errorMessage: this.state.case.message });
           }

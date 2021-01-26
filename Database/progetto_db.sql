@@ -1,7 +1,7 @@
 --
 -- Create schema 
 --
-DROP DATABASE progetto;
+-- DROP DATABASE progetto;
 
 CREATE DATABASE IF NOT EXISTS progetto;
 USE progetto;

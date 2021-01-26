@@ -73,14 +73,25 @@ class ListAccettare extends Component {
     })
     .then((result) => result.text())
     .then((result) => {
-      this.setState({ apiResponse_accettazione: JSON.parse(result) });
-      var res = JSON.parse(result);
+
+      var res;
+
+      try {
+
+        this.setState({ apiResponse_accettazione: JSON.parse(result) });
+        res = JSON.parse(result);
+
+      } catch(error) {
+
+        this.setState({ apiResponse_accettazione: result });
+        res = result;
+      }
 
       if(res.length < 1 || (res.code && res.code === 404)) {
         this.setState({ empty: true, errorMessage: res.message });
       }
 
-      else if(this.state.apiResponse_accettazione.status === 'error') {
+      else if(this.state.apiResponse_accettazione.status && this.state.apiResponse_accettazione.status === 'error') {
         this.setState({ error: true });
         this.setState({ errorMessage: this.state.apiResponse_accettazione.message });
       }

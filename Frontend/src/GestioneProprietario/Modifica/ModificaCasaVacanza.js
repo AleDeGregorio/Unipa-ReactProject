@@ -61,9 +61,16 @@ class ModificaCasaVacanza extends React.Component {
     })
     .then((result) => result.text())
     .then((result) => {
+
+      try {
+
         this.setState({ listaServizi: JSON.parse(result) });
+      } catch(error) {
+
+        this.setState({ listaServizi: result });
+      }
     
-        if(this.state.listaServizi.status === 'error') {
+        if(this.state.listaServizi.status && this.state.listaServizi.status === 'error') {
           this.setState({ error: true });
           this.setState({ errorMessage: this.state.listaServizi.message });
         }
@@ -238,15 +245,26 @@ class ModificaCasaVacanza extends React.Component {
       })
       .then((result) => result.text())
       .then((result) => {
-        this.setState({ apiResponse: JSON.parse(result) });
 
-        var res = JSON.parse(result);
+        var res;
+
+        try {
+        this.setState({ apiResponse: JSON.parse(result) });
+        
+        res = JSON.parse(result);
+      } catch (error) {
+        this.setState({ apiResponse: result });
+        
+        res = result;
+
+        this.setState({ empty: true });
+      }
 
         if(res.length < 1 || (res.code && res.code === 404)) {
           this.setState({ empty: true, errorMessage: res.message });
         }
 
-        if(this.state.apiResponse.status === 'error') {
+        if(this.state.apiResponse.status && this.state.apiResponse.status === 'error') {
           this.setState({ error: true });
           this.setState({ errorMessage: this.state.apiResponse.message });
         }

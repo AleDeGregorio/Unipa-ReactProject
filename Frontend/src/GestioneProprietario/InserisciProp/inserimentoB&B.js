@@ -45,9 +45,16 @@ class InserimentoBnB extends React.Component {
     })
     .then((result) => result.text())
     .then((result) => {
+
+      try {
+
         this.setState({ listaServizi: JSON.parse(result) });
+      } catch(error) {
+
+        this.setState({ listaServizi: result });
+      }
     
-        if(this.state.listaServizi.status === 'error') {
+        if(this.state.listaServizi.status && this.state.listaServizi.status === 'error') {
           this.setState({ error: true });
           this.setState({ errorMessage: this.state.listaServizi.message });
         }
@@ -108,15 +115,27 @@ class InserimentoBnB extends React.Component {
     })
     .then((result) => result.text())
     .then((result) => {
-      this.setState({ apiResponse: JSON.parse(result) });
 
-      var res = JSON.parse(result);
+      var res;
+
+      try {
+        this.setState({ apiResponse: JSON.parse(result) });
+        
+        res = JSON.parse(result);
+      } catch (error) {
+        this.setState({ apiResponse: result });
+        
+        res = result;
+
+        this.setState({ empty: true });
+      }
+
 
       if(res.length < 1 || (res.code && res.code === 404)) {
         this.setState({ empty: true, errorMessage: res.message });
       }
 
-      else if(this.state.apiResponse.status === 'error') {
+      else if(this.state.apiResponse.status && this.state.apiResponse.status === 'error') {
         window.scrollTo(0, 0);
         this.setState({ error: true });
         this.setState({ errorMessage: this.state.apiResponse.message });
@@ -137,15 +156,26 @@ class InserimentoBnB extends React.Component {
       })
       .then((result) => result.text())
       .then((result) => {
-        this.setState({ apiResponse: result });
 
-        var res2 = JSON.parse(result);
+        var res2;
+
+        try {
+
+          this.setState({ apiResponse: result });
+
+          res2 = JSON.parse(result);
+        } catch(error) {
+
+          this.setState({ apiResponse: result });
+
+          res2 = result;
+        }
 
         if(res2.length < 1 || (res2.code && res2.code === 404)) {
           this.setState({ empty: true, errorMessage: res2.message });
         }
 
-        else if(this.state.apiResponse.status === 'error') {
+        else if(this.state.apiResponse.status && this.state.apiResponse.status === 'error') {
           window.scrollTo(0, 0);
           this.setState({ error: true });
           this.setState({ errorMessage: this.state.apiResponse.message });
@@ -179,15 +209,26 @@ class InserimentoBnB extends React.Component {
       })
       .then((result) => result.text())
       .then((result) => {
-        this.setState({ apiResponse: JSON.parse(result) });
 
-        var res = JSON.parse(result);
+        var res;
+
+        try {
+        this.setState({ apiResponse: JSON.parse(result) });
+        
+        res = JSON.parse(result);
+      } catch (error) {
+        this.setState({ apiResponse: result });
+        
+        res = result;
+
+        this.setState({ empty: true });
+      }
 
         if(res.length < 1 || (res.code && res.code === 404)) {
           this.setState({ empty: true, errorMessage: res.message });
         }
 
-        if(this.state.apiResponse.status === 'error') {
+        if(this.state.apiResponse.status && this.state.apiResponse.status === 'error') {
           this.setState({ error: true });
           this.setState({ errorMessage: this.state.apiResponse.message });
         }

@@ -140,9 +140,15 @@ class Prenota extends React.Component {
             })
             .then((result) => result.text())
             .then((result) => {
-                this.setState({ apiRespone: JSON.parse(result) })
+                try {
+
+                    this.setState({ apiRespone: JSON.parse(result) });
+                } catch(error) {
+
+                    this.setState({ apiRespone: result });
+                }
         
-                if(this.state.apiRespone.status === 'error') {
+                if(this.state.apiRespone.status && this.state.apiRespone.status === 'error') {
                     window.scrollTo(0, 0);
                     this.setState({ error: true });
                     this.setState({ errorMessage: this.state.apiRespone.message });

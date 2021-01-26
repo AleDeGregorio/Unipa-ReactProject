@@ -175,9 +175,20 @@ class ModificaBeB extends React.Component {
       })
       .then((result) => result.text())
       .then((result) => {
-        this.setState({ apiResponse: JSON.parse(result) });
 
-        var res = JSON.parse(result);
+        var res;
+
+        try {
+        this.setState({ apiResponse: JSON.parse(result) });
+        
+        res = JSON.parse(result);
+      } catch (error) {
+        this.setState({ apiResponse: result });
+        
+        res = result;
+
+        this.setState({ empty: true });
+      }
 
         if(res.length < 1 || (res.code && res.code === 404)) {
           this.setState({ empty: true, errorMessage: res.message });

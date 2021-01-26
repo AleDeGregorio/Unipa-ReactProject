@@ -70,15 +70,27 @@ class List extends Component {
     })
     .then((result) => result.text())
     .then((result) => {
+
+      var res;
+
+        try {
         this.setState({ apiResponse: JSON.parse(result) });
         
-        var res = JSON.parse(result);
+        res = JSON.parse(result);
+      } catch (error) {
+        this.setState({ apiResponse: result });
+        
+        res = result;
+
+        this.setState({ empty: true });
+      }
+        
 
         if(res.length < 1 || (res.code && res.code === 404)) {
           this.setState({ empty: true, errorMessage: res.message });
         }
 
-        else if(this.state.apiResponse.status === 'error') {
+        else if(this.state.apiResponse.status && this.state.apiResponse.status === 'error') {
           this.setState({ error: true });
           this.setState({ errorMessage: this.state.apiResponse.message });
         }
@@ -141,9 +153,7 @@ class List extends Component {
             <ListTitle>{listTitle}</ListTitle>
             <ListBreadcrumb>{listBreadcrumb}</ListBreadcrumb>
             <DragDropContext onDragEnd={this.onDragEnd}>
-              <Droppable droppableId="droppabe-list">
-                <p>Si è verificato un errore: {this.state.errorMessage}</p>
-              </Droppable>
+                <p>Si è verificato un errore: nessuna stanza</p>
             </DragDropContext>
           </ListWrapper>
         </ThemeProvider>

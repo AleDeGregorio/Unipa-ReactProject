@@ -7,7 +7,7 @@ var router = express.Router();
 // indirizzo: /insertStanza/new
 router.post('/new', async(req, res) => {
     try {
-        let insert = await DB.stanza.insertStanza(req.body);
+        let insert = await DB.Stanza.insertStanza(req.body);
         res.json(insert);
     }
     catch(e) {

@@ -63,9 +63,17 @@ class Earning extends React.Component {
         })
         .then((result) => result.text())
         .then((result) => {
-            this.setState({ apiResponse: JSON.parse(result) });
+            try {
+        this.setState({ apiResponse: JSON.parse(result) });
         
-            if(this.state.apiResponse.status === 'error') {
+      } catch (error) {
+        this.setState({ apiResponse: result });
+        
+
+        this.setState({ empty: true });
+      }
+        
+            if(this.state.apiResponse.status && this.state.apiResponse.status === 'error') {
               this.setState({ error: true });
               this.setState({ errorMessage: this.state.apiResponse.message });
             }
@@ -90,9 +98,16 @@ class Earning extends React.Component {
         })
         .then((result) => result.text())
         .then((result) => {
-          this.setState({ apiResponse: JSON.parse(result) });
+          try {
+        this.setState({ apiResponse: JSON.parse(result) });
+        
+      } catch (error) {
+        this.setState({ apiResponse: result });
+
+        this.setState({ empty: true });
+      }
       
-          if(this.state.apiResponse.status === 'error') {
+          if(this.state.apiResponse.status && this.state.apiResponse.status === 'error') {
               this.setState({ error: true });
               this.setState({ errorMessage: this.state.apiResponse.message });
           }
@@ -117,9 +132,16 @@ class Earning extends React.Component {
         })
         .then((result) => result.text())
         .then((result) => {
-            this.setState({ apiResponse: JSON.parse(result) });
+            try {
+        this.setState({ apiResponse: JSON.parse(result) });
         
-            if(this.state.apiResponse.status === 'error') {
+      } catch (error) {
+        this.setState({ apiResponse: result });
+
+        this.setState({ empty: true });
+      }
+        
+            if(this.state.apiResponse.status && this.state.apiResponse.status === 'error') {
                 this.setState({ error: true });
                 this.setState({ errorMessage: this.state.apiResponse.message });
             }
@@ -140,9 +162,16 @@ class Earning extends React.Component {
     })
     .then((result) => result.text())
     .then((result) => {
+      
+      try {
+
         this.setState({ apiResponse_strutture: JSON.parse(result) });
+      } catch(error) {
+
+        this.setState({ apiResponse_strutture: result });
+      }
     
-        if(this.state.apiResponse_strutture.status === 'error') {
+        if(this.state.apiResponse_strutture.status && this.state.apiResponse_strutture.status === 'error') {
             this.setState({ error: true });
             this.setState({ errorMessage: this.state.apiResponse_strutture.message });
         }

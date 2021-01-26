@@ -59,7 +59,7 @@ class InserimentoStanzaBnB extends React.Component {
     e.preventDefault();
 
     const data1 = {
-      ref_bb: this.state.dati_bb.ref_bb,
+      ref_bb: this.state.dati_bb.ref_proprieta_bb,
       tipologia: this.state.tipologia,
       tariffa_stanza: this.state.tariffa_stanza
     }
@@ -73,15 +73,27 @@ class InserimentoStanzaBnB extends React.Component {
     })
     .then((result) => result.text())
     .then((result) => {
-      this.setState({ apiResponse: JSON.parse(result) });
 
-      var res = JSON.parse(result);
+      var res;
+
+      try {
+        this.setState({ apiResponse: JSON.parse(result) });
+        
+        res = JSON.parse(result);
+      } catch (error) {
+        this.setState({ apiResponse: result });
+        
+        res = result;
+
+        this.setState({ empty: true });
+      }
+
 
       if(res.length < 1 || (res.code && res.code === 404)) {
         this.setState({ empty: true, errorMessage: res.message });
       }
 
-      else if(this.state.apiResponse.status === 'error') {
+      else if(this.state.apiResponse.status && this.state.apiResponse.status === 'error') {
         window.scrollTo(0, 0);
         this.setState({ error: true });
         this.setState({ errorMessage: this.state.apiResponse.message });
@@ -109,15 +121,13 @@ class InserimentoStanzaBnB extends React.Component {
       })
       .then((result) => result.text())
       .then((result) => {
-        this.setState({ apiResponse: result });
-
-        var res = JSON.parse(result);
+        var res = result;
 
         if(res.length < 1 || (res.code && res.code === 404)) {
           this.setState({ empty: true, errorMessage: res.message });
         }
   
-        else if(this.state.apiResponse.status === 'error') {
+        else if(this.state.apiResponse.status && this.state.apiResponse.status === 'error') {
           window.scrollTo(0, 0);
           this.setState({ error: true });
           this.setState({ errorMessage: this.state.apiResponse.message });

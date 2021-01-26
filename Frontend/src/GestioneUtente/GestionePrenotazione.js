@@ -8,14 +8,14 @@ import { Redirect } from 'react-router-dom'
 
 class GestionePrenotazione extends React.Component {
 
-    constructor(props) {     //props : stati delle componenti parent
+    constructor(props) {
         super(props);
         this.state = {
             id_prenotazione: '',
             data_partenza: '',
             data_ritorno: '',
             ref_proprietario: '',
-            email: localStorage.getItem('email'),  //variabili di cui abbiamo bisogno
+            email: localStorage.getItem('email'),
             apiResponse: [],
             responseElimina: [],
             error: false,
@@ -40,7 +40,7 @@ class GestionePrenotazione extends React.Component {
             ref_cliente: this.state.email
         }; 
 
-        fetch('http://localhost:9000/searchPrenotazioneCliente/prenotazioneCliente', { //metodo http in fetch
+        fetch('http://localhost:9000/searchPrenotazioneCliente/prenotazioneCliente', {
             method:'POST',
             headers:{
                 'Content-type':'application/json'
@@ -49,14 +49,24 @@ class GestionePrenotazione extends React.Component {
         })
         .then((result)=> result.text())                  
         .then((result)=> {
-            this.setState({ apiResponse:JSON.parse(result) }); //rende array il risultato
-            var res = JSON.parse(result);
+
+            var res;
+
+            try {
+
+                this.setState({ apiResponse:JSON.parse(result) }); 
+                res = JSON.parse(result);
+            } catch(error) {
+
+                this.setState({ apiResponse: result });
+                res = result;
+            }
 
             if(res.length < 1 || (res.code && res.code === 404)) {
               this.setState({ empty: true, errorMessage: res.message });
             }
       
-            else if(this.state.apiResponse.status === 'error') {
+            else if(this.state.apiResponse.status && this.state.apiResponse.status === 'error') {
               this.setState({ error: true });
               this.setState({ errorMessage: this.state.apiResponse.message });
             }
@@ -155,8 +165,18 @@ class GestionePrenotazione extends React.Component {
             })
             .then((result) => result.text())
             .then((result)=>{
-                this.setState({ apiResponse:JSON.parse(result) });
-                var res = JSON.parse(result);
+
+                var res;
+
+                try {
+
+                    this.setState({ apiResponse:JSON.parse(result) });
+                    res = JSON.parse(result);
+                } catch(error) {
+
+                    this.setState({ apiResponse: result });
+                    res = result;
+                }
 
                 if(res.length < 1 || (res.code && res.code === 404)) {
                     this.setState({ empty: true, errorMessage: res.message });
@@ -194,14 +214,24 @@ class GestionePrenotazione extends React.Component {
         })
         .then((result) => result.text())
         .then((result)=>{
-            this.setState({ responseElimina:JSON.parse(result) });
-            var res = JSON.parse(result);
+
+            var res;
+
+            try {
+
+                this.setState({ responseElimina:JSON.parse(result) });
+                res = JSON.parse(result);
+            } catch(error) {
+
+                this.setState({ responseElimina: result });
+                res = result;
+            }
 
             if(res.length < 1 || (res.code && res.code === 404)) {
               this.setState({ empty: true, errorMessage: res.message });
             }
       
-            else if(this.state.responseElimina.status === 'error') {
+            else if(this.state.responseElimina.status && this.state.responseElimina.status === 'error') {
                 window.scrollTo(0, 0);
                 this.setState({ error: true });
                 this.setState({ errorMessage: this.state.responseElimina.message });
@@ -238,13 +268,22 @@ class GestionePrenotazione extends React.Component {
             })
             .then((result)=> result.text())                  
             .then((result)=> {
-                var res = JSON.parse(result);
+
+                var res;
+
+                try {
+
+                    res = JSON.parse(result);
+                } catch(error) {
+
+                    res = result;
+                }
 
                 if(res.length < 1 || (res.code && res.code === 404)) {
                 this.setState({ empty: true, errorMessage: res.message });
                 }
         
-                else if(res.status === 'error') {
+                else if(res.status && res.status === 'error') {
                 this.setState({ error: true });
                 this.setState({ errorMessage: res.message });
                 }
@@ -273,13 +312,22 @@ class GestionePrenotazione extends React.Component {
             })
             .then((result)=> result.text())                  
             .then((result)=> {
-                var res = JSON.parse(result);
+
+                var res;
+
+                try {
+
+                    res = JSON.parse(result);
+                } catch(error) {
+
+                    res = result;
+                }
 
                 if(res.length < 1 || (res.code && res.code === 404)) {
                 this.setState({ empty: true, errorMessage: res.message });
                 }
         
-                else if(res.status === 'error') {
+                else if(res.status && res.status === 'error') {
                 this.setState({ error: true });
                 this.setState({ errorMessage: res.message });
                 }

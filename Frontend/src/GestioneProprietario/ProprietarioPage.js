@@ -45,14 +45,24 @@ class ProprietarioPage extends React.Component {
         })
         .then((result)=>result.text())
         .then((result)=>{
-            this.setState({ apiResponse:JSON.parse(result) });
-            var res = JSON.parse(result);
+
+            var res;
+
+            try {
+
+                this.setState({ apiResponse:JSON.parse(result) });
+                res = JSON.parse(result);
+            } catch(error) {
+
+                this.setState({ apiResponse:result });
+                res = result;
+            }
 
             if(res.length < 1 || (res.code && res.code === 404)) {
               this.setState({ empty: true, errorMessage: res.message });
             }
       
-            else if(this.state.apiResponse.status === 'error') {
+            else if(this.state.apiResponse.status && this.state.apiResponse.status === 'error') {
               this.setState({ error: true });
               this.setState({ errorMessage: this.state.apiResponse.message });
             }
@@ -71,14 +81,24 @@ class ProprietarioPage extends React.Component {
         })
         .then((result)=>result.text())
         .then((result)=>{
-            this.setState({ tasseInvio:JSON.parse(result) });
-            var res = JSON.parse(result);
+
+            var res;
+
+            try {
+
+                this.setState({ tasseInvio:JSON.parse(result) });
+                res = JSON.parse(result);
+            } catch(error) {
+
+                this.setState({ tasseInvio:result });
+                res = result;
+            }
 
             if(res.length < 1 || (res.code && res.code === 404)) {
               this.setState({ empty: true, errorMessage: res.message });
             }
       
-            else if(this.state.tasseInvio.status === 'error') {
+            else if(this.state.tasseInvio.status && this.state.tasseInvio.status === 'error') {
               this.setState({ error: true });
               this.setState({ errorMessage: this.state.tasseInvio.message });
             }
@@ -113,14 +133,24 @@ class ProprietarioPage extends React.Component {
         })
         .then((result)=>result.text())
         .then((result)=>{
-            this.setState({ apiResponse:JSON.parse(result) });
-            var res = JSON.parse(result);
+
+            var res;
+
+            try {
+
+                this.setState({ apiResponse:JSON.parse(result) });
+                res = JSON.parse(result);   
+            } catch(error) {
+
+                this.setState({ apiResponse:result });
+                res = result;
+            }
 
             if(res.length < 1 || (res.code && res.code === 404)) {
               this.setState({ empty: true, errorMessage: res.message });
             }
       
-            else if(this.state.apiResponse.status === 'error') {
+            else if(this.state.apiResponse.status && this.state.apiResponse.status === 'error') {
                 window.scrollTo(0, 0);
                 this.setState({ error: true });
                 this.setState({ errorMessage: this.state.apiResponse.message });
@@ -140,14 +170,24 @@ class ProprietarioPage extends React.Component {
         })
         .then((result)=>result.text())
         .then((result)=>{
-            this.setState({ tasseInvio:JSON.parse(result) });
-            var res = JSON.parse(result);
+
+            var res;
+
+            try {
+
+                this.setState({ tasseInvio:JSON.parse(result) });
+                res = JSON.parse(result);
+            } catch(error) {
+
+                this.setState({ tasseInvio:result });
+                res = result;
+            }
 
             if(res.length < 1 || (res.code && res.code === 404)) {
               this.setState({ empty: true, errorMessage: res.message });
             }
       
-            else if(this.state.tasseInvio.status === 'error') {
+            else if(this.state.tasseInvio.status && this.state.tasseInvio.status === 'error') {
                 window.scrollTo(0, 0);
                 this.setState({ error: true });
                 this.setState({ errorMessage: this.state.tasseInvio.message });

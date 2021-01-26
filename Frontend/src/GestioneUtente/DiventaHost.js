@@ -52,14 +52,24 @@ class DiventaHost extends React.Component {
         })
         .then((result) => result.text())
         .then((result)=>{
-            this.setState({ apiResponse:JSON.parse(result) });
-            var res = JSON.parse(result);
+
+            var res;
+
+            try {
+
+                this.setState({ apiResponse:JSON.parse(result) });
+                res = JSON.parse(result);
+            } catch(error) {
+
+                this.setState({ apiResponse:result });
+                res = result;
+            }
 
             if(res.length < 1 || (res.code && res.code === 404)) {
               this.setState({ empty: true, errorMessage: res.message });
             }
       
-            else if(this.state.apiResponse.status === 'error') {
+            else if(this.state.apiResponse.status && this.state.apiResponse.status === 'error') {
               this.setState({ error: true });
               this.setState({ errorMessage: this.state.apiResponse.message });
             }
@@ -81,14 +91,24 @@ class DiventaHost extends React.Component {
                         })
                         .then((result) => result.text())
                         .then((result)=>{
-                            this.setState({ apiResponse:JSON.parse(result) });
-                            var res = JSON.parse(result);
+
+                            var res;
+
+                            try {
+
+                                this.setState({ apiResponse:JSON.parse(result) });
+                                res = JSON.parse(result);
+                            } catch(error) {
+
+                                this.setState({ apiResponse: result });
+                                res = result;
+                            }
                 
                             if(res.length < 1 || (res.code && res.code === 404)) {
                               this.setState({ empty: true, errorMessage: res.message });
                             }
                       
-                            else if(this.state.apiResponse.status === 'error') {
+                            else if(this.state.apiResponse.status && this.state.apiResponse.status === 'error') {
                               this.setState({ error: true });
                               this.setState({ errorMessage: this.state.apiResponse.message });
                             }
@@ -126,10 +146,17 @@ class DiventaHost extends React.Component {
         })
         .then((result) => result.text())
         .then((result) => {
-            //console.log(JSON.parse(result));
-            this.setState({ apiResponse: JSON.parse(result) });
 
-            if(this.state.apiResponse.status === 'error') {
+            try {
+
+                this.setState({ apiResponse: JSON.parse(result) });
+            } catch (error) {
+                this.setState({ apiResponse: result });
+
+                this.setState({ empty: true });
+            }
+
+            if(this.state.apiResponse.status && this.state.apiResponse.status === 'error') {
                 this.setState({ error: true });
                 this.setState({ errorMessage: this.state.apiResponse.message });
             }

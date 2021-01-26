@@ -58,10 +58,17 @@ class NavBar extends React.Component {
         })
         .then((result) => result.text())
         .then((result) => {
-            //console.log(JSON.parse(result));
-            this.setState({ apiResponse: JSON.parse(result) });
 
-            if(this.state.apiResponse.status === 'error') {
+            try {
+                this.setState({ apiResponse: JSON.parse(result) });
+                
+            } catch (error) {
+                this.setState({ apiResponse: result });
+
+                this.setState({ empty: true });
+            }
+
+            if(this.state.apiResponse.status && this.state.apiResponse.status === 'error') {
                 this.setState({ error: true });
                 this.setState({ errorMessage: this.state.apiResponse.message });
             }
@@ -106,10 +113,17 @@ class NavBar extends React.Component {
         })
         .then((result) => result.text())
         .then((result) => {
-            //console.log(JSON.parse(result));
-            this.setState({ apiResponse: JSON.parse(result) });
 
-            if(this.state.apiResponse.status === 'error') {
+            try {
+                this.setState({ apiResponse: JSON.parse(result) });
+                
+            } catch (error) {
+                this.setState({ apiResponse: result });
+
+                this.setState({ empty: true });
+            }
+
+            if(this.state.apiResponse.status && this.state.apiResponse.status === 'error') {
                 this.setState({ error: true });
                 this.setState({ errorMessage: this.state.apiResponse.message });
             }
