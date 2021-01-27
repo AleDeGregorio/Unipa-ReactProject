@@ -374,7 +374,7 @@ const updateDatePrenotazione = async(req) => {
     return new Promise((resolve, reject) => {
 
         Connection.query(
-            'UDATE prenotazione ' +
+            'UPDATE prenotazione ' +
             'SET data_partenza = (STR_TO_DATE("' + req.data_partenza + '","%d/%m/%Y")), data_ritorno = (STR_TO_DATE("' + req.data_ritorno + '","%d/%m/%Y")), accettata = null ' +
             'WHERE id_prenotazione = ' + req.id_prenotazione + '; ',
             (err, results) => {

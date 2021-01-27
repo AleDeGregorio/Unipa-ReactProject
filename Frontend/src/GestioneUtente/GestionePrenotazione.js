@@ -190,9 +190,11 @@ class GestionePrenotazione extends React.Component {
                     window.scrollTo(0, 0);
                     this.setState({ success: true, error: false },()=>{
                         window.setTimeout(()=>{
-                            this.setState({success:false})
+                            this.setState({success:false}, () => {
+                                window.location.reload()
+                            })
                         }, 3000)
-                        })
+                    })
                 }
             });
         });
@@ -344,9 +346,18 @@ class GestionePrenotazione extends React.Component {
         }
     }
 
-    isDayBlocked = (day) => {
-        if(day.isBefore(this.state.dateNonDisponibili.inizio) || day.isAfter(this.state.dateNonDisponibili.fine)) {
-            return false;
+    isDayBlocked = (checkout, day) => {
+
+        if(!checkout) {
+            if(day.isBefore(this.state.dateNonDisponibili.inizio) || day.isAfter(this.state.dateNonDisponibili.fine)) {
+                return false;
+            }
+        }
+
+        if(checkout) {
+            if(day.isAfter(this.state.startDate) && (day.isBefore(this.state.dateNonDisponibili.inizio) || day.isAfter(this.state.dateNonDisponibili.fine))) {
+                return false;
+            }
         }
 
         return true;
@@ -469,14 +480,14 @@ class GestionePrenotazione extends React.Component {
                                                                                         showClearDate={this.state.checkInFocus[index]}
                                                                                         reopenPickerOnClearDate={true}
                                                                                         noBorder={true}
-                                                                                        isDayBlocked={day => this.isDayBlocked(day)}
+                                                                                        isDayBlocked={day => this.isDayBlocked(false, day)}
                                                                                     />
                                                                                 </div>
                                                                         </div>
                                                                         </Form.Group>
                                                                         <Form.Group as={Col} controlId="formGridDate1">
                                                                         <div className="bianco">
-                                                                            <label class="search-label" htmlFor="start_date">Check-out</label>
+                                                                            <label class="search-label" htmlFor="end_date">Check-out</label>
                                                                                 <div onClick={() => this.set_focused_checkOut(!this.state.checkOutFocus[index], index)}>
                                                                                     <SingleDatePicker
                                                                                         class="search-element"
@@ -484,7 +495,7 @@ class GestionePrenotazione extends React.Component {
                                                                                         onDateChange={date => this.setEndDate(date)}
                                                                                         focused={this.state.checkOutFocus[index]}
                                                                                         onFocusChange = {focused => this.onClick(focused)}
-                                                                                        id="start_date" 
+                                                                                        id="end_date" 
                                                                                         numberOfMonths={1}
                                                                                         placeholder="gg/mm/aaaa"
                                                                                         daySize={32}
@@ -495,13 +506,17 @@ class GestionePrenotazione extends React.Component {
                                                                                         showClearDate={this.state.checkOutFocus[index]}
                                                                                         reopenPickerOnClearDate={true}
                                                                                         noBorder={true}
+                                                                                        isDayBlocked={day => this.isDayBlocked(true, day)}
+                                                                                        isDayHighlighted={day =>
+                                                                                            day.isAfter(this.state.startDate) && day.isBefore(this.state.endDate)
+                                                                                        }
                                                                                     />
                                                                                 </div>
                                                                         </div>
                                                                         </Form.Group>
                                                                     </Form.Row>
                                                                 </Form>
-                                                                <Button id="cambiadata" type="submit">
+                                                                <Button id="cambiadata" type="submit" onClick = {this.onSubmitModifica}>
                                                                 Modifica data
                                                                  </Button>
                                                                  </div>
