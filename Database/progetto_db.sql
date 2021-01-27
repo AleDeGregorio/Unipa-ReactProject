@@ -354,7 +354,12 @@ INSERT INTO cliente VALUES
 ('fellini@gmail.it', 'cff036a71ac63cdfa61d4ca90b6e191bc0fefb1b9afcffdd282cdc7638e2a3f58ebeac34a0ca543ca2c582cc3ded8ad1a755417ee0229be8eeab19b1241c9f7d', 'Federico', 'Fellini', '1953-02-05', '3771234567'),
 ('mastroianni@gmail.it', '26748100e64e3bdb7e917525cebd53eb7989ec641cc42ae9f6a583ca1a47304a47a442a653cdbbfe29b87df390711505e202a1731e15c6bcf14f72a58c10cc18', 'Marcello', 'Mastroianni', '1973-05-12', '3410000000'),
 ('leone@gmail.it', 'd1a2ded6083d2fb2ce63463a69fe27ceba5272eae3cddbd449438746dd569147e35acdb1c0909db0f38aa55162c02498cf0982362767ad506aac68a11ab14ded', 'Sergio', 'Leone', '1993-06-02', '389000123'),
-('sorrentino@gmail.it', 'd7c7dfe631d88081828fd8a0ce047e0dec667d4dde49b4fd88897f086450fee64fbde97babb0af508c7987c747027326a3e0422180fc68b5f61141211e5f07c7', 'Paolo', 'Sorrentino', '1999-06-01', '3211234567');
+('sorrentino@gmail.it', 'd7c7dfe631d88081828fd8a0ce047e0dec667d4dde49b4fd88897f086450fee64fbde97babb0af508c7987c747027326a3e0422180fc68b5f61141211e5f07c7', 'Paolo', 'Sorrentino', '1999-06-01', '3211234567'),
+('alessio@gmail.it', '80f8f6bb0d272add18b66f2330750b9e2f1029f46e95264d5c12e461fd19bd59e59cca513985ee6e05b2fa9d9fde3e6a547ba408488bb2ecc67e5988b8e6856d', 'Alessio', 'De Gregorio', '1998-08-04', '3461234567'),
+('mario@gmail.it', '46c10deefef5e8f4a6b7b86fd4bc69e6d5302a35ba5314edcf26bd8b5c3034ff415f97308d4003b2adc8d6d7f46c7107345423ebcb76ff2b406ad2f239a4415c', 'Mario', 'Rossi', '1990-06-06', '3331234567'),
+('luigi@gmail.it', '9b02203d4c29a8d7d850e96602ff1a1f37afcd806415038cfafd1738b4166763a05bc560f4ede09a263a696c807b8c28e55f1fada6ad3a4cd5f25063c0355f1f', 'Luigi', 'Bianchi', '1952-02-02', '3666666666'),
+('matteo@gmail.it', '7921b80aed776e739d106eb29ee2469204cf1b92f05a94fcc95e42f82c2d40d5cbafb2b434be042d5551a80eb2989b515f98ca555804c41e4f92b2f4d948e6df', 'Matteo', 'Neri', '1982-07-07', '3431234567');
+
 
 INSERT INTO soggiornante VALUES
 -- (CF_SOGG, nome_sogg, cognome_sogg, data_nascita_sogg)

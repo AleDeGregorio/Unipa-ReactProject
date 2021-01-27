@@ -95,7 +95,49 @@ class autenticazioneRegistratiProprietario extends React.Component {
               this.setState({ errorMessage: this.state.apiResponse.message });
             }
             else {
-                this.setState({ success: true })
+                const data2 = {
+                    email: this.state.email,
+                    password: this.state.password,
+                    nome: this.state.nome,
+                    cognome: this.state.cognome,
+                    nascita: new Date(this.state.nascita).toLocaleDateString(),
+                    telefono: this.state.telefono
+                }
+        
+                fetch('http://localhost:9000/insertCliente/new', {
+                    method: "POST",
+                    headers: {
+                        'Content-type' : 'application/json'
+                    },
+                    body: JSON.stringify(data2)
+                })
+                .then((result) => result.text())
+                .then((result)=>{
+        
+                    var res;
+        
+                    try {
+        
+                        this.setState({ apiResponse:JSON.parse(result) });
+                        res = JSON.parse(result);
+                    } catch(error) {
+        
+                        this.setState({ apiResponse:result });
+                        res = result;
+                    }   
+        
+                    if(res.length < 1 || (res.code && res.code === 404)) {
+                      this.setState({ empty: true, errorMessage: res.message });
+                    }
+              
+                    else if(this.state.apiResponse.status && this.state.apiResponse.status === 'error') {
+                      this.setState({ error: true });
+                      this.setState({ errorMessage: this.state.apiResponse.message });
+                    }
+                    else {
+                        this.setState({ success: true })
+                    }
+                });
             }
         });
     }
@@ -141,7 +183,7 @@ class autenticazioneRegistratiProprietario extends React.Component {
         }
 
         return (
-            <Form className="contenitoreAutenticazione" onSubmit={this.props.onSubmitInsert}>
+            <Form className="contenitoreAutenticazione" onSubmit={this.onSubmitInsert}>
                 <div className="contentNewCheckAutenticazione">
                     <h2>Iscriviti</h2>
 

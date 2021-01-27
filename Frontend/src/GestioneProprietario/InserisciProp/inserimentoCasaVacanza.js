@@ -27,7 +27,7 @@ class InserimentoCasaVacanza extends React.Component {
       nuovoServizio: '',
       descrizione: '',
       ref_proprietario: localStorage.getItem('email'),
-      posti_letto:'',
+      posti_letto: 1,
       tariffa_casa: '',
       foto1SRC: '',
       foto1: null,
@@ -208,7 +208,7 @@ class InserimentoCasaVacanza extends React.Component {
           .then((result) => {
             this.setState({ apiResponse: result });
 
-            var res = JSON.parse(result);
+            var res = result;
 
             if(res.length < 1 || (res.code && res.code === 404)) {
               this.setState({ empty: true, errorMessage: res.message });

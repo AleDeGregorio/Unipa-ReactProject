@@ -364,7 +364,7 @@ class GestionePrenotazione extends React.Component {
     }
 
     render() {
-        if(!localStorage.getItem('logged') || !localStorage.getItem('cliente')) {
+        if(!localStorage.getItem('logged')) {
             return <Redirect
                 to={{
                     pathname: "/ErrorPage",

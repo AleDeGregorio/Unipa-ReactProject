@@ -166,9 +166,7 @@ class ListBeB extends Component {
           <ListTitle>{listTitle}</ListTitle>
           <ListBreadcrumb>{listBreadcrumb}</ListBreadcrumb>
           <DragDropContext onDragEnd={this.onDragEnd}>
-            <Droppable droppableId="droppabe-list">
-              <p>Si è verificato un errore: {this.state.errorMessage}</p>
-            </Droppable>
+            <p>Si è verificato un errore: nessun B&B</p>
           </DragDropContext>
         </ListWrapper>
       </ThemeProvider>

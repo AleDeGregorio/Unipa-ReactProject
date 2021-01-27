@@ -30,7 +30,7 @@ class DiventaHost extends React.Component {
         this.setState({ num_documento: e.target.value });
     }
 
-    onSubimit = (e) => {
+    onSubmit = (e) => {
         e.preventDefault();
 
         const data = {
@@ -115,7 +115,8 @@ class DiventaHost extends React.Component {
                             else {
                                 localStorage.setObj('user_data', this.state.apiResponse);
                                 localStorage.setItem('proprietario', true);
-                                this.setState({ success: false, paginaProprietario: true })
+                                this.setState({ success: false, paginaProprietario: true });
+                                window.location.reload()
                             }
                         });
                     }, 3000)
@@ -223,7 +224,7 @@ class DiventaHost extends React.Component {
                                 <Form.Label className="colorLabel">Inserisci numero documento</Form.Label>
                                 <Form.Control as = "input" id="form-select1" onChange = {this.onChange} placeholder = "Numero documento" required/>
                             </Form.Group>
-                            <Button id="dhbutton" onClick = {this.onSubimit}>Diventa un Host</Button>
+                            <Button id="dhbutton" onClick = {this.onSubmit}>Diventa un Host</Button>
                         </Form>
                         
                 </div>

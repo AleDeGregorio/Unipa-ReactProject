@@ -39,11 +39,11 @@ class DatiPersonali extends React.Component {
     componentDidMount() {
         if(localStorage.getItem('logged') && localStorage.getItem('cliente')) {
             this.setState({
-                nome: localStorage.getObj('user_data')[0].nome_cl,
-                cognome: localStorage.getObj('user_data')[0].cognome_cl,
-                nascita: new Date(localStorage.getObj('user_data')[0].data_nascita_cl).toLocaleDateString(),
-                num_documentoTXT: localStorage.getObj('user_data')[1] ? localStorage.getObj('user_data')[1].num_documento : '',
-                telefonoTXT: localStorage.getObj('user_data')[1] ? localStorage.getObj('user_data')[1].telefono_prop : localStorage.getObj('user_data')[0].telefono_cl,
+                nome: localStorage.getObj('user_data')[0].nome_cl ? localStorage.getObj('user_data')[0].nome_cl : localStorage.getObj('user_data')[0].nome_prop,
+                cognome: localStorage.getObj('user_data')[0].cognome_cl ? localStorage.getObj('user_data')[0].cognome_cl : localStorage.getObj('user_data')[0].cognome_prop,
+                nascita: localStorage.getObj('user_data')[0].data_nascita_cl ? new Date(localStorage.getObj('user_data')[0].data_nascita_cl).toLocaleDateString() : new Date(localStorage.getObj('user_data')[0].data_nascita_prop).toLocaleDateString(),
+                num_documentoTXT: localStorage.getObj('user_data')[1] ? localStorage.getObj('user_data')[1].num_documento : (localStorage.getObj('user_data')[0].num_documento ? localStorage.getObj('user_data')[0].num_documento : ''),
+                telefonoTXT: localStorage.getObj('user_data')[1] ? localStorage.getObj('user_data')[1].telefono_prop : (localStorage.getObj('user_data')[0].telefono_cl ? localStorage.getObj('user_data')[0].telefono_cl : localStorage.getObj('user_data')[0].telefono_prop),
                 email: localStorage.getItem('email')
             })
         }

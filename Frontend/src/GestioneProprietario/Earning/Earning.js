@@ -21,7 +21,8 @@ class Earning extends React.Component {
       data_2: '',
       tipo_struttura: '',
       id_struttura: '',
-      nome_struttura: ''
+      nome_struttura: '',
+      empty: false
     }
   }
 
@@ -162,24 +163,34 @@ class Earning extends React.Component {
     })
     .then((result) => result.text())
     .then((result) => {
-      
+      var res;
+
       try {
 
-        this.setState({ apiResponse_strutture: JSON.parse(result) });
+        res = JSON.parse(result);
       } catch(error) {
 
-        this.setState({ apiResponse_strutture: result });
+        res = result;
+      }
+
+      if(res.code && res.code === 404) {
+        this.setState({ apiResponse_strutture: [], empty: true });
       }
     
-        if(this.state.apiResponse_strutture.status && this.state.apiResponse_strutture.status === 'error') {
-            this.setState({ error: true });
-            this.setState({ errorMessage: this.state.apiResponse_strutture.message });
-        }
+      else if(res.status && res.status === 'error') {
+        this.setState({ error: true });
+        this.setState({ errorMessage: res.message, apiResponse_strutture: [] });
+      }
+      
+      else {
+        
+        this.setState({ apiResponse_strutture: JSON.parse(result) });
+      }
     });
   }
 
   render() {
-    if(!localStorage.getItem('logged') || !localStorage.getItem('proprietario')) {
+  if(!localStorage.getItem('logged') || !localStorage.getItem('proprietario')) {
       return <Redirect
           to={{
               pathname: "/ErrorPage",
@@ -190,7 +201,7 @@ class Earning extends React.Component {
           }}
       />
   }
-  else if(this.state.error) {
+  if(this.state.error) {
       return <Redirect
           to={{
               pathname: "/ErrorPage",
@@ -200,6 +211,23 @@ class Earning extends React.Component {
               }
           }}
       />
+  }
+  if(this.state.empty) {
+    return(
+      <div className="contenitoreEarning">
+      <div className="paginaEarning">
+          <div className="earningDescrizione">
+            <h2 className="h2Earning">Resoconto guadagni</h2>
+            <p className="h2Earning">Qui puoi vedere i tuoi guadagni grazie a tre filtri diversi, a secondo delle tue esigienze.</p>
+          </div>
+            &nbsp;
+            &nbsp;
+            &nbsp;
+            &nbsp;
+            <h2>Nessun guadagno ancora registrato...</h2>
+        </div>
+        </div>
+    );
   }
   else {
     var tipo_struttura = '';

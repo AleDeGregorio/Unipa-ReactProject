@@ -95,11 +95,11 @@ class ProprietarioPage extends React.Component {
             }
 
             if(res.length < 1 || (res.code && res.code === 404)) {
-              this.setState({ empty: true, errorMessage: res.message });
+              this.setState({ empty: true, errorMessage: res.message, inviaDati: true });
             }
       
             else if(this.state.tasseInvio.status && this.state.tasseInvio.status === 'error') {
-              this.setState({ error: true });
+              this.setState({ error: true, inviaDati: true });
               this.setState({ errorMessage: this.state.tasseInvio.message });
             }
         })

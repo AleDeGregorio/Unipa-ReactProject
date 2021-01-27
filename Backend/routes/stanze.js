@@ -67,16 +67,16 @@ router.post('/upload', async(req, res, next) => {
         let filename3 = foto3 ? foto3.name : null;
         let filename4 = foto4 ? foto4.name : null;
         if(foto1) {
-            foto1.mv('../../public/Images/' + filename1);
+            foto1.mv('../Frontend/public/Images/' + filename1);
         }
         if(foto2) {
-            foto2.mv('../../public/Images/' + filename2);
+            foto2.mv('../Frontend/public/Images/' + filename2);
         }
         if(foto3) {
-            foto3.mv('../../public/Images/' + filename3);
+            foto3.mv('../Frontend/public/Images/' + filename3);
         }
         if(foto4) {
-            foto4.mv('../../public/Images/' + filename4);
+            foto4.mv('../Frontend/public/Images/' + filename4);
         }
         res.send("file uploaded");
     }

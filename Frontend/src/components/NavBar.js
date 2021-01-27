@@ -140,8 +140,8 @@ class NavBar extends React.Component {
         var cognome = '';
         
         if(localStorage.getItem('logged') && localStorage.getItem('cliente')) {
-            nome = localStorage.getObj('user_data')[0].nome_cl;
-            cognome = localStorage.getObj('user_data')[0].cognome_cl;
+            nome = localStorage.getObj('user_data')[0].nome_cl ? localStorage.getObj('user_data')[0].nome_cl : localStorage.getObj('user_data')[0].nome_prop;
+            cognome = localStorage.getObj('user_data')[0].cognome_cl ? localStorage.getObj('user_data')[0].cognome_cl : localStorage.getObj('user_data')[0].cognome_prop;
             
             loggato = (
                 <Dropdown>
@@ -161,15 +161,15 @@ class NavBar extends React.Component {
         if(localStorage.getItem('logged') && localStorage.getItem('proprietario')) {
             loggato = (
                 <Nav>
-                    <Nav.Link href="/PaginaProprietario">Area personale</Nav.Link>
+                    <Nav.Link href="/PaginaProprietario">Area personale host</Nav.Link>
                     <Nav.Link href="/autenticazioneAccedi" onClick = {this.onClick}>ESCI</Nav.Link>
                 </Nav>
             );
         }
 
         if(localStorage.getItem('logged') && localStorage.getItem('proprietario') && localStorage.getItem('cliente')) {
-            nome = localStorage.getObj('user_data')[0].nome_cl;
-            cognome = localStorage.getObj('user_data')[0].cognome_cl;
+            nome = localStorage.getObj('user_data')[0].nome_cl ? localStorage.getObj('user_data')[0].nome_cl : localStorage.getObj('user_data')[0].nome_prop;
+            cognome = localStorage.getObj('user_data')[0].cognome_cl ? localStorage.getObj('user_data')[0].cognome_cl : localStorage.getObj('user_data')[0].cognome_prop;
             
             loggato = (
                 <Dropdown>
