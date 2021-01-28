@@ -183,6 +183,8 @@ class autenticazioneRegistratiCliente extends React.Component {
                 <Form.Control 
                     type="tel" 
                     placeholder="Telefono" 
+                    pattern = "^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$"
+                    title = "Inserire il numero di telefono in un formato valido"
                     id = 'telefono'
                     name = 'telefono'
                     onChange={this.onChange} 
