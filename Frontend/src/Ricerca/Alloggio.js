@@ -4,15 +4,66 @@ import './Alloggio.css';
 
 class Alloggio extends React.Component {
 
+  constructor(props) {
+
+    super(props);
+
+    this.state = {
+
+      incomplete: true
+    }
+  }
+
+  onClick = () => {
+
+    if(new Date(this.props.checkOut).getFullYear() === 2099) {
+
+      this.props.incomplete(true);
+    }
+
+    else {
+
+      this.setState({ incomplete: false }, () => {
+
+        this.props.incomplete(false);
+      })
+    }
+  }
+
   render() {
-    //const { name, slug, images, price } = casaVacanza;
-    // console.log(name);
+
     var dati_casa = this.props.casaVacanza ? this.props.casaVacanza : '';
     var datiRicerca = this.props.datiRicerca ? this.props.datiRicerca : '';
     var servizi = this.props.servizi ? this.props.servizi : [];
     var checkIn = this.props.checkIn ? this.props.checkIn : '';
     var checkOut = this.props.checkOut ? this.props.checkOut : '';
     var tipo = this.props.tipo ? this.props.tipo : '';
+
+    var link = (
+      <p className = "vai">Visualizza dettagli</p>
+    );
+
+    if(!this.state.incomplete) {
+
+      link = (
+        <Link 
+          to = {{
+            pathname: "/Alloggio",
+            state: {
+              dati_casa: {dati_casa},
+              datiRicerca: {datiRicerca},
+              servizi: {servizi},
+              checkIn: {checkIn},
+              checkOut: {checkOut},
+              tipo: {tipo}
+            }
+          }}
+          className = "vai"
+        >
+          Visualizza dettagli
+        </Link>
+      );
+    }
 
     return (
       <article className="casaVacanza">
@@ -28,23 +79,8 @@ class Alloggio extends React.Component {
             <div className="price-top">
               <h6>€{dati_casa.costo} ({dati_casa.ngiorni} {dati_casa.ngiorni === 1 ? 'giorno' : 'giorni'})</h6>
             </div>
-            <div className="bottoneLink">
-              <Link 
-                to = {{
-                  pathname: "/Alloggio",
-                  state: {
-                    dati_casa: {dati_casa},
-                    datiRicerca: {datiRicerca},
-                    servizi: {servizi},
-                    checkIn: {checkIn},
-                    checkOut: {checkOut},
-                    tipo: {tipo}
-                  }
-                }}
-                className = "vai"
-              >
-                Visualizza dettagli
-              </Link>
+            <div className="bottoneLink" onClick = {this.onClick}>
+              {link}
             </div>
         </div>
       </article>

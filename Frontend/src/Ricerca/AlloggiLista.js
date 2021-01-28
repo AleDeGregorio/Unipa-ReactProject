@@ -1,9 +1,36 @@
 import React from "react";
 import Alloggio from "./Alloggio";
+import { Button, Alert } from 'react-bootstrap'
 
 import './AlloggiLista';
 
 class AlloggiList extends React.Component {
+
+  constructor(props) {
+
+    super(props);
+
+    this.state = {
+
+      incomplete: false
+    }
+  }
+
+  incomplete = (e) => {
+
+    if(e === true) {
+
+      window.scrollTo(0, 0);
+      this.setState({ incomplete: true },()=>{
+          window.scrollTo(0, 0);
+          window.setTimeout(()=>{
+            this.setState({ incomplete: false })
+          }, 3000)
+      })
+    }
+
+    this.setState({ incomplete: e })
+  }
 
   render() {
     var datiCase = this.props.case ? this.props.case : [];
@@ -22,6 +49,20 @@ class AlloggiList extends React.Component {
 
     return (
       <section className="caseVacanzalist">
+        <>
+          <Alert show={this.state.incomplete} variant="danger">
+          <Alert.Heading style = {{fontWeight: 'bold'}}>Si è verificato un errore!</Alert.Heading>
+          <p>
+            Devi specificare una data di check-out prima di continuare 
+          </p>
+          <hr />
+          <div className="d-flex justify-content-end">
+              <Button onClick={() => this.incomplete(false)} variant="outline-success">
+              <span style = {{fontWeight: 'bold'}}>Ok</span>
+              </Button>
+          </div>
+          </Alert>
+      </>
         <div className="caseVacanzalistDiv">
           {datiCase.map(item => {
             return <Alloggio 
@@ -32,6 +73,7 @@ class AlloggiList extends React.Component {
               checkIn = {checkIn} 
               checkOut = {checkOut}
               tipo = {tipo}
+              incomplete = {this.incomplete}
             />;
           })}
         </div>

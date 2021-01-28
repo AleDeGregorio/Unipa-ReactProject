@@ -15,7 +15,7 @@ class AlloggiFilter extends React.Component {
       localita: this.props.localita ? this.props.localita : '',
       posti: this.props.posti ? this.props.posti : 1,
       checkIn: this.props.checkIn ? this.props.checkIn : '',
-      checkOut: this.props.checkOut ? this.props.checkOut : '',
+      checkOut: '',
       checkInFocus: false,
       checkInFocusDROP: false,
       checkOutFocus: false,

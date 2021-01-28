@@ -66,7 +66,7 @@ class Ricerca extends React.Component {
         e.preventDefault();
 
         var inizio = new Date(this.state.startDate.format());
-        var fine = this.state.endDate ? new Date(this.state.endDate.format()) : new Date(moment(this.state.startDate).add(1, 'days').format());
+        var fine = this.state.endDate ? new Date(this.state.endDate.format()) : new Date(moment([2099]).format());
 
         this.setState({
             checkIn: inizio.toLocaleDateString(),
