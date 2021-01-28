@@ -162,7 +162,7 @@ class ElencoCheck extends Component {
             <Droppable droppableId="droppabe-list">
               {(provided) => (
                 <div ref={provided.innerRef}>
-                  <p>Attualmente non è presente nessuna prenotazione accettata</p>
+                  <p style={{color: "white"}}>Attualmente non è presente nessuna prenotazione accettata</p>
                 </div>
               )}
             </Droppable>

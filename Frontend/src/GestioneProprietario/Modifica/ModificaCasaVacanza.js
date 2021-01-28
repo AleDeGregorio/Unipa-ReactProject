@@ -517,7 +517,7 @@ class ModificaCasaVacanza extends React.Component {
     name = 'tariffa_casa'
     placeholder="Inserisci tariffa casa usando un punto per i valori decimali"
     onChange = {this.onChange}
-    className = "i"
+    className = "icasa"
   />
               <button type = 'button' className="bottoniSceltaModifica" onClick = {this.onSubmit}>
                 Cambia tariffa

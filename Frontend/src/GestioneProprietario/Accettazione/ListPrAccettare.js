@@ -163,7 +163,7 @@ class ListAccettare extends Component {
             <Droppable droppableId="droppabe-list">
               {(provided) => (
                 <div ref={provided.innerRef}>
-                  <p>Attualmente non è presente nessuna prenotazione da accettare</p>
+                  <p style={{color: "white"}}>Attualmente non è presente nessuna prenotazione da accettare</p>
                 </div>
               )}
             </Droppable>

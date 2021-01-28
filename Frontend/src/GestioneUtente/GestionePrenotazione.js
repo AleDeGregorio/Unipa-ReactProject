@@ -391,7 +391,7 @@ class GestionePrenotazione extends React.Component {
                 <div className="containerGP">
                     <div>
                         <h1>Gestisci le tue prenotazioni</h1>
-                        <p>Si è verificato un errore: {this.state.errorMessage}</p>
+                        <p style={{color: "white"}}>Si è verificato un errore: {this.state.errorMessage}</p>
                     </div>
                 </div>
             );
