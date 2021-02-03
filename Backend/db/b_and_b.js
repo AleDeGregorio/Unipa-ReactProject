@@ -1,15 +1,7 @@
-//var Connection = require('./index');
-// prova
 // connection to mysql db
+var db = require('./config');
 var mysql = require('mysql');
-var Connection = mysql.createConnection({
-    host: 'localhost',
-    port: 3306,
-    user: 'user',
-    database: 'progetto',
-    password: 'user',
-    multipleStatements: true
-});
+var Connection = mysql.createConnection(db.mysql);
 
 Connection.connect(function(err) {
     if(err) throw err;
@@ -83,62 +75,8 @@ const deleteBB = async(req) => {
     })
 }
 
-/* 
-    _______________
-
-    NON UTILIZZATI
-
-    _______________
-
-*/
-
-// return all table
-const all = async () => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query('SELECT * FROM b_and_b', (err, results) => {
-            if(err) {
-                console.log(err);
-                return reject(new GeneralError('Si è verificato un errore'));
-            }
-            if(results.length < 1) {
-                return reject(new NotFound('Nessun b&b registrato'));
-            }
-            resolve(results);
-        });
-    });
-}
-
-// get b&b from ref_proprieta_bb
-const getBB = async(req) => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query(
-            'SELECT * ' +
-            'FROM b_and_b ' +
-            'WHERE ref_proprieta_bb = ' + req.ref_proprieta_bb + '; ', (err, results) => {
-                if(err) {
-                    console.log(err);
-                    return reject(new GeneralError('Si è verificato un errore'));
-                }
-                if(results.length < 1) {
-                    return reject(new NotFound('Nessun b&b relativo al proprietario'));
-                }
-            resolve(results);
-        });
-    });
-}
-
-module.exports = all;
-module.exports = getBB;
-module.exports = updateBB;
-module.exports = insertBB;
-module.exports = deleteBB;
-
 module.exports = {
-    all,
-    getBB,
-    updateBB,
     insertBB,
+    updateBB,
     deleteBB
 }

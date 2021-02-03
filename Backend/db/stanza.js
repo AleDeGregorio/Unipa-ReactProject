@@ -1,13 +1,7 @@
 // connection to mysql db
+var db = require('./config');
 var mysql = require('mysql');
-var Connection = mysql.createConnection({
-    host: 'localhost',
-    port: 3306,
-    user: 'user',
-    database: 'progetto',
-    password: 'user',
-    multipleStatements: true
-});
+var Connection = mysql.createConnection(db.mysql);
 
 Connection.connect(function(err) {
     if(err) throw err;
@@ -141,111 +135,10 @@ const deleteStanza = async(req) => {
     })
 }
 
-/* 
-    _______________
-
-    NON UTILIZZATI
-
-    _______________
-
-*/
-
-// return all table
-const all = async (req) => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query('SELECT * FROM stanza', (err, results) => {
-            if(err) {
-                console.log(err);
-                return reject(new GeneralError('Si è verificato un errore'));
-            }
-            if(results.length < 1) {
-                return reject(new NotFound('Nessuna stanza registrata'));
-            }
-            resolve(results);
-        });
-    });
-}
-
-// get stanza from id_stanza
-const getStanza = async(req) => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query(
-            'SELECT * ' +
-            'FROM stanza ' +
-            'WHERE id_stanza = ' +  req.id_stanza + '; ', (err, results) => {
-                if(err) {
-                    console.log(err);
-                    return reject(new GeneralError('Si è verificato un errore'));
-                }
-                if(results.length < 1) {
-                    return reject(new NotFound('Stanza non trovata'));
-                }
-            resolve(results);
-        });
-    });
-}
-
-// get stanza from tipologia
-const getStanzaTipologia = async(req) => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query(
-            'SELECT * ' +
-            'FROM stanza ' +
-            'WHERE tipologia = ' +  req.tipologia + '; ', (err, results) => {
-                if(err) {
-                    console.log(err);
-                    return reject(new GeneralError('Si è verificato un errore'));
-                }
-                if(results.length < 1) {
-                    return reject(new NotFound('Nessuna stanza corrisponde alla tipologia selezionata'));
-                }
-            resolve(results);
-        });
-    });
-}
-
-// get stanza from ref_bb && tipologia
-const getStanzaBBTipologia = async(req) => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query(
-            'SELECT * ' +
-            'FROM stanza ' +
-            'WHERE ref_bb = ' +  req.ref_bb + ' AND tipologia = ' + req.tipologia + ';',
-            (err, results) => {
-                if(err) {
-                    console.log(err);
-                    return reject(new GeneralError('Si è verificato un errore'));
-                }
-                if(results.length < 1) {
-                    return reject(new NotFound('Nessuna stanza trovata'));
-                }
-            resolve(results);
-        });
-    });
-}
-
-module.exports = all;
-module.exports = getStanza;
-module.exports = getStanzaBB;
-module.exports = getStanzaTipologia;
-module.exports = getStanzaBBTipologia;
-module.exports = updateStanza;
-module.exports = insertStanza;
-module.exports = deleteStanza;
-module.exports = getDateStanza;
-
 module.exports = {
-    all,
-    getStanza,
-    getStanzaBB,
-    getStanzaTipologia,
-    getStanzaBBTipologia,
-    updateStanza,
     insertStanza,
-    deleteStanza,
-    getDateStanza
+    getStanzaBB,
+    getDateStanza,
+    updateStanza,
+    deleteStanza
 }

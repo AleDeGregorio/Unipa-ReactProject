@@ -135,24 +135,4 @@ router.post('/invioDati', async(req, res, next) => {
     }
 });
 
-/* 
-    _______________
-
-    NON UTILIZZATI
-
-    _______________
-
-*/
-
-// show all table proprietario
-// indirizzo: /proprietari/all
-router.get('/all', async (req, res, next) => {
-    try {
-        let proprietario = await DB.Proprietario.all();
-        res.json(proprietario);
-    } catch(e) {
-        next(e);
-    }
-});
-
 module.exports = router;

@@ -26,7 +26,7 @@ app.use(bodyParser.json());
 
 app.use(fileUpload());
 
-// NECESSARIO PER L'APP MOBILE. BISOGNA UTILIZZARE IL PROPRIO INDIRIZZO IP. Il mio (Alessio) è questo
+// NECESSARIO PER L'APP MOBILE. BISOGNA UTILIZZARE IL PROPRIO INDIRIZZO IP. Viene riportato il mio come esempio
 /*app.get("/", (req, res) => {
   res.redirect('http://192.168.1.106:3000');
 });*/
@@ -54,10 +54,7 @@ var handleErrors = require('./routes/handleErrors');
 app.use('/login', utenteRouter);
 
 // TABELLA PROPRIETARIO
-// lista di tutti i proprietari
-// indirizzo: /proprietari/all
-//app.use('/proprietari', proprietarioRouter);
-// registrazione di un nuovo proprietario che era cliente
+// registrazione di un nuovo proprietario
 // indirizzo: /insertProprietario/new
 app.use('/insertProprietario', proprietarioRouter);
 // registrazione di un nuovo proprietario che era cliente
@@ -92,9 +89,6 @@ app.use('/updateProprietarioPassword', proprietarioRouter);
 app.use('/updateDataInvio', proprietarioRouter);
 
 // TABELLA PROPRIETA
-// lista di tutte le proprieta
-// indirizzo: /proprieta/all
-//app.use('/proprieta', proprietaRouter);
 // inserimento di una nuova proprieta
 // indirizzo: /insertProprieta/new
 app.use('/insertProprieta', proprietaRouter);
@@ -113,51 +107,8 @@ app.use('/searchProprietaBBProprietario', proprietaRouter);
 // modifica dei campi di una proprieta (fornendo l'id)
 // indirizzo: /updateProprieta/fields
 app.use('/updateProprieta', proprietaRouter);
-// ricerca di una proprieta dal suo id
-// indirizzo: /searchProprieta/results
-//app.use('/searchProprieta', proprietaRouter);
-// ricerca di una proprieta dal suo nome
-// indirizzo: /searchProprietaNome/proprietaNome
-//app.use('/searchProprietaNome', proprietaRouter);
-// ricerca di una proprieta dalla sua Localita
-// indirizzo: /searchProprietaLocalita/proprietaLocalita
-//app.use('/searchProprietaLocalita', proprietaRouter);
-// ricerca di una proprieta dalla sua Provincia
-// indirizzo: /searchProprietaProvincia/proprietaProvincia
-//app.use('/searchProprietaProvincia', proprietaRouter);
-// ricerca di una proprieta dal suo Tipo
-// indirizzo: /searchProprietaTipo/proprietaTipo
-//app.use('/searchProprietaTipo', proprietaRouter);
-// ricerca di una proprieta dai suoi Servizi
-// indirizzo: /searchProprietaServizi/proprietaServizi
-//app.use('/searchProprietaServizi', proprietaRouter);
-// ricerca di una proprieta da Localita && Tipo
-// indirizzo: /searchProprietaLocalitaTipo/proprietaLocalitaTipo
-//app.use('/searchProprietaLocalitaTipo', proprietaRouter);
-// ricerca di una proprieta da Provincia && Tipo
-// indirizzo: /searchProprietaProvinciaTipo/proprietaProvinciaTipo
-//app.use('/searchProprietaProvinciaTipo', proprietaRouter);
-// ricerca di una proprieta da Localita && Servizi
-// indirizzo: /searchProprietaLocalitaServizi/proprietaLocalitaServizi
-//app.use('/searchProprietaLocalitaServizi', proprietaRouter);
-// ricerca di una proprieta da Provincia && Servizi
-// indirizzo: /searchProprietaProvinciaServizi/proprietaProvinciaServizi
-//app.use('/searchProprietaProvinciaServizi', proprietaRouter);
-// ricerca di una proprieta da Tipo && Servizi
-// indirizzo: /searchProprietaTipoServizi/proprietaTipoServizi
-//app.use('/searchProprietaTipoServizi', proprietaRouter);
-// ricerca di una proprieta da Localita && Tipo && Servizi
-// indirizzo: /searchProprietaLocalitaTipoServizi/proprietaLocalitaTipoServizi
-//app.use('/searchProprietaLocalitaTipoServizi', proprietaRouter);
-// ricerca di una proprieta da Provincia && Tipo && Servizi
-// indirizzo: /searchProprietaProvinciaTipoServizi/proprietaProvinciaTipoServizi
-//app.use('/searchProprietaProvinciaTipoServizi', proprietaRouter);
-// elaborazione del form di ricerca di un alloggio, nel caso più generale
 
 // TABELLA CASA VACANZA
-// lista di tutte le case vacanza
-// indirizzo: /case/all
-//app.use('/case', casaRouter);
 // inserimento di una nuova casa
 // indirizzo: /insertCasa/new
 app.use('/insertCasa', casaRouter);
@@ -173,17 +124,8 @@ app.use('/uploadFotoCV', casaRouter);
 // cancellazione di una casa
 // indirizzo: /deleteCasa/deleted
 app.use('/deleteCasa', casaRouter);
-// ricerca di una casa dal suo id
-// indirizzo: /searchCasa/results
-//app.use('/searchCasa', casaRouter);
-// ricerca di case dal numero di posti letto
-// indirizzo: /searchPosti/postiCase
-//app.use('/searchPosti', casaRouter);
 
 // TABELLA B&B
-// lista di tutti i b&b
-// indirizzo: /BB/all
-//app.use('/BB', bbRouter);
 // inserimento di un nuovo b&b
 // indirizzo: /insertBB/new
 app.use('/insertBB', bbRouter);
@@ -193,14 +135,8 @@ app.use('/updateBB', bbRouter);
 // cancellazione di un b&b
 // indirizzo: /deleteBB/deleted
 app.use('/deleteBB', bbRouter);
-// ricerca di un b&b dal suo id
-// indirizzo: /searchBB/results
-//app.use('/searchBB', bbRouter);
 
 // TABELLA STANZA
-// lista di tutte le stanza
-// indirizzo: /stanze/all
-//app.use('/stanze', stanzaRouter);
 // inserimento di una nuova stanza
 // indirizzo: /insertStanza/new
 app.use('/insertStanza', stanzaRouter);
@@ -219,20 +155,8 @@ app.use('/uploadFotoST', stanzaRouter);
 // cancellazione di una stanza
 // indirizzo: /deleteStanza/deleted
 app.use('/deleteStanza', stanzaRouter);
-// ricerca di una stanza dal suo id
-// indirizzo: /searchStanza/results
-//app.use('/searchStanza', stanzaRouter);
-// ricerca di una stanza dalla sua tipologia
-// indirizzo: /searchStanzaTipologia/stanzaTipologia
-//app.use('/searchStanzaTipologia', stanzaRouter);
-// ricerca di una stanza dal suo ref_bb && tipologia
-// indirizzo: /searchStanzaBBTipologia/stanzaBBTipologia
-//app.use('/searchStanzaBBTipologia', stanzaRouter);
 
 // TABELLA CLIENTE
-// lista di tutti i clienti
-// indirizzo: /clienti/all
-//app.use('/clienti', clienteRouter);
 // inserimento di un nuovo cliente
 // indirizzo: /insertCliente/new
 app.use('/insertCliente', clienteRouter);
@@ -258,23 +182,11 @@ app.use('/servizi', servizioRouter);
 app.use('/insertServizio', servizioRouter);
 
 // TABELLA SOGGIORNANTE
-// lista di tutti i soggiornanti
-// indirizzo: /soggiornanti/all
-//app.use('/soggiornanti', soggiornanteRouter);
 // inserimento di un nuovo soggiornante
 // indirizzo: /insertSoggiornante/new
 app.use('/insertSoggiornante', soggiornanteRouter);
-// ricerca di un soggiornante dal suo cf
-// indirizzo: /searchSoggiornante/results
-//app.use('/searchSoggiornante', soggiornanteRouter);
-// modifica dei campi di un Soggiornante (fornendo il cf)
-// indirizzo: /updateSoggiornante/fields
-//app.use('/updateSoggiornante', soggiornanteRouter);
 
 // TABELLA PRENOTAZIONE
-// lista di tutte le prenotazioni
-// indirizzo: /prenotazioni/all
-//app.use('/prenotazioni', prenotazioneRouter);
 // inserimento di una nuova prenotazione
 // indirizzo: /insertPrenotazione/new
 app.use('/insertPrenotazione', prenotazioneRouter);
@@ -305,29 +217,8 @@ app.use('/checkinPrenotazione', prenotazioneRouter);
 // delete prenotazione from id_prenotazione
 // indirizzo: /deletePrenotazione/delete
 app.use('/deletePrenotazione', prenotazioneRouter);
-// ricerca di una prenotazione dal suo id
-// indirizzo: /searchPrenotazione/results
-//app.use('/searchPrenotazione', prenotazioneRouter);
-// ricerca di una prenotazione dal suo ref_soggiornante
-// indirizzo: /searchPrenotazioneSoggiornante/prenotazioneSoggiornante
-//app.use('/searchPrenotazioneSoggiornante', prenotazioneRouter);
-// ricerca di una prenotazione dal suo ref_proprietario
-// indirizzo: /searchPrenotazioneProprietario/prenotazioneProprietario
-//app.use('/searchPrenotazioneProprietario', prenotazioneRouter);
-// ricerca di una prenotazione dal suo ref_proprieta
-// indirizzo: /searchPrenotazioneProprieta/prenotazioneProprieta
-//app.use('/searchPrenotazioneProprieta', prenotazioneRouter);
-// mostra prenotazioni rifiutate (da ref_proprietario)
-// indirizzo: /getPrenotazioniRifiutate/prenotazioniRifiutate
-//app.use('/getPrenotazioniRifiutate', prenotazioneRouter);
-// modifica dei campi di una prenotazione (fornendo l'id)
-// indirizzo: /updatePrenotazione/fields
-//app.use('/updatePrenotazione', prenotazioneRouter);
 
 // TABELLA TASSA SOGGIORNO
-// lista di tutte le tasse
-// indirizzo: /tasse/all
-//app.use('/tasse', tassaRouter);
 // inserimento di una nuova tassa
 // indirizzo: /insertTassa/new
 app.use('/insertTassa', tassaRouter);
@@ -337,34 +228,6 @@ app.use('/getTasseInvio', tassaRouter);
 // elimina tasse di soggiorno del proprietario. Da usare dopo invio dati ufficio turismo
 // indirizzo: /deleteTasseInvio/deleteTasse
 app.use('/deleteTasseInvio', tassaRouter);
-// ricerca di una tassa dal suo id
-// indirizzo: /searchTassa/results
-//app.use('/searchTassa', tassaRouter);
-// ricerca di una tassa dal suo ref_soggiornante
-// indirizzo: /searchTassaSoggiornante/tassaSoggiornante
-//app.use('/searchTassaSoggiornante', tassaRouter);
-// ricerca di una tassa dal suo ref_proprietario
-// indirizzo: /searchTassaProprietario/tassaProprietario
-//app.use('/searchTassaProprietario', tassaRouter);
-// modifica dei campi di una tassa di soggiorno (fornendo il suo id)
-// indirizzo: /updateTassa/fields
-//app.use('/updateTassa', tassaRouter);
-
-/* catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
-
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});*/
 
 app.use(handleErrors);
 

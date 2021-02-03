@@ -1,13 +1,7 @@
 // connection to mysql db
+var db = require('./config');
 var mysql = require('mysql');
-var Connection = mysql.createConnection({
-    host: 'localhost',
-    port: 3306,
-    user: 'user',
-    database: 'progetto',
-    password: 'user',
-    multipleStatements: true
-});
+var Connection = mysql.createConnection(db.mysql);
 
 Connection.connect(function(err) {
     if(err) throw err;
@@ -146,44 +140,10 @@ const updateUserPassword= async(req) => {
     });
 }
 
-/* 
-    _______________
-
-    NON UTILIZZATI
-
-    _______________
-
-*/
-
-// return all table
-const all = async () => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query('SELECT * FROM cliente', (err, results) => {
-            if(err) {
-                console.log(err);
-                return reject(new GeneralError('Si è verificato un errore'));
-            }
-            if(results.length < 1) {
-                return reject(new NotFound('Nessun cliente registrato'));
-            }
-            resolve(results);
-        });
-    });
-}
-
-module.exports = all;
-module.exports = getUser;
-module.exports = updateUser;
-module.exports = updateUserPassword;
-module.exports = insertUser;
-module.exports = login;
-
 module.exports = {
-    all,
+    insertUser,
+    login,
     getUser,
     updateUser,
     updateUserPassword,
-    insertUser,
-    login
 }

@@ -4,6 +4,7 @@ module.exports = {
         port: 3306,
         user: 'user',
         database: 'progetto',
-        password: 'user'
+        password: 'user',
+        multipleStatements: true
     }
 }

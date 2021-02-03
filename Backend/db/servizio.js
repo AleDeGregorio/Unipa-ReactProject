@@ -1,15 +1,7 @@
-//var Connection = require('./index');
-// prova
 // connection to mysql db
+var db = require('./config');
 var mysql = require('mysql');
-var Connection = mysql.createConnection({
-    host: 'localhost',
-    port: 3306,
-    user: 'user',
-    database: 'progetto',
-    password: 'user',
-    multipleStatements: true
-});
+var Connection = mysql.createConnection(db.mysql);
 
 Connection.connect(function(err) {
     if(err) throw err;
@@ -56,9 +48,6 @@ const insertServizio = async(req) => {
         });
     });
 }
-
-module.exports = all;
-module.exports = insertServizio;
 
 module.exports = {
     all,

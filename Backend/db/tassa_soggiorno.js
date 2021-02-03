@@ -1,13 +1,7 @@
 // connection to mysql db
+var db = require('./config');
 var mysql = require('mysql');
-var Connection = mysql.createConnection({
-    host: 'localhost',
-    port: 3306,
-    user: 'user',
-    database: 'progetto',
-    password: 'user',
-    multipleStatements: true
-});
+var Connection = mysql.createConnection(db.mysql);
 
 Connection.connect(function(err) {
     if(err) throw err;
@@ -84,130 +78,7 @@ const deleteTasseInvio = async(req) => {
     });
 }
 
-/* 
-    _______________
-
-    NON UTILIZZATI
-
-    _______________
-
-*/
-
-// return all table
-const all = async (req) => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query('SELECT * FROM tassa_soggiorno', (err, results) => {
-            if(err) {
-                console.log(err);
-                return reject(new GeneralError('Si è verificato un errore'));
-            }
-            if(results.length < 1) {
-                return reject(new NotFound('Nessuna tassa di soggiorno registrata'));
-            }
-            resolve(results);
-        });
-    });
-}
-
-// get tassa from id_tassa
-const getTassa = async(req) => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query(
-            'SELECT * ' +
-            'FROM tassa_soggiorno ' +
-            'WHERE id_tassa = ' +  req.id_tassa + '; ', (err, results) => {
-                if(err) {
-                    console.log(err);
-                    return reject(new GeneralError('Si è verificato un errore'));
-                }
-                if(results.length < 1) {
-                    return reject(new NotFound('Tassa di soggiorno non trovata'));
-                }
-            resolve(results);
-        });
-    });
-}
-
-// get tassa from ref_soggiornante
-const getTassaSoggiornante = async(req) => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query(
-            'SELECT * ' +
-            'FROM tassa_soggiorno ' +
-            'WHERE ref_soggiornante = "' +  req.ref_soggiornante + '"', (err, results) => {
-                if(err) {
-                    console.log(err);
-                    return reject(new GeneralError('Si è verificato un errore'));
-                }
-                if(results.length < 1) {
-                    return reject(new NotFound('Nessuna tassa di soggiorno relativa al soggiornante'));
-                }
-            resolve(results);
-        });
-    });
-}
-
-// get tassa from ref_proprietario
-const getTassaProprietario = async(req) => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query(
-            'SELECT * ' +
-            'FROM tassa_soggiorno ' +
-            'WHERE ref_proprietario = ' + '"' +  req.ref_proprietario + '"', (err, results) => {
-                if(err) {
-                    console.log(err);
-                    return reject(new GeneralError('Si è verificato un errore'));
-                }
-                if(results.length < 1) {
-                    return reject(new NotFound('Nessuna tassa di soggiorno relativa al proprietario'));
-                }
-            resolve(results);
-        });
-    });
-}
-
-// update fields
-const updateTassa= async(req) => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query(
-            'UPDATE tassa_soggiorno ' +
-            'SET ref_soggiornante = "' + req.ref_soggiornante + '"' +
-            ', ref_proprietario = "' + req.ref_proprietario + '", ammontare = ' + req.ammontare + ' ' +
-            'WHERE id_tassa = ' + req.id_tassa + '; ',
-            (err, results) => {
-                if(err) {
-                    console.log(err);
-                    return reject(new GeneralError('Si è verificato un errore'));
-                }
-                if(results.length < 1) {
-                    return reject(new NotFound('Tassa di soggiorno non trovata'));
-                }
-                resolve(results);
-            }
-        );
-    });
-}
-
-module.exports = all;
-module.exports = getTassa;
-module.exports = getTassaSoggiornante;
-module.exports = getTassaProprietario;
-module.exports = updateTassa;
-module.exports = insertTassa;
-module.exports = getTasseInvio;
-module.exports = deleteTasseInvio;
-
 module.exports = {
-    all,
-    getTassa,
-    getTassaSoggiornante,
-    getTassaProprietario,
-    updateTassa,
     insertTassa,
     getTasseInvio,
     deleteTasseInvio

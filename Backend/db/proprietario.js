@@ -1,15 +1,7 @@
-//var Connection = require('./index');
-
 // connection to mysql db
+var db = require('./config');
 var mysql = require('mysql');
-var Connection = mysql.createConnection({
-    host: 'localhost',
-    port: 3306,
-    user: 'user',
-    database: 'progetto',
-    password: 'user',
-    multipleStatements: true
-});
+var Connection = mysql.createConnection(db.mysql);
 
 
 Connection.connect(function(err) {
@@ -301,57 +293,16 @@ const invioDati = async(req) => {
     });
 }
 
-/* 
-    _______________
-
-    NON UTILIZZATI
-
-    _______________
-
-*/
-
-// return all table
-const all = async () => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query('SELECT * FROM proprietario', (err, results) => {
-            if(err) {
-                console.log(err);
-                return reject(new GeneralError('Si è verificato un errore'));
-            }
-            if(results.length < 1) {
-                return reject(new NotFound('Nessun proprietario registrato'));
-            }
-            resolve(results);
-        });
-    });
-}
-
-
-module.exports = all;
-module.exports = getUser;
-module.exports = getGuadagni;
-module.exports = getGuadagniTipo;
-module.exports = getGuadagniProprieta;
-module.exports = updateUser;
-module.exports = updateUserPassword;
-module.exports = invioDati;
-module.exports = getDataInvio;
-module.exports = insertUser;
-module.exports = insertProprietarioCliente;
-module.exports = login;
-
 module.exports = {
-    all,
+    insertUser,
+    insertProprietarioCliente,
+    login,
     getUser,
+    getDataInvio,
     getGuadagni,
     getGuadagniTipo,
     getGuadagniProprieta,
     updateUser,
     updateUserPassword,
-    invioDati,
-    getDataInvio,
-    insertUser,
-    insertProprietarioCliente,
-    login
+    invioDati
 }

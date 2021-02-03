@@ -40,36 +40,4 @@ router.post('/deleted', async(req, res, next) => {
     }
 });
 
-/* 
-    _______________
-
-    NON UTILIZZATI
-
-    _______________
-
-*/
-
-// show all table b_and_b
-// indirizzo: /BB/all
-router.get('/all', async (req, res, next) => {
-    try {
-        let bb = await DB.B_and_b.all();
-        res.json(bb);
-    } catch(e) {
-        next(e);
-    }
-});
-
-// show searched b&b (by ref_proprieta_bb)
-// indirizzo: /searchBB/results
-router.post('/results', async(req, res, next) => {
-    try {
-        let search = await DB.B_and_b.getBB(req.body);
-        res.json(search);
-    }
-    catch(e) {
-        next(e);
-    }
-});
-
 module.exports = router;

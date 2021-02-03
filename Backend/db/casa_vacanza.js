@@ -1,14 +1,7 @@
 // connection to mysql db
+var db = require('./config');
 var mysql = require('mysql');
-var Connection = mysql.createConnection({
-    host: 'localhost',
-    port: 3306,
-    user: 'user',
-    database: 'progetto',
-    password: 'user',
-    multipleStatements: true
-});
-//prova
+var Connection = mysql.createConnection(db.mysql);
 
 Connection.connect(function(err) {
     if(err) throw err;
@@ -113,87 +106,9 @@ const deleteCasa = async(req) => {
     })
 }
 
-/* 
-    _______________
-
-    NON UTILIZZATI
-
-    _______________
-
-*/
-
-// return all table
-const all = async (req) => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query('SELECT * FROM casa_vacanza', (err, results) => {
-            if(err) {
-                console.log(err);
-                return reject(new GeneralError('Si è verificato un errore'));
-            }
-            if(results.length < 1) {
-                return reject(new NotFound('Nessuna casa vacanza registrata'));
-            }
-            resolve(results);
-        });
-    });
-}
-
-// get casa vacanza from ref_proprieta_cv
-const getCasa = async(req) => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query(
-            'SELECT * ' +
-            'FROM casa_vacanza ' +
-            'WHERE ref_proprieta_cv = ' +  req.ref_proprieta_cv + '; ', (err, results) => {
-                if(err) {
-                    console.log(err);
-                    return reject(new GeneralError('Si è verificato un errore'));
-                }
-                if(results.length < 1) {
-                    return reject(new NotFound('Nessuna casa vacanza trovata'));
-                }
-            resolve(results);
-        });
-    });
-}
-
-// get case from posti letto
-const getCasePosti = async(req) => {
-    return new Promise((resolve, reject) => {
-
-        Connection.query(
-            'SELECT * ' +
-            'FROM casa_vacanza ' +
-            'WHERE posti_letto = ' + req.posti_letto,
-            (err, results) => {
-                if(err) {
-                    console.log(err);
-                    return reject(new GeneralError('Si è verificato un errore'));
-                }
-                if(results.length < 1) {
-                    return reject(new NotFound('Nessuna casa vacanza corrisponde ai criteri di ricerca'));
-                }
-                resolve(results); 
-        });
-    });
-}
-
-module.exports = all;
-module.exports = getCasa;
-module.exports = getCasePosti;
-module.exports = updateCasa;
-module.exports = insertCasa;
-module.exports = deleteCasa;
-module.exports = getDateCasa;
-
 module.exports = {
-    all,
-    getCasa,
-    getCasePosti,
-    updateCasa,
     insertCasa,
-    deleteCasa,
-    getDateCasa
+    getDateCasa,
+    updateCasa,
+    deleteCasa
 }

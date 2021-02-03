@@ -1,6 +1,6 @@
 var mysql = require('mysql');
 
-var config = require('../config');
+var config = require('./config');
 
 const Connection = mysql.createConnection(config.mysql);
 
@@ -15,9 +15,6 @@ var Soggiornante = require('./soggiornante');
 var Stanza = require('./stanza');
 var Tassa_soggiorno = require('./tassa_soggiorno');
 var Utente = require('./utente');
-
-
-module.exports = Connection;
 
 Connection.connect(err => {
     if(err) console.log(err)

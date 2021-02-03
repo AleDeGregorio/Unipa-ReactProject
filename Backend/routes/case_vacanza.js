@@ -82,48 +82,4 @@ router.post('/deleted', async(req, res, next) => {
     }
 });
 
-/* 
-    _______________
-
-    NON UTILIZZATI
-
-    _______________
-
-*/
-
-// show all table casa_vacanza
-// indirizzo: /case/all
-router.get('/all', async (req, res, next) => {
-    try {
-        let casa = await DB.Casa.all();
-        res.json(casa);
-    } catch(e) {
-        next(e);
-    }
-});
-
-// show searched casa vacanza (by ref_proprieta_cv)
-// indirizzo: /searchCasa/results
-router.post('/results', async(req, res, next) => {
-    try {
-        let search = await DB.Casa.getCasa(req.body);
-        res.json(search);
-    }
-    catch(e) {
-        next(e);
-    }
-});
-
-// show searched case vacanza by posti letto
-// indirizzo: /serchPosti/postiCase
-router.post('/postiCase', async(req, res, next) => {
-    try {
-        let search = await DB.Casa.getCasePosti(req.body);
-        res.json(search);
-    }
-    catch(e) {
-        next(e);
-    }
-});
-
 module.exports = router;

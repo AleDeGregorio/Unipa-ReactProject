@@ -63,24 +63,4 @@ router.post('/updPassword', async(req, res, next) => {
     }
 });
 
-/* 
-    _______________
-
-    NON UTILIZZATI
-
-    _______________
-
-*/
-
-// show all table cliente
-// indirizzo: /cliente/all
-router.get('/all', async (req, res, next) => {
-    try {
-        let cliente = await DB.Cliente.all();
-        res.json(cliente);
-    } catch(e) {
-        next(e);
-    }
-});
-
 module.exports = router;
