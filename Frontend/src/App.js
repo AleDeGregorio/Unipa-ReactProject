@@ -24,8 +24,8 @@ import AutenticazioneRegistratiCliente from './Autenticazione/autenticazioneRegi
 import AutenticazioneRegistratiProprietario from './Autenticazione/autenticazioneRegistratiProprietario'
 
 // Area personale del cliente
-import GestionePrenotazione from './GestioneUtente/GestionePrenotazione'
-import DiventaHost from './GestioneUtente/DiventaHost'
+import GestionePrenotazione from './GestioneCliente/GestionePrenotazione'
+import DiventaHost from './GestioneCliente/DiventaHost'
 
 // Area personale del proprietario
 import ProprietarioPage from './GestioneProprietario/ProprietarioPage'
