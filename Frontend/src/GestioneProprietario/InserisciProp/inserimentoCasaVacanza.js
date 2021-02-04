@@ -267,17 +267,20 @@ class InserimentoCasaVacanza extends React.Component {
         this.setState({ empty: true });
       }
 
-
         if(res.length < 1 || (res.code && res.code === 404)) {
           this.setState({ empty: true, errorMessage: res.message });
         }
 
-        if(this.state.apiResponse.status && this.state.apiResponse.status === 'error') {
+        else if(this.state.apiResponse.status && this.state.apiResponse.status === 'error') {
           this.setState({ error: true });
           this.setState({ errorMessage: this.state.apiResponse.message });
+          window.scrollTo(0, 0);
         }
 
-        window.location.reload();
+        else {
+          
+          window.location.reload();
+        }
       });
     }
   }

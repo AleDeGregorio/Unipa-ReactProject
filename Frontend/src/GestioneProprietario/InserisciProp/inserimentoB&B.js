@@ -228,12 +228,16 @@ class InserimentoBnB extends React.Component {
           this.setState({ empty: true, errorMessage: res.message });
         }
 
-        if(this.state.apiResponse.status && this.state.apiResponse.status === 'error') {
+        else if(this.state.apiResponse.status && this.state.apiResponse.status === 'error') {
           this.setState({ error: true });
           this.setState({ errorMessage: this.state.apiResponse.message });
+          window.scrollTo(0, 0);
         }
 
-        window.location.reload();
+        else {
+          
+          window.location.reload();
+        }
       });
     }
   }
@@ -255,7 +259,7 @@ class InserimentoBnB extends React.Component {
         <div className = "background">
         <div className = "containerNew">  
             <div className = "contentNew">
-                <p>Si è verificato un errore: {this.state.errorMessage}</p>
+              <p>Si è verificato un errore: {this.state.errorMessage}</p>
             <Link to="/InserimentoProprietà">Torna indietro</Link>
         </div>
       </div>
