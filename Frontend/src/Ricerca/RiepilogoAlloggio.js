@@ -11,31 +11,34 @@ export default class RiepilogoAlloggio extends Component {
     super(props);
 
     this.state = {
-      dati_casa: this.props.history.location.state ? this.props.history.location.state.dati_casa.dati_casa : [],
-      dati_servizi: this.props.history.location.state ? this.props.history.location.state.servizi.servizi : [],
-      checkIn: this.props.history.location.state ? this.props.history.location.state.checkIn.checkIn : '',
-      checkOut: this.props.history.location.state ? this.props.history.location.state.checkOut.checkOut : '',
-      tipo: this.props.history.location.state ? this.props.history.location.state.tipo.tipo : '',
-      datiRicerca: this.props.history.location.state ? this.props.history.location.state.datiRicerca.datiRicerca : [],
+      dati_casa: this.props.history.location.state ? this.props.history.location.state.dati_casa : [],
+      dati_servizi: this.props.history.location.state ? this.props.history.location.state.servizi : [],
+      checkIn: this.props.history.location.state ? this.props.history.location.state.checkIn : '',
+      checkOut: this.props.history.location.state ? this.props.history.location.state.checkOut : '',
+      tipo: this.props.history.location.state ? this.props.history.location.state.tipo : '',
+      datiRicerca: this.props.history.location.state ? this.props.history.location.state.datiRicerca : [],
       servizi: [],
       numPosti: [],
-      posti: this.props.history.location.state ? this.props.history.location.state.dati_casa.dati_casa.posti : 1
+      posti: this.props.history.location.state ? this.props.history.location.state.dati_casa.posti : 1
     };
   }
 
   componentDidMount() {
-    this.setState({
-      servizi: this.state.dati_casa.servizi ? this.state.dati_casa.servizi.replace(/\s*,\s*/g, ",").split(',') : []
-    });
+    if(this.state.dati_casa) {
 
-    var array = [];
+      this.setState({
+        servizi: this.state.dati_casa.servizi ? this.state.dati_casa.servizi.replace(/\s*,\s*/g, ",").split(',') : []
+      });
 
-    for(var i = 0; i < this.state.dati_casa.posti; i++) {
-      array[i] = i;
-      array[i]++;
+      var array = [];
+
+      for(var i = 0; i < this.state.dati_casa.posti; i++) {
+        array[i] = i;
+        array[i]++;
+      }
+
+      this.setState({ numPosti: array })
     }
-
-    this.setState({ numPosti: array })
   }
 
   onChange = (e) => {
@@ -43,20 +46,13 @@ export default class RiepilogoAlloggio extends Component {
   }
 
   render() {
-    if (this.state.dati_casa === []) {
+    if (this.state.dati_casa === [] || !this.state.dati_casa) {
       return (
         <div className="error">
           <h3> Casa vacanza non trovata...</h3>
           <Link 
             to = {{
-              pathname: "/CaseVacanza",
-              state: {
-                case: this.state.datiRicerca,
-                posti: this.state.dati_casa.posti,
-                localita: this.state.dati_casa.localita,
-                checkIn: this.state.dati_casa.checkIn,
-                checkOut: this.state.dati_casa.checkOut
-              }
+              pathname: "/",
             }}
             className = "return"
           >
@@ -80,9 +76,12 @@ export default class RiepilogoAlloggio extends Component {
               pathname: "/autenticazioneAccedi",
               state: {
                 dati_casa: this.state.dati_casa,
+                dati_servizi: this.state.dati_servizi,
                 posti: this.state.posti,
                 checkIn: this.state.checkIn,
-                checkOut: this.state.checkOut
+                checkOut: this.state.checkOut,
+                tipo: this.state.tipo,
+                datiRicerca: this.state.datiRicerca
               }
             }}
             className = "return"

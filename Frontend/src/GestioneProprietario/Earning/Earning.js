@@ -64,20 +64,23 @@ class Earning extends React.Component {
         })
         .then((result) => result.text())
         .then((result) => {
-            try {
-        this.setState({ apiResponse: JSON.parse(result) });
-        
-      } catch (error) {
-        this.setState({ apiResponse: result });
-        
+          try {
+            this.setState({ apiResponse: JSON.parse(result) }, () => {
 
-        this.setState({ empty: true });
-      }
+              window.scrollBy(0, window.innerHeight);
+            });
         
-            if(this.state.apiResponse.status && this.state.apiResponse.status === 'error') {
-              this.setState({ error: true });
-              this.setState({ errorMessage: this.state.apiResponse.message });
-            }
+          } catch (error) {
+            this.setState({ apiResponse: result });
+            
+
+            this.setState({ empty: true });
+          }
+        
+          if(this.state.apiResponse.status && this.state.apiResponse.status === 'error') {
+            this.setState({ error: true });
+            this.setState({ errorMessage: this.state.apiResponse.message });
+          }
         });
   }
 
@@ -100,13 +103,15 @@ class Earning extends React.Component {
         .then((result) => result.text())
         .then((result) => {
           try {
-        this.setState({ apiResponse: JSON.parse(result) });
-        
-      } catch (error) {
-        this.setState({ apiResponse: result });
+            this.setState({ apiResponse: JSON.parse(result) }, () => {
 
-        this.setState({ empty: true });
-      }
+              window.scrollBy(0, window.innerHeight);
+            });
+          } catch (error) {
+            this.setState({ apiResponse: result });
+
+            this.setState({ empty: true });
+          }
       
           if(this.state.apiResponse.status && this.state.apiResponse.status === 'error') {
               this.setState({ error: true });
@@ -133,20 +138,23 @@ class Earning extends React.Component {
         })
         .then((result) => result.text())
         .then((result) => {
-            try {
-        this.setState({ apiResponse: JSON.parse(result) });
-        
-      } catch (error) {
-        this.setState({ apiResponse: result });
+          try {
+            this.setState({ apiResponse: JSON.parse(result) }, () => {
 
-        this.setState({ empty: true });
-      }
+              window.scrollBy(0, window.innerHeight);
+            });
+            
+          } catch (error) {
+            this.setState({ apiResponse: result });
+
+            this.setState({ empty: true });
+          }
         
-            if(this.state.apiResponse.status && this.state.apiResponse.status === 'error') {
-                this.setState({ error: true });
-                this.setState({ errorMessage: this.state.apiResponse.message });
-            }
-        });
+        if(this.state.apiResponse.status && this.state.apiResponse.status === 'error') {
+            this.setState({ error: true });
+            this.setState({ errorMessage: this.state.apiResponse.message });
+        }
+      });
   }
 
   componentDidMount() {
@@ -352,16 +360,20 @@ class Earning extends React.Component {
               </Accordion>
             </div>
             <div className="earningResult">
-            <h5>Ecco il resoconto dei tuoi guadagni :</h5>
-            <p>Codice truttura selezionata: {this.state.id_struttura} </p>
-            <p>Tipo di struttura selezionata: {tipo_struttura} </p>
+            <h5>Ecco il resoconto dei tuoi guadagni:</h5>
+            <p>Codice truttura selezionata: <span style = {{fontWeight: 'bold'}}>{this.state.id_struttura}</span></p>
+            <p>Tipo di struttura selezionata: <span style = {{fontWeight: 'bold'}}>{tipo_struttura}</span></p>
             <p>Date selezionate: &nbsp;
-              {this.state.data_1 ? new Date(this.state.data_1).toLocaleDateString() : 'Selezionare una data'} - 
-              {this.state.data_2 ? new Date(this.state.data_2).toLocaleDateString() : 'Selezionare una data'} 
+              <span style = {{fontWeight: 'bold'}}>
+                {this.state.data_1 ? new Date(this.state.data_1).toLocaleDateString() : 'Selezionare una data'} -&nbsp;
+                {this.state.data_2 ? new Date(this.state.data_2).toLocaleDateString() : 'Selezionare una data'} 
+              </span>
             </p>
             <p>Guadagni: &nbsp;
-              {this.state.apiResponse[3] && this.state.apiResponse[3][0] ? this.state.apiResponse[3][0].tot_guadagni : ".0"}
-              {(this.state.apiResponse[4] && this.state.apiResponse[4][0]) ? this.state.apiResponse[4][0].tot_guadagni : ".0"} euro
+              <span style = {{fontWeight: 'bold', color: 'green'}}>
+                {this.state.apiResponse[3] && this.state.apiResponse[3][0] ? this.state.apiResponse[3][0].tot_guadagni : ".0"}
+                {(this.state.apiResponse[4] && this.state.apiResponse[4][0]) ? this.state.apiResponse[4][0].tot_guadagni : ".0"} euro
+              </span>
             </p>
           </div>
         </div>

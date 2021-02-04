@@ -15,7 +15,14 @@ class autenticazioneAccedi extends React.Component {
 
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            dati_casa: this.props.history.location.state ? this.props.history.location.state.dati_casa : [],
+            dati_servizi: this.props.history.location.state ? this.props.history.location.state.dati_servizi : [],
+            checkIn: this.props.history.location.state ? this.props.history.location.state.checkIn : '',
+            checkOut: this.props.history.location.state ? this.props.history.location.state.checkOut : '',
+            posti: this.props.history.location.state ? this.props.history.location.state.posti : 1,
+            tipo: this.props.history.location.state ? this.props.history.location.state.tipo : '',
+            datiRicerca: this.props.history.location.state ? this.props.history.location.state.datiRicerca : []
         }
     }
 
@@ -29,6 +36,26 @@ class autenticazioneAccedi extends React.Component {
 
         if(this.props.error && this.props.errorMessage !== '') {
             messaggioErrore = <p style={{color: 'red'}}>Nome utente o password errati</p>;
+        }
+
+        if((this.props.successCliente || this.props.successProprietario) && !Array.isArray(this.state.dati_casa)) {
+
+            return (
+                <Redirect 
+                    to = {{
+                    pathname: "/Alloggio",
+                    state: {
+                        dati_casa: this.state.dati_casa,
+                        servizi: this.state.dati_servizi,
+                        posti: this.state.posti,
+                        checkIn: this.state.checkIn,
+                        checkOut: this.state.checkOut,
+                        tipo: this.state.tipo,
+                        datiRicerca: this.state.datiRicerca
+                    }
+                    }}
+                />
+            );
         }
 
         if(this.props.successCliente) {

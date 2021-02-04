@@ -34,6 +34,35 @@ class AlloggiFilter extends React.Component {
   }
 
   componentDidMount() {
+
+    var str = this.props.checkOut;
+    var dmy = str.split("/");
+
+    var d = new Date(dmy[2], dmy[1] - 1, dmy[0]);
+
+    if(d.getFullYear() < 2099) {
+
+      this.setState({ checkOut: d.toLocaleDateString() }, () => {
+
+        this.setState({
+          startDate: this.state.checkIn ? moment(this.state.checkIn, "DD-MM-YYYY") : null,
+          endDate: this.state.checkOut ? moment(this.state.checkOut, "DD-MM-YYYY") : null
+        }, () => {
+          
+          var ngiorni = this.state.endDate ? this.state.endDate.diff(this.state.startDate, 'days') : 1;
+    
+          if(ngiorni < 1) {
+            ngiorni = 1;
+          }
+    
+          this.setState({
+            maxCosto: ngiorni * 150,
+            costo: ngiorni*150
+          });
+        });
+      })
+    }
+
     this.setState({
       startDate: this.state.checkIn ? moment(this.state.checkIn, "DD-MM-YYYY") : null,
       endDate: this.state.checkOut ? moment(this.state.checkOut, "DD-MM-YYYY") : null

@@ -50,12 +50,12 @@ class Alloggio extends React.Component {
           to = {{
             pathname: "/Alloggio",
             state: {
-              dati_casa: {dati_casa},
-              datiRicerca: {datiRicerca},
-              servizi: {servizi},
-              checkIn: {checkIn},
-              checkOut: {checkOut},
-              tipo: {tipo}
+              dati_casa: dati_casa,
+              datiRicerca: datiRicerca,
+              servizi: servizi,
+              checkIn: checkIn,
+              checkOut: checkOut,
+              tipo: tipo
             }
           }}
           className = "vai"

@@ -48,21 +48,19 @@ const insertProprieta = async(req) => {
 // elaborazione del form di ricerca di un alloggio, nel caso più generale
 // ----------METODO PRINCIPALE DA USARE PER LA RICERCA----------
 const ricercaAlloggio = async(req) => {
-    var str1 = req.checkIn === '' ? '1/1/1970' : req.checkIn;
-    var dmy1 = str1.split("/");
+    var str1 = req.checkIn === '' ? '1970-01-01' : req.checkIn;
 
-    var str2 = req.checkOut === '' ? '1/1/1970' : req.checkOut
-    var dmy2 = str2.split("/");
+    var str2 = req.checkOut === '' ? '1970-01-01' : req.checkOut
 
-    var partenza = new Date(dmy1[2], dmy1[1] - 1, dmy1[0]);
-    var ritorno = new Date(dmy2[2], dmy2[1] - 1, dmy2[0]);
+    var partenza = new Date(str1);
+    var ritorno = new Date(str2);
 
     const utc1 = Date.UTC(partenza.getFullYear(), partenza.getMonth(), partenza.getDate());
     const utc2 = Date.UTC(ritorno.getFullYear(), ritorno.getMonth(), ritorno.getDate());
 
     var ngiorni = Math.floor((utc2 - utc1) / (1000 * 60 * 60 * 24));
     
-    if(!ngiorni || ngiorni < 1) {
+    if(!ngiorni || ngiorni < 1 || ritorno.getFullYear() === 2099) {
         ngiorni = 1;
     }
     
