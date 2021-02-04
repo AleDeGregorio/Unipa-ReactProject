@@ -261,9 +261,10 @@ const checkSoggiornante = async(req) => {
             'SELECT @sogg := "' + req.ref_soggiornante + '"; ' +
             'SELECT @anno := ' + req.anno + '; ' +
             'SELECT @prenotazione := ' + req.id_prenotazione + '; ' +
+            'SELECT @proprieta := ' + req.proprieta + '; ' +
             'SELECT pre.ref_soggiornante, SUM(datediff(pre.data_ritorno, pre.data_partenza)) AS tot_giorni ' +
             'FROM prenotazione pre, proprieta pro ' + 
-            'WHERE pre.ref_proprieta = pro.id_proprieta AND ' +
+            'WHERE pre.ref_proprieta = pro.id_proprieta AND pro.id_proprieta = @proprieta AND ' +
             'pro.tipo_proprieta = "cv" AND pre.ref_soggiornante = @sogg AND ' +
             'YEAR(pre.data_ritorno) = @anno AND pre.id_prenotazione != @prenotazione AND pre.accettata IS NOT NULL; ',
             (err, results) => {

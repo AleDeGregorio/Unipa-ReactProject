@@ -408,14 +408,34 @@ INSERT INTO tassa_soggiorno (ref_soggiornante, ref_proprietario, data_partenza, 
 -- GROUP BY pro.email_prop, p.id_proprieta;
 
 -- Esempio query vincolo 28 giorni
+-- USE progetto;
+
+-- INSERT INTO soggiornante VALUES
+-- (CF_SOGG, nome_sogg, cognome_sogg, data_nascita_sogg)
+-- ('DGRLSS98M04G273N', 'Alessio', 'Deg', '1998-08-04');
+
+-- INSERT INTO prenotazione (ref_soggiornante, ref_cliente, ref_proprietario, ref_proprieta, num_soggiornanti, costo, caparra, data_partenza, data_ritorno, accettata, checkin) VALUES
+-- (ID_PRENOTAZIONE, REF_SOGGIORNANTE, ref_cliente, ref_proprietario, ref_proprieta, num_soggiornanti, costo, (caparra), data_partenza, data_ritorno, 
+-- accettata)
+-- ('DGRLSS98M04G273N', 'sorrentino@gmail.it', 'alessio@gmail.it', 100, 1, 100, 100, '2021-01-01', '2021-01-21', null, false),
+-- ('DGRLSS98M04G273N', 'sorrentino@gmail.it', 'alessio@gmail.it', 100, 1, 100, 100, '2021-02-01', '2021-02-21', null, false);
+
+-- UPDATE prenotazione
+-- SET accettata = true
+-- WHERE id_prenotazione = 508;
+
+-- SELECT *
+-- FROM prenotazione;
+
 -- SELECT @sogg := 'DGRLSS98M04G273N';
 -- SELECT @anno := 2021;
--- SELECT @prenotazione := 507
+-- SELECT @prenotazione := 509;
+-- SELECT @proprieta := 100;
 -- SELECT pre.ref_soggiornante, SUM(datediff(pre.data_ritorno, pre.data_partenza)) AS tot_giorni
 -- FROM prenotazione pre, proprieta pro
--- WHERE pre.ref_proprieta = pro.id_proprieta AND
-	-- pro.tipo_proprieta = 'cv' AND pre.ref_soggiornante = 'DGRLSS98M04G273N' AND
-    -- YEAR(pre.data_ritorno) = 2021 AND pre.id_prenotazione != 507 AND pre.accettata IS NOT NULL;
+-- WHERE pre.ref_proprieta = pro.id_proprieta AND pro.id_proprieta = @proprieta AND
+	-- pro.tipo_proprieta = 'cv' AND pre.ref_soggiornante = @sogg AND
+    -- YEAR(pre.data_ritorno) = @anno AND pre.id_prenotazione != @prenotazione AND pre.accettata IS NOT NULL;
     
     
 -- Query per ricercare alloggi in base a vari filtri

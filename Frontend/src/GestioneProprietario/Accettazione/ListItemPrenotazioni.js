@@ -373,7 +373,8 @@ class ListItemPrenotazioni extends Component {
     const data = {
       ref_soggiornante: e.ref_soggiornante,
       anno: new Date(e.data_ritorno).getFullYear(),
-      id_prenotazione: e.id_prenotazione
+      id_prenotazione: e.id_prenotazione,
+      proprieta: e.ref_proprieta
     }
 
     fetch('http://localhost:9000/checkSoggiornante/resultIdoneita', {
@@ -510,7 +511,7 @@ class ListItemPrenotazioni extends Component {
     if ({tipo_proprieta}.tipo_proprieta === 'cv') {
       messaggioControllo = (
         <div className="listitem__select__list__item">
-          <span onClick = {() => this.checkSoggiornante({id_prenotazione, ref_soggiornante, data_partenza, data_ritorno})}>Controllo soggiornante</span>
+          <span onClick = {() => this.checkSoggiornante({id_prenotazione, ref_proprieta, ref_soggiornante, data_partenza, data_ritorno})}>Controllo soggiornante</span>
           {idoneita}
         </div>
       );
