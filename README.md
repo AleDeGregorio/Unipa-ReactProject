@@ -1,11 +1,8 @@
-# Progetto-Unipa UniBnB
+# Project-Unipa UniBnB
 * **React.js** frontend; 
 * **Express.js** backend; 
 * **React-native** mobile app; 
 
-# Specifiche del progetto
-- Sistema per il supporto alle attività di gestione e ricezione nel settore turistico delle *Case Vacanza* e *B&B*
-- Progetto realizzato durante l'anno accademico 2020/2021 presso l'**Università degli studi di Palermo**, facoltà di **Ingegneria Informatica** (triennale), in ambito delle materie di **Programmazione web e mobile** e **Ingegneria del software**
-
-# Indirizzo web site
-https://uni-bnb.herokuapp.com/
+# Project specifications
+- Application to support management and reception activities in the tourism sector of *Holiday Homes* and *B&B*
+- Project realized during the 2020/2021 academic year at the **Università degli studi di Palermo**, degree course **Computer Engineering**, courses **Programmazione web e mobile** and **Ingegneria del software**
